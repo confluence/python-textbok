@@ -207,3 +207,4 @@ Broader Issues
 * Discussion of .pyc files.
 * Do we want something about C extensions?
 * Do we want something about regular expressions?
+* Mention version control?
