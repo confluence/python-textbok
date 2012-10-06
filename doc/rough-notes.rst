@@ -199,6 +199,7 @@ Broader Issues
 * Add chapter on functions (before chapter 5 on classes)
   * Decorators!
 * Parameter passing
+* Scope! Where does it go?
 * Writing procedural code
 * Writing functional code
   * Nested functions
