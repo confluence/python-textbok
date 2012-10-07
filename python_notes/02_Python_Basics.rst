@@ -299,9 +299,11 @@ Built-in Types
 
 There are many kinds of information that a computer can process, like numbers and characters. In Python (and other programming languages), the kinds of information the language is able to handle are known as types.  Many common types are built into Python -- for example integers, floating-point numbers and strings.  Users can also define their own types using classes.
 
-.. Note:: In many languages a distinction is made between built-in types (which are often called "primitive types" for this reason) and classes, but in Python they are indistinguishable.  Everything in Python is an object (i.e. an instance of some class) -- that even includes lists and functions.
+In many languages a distinction is made between built-in types (which are often called "primitive types" for this reason) and classes, but in Python they are indistinguishable.  Everything in Python is an object (i.e. an instance of some class) -- that even includes lists and functions.
 
 A type consists of two parts: a domain of possible values and a set of possible operations that can be performed on these values. For example, the domain of the integer type (``int``) contains all integers, while common integer operations are addition, subtraction, multiplication and division.
+
+Python is a dynamically (and not statically) typed language.  That means that you don't have to specify a type for a variable when you create it -- you can use the same variable to store values of different types.  However, Python is also strongly (and not weakly) typed -- at any given time, a variable has a definite type.  If you try to perform operations on variables which have incompatible types (for example, if you try to add a number to a string), Python will exit with a type error instead of converting the variables implicitly.
 
 ``int`` type
 ------------
@@ -317,7 +319,7 @@ Python can display an integer with the ``print`` function, but only if it is the
     # You can add two numbers together
     print(1 + 2)
 
-You can't combine a string and an integer directly::
+You can't combine a string and an integer directly, because Python is strongly typed::
 
     >>> print("My number is " + 3)
     Traceback (most recent call last):
@@ -352,14 +354,8 @@ Note that all these operations are integer operations. That is why the answer to
 
 
 
-
-
-
-
-
-
-  * simple types -- integers, floats, boolean, strings
-  * delay discussion of static and class variables until OO section
+* simple types -- integers, floats, boolean, strings
+* delay discussion of static and class variables until OO section
 
 * Variables of Primitive Types and Strings
   * assignment is just labelling in Python
