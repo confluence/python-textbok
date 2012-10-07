@@ -196,11 +196,13 @@ Chapter 14: Introduction to GUI Programming with Swing
 Broader Issues
 ==============
 
+* Scope! Where does it go?
+* docstrings need to be mentioned somewhere
+* file I/O -- just after print in ch2?
+
 * Add chapter on functions (before chapter 5 on classes)
   * Decorators!
 * Parameter passing
-* Scope! Where does it go?
-* docstrings need to be mentioned somewhere
 * Writing procedural code
 * Writing functional code
   * Nested functions
