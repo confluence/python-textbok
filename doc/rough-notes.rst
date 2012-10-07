@@ -200,6 +200,7 @@ Broader Issues
   * Decorators!
 * Parameter passing
 * Scope! Where does it go?
+* docstrings need to be mentioned somewhere
 * Writing procedural code
 * Writing functional code
   * Nested functions
