@@ -294,7 +294,7 @@ These string literals will be identical::
 
 .. Todo:: Exercise 4
 
-Built-in Types
+Built-in types
 ==============
 
 There are many kinds of information that a computer can process, like numbers and characters. In Python (and other programming languages), the kinds of information the language is able to handle are known as types.  Many common types are built into Python -- for example integers, floating-point numbers and strings.  Users can also define their own types using classes.
@@ -305,12 +305,12 @@ A type consists of two parts: a domain of possible values and a set of possible 
 
 Python is a dynamically (and not statically) typed language.  That means that you don't have to specify a type for a variable when you create it -- you can use the same variable to store values of different types.  However, Python is also strongly (and not weakly) typed -- at any given time, a variable has a definite type.  If you try to perform operations on variables which have incompatible types (for example, if you try to add a number to a string), Python will exit with a type error instead of converting the variables implicitly.
 
-``int`` type
-------------
+Integers
+--------
 
-An integer is a whole number such as 1, 5, 1350 or -34. 1.5 is not an integer because it has a decimal point. Numbers with decimal points are floating-point numbers. Even 1.0 is a floating-point number and not an integer.
+An integer (``int`` type) is a whole number such as ``1``, ``5``, ``1350`` or ``-34``. ``1.5`` is not an integer because it has a decimal point. Numbers with decimal points are floating-point numbers. Even ``1.0`` is a floating-point number and not an integer.
 
-Integer Operations
+Integer operations
 ^^^^^^^^^^^^^^^^^^
 
 Python can display an integer with the ``print`` function, but only if it is the only argument::
@@ -347,12 +347,56 @@ Division             ``//``  ``28 // 10``  ``2``
 Modulus (Remainder)  ``%``   ``28 % 10``   ``8``
 ===================  ======  ============  ========
 
-Note that all these operations are integer operations. That is why the answer to 28 // 10 is not 2.8 but 2. An integer operation results in an integer solution.
+Note that all these operations are integer operations. That is why the answer to ``28 // 10`` is not ``2.8`` but ``2``. An integer operation results in an integer solution.
 
 .. Note:: In Python 2, the operator ``/`` performed integer division if both the dividend and the divisor were integers, and floating point division if at least one of them was a float.  In Python 3, ``/`` *always* performs floating-point division and ``//`` *always* performs integer division -- even if the dividend and divisor are floats!
 
 
+Operator precedence
+^^^^^^^^^^^^^^^^^^^
 
+Another important thing to keep in mind is operator precedence. For example, ``1 + 2 // 3`` could mean ``(1 + 2) // 3`` or ``1 + (2 // 3)`` depending on where one puts the brackets. To solve this issue, Python has a specific and predictable way to determine the order in which it performs operations. For integer operations, the system will first handle brackets ``()``, followed by ``*``, ``//`` and ``%``, then ``+`` and ``-``. The operators ``*``, ``//`` and ``%`` are in the same level of precedence, so the system will handle them from left to right. ``+`` and ``-`` are handled the same way. Left to right handling is performed for left-associative operators (which all operators mentioned so far are). The following table shows some examples.
+
+============   ====================  ======
+Expression     How Python evaluates  Result
+============   ====================  ======
+20 + 10 // 2   20 + (10 // 2)        25
+20 + 10 - 2    (20 + 10) - 2         28
+20 - 10 + 2    (20 - 10) + 2         12
+20 - 10 * 2    20 - (10 * 2)         0
+20 // 10 * 2   (20 // 10) * 2        4
+20 * 10 // 2   (20 * 10) // 2        100
+============   ====================  ======
+
+.. Todo:: Exercise 5
+
+Floating-point numbers
+--------------------
+
+Floating-point numbers (``float`` type) are numbers with a decimal point or an exponent (or both). Examples are ``5.0``, ``10.24``, ``0.0``, ``12.`` and ``.3``. You can use scientific notation to denote very large or very small floating point numbers e.g. 3.8 x 10\ :sup:`15`. The first part of the number, 3.8, is the mantissa and 15 is the exponent. You can think of the exponent as the number of times you have to move the decimal point to the right to get to the actual value of the number.
+
+In Python, you can write the number 3.8 x 10\ :sup:`15` as ``3.8e15`` or ``3.8e+15``. You can also write it as ``38e14`` or ``.038e17``. They are all the same value. A negative exponent indicates smaller numbers, e.g. ``2.5e-3`` is the same as ``0.0025``. Negative exponents can be thought of as how many times you have to move the decimal point to the left. Negative mantissa indicates that the number itself is negative, e.g. ``-2.5e3`` equals ``-2500`` and ``-2.5e-3`` equals ``-0.0025``.
+
+The ``print`` function will display floating-point numbers in decimal notation if they are greater than or equal to ``1e-4`` and less than ``1e16``, but for smaller and larger numbers it will use scientific notation::
+
+    # This will print 10000000000.0
+    print(1e10)
+
+    # This will print 1e+100
+    print(1e100)
+
+    # This will print 1e-10
+    print(0.0000000001)
+
+When displaying floats, you will usually specify how you would like them to be displayed, using string formatting::
+
+    # This will print 12.35
+    print("%.2f" % 12.3456)
+
+    # This will print 1.234560e+01
+    print("%e" % 12.3456)
+
+Note that any rounding only affects the display of the numbers. The precision of the number itself is not affected.
 
 * simple types -- integers, floats, boolean, strings
 * delay discussion of static and class variables until OO section
