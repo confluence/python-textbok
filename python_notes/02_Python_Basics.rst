@@ -158,12 +158,13 @@ Unlike some languages (such as Pascal), Python is case-sensitive. This means tha
 More on Comments
 ----------------
 
-Recall that comments start with ``#`` and continue until the end of line, for example::
+Recall that comments start with ``#`` and continue until the end of the line, for example::
 
     # This is a comment
     print("Hello!")    # tells the computer to print "Hello!"
 
 Comments are ignored by the interpreter and should be used by a programmer to:
+
 * describe what the program does
 * describe (in higher-level terms than the code) how the program works
 
@@ -171,18 +172,130 @@ It is not necessary to comment each line. You should comment in appropriate plac
 
 Some languages also have support for comments that span multiple lines, but Python does not.  If you want to type a very long comment in Python, you should split it into multiple shorter lines and put a ``#`` at the start of each line.
 
-You can easily disable part of your program temporarily by commenting out some lines.  If this is a large block, typing and removing hashes by hand can be time-consuming -- your editor should have a keyboard shortcut which allows you to comment or uncomment all the text you have selected.
+.. Note:: It is possible to insert a multi-line string literal into your code by enclosing it in triple quotes.  This is not normally used for comments, except in the special case of docstrings: strings which are inserted at the top of structures like functions and classes, and which document them according to a standard format.  It is good practice to annotate your code in this way because automated tools can then parse it to generate documentation automatically.  We will discuss docstrings further in a future chapter.
 
-We will discuss comments in more detail in a future chapter, where we will introduce you to a common commenting system used by Java programmers.
+.. Note:: You can easily disable part of your program temporarily by commenting out some lines.  Adding or removing many hashes by hand can be time-consuming -- your editor should have a keyboard shortcut which allows you to comment or uncomment all the text you have selected.
 
-Print
+Reading and Writing
+-------------------
+
+Many programs display text on the screen either to give some information or to ask for some information. For example, you might just want to tell the user what your program does::
+
+    Welcome to John's Calculating Machine.
+
+Perhaps you might want to ask the user for a number::
+
+    Enter the first number:
+
+The easiest way to output information is to display a string literal using the built-in ``print`` function. A string literal is text enclosed in quotes. You can use either single quotes (``'``) or double quotes (``"``) -- but the start quote and the end quote have to match!
+
+These are examples of string literals::
+
+    "Welcome to John's Calculating Machine."
+    'Enter the first number:'
+
+.. Todo:: How much stuff about streams do we actually need to put here?
+
+We can tell the computer to print "Hello!" on the console with the following instruction::
+
+    print("Hello!")
+
+As you can see the ``print`` function takes in a string literal as an argument.  It prints the string literal, and by default also prints a newline character at the end -- this is why the console's cursor appears on a new line after you have printed something.  If you want to print a message *without* a newline at the end, you can pass an optional ``end`` parameter into the ``print`` function::
+
+    print("Hello!", end='')
+
+Now ``print`` will print an empty string (i.e. nothing) instead of a newline -- you should see your cursor appear immediately after the message.
+
+To query the user for information, use the ``input`` function::
+
+    first_number = input('Enter the first number: ')
+
+There are several things to note.  First, unlike the ``print`` function, the ``input function`` does *not* print a newline automatically -- the text will be entered directly after the prompt.  That is why we have added a trailing space after the colon.  Second, the function always returns a string -- we will have to convert it to a number ourselves.
+
+The string prompt is optional -- we could just use the ``input`` function without a parameter::
+
+    second_number = input()
+
+String Formatting
+-----------------
+
+You will often need to print a message which is not a fixed string -- perhaps you want to include some numbers or other values which are stored in variables.  The recommended way to include these variables in your message is to use string formatting syntax::
+
+    name = "Jane"
+    age = 23
+    print("Hello! My name is %s." % name)
+    print("Hello! My name is %s and I am %d years old." % (name, age))
+
+The symbols in the string which start with percent signs (``%``) are placeholders, and the variables which are to be inserted into those positions are given after the string formatting operator, ``%``, in the same order in which they appear in the string.  If there is only one variable, it doesn't require any kind of wrapper, but if you have more than one you need to put them in a tuple (between round brackets).  The placeholders symbols have different letters depending on the type of the variable -- ``name`` is a string, but ``age`` is an integer.  All the variables will be converted to strings before being combined with the rest of the message.  We will discuss types in more detail soon.
+
+.. Todo:: this is technically deprecated in 3.1, so should we use .format() instead?
+
+Files
 -----
 
-* String Formatting
-* Files
+Although the ``print`` function prints to the console by default, you can also use it to write to a file.  Here is a simple example::
+
+    with open('myfile.txt', 'w') as myfile:
+        print("Hello!", file=myfile)
+
+.. Todo:: do we need to mention flushing?
+
+More on String Literals
+-----------------------
+
+Escape Sequences
+^^^^^^^^^^^^^^^^
+
+An escape sequence (of characters) can be used to denote a special character which cannot be typed easily on a keyboard or one which has been reserved for other purposes.  For example, you may want to insert a newline into your string::
+
+    print('This is one line.\nThis is another line.')
+
+If your string is enclosed in single quotes, you will have to escape apostrophes, and you need to do the same for double quotes in a string enclosed in double quotes.  An escape sequence starts with a backslash (``\``)::
+
+    print('"Hi! I\'m Jane," she said.')
+    print("\"Hi! I'm Jane,\" she said.")
+
+If you did not escape one of these quotes, Python would treat it as the end quote of your string -- and shortly afterwards it would fail to parse the rest of the statement and give you a syntax error::
+
+    >>> print('"Hi! I'm Jane," she said.')
+      File "<stdin>", line 1
+        print('"Hi! I'm Jane," she said.')
+                      ^
+    SyntaxError: invalid syntax
+
+Some common escape sequences:
+
+========  =================
+Sequence  Meaning
+========  =================
+``\\``    literal backslash
+``\'``    single quote
+``\"``    double quote
+``\n``    newline
+``\t``    tab
+========  =================
+
+You can also use escape sequences to output unicode characters.
+
+.. Todo:: argh, how do line endings work on Windows?
+
+
+Triple quotes
+^^^^^^^^^^^^^
+
+In cases where you need to define a long literal spanning multiple lines, or containing many quotes, it may be simplest and most legible to enclose it in triple quotes (either single or double quotes, but of course they must match).  Inside the triple quotes, all whitespace is treated literally -- if you type a newline it will be reflected in your string.  You also don't have to escape any quotes.  Be careful that you don't include anything that you don't mean to -- any indentation will also go inside your string!
+
+These string literals will be identical::
+
+    string_one = '''"Hello," said Jane.
+    "Hi," said Bob.'''
+
+    string_two = '"Hello," said Jane.\n"Hi," said Bob.'
 
 Primitive Types
 ===============
+
+
 
   * simple types -- integers, floats, boolean, strings
   * delay discussion of static and class variables until OO section
