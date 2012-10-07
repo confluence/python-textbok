@@ -115,10 +115,10 @@ A computer program may be spread across several files and consist of many differ
 
 The second example shows a typical way of designating code to be a Python program's "main function": ``__name__`` is a special variable which is set to the value ``"__main__"`` when the file is executed by Python directly.  If you run the file containing this program, everything inside the ``if`` statement will be executed -- the function will be called, and the message will be printed.  However, if you were to import the function ``my_function`` from a different file, this statement would not be executed.
 
-Indentation and semicolons
---------------------------
+Indentation and (lack of) semicolons
+------------------------------------
 
-Many languages arrange code into blocks using curly braces (``{`` and ``}``) or ``BEGIN`` and ``END`` statements -- these languages encourage you to indent blocks to make code easier to read, but indentation is not compulsory.  Python uses indentation only to delimit blocks::
+Many languages arrange code into blocks using curly braces (``{`` and ``}``) or ``BEGIN`` and ``END`` statements -- these languages encourage you to indent blocks to make code easier to read, but indentation is not compulsory.  Python uses indentation only to delimit blocks, so you *must* indent your code::
 
     # this function definition starts a new block
     def add_numbers(a, b):
@@ -151,10 +151,29 @@ In many languages you need to use a special character to mark the end of each in
 .. Todo: Exercise 2 and Exercise 3
 
 Letter Case
+-----------
 
-Unlike some languages (such as Pascal), Python is case-sensitive. This means that the inerpreter treats upper and lower case letters as different from one another. For example, ``A`` is different to ``a`` and ``def main()`` is different to ``DEF MAIN()``. Also remember that all reserved words are in lower case.
+Unlike some languages (such as Pascal), Python is case-sensitive. This means that the interpreter treats upper- and lowercase letters as different from one another. For example, ``A`` is different from ``a`` and ``def main()`` is different from ``DEF MAIN()``. Also remember that all reserved words are in lowercase.
 
 More on Comments
+----------------
+
+Recall that comments start with ``#`` and continue until the end of line, for example::
+
+    # This is a comment
+    print("Hello!")    # tells the computer to print "Hello!"
+
+Comments are ignored by the interpreter and should be used by a programmer to:
+* describe what the program does
+* describe (in higher-level terms than the code) how the program works
+
+It is not necessary to comment each line. You should comment in appropriate places where it might not be clear what is going on. You can also put a short comment describing what is taking place in the next few instructions following the comment.
+
+Some languages also have support for comments that span multiple lines, but Python does not.  If you want to type a very long comment in Python, you should split it into multiple shorter lines and put a ``#`` at the start of each line.
+
+You can easily disable part of your program temporarily by commenting out some lines.  If this is a large block, typing and removing hashes by hand can be time-consuming -- your editor should have a keyboard shortcut which allows you to comment or uncomment all the text you have selected.
+
+We will discuss comments in more detail in a future chapter, where we will introduce you to a common commenting system used by Java programmers.
 
 Print
 -----
