@@ -292,8 +292,69 @@ These string literals will be identical::
 
     string_two = '"Hello," said Jane.\n"Hi," said Bob.'
 
-Primitive Types
-===============
+.. Todo:: Exercise 4
+
+Built-in Types
+==============
+
+There are many kinds of information that a computer can process, like numbers and characters. In Python (and other programming languages), the kinds of information the language is able to handle are known as types.  Many common types are built into Python -- for example integers, floating-point numbers and strings.  Users can also define their own types using classes.
+
+.. Note:: In many languages a distinction is made between built-in types (which are often called "primitive types" for this reason) and classes, but in Python they are indistinguishable.  Everything in Python is an object (i.e. an instance of some class) -- that even includes lists and functions.
+
+A type consists of two parts: a domain of possible values and a set of possible operations that can be performed on these values. For example, the domain of the integer type (``int``) contains all integers, while common integer operations are addition, subtraction, multiplication and division.
+
+``int`` type
+------------
+
+An integer is a whole number such as 1, 5, 1350 or -34. 1.5 is not an integer because it has a decimal point. Numbers with decimal points are floating-point numbers. Even 1.0 is a floating-point number and not an integer.
+
+Integer Operations
+^^^^^^^^^^^^^^^^^^
+
+Python can display an integer with the ``print`` function, but only if it is the only argument::
+
+    print(3)
+    # You can add two numbers together
+    print(1 + 2)
+
+You can't combine a string and an integer directly::
+
+    >>> print("My number is " + 3)
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: Can't convert 'int' object to str implicitly
+
+If you want to print a number and a string together, you will have to convert the number to a string somehow::
+
+    # str function converts things to strings.
+    # Then you can concatenate two strings with +.
+    print("My number is " + str(3))
+
+    # String formatting does the conversion for you.
+    print("My number is %d" % 3)
+
+Other integer operations:
+
+===================  ======  ============  ========
+Operation            Symbol  Example       Result
+===================  ======  ============  ========
+Addition             ``+``   ``28 + 10``   ``38``
+Subtraction          ``-``   ``28 - 10``   ``18``
+Multiplication       ``*``   ``28 * 10``   ``280``
+Division             ``//``  ``28 // 10``  ``2``
+Modulus (Remainder)  ``%``   ``28 % 10``   ``8``
+===================  ======  ============  ========
+
+Note that all these operations are integer operations. That is why the answer to 28 // 10 is not 2.8 but 2. An integer operation results in an integer solution.
+
+.. Note:: In Python 2, the operator ``/`` performed integer division if both the dividend and the divisor were integers, and floating point division if at least one of them was a float.  In Python 3, ``/`` *always* performs floating-point division and ``//`` *always* performs integer division -- even if the dividend and divisor are floats!
+
+
+
+
+
+
+
 
 
 
