@@ -347,7 +347,7 @@ Division             ``//``  ``28 // 10``  ``2``
 Modulus (Remainder)  ``%``   ``28 % 10``   ``8``
 ===================  ======  ============  ========
 
-Note that all these operations are integer operations. That is why the answer to ``28 // 10`` is not ``2.8`` but ``2``. An integer operation results in an integer solution.
+Note that all these operations are integer operations. That is why the answer to ``28 // 10`` is not ``2.8``, but ``2``. An integer operation results in an integer solution.
 
 .. Note:: In Python 2, the operator ``/`` performed integer division if both the dividend and the divisor were integers, and floating point division if at least one of them was a float.  In Python 3, ``/`` *always* performs floating-point division and ``//`` *always* performs integer division -- even if the dividend and divisor are floats!
 
@@ -373,7 +373,7 @@ Expression     How Python evaluates  Result
 Floating-point numbers
 ----------------------
 
-Floating-point numbers (``float`` type) are numbers with a decimal point or an exponent (or both). Examples are ``5.0``, ``10.24``, ``0.0``, ``12.`` and ``.3``. You can use scientific notation to denote very large or very small floating point numbers e.g. 3.8 x 10\ :sup:`15`. The first part of the number, 3.8, is the mantissa and 15 is the exponent. You can think of the exponent as the number of times you have to move the decimal point to the right to get to the actual value of the number.
+Floating-point numbers (``float`` type) are numbers with a decimal point or an exponent (or both). Examples are ``5.0``, ``10.24``, ``0.0``, ``12.`` and ``.3``. You can use scientific notation to denote very large or very small floating point numbers, e.g. 3.8 x 10\ :sup:`15`. The first part of the number, 3.8, is the mantissa and 15 is the exponent. You can think of the exponent as the number of times you have to move the decimal point to the right to get to the actual value of the number.
 
 In Python, you can write the number 3.8 x 10\ :sup:`15` as ``3.8e15`` or ``3.8e+15``. You can also write it as ``38e14`` or ``.038e17``. They are all the same value. A negative exponent indicates smaller numbers, e.g. ``2.5e-3`` is the same as ``0.0025``. Negative exponents can be thought of as how many times you have to move the decimal point to the left. Negative mantissa indicates that the number itself is negative, e.g. ``-2.5e3`` equals ``-2500`` and ``-2.5e-3`` equals ``-0.0025``.
 
