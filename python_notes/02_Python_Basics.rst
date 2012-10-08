@@ -109,7 +109,7 @@ Flow of Control
 In Python, statements are written as a list, in the way that a person would write a list of things to do. Recall that this is what makes Python a procedural language. The computer starts off by following the first instruction, then the next, in the order that they appear in the program. It only stops executing the program after the last instruction is completed. We refer to the order in which the computer executes instructions as the flow of control. When the computer is executing a particular instruction, we can say that control is at that instruction.
 
 ``"__main__"``
-------------
+--------------
 
 A computer program may be spread across several files and consist of many different functions and classes. Somewhere in the program there must be a starting point -- an instruction which the computer will execute first.  In some languages this is a function with a special name (usually ``main``).  In Python, there is no name reserved for this purpose, and you don't even need to have a function at all -- you may simply write a list of statements, and they will be executed in order.
 
@@ -371,7 +371,7 @@ Expression     How Python evaluates  Result
 .. Todo:: Exercise 5
 
 Floating-point numbers
---------------------
+----------------------
 
 Floating-point numbers (``float`` type) are numbers with a decimal point or an exponent (or both). Examples are ``5.0``, ``10.24``, ``0.0``, ``12.`` and ``.3``. You can use scientific notation to denote very large or very small floating point numbers e.g. 3.8 x 10\ :sup:`15`. The first part of the number, 3.8, is the mantissa and 15 is the exponent. You can think of the exponent as the number of times you have to move the decimal point to the right to get to the actual value of the number.
 
@@ -397,6 +397,51 @@ When displaying floats, you will usually specify how you would like them to be d
     print("%e" % 12.3456)
 
 Note that any rounding only affects the display of the numbers. The precision of the number itself is not affected.
+
+Floating-point operations and precedence
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Arithmetic operations for floating-point numbers are the same as those for integers: addition, subtraction, multiplication, division and modulus.  They also use the same operators, except for division -- the floating-point division operator is ``/``.  Floating-point operations always produce a floating-point solution. The order of precedence for these operators is the same as those for integer operators.
+
+Often, you will have to decide which type of number to use in a program. Generally, you should use an integer for counting and measuring discrete whole numbers. Use floating-point numbers for measuring things that are continuous.
+
+You can combine integers and numbers in arithmetic expressions without having to convert them -- this is something that Python will do for you automatically.  If you perform an arithmetic operation on an integer and a floating-point number, the result will always be a floating-point number.
+
+You can use the integer division operator on floating-point numbers, and vice versa. The two division operators are at the same level in the order of precedence.
+
+.. Todo:: Exercise 6
+
+Using strings
+-------------
+
+A string is a sequence of characters. You should already be familiar with string literals from working with them in the last section.  In Python, strings (type ``str``) are a special kind of type which is similar to sequence types. In many ways, strings behave in similar ways to lists (type ``list``), which we will discuss in a later chapter, but they also have some functionality specific to text.
+
+.. Note:: In Python 2, the ``str`` type used the ASCII encoding. If you wanted to use strings containing Unicode (for example, characters from other alphabets or special punctuation) you had to use the ``unicode`` type. In Python 3, the ``str`` type uses Unicode.
+
+String Operations
+-----------------
+
+We have already introduced a string operation - concatenation (``+``). It can be used to join two strings. There are many built-in functions which perform operations on strings.  String objects also have many useful methods (i.e. functions which are attached to the objects, and accessed with the attribute reference operator, ``.``)::
+
+    name = "Jane Smith"
+
+    # Find the length of a string with the built-in len function
+    print(len(name))
+
+    # Print the string converted to lowercase
+    print(name.lower())
+    # Print the original string
+    print(name)
+
+Why does the last print statement output the original value of ``name``? It's because the ``lower`` method does not change the value of ``name``.  It returns a modified *copy* of the value.  If you wanted to change the value of ``name`` permanently, you would have to assign the new value to the variable, like this::
+
+    # Convert the string to lowercase
+    name = name.lower()
+    print(name)
+
+In Python, strings are *immutable* -- that means that you can't modify part of a string once it has been created.  You can only *replace* it with a modified version.
+
+
 
 * simple types -- integers, floats, boolean, strings
 * delay discussion of static and class variables until OO section
