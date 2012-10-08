@@ -303,7 +303,7 @@ In many languages a distinction is made between built-in types (which are often 
 
 A type consists of two parts: a domain of possible values and a set of possible operations that can be performed on these values. For example, the domain of the integer type (``int``) contains all integers, while common integer operations are addition, subtraction, multiplication and division.
 
-Python is a dynamically (and not statically) typed language.  That means that you don't have to specify a type for a variable when you create it -- you can use the same variable to store values of different types.  However, Python is also strongly (and not weakly) typed -- at any given time, a variable has a definite type.  If you try to perform operations on variables which have incompatible types (for example, if you try to add a number to a string), Python will exit with a type error instead of converting the variables implicitly.
+Python is a dynamically (and not statically) typed language.  That means that you don't have to specify a type for a variable when you create it -- you can use the same variable to store values of different types.  However, Python is also strongly (and not weakly) typed -- at any given time, a variable has a definite type.  If you try to perform operations on variables which have incompatible types (for example, if you try to add a number to a string), Python will exit with a type error instead of trying to guess what you mean.
 
 Integers
 --------
