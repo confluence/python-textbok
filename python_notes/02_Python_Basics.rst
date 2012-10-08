@@ -54,13 +54,13 @@ Keywords
 
 In the code above, the words ``def`` and ``if`` are keywords or reserved words, i.e. they have been kept for specific purposes and may not be used for any other purposes in the program. The following are keywords in Python::
 
-False      class      finally    is         return
-None       continue   for        lambda     try
-True       def        from       nonlocal   while
-and        del        global     not        with
-as         elif       if         or         yield
-assert     else       import     pass
-break      except     in         raise
+  False      class      finally    is         return
+  None       continue   for        lambda     try
+  True       def        from       nonlocal   while
+  and        del        global     not        with
+  as         elif       if         or         yield
+  assert     else       import     pass
+  break      except     in         raise
 
 Identifier names
 ----------------
