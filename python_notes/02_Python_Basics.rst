@@ -453,12 +453,9 @@ To define a new variable in Python, you simply assign a value to a label.  For e
 
 This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  In the next section we will discuss under what circumstances this statement will cause a new variable will be created.
 
-
-  If no variable with that name exists **IN THE SAME SCOPE?**, Python will create it for you automatically -- with some exceptions, which we will discuss in the next section.
-
 If you try to access the value of a variable which hasn't been defined anywhere yet, the interpreter will exit with a name error.
 
-We can define several variables in one line::
+We can define several variables in one line, but this is usually considered bad style::
 
     # Define three variables at once:
     count, result, total = 0, 0, 0
@@ -470,8 +467,6 @@ We can define several variables in one line::
 
 In keeping with good programming style, you should make use of meaningful names for variables.
 
-.. Note:: in statically typed languages, in which variables have types, you must declare the type of a new variable before assigning any value to it -- you can do this in the same step as the value assignment, or in a separate step.  Because of this, it is possible for a variable to be defined, but never to have been assigned a value -- such a variable is said to be ``uninitialised``.  Trying to access the values of uninitialised variables can result in unpredictable errors!  Fortunately, you will never have this problem in Python, because it has no separate variable definition step.  When you create a new variable in Python, you define it and initialize it with a starting value at the same time.
-
 Variable scope and lifetime
 ---------------------------
 
@@ -479,7 +474,7 @@ Not all variables are accessible from all parts of your program, and not all var
 
 A variable which is defined in the main body of a file is called a ''global'' variable.  It will be visible throughout the file, and also inside any file which imports that file.  Global variables can have unintended consequences because of their wide-ranging effects -- that is why you should almost never use them.  Only objects which are intended to be used globally, like functions and classes, should be put in the global namespace.
 
-A variable which is defined inside a function is ''local'' to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.
+A variable which is defined inside a function is ''local'' to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.  The parameter names in the function definition behave like local variables, but they contain the values that you pass into the function when you call it.
 
 Here is an example of variables in different scopes::
 
@@ -490,24 +485,34 @@ Here is an example of variables in different scopes::
         # This is still a global variable
         b = 1
 
-    def my_function():
+    def my_function(c):
         # this is a local variable
-        c = 3
+        d = 3
         print(c)
+        print(d)
 
-    # Now we call the function
-    my_function()
+    # Now we call the function, passing the value 7 as the first and only parameter
+    my_function(7)
 
     # a and b still exist
     print(a)
     print(b)
 
-    # c doesn't exist anymore -- this will give you a name error!
+    # c and d don't exist anymore -- these statements will give you name errors!
     print(c)
+    print(d)
 
-This may not do what you expect::
+What if you want to access a global variable from inside a function?  It is possible, but doing so comes with a few caveats::
 
-    # This is a global variable
+    a = 0
+
+    def my_function():
+        print(a)
+
+    my_function()
+
+The print statement will output ``0``, the value of the global variable ``a``, as you probably expected.  But what about this program? ::
+
     a = 0
 
     def my_function():
@@ -518,13 +523,42 @@ This may not do what you expect::
 
     print(a)
 
-Why does the last print statement also output ``0``?  Because the assignment inside the function does not modify the global ``a``.  It creates a new local variable called ``a``, and assigns the value ``3`` to that variable.  The first print statement prints out the value of the local variable -- because if a local variable has the same name as a global variable the local variable will always take precedence.  The last print statement prints out the global variable, which has remained unchanged.
+When you call the function, the print statement inside outputs ``3`` -- but why does the print statement at the end of the program output ``0``?
+
+By default, the assignment statement creates variables in the local scope.  So the assignment inside the function does not modify the global variable ``a`` -- it creates a new local variable called ``a``, and assigns the value ``3`` to that variable.  The first print statement outputs the value of the new local variable -- because if a local variable has the same name as a global variable the local variable will always take precedence.  The last print statement prints out the global variable, which has remained unchanged.
+
+What if you really want to modify a global variable from inside a function?  You can use the ``global`` keyword::
+
+    a = 0
+
+    def my_function():
+        global a
+        a = 3
+        print(a)
+
+    my_function()
+
+    print(a)
+
+You may not refer to both a global variable and a local variable by the same name inside the same function.  This program will give you an error::
+
+    a = 0
+
+    def my_function():
+        print(a)
+        a = 3
+        print(a)
+
+    my_function()
+
+Because you haven't declared ``a`` to be global, the assignment in the second line of the function will create a local variable ``a``.  This means that you can't refer to the global variable ``a`` elsewhere in the function, even before this line!  The first print statement now refers to the local variable ``a`` -- but this variable doesn't have a value in the first line, because you haven't assigned it yet!
+
+Note that it is usually very bad practice to access global variables from inside functions, and even worse practice to modify them.  This makes it difficult to arrange your program into logically encapsulated parts which do not affect each other in unexpected ways.  If a function needs to access some external value, the value should be passed into the function as a parameter.  If the function is a method of an object, it is sometimes appropriate to make the value an attribute of the same object -- we will discuss this in the chapter about object orientation.
+
+.. Note:: There is also a ``nonlocal`` keyword in Python -- when you nest a function inside another function, it allows you to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If you use the ``global`` keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If you use the ``nonlocal`` keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.
 
 
-.. Note:: Variables which are associated with a class are known as ''attributes''.  They can either be ''class'' variables (variables shared between all instances of a class) or ''instance'' variables (a separate variable for each instance) We will look at variable scope within classes in greater detail in a later chapter.
-
-
-
+JAVA BELOW THIS LINE
 
 
 There are three kinds of variable in Java (Note that here we are not talking about the type of the value that is to be stored in that variable). These are local, instance and class variables. Local variables are those defined inside a method such as main(). Instance variables are those defined inside a class, but not in any method in this class. There is a different version of this variable for each object of the class. Class variables (also known as static variable) are defined in the same place as instance variables, but there is only one version per class. Class variables are defined with the keyword static at the beginning. The following example shows the three different kinds of variables.
