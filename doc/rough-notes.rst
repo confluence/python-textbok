@@ -196,9 +196,10 @@ Chapter 14: Introduction to GUI Programming with Swing
 Broader Issues
 ==============
 
-* Scope! Where does it go?
 * docstrings need to be mentioned somewhere
 * file I/O -- just after print in ch2?
+
+* add more detail about scope within classes to the class chapter, where it will make more sense.
 
 * Add chapter on functions (before chapter 5 on classes)
   * Decorators!

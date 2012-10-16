@@ -441,6 +441,114 @@ Why does the last print statement output the original value of ``name``? It's be
 
 In Python, strings are *immutable* -- that means that you can't modify part of a string once it has been created.  You can only *replace* it with a modified version.
 
+Variables
+=========
+
+Recall that a variable is a label for a location in memory.  It can be used to hold a value.  In many languages, ariables have predetermined types, and a variable can only be used to hold values of that type **EXPLAIN WHY**.  In Python, you may reuse the same variable to store values of any type.
+
+A variable is similar to the memory functionality found in most calculators, in that it holds one value which can be retrieved many times, and that storing a new value erases the old. A variable differs from a calculator's memory in that one can have many variables storing different values, and that each variable is referred to by name.
+
+Defining variables
+------------------
+
+To define a new variable in Python, you simply assign a value to a label.  For example, this is how you create a variable called ``count``, which contains an integer value of zero::
+
+    count = 0
+
+This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  If no variable with that name exists **IN THE SAME SCOPE?**, Python will create it for you automatically -- with some exceptions, which we will discuss in the next section.
+
+If you try to access the value of a variable which hasn't been defined anywhere yet, the interpreter will exit with a name error.
+
+We can define several variables in one line::
+
+    # Define three variables at once:
+    count, result, total = 0, 0, 0
+
+    # This is equivalent to:
+    count = 0
+    result = 0
+    total = 0
+
+In keeping with good programming style, you should make use of meaningful names for variables.
+
+.. Note:: in statically typed languages, in which variables have types, you must declare the type of a new variable before assigning any value to it -- you can do this in the same step as the value assignment, or in a separate step.  Because of this, it is possible for a variable to be defined, but never to have been assigned a value -- such a variable is said to be ``uninitialised``.  Trying to access the values of uninitialised variables can result in unpredictable errors!  Fortunately, you will never have this problem in Python, because it has no separate variable definition step.  When you create a new variable in Python, you define it and initialize it with a starting value at the same time.
+
+Variable scope and lifetime
+---------------------------
+
+Not all variables are accessible from all parts of your program, and not all variables exist for the same amount of time.  Where a variable is accessible and how long it exists depend on how it is defined.  We call the part of a program where a variable is accessible its ''scope'', and the duration for which the variable exists its ''lifetime''.
+
+A variable which is defined in the main body of a file is called a ''global'' variable.  It will be visible throughout the file, and also inside any file which imports that file.  Global variables can have unintended consequences because of their wide-ranging effects -- that is why you should almost never use them.  Only objects which are intended to be used globally, like functions and classes, should be put in the global namespace.
+
+A variable which is defined inside a function is ''local'' to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.
+
+Here is an example of variables in different scopes::
+
+    # This is a global variable
+    a = 0
+
+    if (a == 0):
+        # This is still a global variable
+        b = 1
+
+    def my_function():
+        # this is a local variable
+        c = 3
+        print(c)
+
+    # Now we call the function
+    my_function()
+
+    # a and b still exist
+    print(a)
+    print(b)
+
+    # c doesn't exist anymore -- this will give you a name error!
+    print(c)
+
+This may not do what you expect::
+
+    # This is a global variable
+    a = 0
+
+    def my_function():
+        a = 3
+        print(a)
+
+    my_function()
+
+    print(a)
+
+Why does the last print statement also output ``0``?  Because the assignment inside the function does not modify the global ``a``.  It creates a new local variable called ``a``, and assigns the value ``3`` to that variable.  The first print statement prints out the value of the local variable -- because if a local variable has the same name as a global variable the local variable will always take precedence.  The last print statement prints out the global variable, which has remained unchanged.
+
+
+.. Note:: Variables which are associated with a class are known as ''attributes''.  They can either be ''class'' variables (variables shared between all instances of a class) or ''instance'' variables (a separate variable for each instance) We will look at variable scope within classes in greater detail in a later chapter.
+
+
+
+
+
+There are three kinds of variable in Java (Note that here we are not talking about the type of the value that is to be stored in that variable). These are local, instance and class variables. Local variables are those defined inside a method such as main(). Instance variables are those defined inside a class, but not in any method in this class. There is a different version of this variable for each object of the class. Class variables (also known as static variable) are defined in the same place as instance variables, but there is only one version per class. Class variables are defined with the keyword static at the beginning. The following example shows the three different kinds of variables.
+
+﻿public class KindsOfVariables {
+  int anInstanceVariable;
+  static int aClassVariable;
+
+  public static void main(String[] args) {
+    int aLocalVariable;
+  }
+}
+
+The scope of a variable is the part of the program that can make use of the variable i.e where the variable is accessible. A local variable is accessible from its definition to the end of the containing method. Instance and class variables are accessible throughout the class.
+
+The lifetime of a variable is the time when the variable exists. Local variables exist as long as the containing method is running. Instance and class variables exist as long as an object of the class exists.
+
+In the next few units, we will make use of local and instance variables. Static variables will be used in later units. Also remember that local variable's definition must appear earlier in the program than any use of that variable.
+
+Exercise 7
+
+Draw up a summary table comparing the three kinds of variables. It should contain the following columns: definition location, number of versions, scope and lifetime.
+
 
 
 * simple types -- integers, floats, boolean, strings
