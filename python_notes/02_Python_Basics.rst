@@ -104,7 +104,7 @@ DEFAULT-HEIGHT  Default_Ht    DEFAULT_HEIGHT
 Flow of Control
 ---------------
 
-In Python, statements are written as a list, in the way that a person would write a list of things to do. Recall that this is what makes Python a procedural language. The computer starts off by following the first instruction, then the next, in the order that they appear in the program. It only stops executing the program after the last instruction is completed. We refer to the order in which the computer executes instructions as the flow of control. When the computer is executing a particular instruction, we can say that control is at that instruction.
+In Python, statements are written as a list, in the way that a person would write a list of things to do. The computer starts off by following the first instruction, then the next, in the order that they appear in the program. It only stops executing the program after the last instruction is completed. We refer to the order in which the computer executes instructions as the flow of control. When the computer is executing a particular instruction, we can say that control is at that instruction.
 
 ``"__main__"``
 --------------
