@@ -442,7 +442,7 @@ In Python, strings are *immutable* -- that means that you can't modify part of a
 Variables
 =========
 
-Recall that a variable is a label for a location in memory.  It can be used to hold a value.  In many languages, ariables have predetermined types, and a variable can only be used to hold values of that type **EXPLAIN WHY**.  In Python, you may reuse the same variable to store values of any type.
+Recall that a variable is a label for a location in memory.  It can be used to hold a value.  In statically typed languages, variables have predetermined types, and a variable can only be used to hold values of that type.  In Python, you may reuse the same variable to store values of any type.
 
 A variable is similar to the memory functionality found in most calculators, in that it holds one value which can be retrieved many times, and that storing a new value erases the old. A variable differs from a calculator's memory in that one can have many variables storing different values, and that each variable is referred to by name.
 
@@ -453,7 +453,10 @@ To define a new variable in Python, you simply assign a value to a label.  For e
 
     count = 0
 
-This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  If no variable with that name exists **IN THE SAME SCOPE?**, Python will create it for you automatically -- with some exceptions, which we will discuss in the next section.
+This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  In the next section we will discuss under what circumstances this statement will cause a new variable will be created.
+
+
+  If no variable with that name exists **IN THE SAME SCOPE?**, Python will create it for you automatically -- with some exceptions, which we will discuss in the next section.
 
 If you try to access the value of a variable which hasn't been defined anywhere yet, the interpreter will exit with a name error.
 
