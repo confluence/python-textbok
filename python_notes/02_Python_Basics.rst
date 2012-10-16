@@ -132,7 +132,7 @@ Many languages arrange code into blocks using curly braces (``{`` and ``}``) or 
     # this is outside the block!
     print("Print this no matter what.")
 
-In many languages you need to use a special character to mark the end of each instruction -- usually a semicolon.  Python uses ends of lines to determine where instructions end (except in some special cases when the last symbol on the line lets Python know that the instruction will span multiple lines).  You may optionally use semicolons -- this is something you might want to do if you want to put more than one instruction on a line (but that is usually bad practice)::
+In many languages you need to use a special character to mark the end of each instruction -- usually a semicolon.  Python uses ends of lines to determine where instructions end (except in some special cases when the last symbol on the line lets Python know that the instruction will span multiple lines).  You may optionally use semicolons -- this is something you might want to do if you want to put more than one instruction on a line (but that is usually bad style)::
 
     # These all individual instructions -- no semicolons required!
     print("Hello!")
@@ -151,7 +151,7 @@ In many languages you need to use a special character to mark the end of each in
 Letter Case
 -----------
 
-Unlike some languages (such as Pascal), Python is case-sensitive. This means that the interpreter treats upper- and lowercase letters as different from one another. For example, ``A`` is different from ``a`` and ``def main()`` is different from ``DEF MAIN()``. Also remember that all reserved words are in lowercase.
+Unlike some languages (such as Pascal), Python is case-sensitive. This means that the interpreter treats upper- and lowercase letters as different from one another. For example, ``A`` is different from ``a`` and ``def main()`` is different from ``DEF MAIN()``. Also remember that all reserved words (except ``True``, ``False`` and ``None``) are in lowercase.
 
 More on Comments
 ----------------
@@ -226,7 +226,6 @@ You will often need to print a message which is not a fixed string -- perhaps yo
 
 The symbols in the string which start with percent signs (``%``) are placeholders, and the variables which are to be inserted into those positions are given after the string formatting operator, ``%``, in the same order in which they appear in the string.  If there is only one variable, it doesn't require any kind of wrapper, but if you have more than one you need to put them in a tuple (between round brackets).  The placeholders symbols have different letters depending on the type of the variable -- ``name`` is a string, but ``age`` is an integer.  All the variables will be converted to strings before being combined with the rest of the message.  We will discuss types in more detail soon.
 
-.. Todo:: this is technically deprecated in 3.1, so should we use .format() instead?
 
 Files
 -----
@@ -236,7 +235,6 @@ Although the ``print`` function prints to the console by default, you can also u
     with open('myfile.txt', 'w') as myfile:
         print("Hello!", file=myfile)
 
-.. Todo:: do we need to mention flushing?
 
 More on String Literals
 -----------------------
@@ -437,7 +435,7 @@ Why does the last print statement output the original value of ``name``? It's be
     name = name.lower()
     print(name)
 
-In Python, strings are *immutable* -- that means that you can't modify part of a string once it has been created.  You can only *replace* it with a modified version.
+In Python, strings are *immutable* -- that means that you can't modify a string once it has been created.  However, you can change *which* string a variable name refers to.
 
 Variables
 =========
