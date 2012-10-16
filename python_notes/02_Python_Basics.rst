@@ -99,8 +99,6 @@ DEFAULT-HEIGHT  Default_Ht    DEFAULT_HEIGHT
 
 .. Todo:: Exercise 1
 
-.. Note:: A few special identifiers are automatically defined by Python: ``_`` (only in the interactive interpreter), variable names that start and end with two underscores, and class method names that start with two underscores.  You should not use these names for your own variables -- it may lead to unpredictable errors in your code.
-
 .. Note:: You should also be careful that you don't accidentally redefine variables that have already been defined elsewhere by reusing their names.  In particular, the names of common Python functions like ``len``, ``max`` or ``sort`` are not keywords: you will not get a syntax error if you try to use them.  Redefining variables (accidentally and on purpose) will be discussed in greater detail in the section about scope.
 
 Flow of Control
