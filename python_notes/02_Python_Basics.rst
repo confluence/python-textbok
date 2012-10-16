@@ -99,7 +99,7 @@ DEFAULT-HEIGHT  Default_Ht    DEFAULT_HEIGHT
 
 .. Todo:: Exercise 1
 
-.. Note:: You should also be careful that you don't accidentally redefine variables that have already been defined elsewhere by reusing their names.  In particular, the names of common Python functions like ``len``, ``max`` or ``sort`` are not keywords: you will not get a syntax error if you try to use them.  Redefining variables (accidentally and on purpose) will be discussed in greater detail in the section about scope.
+.. Note:: Be careful not to redefine existing variables accidentally by reusing their names.  This applies not only to your own variables, but to built-in Python functions like ``len``, ``max`` or ``sort``: these names are not keywords, and you will not get a syntax error if you reuse them, but you will encounter confusing results if you try to use the original functions later in your program.  Redefining variables (accidentally and on purpose) will be discussed in greater detail in the section about scope.
 
 Flow of Control
 ---------------
