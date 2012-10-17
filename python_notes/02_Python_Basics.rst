@@ -659,7 +659,9 @@ Why do we bother defining variables that we don't intend to change?  Consider th
     tom_mark = 58
     print(("Tom's mark is %.2f%%" % (tom_mark / MAXIMUM_MARK * 100))) # %% is how we escape a literal % inside a string
 
-There are several good reasons to define ``MAXIMUM_MARK`` instead of just writing ``80`` inside the print statement.  First, this gives the number a descriptive label which explains what it is -- this makes the code more understandable.  Second, you may eventually need to refer to this number in your program more than once.  If you ever need to update your code with a new value for the maximum mark, you will only have to change it in one place, instead of finding every place where it is used.
+There are several good reasons to define ``MAXIMUM_MARK`` instead of just writing ``80`` inside the print statement.  First, this gives the number a descriptive label which explains what it is -- this makes the code more understandable.  Second, you may eventually need to refer to this number in your program more than once.  If you ever need to update your code with a new value for the maximum mark, you will only have to change it in one place, instead of finding every place where it is used -- such replacements are often error-prone.
+
+Literal numbers scattered throughout a program are known as "magic numbers" -- using them is considered poor coding style.  This does not apply to small numbers which are considered self-explanatory -- it's easy to understand why a total is initialised to zero or incremented by one.
 
 Sometimes we want to use a variable to distinguish between several discrete options.  It is useful to refer to the option values using constants instead of using them directly if the values themselves have no intrinsic meaning::
 
@@ -681,7 +683,7 @@ Sometimes we want to use a variable to distinguish between several discrete opti
         # Nothing prevents us from accidentally setting print_style to 4, 90 or "spoon", so we put in this fallback just in case:
         print("Unknown style option!")
 
-In the above example, the values ``1``, ``2`` and ``3`` are not important -- they are completely meaningless.  You could equally well use ``4``, ``5`` and ``6`` or the strings ``'lower'``, ``'upper'`` and ``'capital'``.  The only important thing is that the three values must be different.  If we used the numbers directly instead of the constants the program would be confusing to read.  Using meaningful strings would make the code more readable, but you could accidentally make a spelling mistake while setting one of the values and not notice -- if you mistype the name of one of the constants you are more likely to get an error straight away.
+In the above example, the values ``1``, ``2`` and ``3`` are not important -- they are completely meaningless.  You could equally well use ``4``, ``5`` and ``6`` or the strings ``'lower'``, ``'upper'`` and ``'capital'``.  The only important thing is that the three values must be different.  If we used the numbers directly instead of the constants the program would be much more confusing to read.  Using meaningful strings would make the code more readable, but you could accidentally make a spelling mistake while setting one of the values and not notice -- if you mistype the name of one of the constants you are more likely to get an error straight away.
 
 Some Python libraries define common constants for your convenience, for example::
 
@@ -705,7 +707,35 @@ Note that many built-in constants don't follow the all-caps naming convention.
 Mutable and immutable types
 ---------------------------
 
+Some *values* in python can be modified, and some cannot.  This does not ever mean that you can't change the value of a variable -- but if a variable contains a value of an *immutable type*, you can only assign it a *new value*.  You cannot *alter the existing value* in any way.  This
 
+Integers, floating-point numbers and strings are all immutable types -- in all the previous examples, when we changed the values of existing variables we used the assignment operator to assign them new values::
+
+    a = 3
+    a = 2
+
+    b = "jane"
+    b = "bob"
+
+Even this operator doesn't modify the value of ``total`` in-place -- it also assigns a new value::
+
+    total += 4
+
+We haven't encountered any mutable types yet, but we will use them extensively in later chapters.  Lists and dictionaries are mutable, and so are most objects that you are likely to write yourself::
+
+    # this is a list of numbers
+    my_list = [1, 2, 3]
+    my_list[0] = 5 # we can change just the first element of the list
+    print(my_list)
+
+    class MyClass(object):
+        pass # this is a very silly class
+
+    # Now we make a very simple object using our class as a type
+    my_object = MyClass()
+
+    # We can change the values of attributes on the object
+    my_object.some_property = 42
 
 .. Todo:: Exercise 7
 
