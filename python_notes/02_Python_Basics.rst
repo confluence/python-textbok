@@ -214,6 +214,8 @@ The string prompt is optional -- we could just use the ``input`` function withou
 
     second_number = input()
 
+.. Note: in Python 2, there is a function called ``raw_input`` which does what ``input`` does in Python 3: that is, it reads input from the user, and returns it as a string.  In Python 2, the function called ``input`` does something different: it reads input from the user and tries to evaluate it as a Python expression.  There is no function like this in Python 3, but you can achieve the same result by using the ``eval`` function on the string returned by ``input``.  ``eval`` is almost always a bad idea, and you should avoid using it -- especially on arbitrary user input that you haven't checked first.  It can be very dangerous -- the user could enter absolutely anything, including malicious code!
+
 String Formatting
 -----------------
 
@@ -742,6 +744,24 @@ We haven't encountered any mutable types yet, but we will use them extensively i
 
 .. Todo:: Exercise 7
 
+More about input
+----------------
+
+In the earlier sections of this unit you learned how to make a program display a message using the ``print`` function or read a string value from the user using the ``input`` function.  What if you want the user to input numbers or other types of variables?  You still use the ``input`` function, but you must convert the string values returned by ``input`` to the types that you want.  Here is a simple example::
+
+    height = int(input("Enter height of rectangle: "))
+    width = int(input("Enter width of rectangle: "))
+
+    print("The area of the rectangle is %d" % (width * height))
+
+``int`` is a function which converts values of various types to ints.  We will discuss type conversion in greater detail in the next section, but for now it is important to know that ``int`` will not be able to convert a string to an integer if it contains anything except digits.  The program above will exit with an error if the user enters ``"aaa"``, ``"zzz10"`` or even ``"7.5"``.  When we write a program which relies on user input, which can be incorrect, we need to add some safeguards so that we can recover if the user makes a mistake.  For example, we can detect if the user entered bad input and exit with a nicer error message:
+
+    try:
+        height = int(input("Enter height of rectangle: "))
+        width = int(input("Enter width of rectangle: "))
+    except ValueError
+
+
 
 .. Todo:: Booleans? Do they go in the if statement section?
 
@@ -759,8 +779,6 @@ We haven't encountered any mutable types yet, but we will use them extensively i
   * Select appropriate Python IDE and translate wizard example
 
 * Differences between Python 2 and 3
-  * raw_input()
-  * print
-  * unicode vs bytes
+  * unicode vs bytes -- add something about bytes where this is mentioned
 
 * translate exercises
