@@ -126,7 +126,7 @@ Many languages arrange code into blocks using curly braces (``{`` and ``}``) or 
         return c
 
     # this if statement starts a new block
-    if (it_is_tuesday):
+    if it_is_tuesday:
         # this is inside the block
         print("It's Tuesday!")
     # this is outside the block!
@@ -481,7 +481,7 @@ Here is an example of variables in different scopes::
     # This is a global variable
     a = 0
 
-    if (a == 0):
+    if a == 0:
         # This is still a global variable
         b = 1
 
@@ -743,10 +743,6 @@ We haven't encountered any mutable types yet, but we will use them extensively i
 .. Todo:: Booleans? Do they go in the if statement section?
 
 * delay discussion of static and class variables until OO section
-
-* Constants
-  * replace with discussion of mutable vs immutable
-  * mention constants in other languages.
 
 * Input
   * input()
