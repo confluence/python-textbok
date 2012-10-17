@@ -673,11 +673,11 @@ Sometimes we want to use a variable to distinguish between several discrete opti
     print_style = UPPER
 
     # ...and when checking them:
-    if(print_style == LOWER):
+    if print_style == LOWER:
         print(name.lower())
-    elif(print_style == UPPER):
+    elif print_style == UPPER:
         print(name.upper())
-    elif(print_style == CAPITAL):
+    elif print_style == CAPITAL:
         print(name.capitalize())
     else:
         # Nothing prevents us from accidentally setting print_style to 4, 90 or "spoon", so we put in this fallback just in case:
@@ -707,7 +707,7 @@ Note that many built-in constants don't follow the all-caps naming convention.
 Mutable and immutable types
 ---------------------------
 
-Some *values* in python can be modified, and some cannot.  This does not ever mean that you can't change the value of a variable -- but if a variable contains a value of an *immutable type*, you can only assign it a *new value*.  You cannot *alter the existing value* in any way.  This
+Some *values* in python can be modified, and some cannot.  This does not ever mean that you can't change the value of a variable -- but if a variable contains a value of an *immutable type*, you can only assign it a *new value*.  You cannot *alter the existing value* in any way.
 
 Integers, floating-point numbers and strings are all immutable types -- in all the previous examples, when we changed the values of existing variables we used the assignment operator to assign them new values::
 
