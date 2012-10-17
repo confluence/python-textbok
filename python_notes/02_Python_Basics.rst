@@ -694,7 +694,7 @@ Some Python libraries define common constants for your convenience, for example:
     import math
     import re
 
-    # All the lowercase ascii letters: 'abcdefghijklmnopqrstuvwxyz'
+    # All the lowercase ASCII letters: 'abcdefghijklmnopqrstuvwxyz'
     print(string.ascii_lowercase)
 
     # The mathematical constants pi and e, both floating point numbers
