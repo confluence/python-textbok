@@ -657,7 +657,8 @@ Why do we bother defining variables that we don't intend to change?  Consider th
     MAXIMUM_MARK = 80
 
     tom_mark = 58
-    print(("Tom's mark is %.2f%%" % (tom_mark / MAXIMUM_MARK * 100))) # %% is how we escape a literal % inside a string
+    print(("Tom's mark is %.2f%%" % (tom_mark / MAXIMUM_MARK * 100)))
+    # %% is how we escape a literal % inside a string
 
 There are several good reasons to define ``MAXIMUM_MARK`` instead of just writing ``80`` inside the print statement.  First, this gives the number a descriptive label which explains what it is -- this makes the code more understandable.  Second, you may eventually need to refer to this number in your program more than once.  If you ever need to update your code with a new value for the maximum mark, you will only have to change it in one place, instead of finding every place where it is used -- such replacements are often error-prone.
 
@@ -680,7 +681,8 @@ Sometimes we want to use a variable to distinguish between several discrete opti
     elif print_style == CAPITAL:
         print(name.capitalize())
     else:
-        # Nothing prevents us from accidentally setting print_style to 4, 90 or "spoon", so we put in this fallback just in case:
+        # Nothing prevents us from accidentally setting print_style to 4, 90 or
+        # "spoon", so we put in this fallback just in case:
         print("Unknown style option!")
 
 In the above example, the values ``1``, ``2`` and ``3`` are not important -- they are completely meaningless.  You could equally well use ``4``, ``5`` and ``6`` or the strings ``'lower'``, ``'upper'`` and ``'capital'``.  The only important thing is that the three values must be different.  If we used the numbers directly instead of the constants the program would be much more confusing to read.  Using meaningful strings would make the code more readable, but you could accidentally make a spelling mistake while setting one of the values and not notice -- if you mistype the name of one of the constants you are more likely to get an error straight away.
@@ -699,7 +701,8 @@ Some Python libraries define common constants for your convenience, for example:
     print(math.pi) # ratio of circumference of a circle to its diameter
     print(math.e) # natural base of logarithms
 
-    # This integer is an option which you can pass to functions in the re (regular expression) library.
+    # This integer is an option which you can pass to functions in the re
+    # (regular expression) library.
     print(re.IGNORECASE)
 
 Note that many built-in constants don't follow the all-caps naming convention.
