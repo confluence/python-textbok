@@ -435,7 +435,7 @@ Why does the last print statement output the original value of ``name``? It's be
     name = name.lower()
     print(name)
 
-In Python, strings are *immutable* -- that means that you can't modify a string once it has been created.  However, you can change *which* string a variable name refers to.
+In Python, strings are *immutable* -- that means that you can't modify a string once it has been created.  However, you can assign a new string value to an existing variable name.
 
 Variables
 =========
@@ -451,7 +451,7 @@ To define a new variable in Python, you simply assign a value to a label.  For e
 
     count = 0
 
-This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  In the next section we will discuss under what circumstances this statement will cause a new variable will be created.
+This is exactly the same syntax as assigning a new value to an existing variable called ``count``.  Later in this chapter we will discuss under what circumstances this statement will cause a new variable to be created.
 
 If you try to access the value of a variable which hasn't been defined anywhere yet, the interpreter will exit with a name error.
 
@@ -470,11 +470,11 @@ In keeping with good programming style, you should make use of meaningful names 
 Variable scope and lifetime
 ---------------------------
 
-Not all variables are accessible from all parts of your program, and not all variables exist for the same amount of time.  Where a variable is accessible and how long it exists depend on how it is defined.  We call the part of a program where a variable is accessible its ''scope'', and the duration for which the variable exists its ''lifetime''.
+Not all variables are accessible from all parts of your program, and not all variables exist for the same amount of time.  Where a variable is accessible and how long it exists depend on how it is defined.  We call the part of a program where a variable is accessible its *scope*, and the duration for which the variable exists its *lifetime*.
 
-A variable which is defined in the main body of a file is called a ''global'' variable.  It will be visible throughout the file, and also inside any file which imports that file.  Global variables can have unintended consequences because of their wide-ranging effects -- that is why you should almost never use them.  Only objects which are intended to be used globally, like functions and classes, should be put in the global namespace.
+A variable which is defined in the main body of a file is called a *global* variable.  It will be visible throughout the file, and also inside any file which imports that file.  Global variables can have unintended consequences because of their wide-ranging effects -- that is why you should almost never use them.  Only objects which are intended to be used globally, like functions and classes, should be put in the global namespace.
 
-A variable which is defined inside a function is ''local'' to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.  The parameter names in the function definition behave like local variables, but they contain the values that you pass into the function when you call it.
+A variable which is defined inside a function is *local* to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.  The parameter names in the function definition behave like local variables, but they contain the values that you pass into the function when you call it.  When you use the assignment operator (``=``) inside a function, its default behaviour is to create a new local variable -- unless a variable with the same name is already defined in the local scope.
 
 Here is an example of variables in different scopes::
 
@@ -501,6 +501,84 @@ Here is an example of variables in different scopes::
     # c and d don't exist anymore -- these statements will give you name errors!
     print(c)
     print(d)
+
+
+The assignment operator
+-----------------------
+
+As you saw in the previous sections, the assignment operator in Python is a single equals sign (``=``).  This operator assigns the value on the right hand side to the variable on the left hand side, sometimes creating the variable first.  If the right hand side is an expression (such as an arithmetic expression), it will be evaluated before the assignment occurs.  Here are a few examples::
+
+    a_number = 5              # a_number becomes 5
+    a_number = total          # a_number becomes the value of total
+    a_number = total + 5      # a_number becomes the value of total + 5
+    a_number = a_number + 1   # a_number becomes the value of a_number + 1
+
+The last statement might look a bit strange if you were to interpret ``=`` as a mathematical equals sign -- clearly a number cannot be equal to the same number plus one!  Remember that ``=`` is an assignment operator -- this statement is assigning a new value to the variable ``a_number`` which is equal to the old value of ``a_number`` plus one.
+
+Assigning an initial value to variable is called *initialising* the variable.  In some languages defining a variable can be done in a separate step before the first value assignment.  It is thus possible in those languages for a variable to be defined but not have a value -- which could lead to errors or unexpected behaviour if you try to use the value before it has been assigned.  In Python a variable is defined and assigned a value in a single step, so you will almost never encounter situations like this.
+
+The left hand side of the assignment statement must be a valid target::
+
+    # this is fine:
+    a = 3
+
+    # these are all illegal:
+    3 = 4
+    3 = a
+    a + b = 3
+
+An assignment statement may have multiple targets separated by equals signs.  The expression on the right hand side of the last equals sign will be assigned to all the targets.  All the targets must be valid::
+
+    # both a and b will be set to zero:
+    a = b = 0
+
+    # this is illegal, because we can't set 0 to b:
+    a = 0 = b
+
+
+Compound assignment operators
+-----------------------------
+
+You have already seen that you can assign the result of an arithmetic expression to a variable::
+
+    total = a + b + c + 50
+
+Counting is something that is done often in a program. For example, you might want to keep count of how many times a certain event occurs by using a variable called ``count``.   You would initialise this variable to zero and add one to it every time the event occurs.  You would perform the addition with this statement::
+
+    count = count + 1
+
+This is in fact a very common operation.  Python has a shorthand operator, ``+=`` which lets you express it more cleanly, without having to write the name of the variable twice::
+
+    # These statements mean exactly the same thing:
+    count = count + 1
+    count += 1
+
+    # You can increment a variable by any number you like.
+    count += 2
+    count += 7
+    count += a + b
+
+There is a similar operator, ``-=``, which lets you decrement numbers::
+
+    # These statements mean exactly the same thing:
+    count = count - 3
+    count -= 3
+
+Other common compound assignment operators are given in the table below:
+
+========  ==========  =============
+Operator  Example     Equivalent to
+========  ==========  =============
+``+=``    ``a += 5``  ``a = a + 5``
+``-=``    ``a -= 5``  ``a = a - 5``
+``*=``    ``a *= 5``  ``a = a * 5``
+``/=``    ``a /= 5``  ``a = a / 5``
+``%=``    ``a %= 5``  ``a = a % 5``
+========  ==========  =============
+
+
+More about scope: crossing boundaries
+-------------------------------------
 
 What if you want to access a global variable from inside a function?  It is possible, but doing so comes with a few caveats::
 
@@ -553,42 +631,18 @@ You may not refer to both a global variable and a local variable by the same nam
 
 Because you haven't declared ``a`` to be global, the assignment in the second line of the function will create a local variable ``a``.  This means that you can't refer to the global variable ``a`` elsewhere in the function, even before this line!  The first print statement now refers to the local variable ``a`` -- but this variable doesn't have a value in the first line, because you haven't assigned it yet!
 
-Note that it is usually very bad practice to access global variables from inside functions, and even worse practice to modify them.  This makes it difficult to arrange your program into logically encapsulated parts which do not affect each other in unexpected ways.  If a function needs to access some external value, the value should be passed into the function as a parameter.  If the function is a method of an object, it is sometimes appropriate to make the value an attribute of the same object -- we will discuss this in the chapter about object orientation.
+Note that it is usually very bad practice to access global variables from inside functions, and even worse practice to modify them.  This makes it difficult to arrange your program into logically encapsulated parts which do not affect each other in unexpected ways.  If a function needs to access some external value, you should pass the value into the function as a parameter.  If the function is a method of an object, it is sometimes appropriate to make the value an attribute of the same object -- we will discuss this in the chapter about object orientation.
 
 .. Note:: There is also a ``nonlocal`` keyword in Python -- when you nest a function inside another function, it allows you to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If you use the ``global`` keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If you use the ``nonlocal`` keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.
 
+.. Todo:: mention mutable types!
 
-JAVA BELOW THIS LINE
-
-
-There are three kinds of variable in Java (Note that here we are not talking about the type of the value that is to be stored in that variable). These are local, instance and class variables. Local variables are those defined inside a method such as main(). Instance variables are those defined inside a class, but not in any method in this class. There is a different version of this variable for each object of the class. Class variables (also known as static variable) are defined in the same place as instance variables, but there is only one version per class. Class variables are defined with the keyword static at the beginning. The following example shows the three different kinds of variables.
-
-﻿public class KindsOfVariables {
-  int anInstanceVariable;
-  static int aClassVariable;
-
-  public static void main(String[] args) {
-    int aLocalVariable;
-  }
-}
-
-The scope of a variable is the part of the program that can make use of the variable i.e where the variable is accessible. A local variable is accessible from its definition to the end of the containing method. Instance and class variables are accessible throughout the class.
-
-The lifetime of a variable is the time when the variable exists. Local variables exist as long as the containing method is running. Instance and class variables exist as long as an object of the class exists.
-
-In the next few units, we will make use of local and instance variables. Static variables will be used in later units. Also remember that local variable's definition must appear earlier in the program than any use of that variable.
-
-Exercise 7
-
-Draw up a summary table comparing the three kinds of variables. It should contain the following columns: definition location, number of versions, scope and lifetime.
+.. Todo:: Exercise 7
 
 
+.. Todo:: Booleans? Do they go in the if statement section?
 
-* simple types -- integers, floats, boolean, strings
 * delay discussion of static and class variables until OO section
-
-* Variables of Primitive Types and Strings
-  * assignment is just labelling in Python
 
 * Constants
   * replace with discussion of mutable vs immutable
