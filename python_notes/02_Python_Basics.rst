@@ -635,7 +635,77 @@ Note that it is usually very bad practice to access global variables from inside
 
 .. Note:: There is also a ``nonlocal`` keyword in Python -- when you nest a function inside another function, it allows you to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If you use the ``global`` keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If you use the ``nonlocal`` keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.
 
-.. Todo:: mention mutable types!
+Modifying values
+================
+
+Constants
+---------
+
+In some languages, it is possible to define special variables which can be assigned a value only once -- once their values have been set, they cannot be changed.  We call these kinds of variables *constants*.  Python does not allow you to set such a restriction on variables, but there is a widely used convention for marking certain variables to indicate that their values are not meant to change: we write their names in all caps, with underscores separating words::
+
+    # These variables are "constants" by convention:
+    NUMBER_OF_DAYS_IN_A_WEEK = 7
+    NUMBER_OF_MONTHS_IN_A_YEAR = 12
+
+    # Nothing is actually stopping us from redefining them...
+    NUMBER_OF_DAYS_IN_A_WEEK = 8
+
+    # ...but it's probably not a good idea.
+
+Why do we bother defining variables that we don't intend to change?  Consider this example::
+
+    MAXIMUM_MARK = 80
+
+    tom_mark = 58
+    print(("Tom's mark is %.2f%%" % (tom_mark / MAXIMUM_MARK * 100))) # %% is how we escape a literal % inside a string
+
+There are several good reasons to define ``MAXIMUM_MARK`` instead of just writing ``80`` inside the print statement.  First, this gives the number a descriptive label which explains what it is -- this makes the code more understandable.  Second, you may eventually need to refer to this number in your program more than once.  If you ever need to update your code with a new value for the maximum mark, you will only have to change it in one place, instead of finding every place where it is used.
+
+Sometimes we want to use a variable to distinguish between several discrete options.  It is useful to refer to the option values using constants instead of using them directly if the values themselves have no intrinsic meaning::
+
+    # We define some options
+    LOWER, UPPER, CAPITAL = 1, 2, 3
+
+    name = "jane"
+    # We use our constants when assigning these values...
+    print_style = UPPER
+
+    # ...and when checking them:
+    if(print_style == LOWER):
+        print(name.lower())
+    elif(print_style == UPPER):
+        print(name.upper())
+    elif(print_style == CAPITAL):
+        print(name.capitalize())
+    else:
+        # Nothing prevents us from accidentally setting print_style to 4, 90 or "spoon", so we put in this fallback just in case:
+        print("Unknown style option!")
+
+In the above example, the values ``1``, ``2`` and ``3`` are not important -- they are completely meaningless.  You could equally well use ``4``, ``5`` and ``6`` or the strings ``'lower'``, ``'upper'`` and ``'capital'``.  The only important thing is that the three values must be different.  If we used the numbers directly instead of the constants the program would be confusing to read.  Using meaningful strings would make the code more readable, but you could accidentally make a spelling mistake while setting one of the values and not notice -- if you mistype the name of one of the constants you are more likely to get an error straight away.
+
+Some Python libraries define common constants for your convenience, for example::
+
+    # you need to import these libraries before you use them
+    import string
+    import math
+    import re
+
+    # All the lowercase ascii letters: 'abcdefghijklmnopqrstuvwxyz'
+    print(string.ascii_lowercase)
+
+    # The mathematical constants pi and e, both floating point numbers
+    print(math.pi) # ratio of circumference of a circle to its diameter
+    print(math.e) # natural base of logarithms
+
+    # This integer is an option which you can pass to functions in the re (regular expression) library.
+    print(re.IGNORECASE)
+
+Note that many built-in constants don't follow the all-caps naming convention.
+
+Mutable and immutable types
+---------------------------
+
+
 
 .. Todo:: Exercise 7
 
