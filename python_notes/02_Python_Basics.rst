@@ -943,11 +943,8 @@ This usually behaves in the way that you would expect: non-zero numbers are ``Tr
     bool("0") # True!
     bool("False") # Also True!
 
-* Compiling Java Programs
-  * Running Python programs
-  * Select appropriate Python IDE and translate wizard example
+.. Todo: come back to translate the section about compiling programs. Shouldn't this go at the *beginning* of the section?  Either way, say something about how to use the interactive interpreter at the beginning of the section.  Include something about an IDE (Wing?).
 
-* Differences between Python 2 and 3
-  * unicode vs bytes -- add something about bytes where this is mentioned
+.. Todo: Differences between Python 2 and 3: unicode vs bytes -- add something about bytes where this is mentioned
 
-* translate exercises
+.. Todo: translate exercises
