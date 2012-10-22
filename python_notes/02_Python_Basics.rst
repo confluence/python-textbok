@@ -759,17 +759,68 @@ In the earlier sections of this unit you learned how to make a program display a
     try:
         height = int(input("Enter height of rectangle: "))
         width = int(input("Enter width of rectangle: "))
-    except ValueError
+    except ValueError as e:
+        print("Error reading height and width: %s" % e)
+
+This program will still only attempt to read in the input once, and exit if it is incorrect.  If we want to keep asking the user for input until it is correct, we can do something like this::
+
+    correct_input = False # this is a boolean value -- it can be either true or false.
+
+    while not correct_input: # this is a while loop
+        try:
+            height = int(input("Enter height of rectangle: "))
+            width = int(input("Enter width of rectangle: "))
+        except ValueError:
+            print("Please enter valid integers for the height and width.")
+        else: # this will be executed if there is no value error
+            correct_input = True
+
+We will learn more about boolean values, loops and exceptions later.
+
+Example: calculating petrol consumption of a car
+------------------------------------------------
+
+In this example, we will write a simple program which asks the user for the distance travelled by a car, and the monetary value of the petrol that was used to cover that distance. From this information, together with the price per litre of petrol, the program will calculate the efficiency of the car, both in litres per 100 kilometres and and kilometres per litre.
+
+First we will define the petrol price as a constant at the top. This will make it easy for us to update the price when it changes on the first Wednesday of every month::
+
+    PETROL_PRICE_PER_LITRE = 4.50
+
+When the program starts,we want to print out a welcome message::
+
+    print("*** Welcome to the fuel efficiency calculator! ***\n") # we add an extra blank line
+
+Ask the user for his or her name::
+
+    name = input("Enter your name: ")
+
+Ask the user for the distance travelled::
+
+    # float is a function which converts values to floating-point numbers.
+    distance_travelled = float(input("Enter distance travelled in km: "))
+
+Then ask the user for the amount paid::
+
+    amount_paid = float(input("Enter monetary value of fuel bought for the trip: R"))
+
+Now we will do the calculations::
+
+    fuel_consumed = amount_paid / PETROL_PRICE_PER_LITRE
+
+    efficiency_l_per_100_km = fuel_consumed / distance_travelled * 100
+    efficiency_km_per_l = distance_travelled / fuel_consumed
+
+Finally, we output the results::
+
+    print("Hi, %s" % name)
+    print("Your car's efficiency is %.2f litres per 100 km." % efficiency_l_per_100_km)
+    print("This means that you can travel %.2f km on a litre of petrol." % efficiency_km_per_l)
+
+    print("\nThanks for using the program.") # add an extra blank line
+
+.. Todo: Exercise 8
 
 
-
-.. Todo:: Booleans? Do they go in the if statement section?
-
-* delay discussion of static and class variables until OO section
-
-* Input
-  * input()
-  * translate scanner example
 
 * Type conversion
   * translate discussion to Python
