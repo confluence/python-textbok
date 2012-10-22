@@ -825,10 +825,123 @@ Finally, we output the results::
 Type conversion
 ===============
 
+As you write more programs, you will often find that you need to convert data from one type to another, for example for a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.
 
+Implicit conversion
+-------------------
 
-* Type conversion
-  * translate discussion to Python
+Recall from the section about floating-point operators that you can arbitrarily combine integers and floating-point numbers in an arithmetic expression -- and that the result of any such expression will always be a floating-point number.  This is because Python will convert the integers to floating-point numbers before evaluating the expression.  This is an *implicit conversion* -- you don't have to convert anything yourself.  There is usually no loss of precision when an integer is converted to a floating-point number.
+
+For example, the integer ``2`` will automatically be converted to a floating-point number in the following example::
+
+    result = 8.5 * 2
+
+``8.5`` is a ``float`` while ``2`` is an ``int``.  Python will automatically convert operands so that they are of the same type.  In this case this is achieved if the integer ``2`` is converted to the floating-point equivalent ``2.0``.  Then the two floating-point numbers can be multiplied.
+
+Let's have a look at a more complex example::
+
+    result = 8.5 + 7 // 3 - 2.5
+
+Python performs operations according to the order of precedence, and decides whether a conversion is needed on a per-operation basis. In our example ``//`` has the highest precedence, so it will be processed first.  ``7`` and ``3`` are both integers and ``//`` is the integer division operator -- the result of this operation is the integer ``2``. Now we are left with ``8.5 + 2 - 2.5``.  The addition and subtraction are at the same level of precedence, so they are evaluated left-to-right, starting with addition.  First ``2`` is converted to the floating-point number ``2.0``, and the two floating-point numbers are added, which leaves us with ``10.5 - 2.5``.  The result of this floating-point subtraction is ``2.0``, which is assigned to ``result``.
+
+Explicit conversion
+-------------------
+
+Converting numbers from ``float`` to ``int`` will result in a loss of precision. For example, try to convert ``5.834`` to an ``int`` -- it is not possible to do this without losing precision. In order for this to happen, you must explicitly tell Python that you are aware that precision will be lost. For example, you need to tell the compiler to convert a ``float`` to an ``int`` like this::
+
+    i = int(5.834)
+
+The ``int`` function converts a ``float`` to an ``int`` by discarding the fractional part -- it will always round down!  If you want more control over the way in which the number is rounded, you will need to use a different function::
+
+    # the floor and ceil functions are in the math module
+    import math
+
+    # ceil returns the closest integer greater than or equal to the number
+    # (so it always rounds up)
+    i = math.ceil(5.834)
+
+    # floor returns the closest integer less than or equal to the number
+    # (so it always rounds down)
+    i = math.floor(5.834)
+
+    # round returns the closest integer to the number
+    # (so it rounds up or down)
+    # Note that this is a built-in function -- you don't need to import math to use it.
+    i = round(5.834)
+
+Explicit conversion is sometimes also called *casting* -- you may read about a ``float`` being *cast* to ``int`` or vice-versa.
+
+Converting to and from strings
+------------------------------
+
+As you saw in the earlier sections, Python seldom performs implicit conversions to and from ``str`` -- you usually have to convert values explicitly.  If you pass a single number (or any other value) to the ``print`` function, it will be converted to a string automatically -- but if you try to add a number and a string, you will get an error::
+
+    # This is OK
+    print(5)
+    print(6.7)
+
+    # This is not OK
+    print("3" + 4)
+
+    # Do you mean this...
+    print("3%d" % 4) # concatenate "3" and "4" to get "34"
+
+    # Or this?
+    print(int("3") + 4) # add 3 and 4 to get 7
+
+To convert numbers to strings, you can use string formatting -- this is usually the cleanest and most readable way to insert multiple values into a message.  If you want to convert a single number to a string, you can also use the ``str`` function explicitly::
+
+    # These lines will do the same thing
+    print("3%d" % 4)
+    print("3" + str(4))
+
+More about conversions
+----------------------
+
+In Python, functions like ``str``, ``int`` and ``float`` will try to convert *anything* to their respective types -- for example, you can use the ``int`` function to convert strings to integers or to convert floating-point numbers to integers.  Note that although ``int`` can convert a float to an integer it can't convert a string containing a float to an integer directly! ::
+
+    # This is OK
+    int("3")
+
+    # This is OK
+    int(3.7)
+
+    # This is not OK
+    int("3.7") # This is a string representation of a float, not an integer!
+
+    # You have to convert the string to a float first
+    int(float("3.7"))
+
+Values of type ``bool`` can contain the value ``True`` or ``False``.  These values are used extensively in conditional statements, which execute or do not execute parts of your program depending on some binary condition::
+
+    my_flag = True
+
+    if my_flag:
+        print("Hello!")
+
+The condition is often an expression which evaluates to a boolean value::
+
+    if 3 > 4:
+        print("This will not be printed.")
+
+However, almost any value can implicitly be converted to a boolean if it is used in a statement like this::
+
+    my_number = 3
+
+    if my_number:
+        print("My number is non-zero!")
+
+This usually behaves in the way that you would expect: non-zero numbers are ``True`` values and zero is ``False``.  However, you should be careful when using strings -- the empty string is treated as ``False``, but any other string is ``True`` -- even ``"0"`` and ``"False"``! ::
+
+    # bool is a function which converts values to booleans
+    bool(34) # True
+    bool(0) # False
+    bool(1) # True
+
+    bool("") # False
+    bool("Jane") # True
+    bool("0") # True!
+    bool("False") # Also True!
 
 * Compiling Java Programs
   * Running Python programs
