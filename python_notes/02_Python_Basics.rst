@@ -754,12 +754,12 @@ In the earlier sections of this unit you learned how to make a program display a
 
     print("The area of the rectangle is %d" % (width * height))
 
-``int`` is a function which converts values of various types to ints.  We will discuss type conversion in greater detail in the next section, but for now it is important to know that ``int`` will not be able to convert a string to an integer if it contains anything except digits.  The program above will exit with an error if the user enters ``"aaa"``, ``"zzz10"`` or even ``"7.5"``.  When we write a program which relies on user input, which can be incorrect, we need to add some safeguards so that we can recover if the user makes a mistake.  For example, we can detect if the user entered bad input and exit with a nicer error message:
+``int`` is a function which converts values of various types to ints.  We will discuss type conversion in greater detail in the next section, but for now it is important to know that ``int`` will not be able to convert a string to an integer if it contains anything except digits.  The program above will exit with an error if the user enters ``"aaa"``, ``"zzz10"`` or even ``"7.5"``.  When we write a program which relies on user input, which can be incorrect, we need to add some safeguards so that we can recover if the user makes a mistake.  For example, we can detect if the user entered bad input and exit with a nicer error message::
 
     try:
         height = int(input("Enter height of rectangle: "))
         width = int(input("Enter width of rectangle: "))
-    except ValueError as e:
+    except ValueError as e: # if a value error occurs, we will skip to this point
         print("Error reading height and width: %s" % e)
 
 This program will still only attempt to read in the input once, and exit if it is incorrect.  If we want to keep asking the user for input until it is correct, we can do something like this::
@@ -788,7 +788,8 @@ First we will define the petrol price as a constant at the top. This will make i
 
 When the program starts,we want to print out a welcome message::
 
-    print("*** Welcome to the fuel efficiency calculator! ***\n") # we add an extra blank line
+    print("*** Welcome to the fuel efficiency calculator! ***\n")
+    # we add an extra blank line after the message with \n
 
 Ask the user for his or her name::
 
@@ -812,13 +813,17 @@ Now we will do the calculations::
 
 Finally, we output the results::
 
-    print("Hi, %s" % name)
+    print("Hi, %s!" % name)
     print("Your car's efficiency is %.2f litres per 100 km." % efficiency_l_per_100_km)
     print("This means that you can travel %.2f km on a litre of petrol." % efficiency_km_per_l)
 
-    print("\nThanks for using the program.") # add an extra blank line
+    # we add an extra blank line before the message with \n
+    print("\nThanks for using the program.")
 
 .. Todo: Exercise 8
+
+Type conversion
+===============
 
 
 
