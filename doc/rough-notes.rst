@@ -68,6 +68,8 @@ Chapter 2: Java Basics
 Chapter 3: Selection Control Statements
 =======================================
 
+* Put boolean values in here?
+
 * Selection: if statement
   * == vs "is"
   * translate examples
