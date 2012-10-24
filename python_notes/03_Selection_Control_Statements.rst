@@ -291,10 +291,88 @@ The default (catch-all) condition is the ``else`` clause at the end of the state
 
 What if we unexpectedly encounter an informatics course, which has a course code of ``"INF"``?  The catch-all ``else`` clause will be executed, and we will immediately see a printed message that this course code is unsupported.  If the ``else`` clause were omitted, we might not have noticed that anything was wrong until we tried to use ``department_name`` and discovered that it had never been assigned a value.  Including the ``else`` clause helps us to pick up potential errors caused by missing options early.
 
-Boolean operators and expressions
-=================================
+Boolean values, operators and expressions
+=========================================
+
+The ``bool`` type
+-----------------
+
+In Python there is a value type for variables which can either be true or false: the boolean type, ``bool``.  The true value is ``True`` and the false value is ``False``.  Python will implicitly convert any other value type to a boolean if you use it like a boolean, for example as a condition in an ``if`` statement.   You will almost never have to cast values to ``bool`` explicitly.  You also don't have to use the ``==`` operator explicitly to check if a variable's value evaluates to ``True`` -- you can use the variable name by itself as a condition::
+
+    name = "Jane"
+
+    # This is shorthand for checking if name evaluates to True:
+    if name:
+        print("Hello, %s!" % name)
+
+    # It means the same thing as this:
+    if bool(name) == True:
+        print("Hello, %s!" % name)
+
+    # This won't give you the answer you expect:
+    if name == True:
+        print("Hello, %s!" % name)
+
+Why won't the last ``if`` statement do what you expect?  If you cast the string ``"Jane"`` to a boolean, it will be equal to ``True``, but it isn't equal to ``True`` while it's still a string -- so the condition in the last ``if`` statement will evaluate to ``False``.  This is why you should always use the shorthand syntax, as shown in the first statement -- Python will then do the implicit cast for you.
+
+.. Note:: For historical reasons, the numbers ``0`` and ``0.0`` are actually equal to ``False`` and ``1`` and ``1.0`` are equal to ``True``.  They are not, however, identical objects -- you can test this by comparing them with the ``is`` operator.
+
+At the end of the previous chapter, we discussed how Python converts values to booleans implicitly.  Remember that all non-zero numbers and all non-empty strings are ``True`` and zero and the empty string (``""``) are ``False``.  Other built-in data types that can be considered to be "empty" or "not empty" follow the same pattern.
+
+Boolean operations
+------------------
 
 Decisions are often based on more than one factor. For example, you might decide to buy a shirt only if you like it AND it costs less than R100. Or you might decide to go out to eat tonight if you don't have anything in the fridge OR you don't feel like cooking. You can also alter conditions by negating them -- for example you might only want to go to the concert tomorrow if it is NOT raining.  Conditions which consist of simpler conditions joined together with AND, OR and NOT are referred to as *compound conditions*. These operators are known as *boolean operators*.
+
+The ``and`` operator
+--------------------
+
+The AND operator in Python is ``and``. A compound expression made up of two subexpressions and the ``and`` operator is only true when *both* subexpressions are true::
+
+    if mark >= 50 and mark < 65:
+        print("Grade B")
+
+The compound condition is only true if the given mark is less than 50 *and* it is less than 65. The ``and`` operator works in the same way as its English counterpart. We can define the ``and`` operator formally with a truth table such as the one below.    The table shows the truth value of ``a and b`` for every possible combination of subexpressions ``a`` and ``b``.  For example, if ``a`` is true and ``b`` is true, then ``a and b`` is true.
+
+=========  =========  ===========
+``a``      ``b``      ``a and b``
+=========  =========  ===========
+``True``   ``True``   ``True``
+``True``   ``False``  ``False``
+``False``  ``True``   ``False``
+``False``  ``False``  ``False``
+=========  =========  ===========
+
+``and`` is a binary operator so it must be given two operands.  You can, however, join three or more subexpressions with ``and`` -- they will be evaluated from left to right::
+
+    condition_1 and condition_2 and condition_3 and condition_4
+    # is the same as
+    ((condition_1 and condition_2) and condition_3) and condition_4
+
+.. Note:: for the special case of testing whether a number falls within a certain range, you don't have to use the ``and`` operator at all.  Instead of writing ``mark >= 50 and mark < 65`` you can simply write ``50 <= mark < 65``.  This doesn't work in many other languages, but it's a useful feature of Python.
+
+Short-circuit evaluation
+------------------------
+
+Note that if ``a`` is false, the expression ``a and b`` is false whether ``b`` is true or not.  The interpreter can take advantage of this to be more efficient: if it evaluates the first subexpression in an AND expression to be false, it does not bother to evaluate the second subexpression.  We call ``and`` a *shortcut operator* or *short-circuit* because of this behaviour.
+
+This behaviour doesn't just make the interpreter slightly faster -- you can also use it to your advantage when writing programs.  Consider this example::
+
+    if x > 0 and 1/x < 0.5:
+        print("x is %f" % x)
+
+What if x is zero?  If the interpreter were to evaluate both of the subexpressions, you would get a divide by zero error.  But because ``and`` is a short-circuit operator, the second subexpression will only be evaluated if the first subexpression is true.  If x is zero, it will evaluate to false, and the second subexpression will not be evaluated at all.
+
+This often comes in useful if you want to access an object's attribute or an element from a list or a dictionary, and you first want to check if it exists::
+
+    if hasattr(my_person, "name") and len(myperson.name) > 30:
+        print("That's a long name, %s!" % myperson.name)
+
+    if i < len(mylist) and mylist[i] == 3
+        print("I found a 3!")
+
+    if key in mydict and mydict[key] == 3:
+        print("I found a 3!")
 
 * Boolean Operators and Expression
   * and, or and not operators
