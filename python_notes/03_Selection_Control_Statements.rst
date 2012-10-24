@@ -343,7 +343,17 @@ The compound condition is only true if the given mark is less than 50 *and* it i
 ``False``  ``False``  ``False``
 =========  =========  ===========
 
-``and`` is a binary operator so it must be given two operands.  You can, however, join three or more subexpressions with ``and`` -- they will be evaluated from left to right::
+``and`` is a binary operator so it must be given two operands.  Each subexpression must be a valid complete expression::
+
+    # This is correct:
+    if (x > 3 and x < 300):
+        x += 1
+
+    # This will give you a syntax error:
+    if (x > 3 and < 300): # < 300 is not a valid expression!
+        x += 1
+
+You can join three or more subexpressions with ``and`` -- they will be evaluated from left to right::
 
     condition_1 and condition_2 and condition_3 and condition_4
     # is the same as
@@ -373,6 +383,46 @@ This often comes in useful if you want to access an object's attribute or an ele
 
     if key in mydict and mydict[key] == 3:
         print("I found a 3!")
+
+The ``or`` operator
+-------------------
+
+The OR operator in Java is ``or``.  A compound expression made up of two subexpressions and the ``or`` operator is true when *at least one* of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:
+
+=========  =========  ==========
+``a``      ``b``      ``a or b``
+=========  =========  ==========
+``True``   ``True``   ``True``
+``True``   ``False``  ``True``
+``False``  ``True``   ``True``
+``False``  ``False``  ``False``
+=========  =========  ==========
+
+The following code fragment will print out a message if the given age is less than 0 *or* if it is more than 120::
+
+    if age <= 0 or age > 120:
+        print("Invalid age: %d" % age)
+
+The interpreter also performs a short-cut evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is suffifent to determine that the whole expression is true.
+
+The || operator is also binary::
+
+    # This is correct:
+    if x < 3 or x > 300:
+        x += 1
+
+    # This will give you a syntax error:
+    if x < 3 or > 300: # > 300 is not a valid expression!
+        x += 1
+
+    # This may not do what you expect:
+    if x == 2 or 3:
+        print("x is 2 or 3")
+
+The last example won't give you an error, because ``3`` is a valid subexpression -- and since it is a non-zero number it evaluates to ``True``.  So the last ``if`` body will always execute, regardless of the value of ``x``!
+
+
+
 
 * Boolean Operators and Expression
   * and, or and not operators
