@@ -291,10 +291,10 @@ The default (catch-all) condition is the ``else`` clause at the end of the state
 
 What if we unexpectedly encounter an informatics course, which has a course code of ``"INF"``?  The catch-all ``else`` clause will be executed, and we will immediately see a printed message that this course code is unsupported.  If the ``else`` clause were omitted, we might not have noticed that anything was wrong until we tried to use ``department_name`` and discovered that it had never been assigned a value.  Including the ``else`` clause helps us to pick up potential errors caused by missing options early.
 
-Boolean Operators and Expressions
+Boolean operators and expressions
 =================================
 
-Decisions are often based on more than one factor. For example, you might decide to buy a shirt only if you like it AND it costs less than R100. Or you might decide to go out to eat tonight if you don't have anything in the fridge OR you don't feel like cooking. You can also alter conditions by negating them -- for example you might only want to go to the concert tomorrow if it is NOT raining.  Conditions which consist of simpler conditions joined together with AND, OR and NOT are referred to as compound conditions. These operators are known as boolean operators.
+Decisions are often based on more than one factor. For example, you might decide to buy a shirt only if you like it AND it costs less than R100. Or you might decide to go out to eat tonight if you don't have anything in the fridge OR you don't feel like cooking. You can also alter conditions by negating them -- for example you might only want to go to the concert tomorrow if it is NOT raining.  Conditions which consist of simpler conditions joined together with AND, OR and NOT are referred to as *compound conditions*. These operators are known as *boolean operators*.
 
 * Boolean Operators and Expression
   * and, or and not operators
