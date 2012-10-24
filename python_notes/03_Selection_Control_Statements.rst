@@ -422,7 +422,7 @@ The || operator is also binary::
 The last example won't give you an error, because ``3`` is a valid subexpression -- and since it is a non-zero number it evaluates to ``True``.  So the last ``if`` body will always execute, regardless of the value of ``x``!
 
 
-
+.. Todo:: at the end mention crazy magic behaviour of ``and`` and ``or``, and what they actually return if they're not applied to booleans.
 
 * Boolean Operators and Expression
   * and, or and not operators
