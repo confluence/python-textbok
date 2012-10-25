@@ -335,15 +335,16 @@ If you want to print a number and a string together, you will have to convert th
 
 Other integer operations:
 
-===================  ======  ============  ========
+===================  ======  ============  ===================
 Operation            Symbol  Example       Result
-===================  ======  ============  ========
+===================  ======  ============  ===================
 Addition             ``+``   ``28 + 10``   ``38``
 Subtraction          ``-``   ``28 - 10``   ``18``
 Multiplication       ``*``   ``28 * 10``   ``280``
 Division             ``//``  ``28 // 10``  ``2``
-Modulus (Remainder)  ``%``   ``28 % 10``   ``8``
-===================  ======  ============  ========
+Modulus (remainder)  ``%``   ``28 % 10``   ``8``
+Exponent (power)     ``**``  ``28**10``    ``296196766695424``
+===================  ======  ============  ===================
 
 Note that all these operations are integer operations. That is why the answer to ``28 // 10`` is not ``2.8``, but ``2``. An integer operation results in an integer solution.
 
@@ -353,7 +354,22 @@ Note that all these operations are integer operations. That is why the answer to
 Operator precedence
 ^^^^^^^^^^^^^^^^^^^
 
-Another important thing to keep in mind is operator precedence. For example, ``1 + 2 // 3`` could mean ``(1 + 2) // 3`` or ``1 + (2 // 3)`` depending on where one puts the brackets. To solve this issue, Python has a specific and predictable way to determine the order in which it performs operations. For integer operations, the system will first handle brackets ``()``, followed by ``*``, ``//`` and ``%``, then ``+`` and ``-``. The operators ``*``, ``//`` and ``%`` are in the same level of precedence, so the system will handle them from left to right. ``+`` and ``-`` are handled the same way. Left to right handling is performed for left-associative operators (which all operators mentioned so far are). The following table shows some examples.
+Another important thing to keep in mind is operator precedence. For example, does ``1 + 2 // 3`` mean ``(1 + 2) // 3`` or ``1 + (2 // 3)``?  Python has a specific and predictable way to determine the order in which it performs operations. For integer operations, the system will first handle brackets ``()``, then ``**``, then ``*``, ``//`` and ``%``, and finally ``+`` and ``-``.
+
+If an expression contains multiple operations which are at the same level of precedence, like ``*``, ``//`` and ``%``, they will be performed in order, either from left to right (for left-associative operators) or from right to left (for right-associative operators).  All these arithmetic operators are left-associative, except for ``**``, which is right-associative::
+
+    # all arithmetic operators other than ** are left-associative, so
+    2 * 3 / 4
+    # is evaluated left to right:
+    (2 * 3) / 4
+
+    # ** is right-associative, so
+    2 ** 3 ** 4
+    # is evaluated right to left:
+    2 ** (3 ** 4)
+
+
+The following table shows some more examples of precedence:
 
 ============   ====================  ======
 Expression     How Python evaluates  Result
@@ -364,7 +380,10 @@ Expression     How Python evaluates  Result
 20 - 10 * 2    20 - (10 * 2)         0
 20 // 10 * 2   (20 // 10) * 2        4
 20 * 10 // 2   (20 * 10) // 2        100
+20 * 10 ** 2   20 * (10 ** 2)        2000
 ============   ====================  ======
+
+Sometimes it's a good idea to add brackets to arithmetic expressions even if they're not compulsory, because it makes the code more understandable.
 
 .. Todo:: Exercise 5
 
