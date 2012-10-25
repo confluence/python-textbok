@@ -364,7 +364,7 @@ You can join three or more subexpressions with ``and`` -- they will be evaluated
 Short-circuit evaluation
 ------------------------
 
-Note that if ``a`` is false, the expression ``a and b`` is false whether ``b`` is true or not.  The interpreter can take advantage of this to be more efficient: if it evaluates the first subexpression in an AND expression to be false, it does not bother to evaluate the second subexpression.  We call ``and`` a *shortcut operator* or *short-circuit* because of this behaviour.
+Note that if ``a`` is false, the expression ``a and b`` is false whether ``b`` is true or not.  The interpreter can take advantage of this to be more efficient: if it evaluates the first subexpression in an AND expression to be false, it does not bother to evaluate the second subexpression.  We call ``and`` a *shortcut operator* or *short-circuit* operator because of this behaviour.
 
 This behaviour doesn't just make the interpreter slightly faster -- you can also use it to your advantage when writing programs.  Consider this example::
 
@@ -373,12 +373,28 @@ This behaviour doesn't just make the interpreter slightly faster -- you can also
 
 What if x is zero?  If the interpreter were to evaluate both of the subexpressions, you would get a divide by zero error.  But because ``and`` is a short-circuit operator, the second subexpression will only be evaluated if the first subexpression is true.  If x is zero, it will evaluate to false, and the second subexpression will not be evaluated at all.
 
+You could also have used nested ``if`` statements, like this::
+
+    if x > 0:
+        if 1/x < 0.5:
+            print("x is %f" % x)
+
+Using ``and`` instead is more compact and readable -- especially if you have more than two conditions to check.  These two snippets do the same thing::
+
+    if x != 0:
+        if y != 0:
+            if z != 0:
+                print(1/(x*y*z))
+
+    if x != 0 and y != 0 and z != 0:
+        print(1/(x*y*z))
+
 This often comes in useful if you want to access an object's attribute or an element from a list or a dictionary, and you first want to check if it exists::
 
     if hasattr(my_person, "name") and len(myperson.name) > 30:
         print("That's a long name, %s!" % myperson.name)
 
-    if i < len(mylist) and mylist[i] == 3
+    if i < len(mylist) and mylist[i] == 3:
         print("I found a 3!")
 
     if key in mydict and mydict[key] == 3:
@@ -400,10 +416,10 @@ The OR operator in Java is ``or``.  A compound expression made up of two subexpr
 
 The following code fragment will print out a message if the given age is less than 0 *or* if it is more than 120::
 
-    if age <= 0 or age > 120:
+    if age < 0 or age > 120:
         print("Invalid age: %d" % age)
 
-The interpreter also performs a short-cut evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is suffifent to determine that the whole expression is true.
+The interpreter also performs a short-circuit evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is suffifent to determine that the whole expression is true.
 
 The || operator is also binary::
 
@@ -423,6 +439,45 @@ The last example won't give you an error, because ``3`` is a valid subexpression
 
 
 .. Todo:: at the end mention crazy magic behaviour of ``and`` and ``or``, and what they actually return if they're not applied to booleans.
+
+The ``not`` operator
+--------------------
+
+The NOT operator, ``not`` in Python, is a unary operator: it only requires one operand. It is used to reverse an expression, as shown in the following truth table:
+
+=========  =========
+``a``      ``not a``
+=========  =========
+``True``   ``False``
+``False``  ``True``
+=========  =========
+
+The ``not`` operator can be used to write a less confusing expression. For example, consider the following example in which we want to check whether a string *doesn't* start with "A"::
+
+    if name.startswith("A"):
+        pass # a statement body can't be empty -- this is an instruction which does nothing.
+    else:
+        print("'%s' doesn't start with A!" % s)
+
+    # That's a little clumsy -- let's use "not" instead!
+    if not name.startswith("A"):
+        print("'%s' doesn't start with A!" % s)
+
+Here are a few other examples::
+
+    # Do something if a flag is False:
+    if not my_flag:
+        print("Hello!")
+
+    # This...
+    if not x == 5:
+        x += 1
+
+    # ... is equivalent to this:
+    if x != 5:
+        x += 1
+
+
 
 * Boolean Operators and Expression
   * and, or and not operators
