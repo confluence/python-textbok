@@ -287,9 +287,73 @@ The default (catch-all) condition is the ``else`` clause at the end of the state
     elif course_code == "STA":
         department_name = "Statistical Sciences"
     else:
+        department_name = None
         print("Unknown course code: %s" % course_code)
 
+    if department_name:
+        print("Department: %s" % department_name)
+
 What if we unexpectedly encounter an informatics course, which has a course code of ``"INF"``?  The catch-all ``else`` clause will be executed, and we will immediately see a printed message that this course code is unsupported.  If the ``else`` clause were omitted, we might not have noticed that anything was wrong until we tried to use ``department_name`` and discovered that it had never been assigned a value.  Including the ``else`` clause helps us to pick up potential errors caused by missing options early.
+
+Switch statements and dictionary-based dispatch
+-----------------------------------------------
+
+``if`` ladders can get unwieldy if they become very long.  Many languages have a control statement called a switch, which tests the value of a single variable and makes a decision on the basis of that value. It is similar to an ``if`` ladder, but can be a little more readable, and is often optimised to be faster.
+
+Python does not have a switch statement, but you can achieve something similar by using a dictionary. This example will be clearer when you have read more about dictionaries, but all you need to know for now is that a dictionary is a store of key and value pairs -- you retrieve a value by its key, the way you would retrieve a list element by its index.  Here is how we can rewrite the course code example::
+
+    DEPARTMENT_NAMES = {
+        "CSC": "Computer Science",
+        "MAM": "Mathematics and Applied Mathematics",
+        "STA": "Statistical Sciences", # Trailing commas like this are allowed in Python!
+    }
+
+    if course_code in DEPARTMENT_NAMES: # this tests whether the variable is one of the dictionary's keys
+        print("Department: %s" % DEPARTMENT_NAMES[course_code])
+    else:
+        print("Unknown course code: %s" % course_code)
+
+You are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so you can even use this dispatch method to execute completely different statements in response to different values::
+
+    def reverse(string):
+        print("'%s' reversed is '%s'." % (string, string[::-1]))
+
+    def capitalise(string):
+        print("'%s' capitalised is '%s'." % (string, string.upper()))
+
+    ACTIONS = {
+        "r" = reverse, # use the function name without brackets to refer to the function without calling it
+        "c" = capitalise,
+    }
+
+    my_function = ACTIONS[my_action] # now we retrieve the function
+    my_function(my_string) # and now we call it
+
+.. Todo:: Exercise?
+
+
+The conditional operator
+------------------------
+
+Python has another way to write a selection in a program -- the conditional operator. It can be used within an expression (i.e. it can be evaluated) -- in contrast to ``if`` and ``if``-``else``, which are just statements and not expressions.  It is often called the *ternary* operator because it has *three* operands (binary operators have two, and unary operators have one). The syntax is as follows:
+
+*true expression* ``if`` *condition* ``else`` *false expression*
+
+For example::
+
+    result = "Pass" if (score >= 50) else "Fail"
+
+This means that if ``score`` is at least 50, ``result`` is assigned ``"Pass"``, otherwise it is assigned ``"Fail"``. This is equivalent to the following ``if`` statement:
+
+    if (score >= 50):
+        result = "Pass"
+    else:
+        result = "Fail"
+
+The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find your code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
+
+.. Todo: exercise 3?
+
 
 Boolean values, operators and expressions
 =========================================
@@ -477,27 +541,182 @@ Here are a few other examples::
     if x != 5:
         x += 1
 
+Precedence rules for boolean expressions
+----------------------------------------
 
+Here is a table indicating the relative level of precedence for all the operators we have seen so far, including the arithmetic, relational and boolean operators.
 
-* Boolean Operators and Expression
-  * and, or and not operators
-  * translate operator precedence
-  * translate De Morgan's laws
-  * remove char type discussion
-  * Aha! Replace this with booleans!
++-------------------------+
+| Operators               |
++=========================+
+| ``()`` (highest)        |
++-------------------------+
+| ``**``                  |
++-------------------------+
+| ``*, /, %``             |
++-------------------------+
+| ``+, -``                |
++-------------------------+
+| ``<, <=, >, >= ==, !=`` |
++-------------------------+
+| ``is, is not``          |
++-------------------------+
+| ``not``                 |
++-------------------------+
+| ``and``                 |
++-------------------------+
+| ``or`` (lowest)         |
++-------------------------+
 
-* The switch Statement
-  * mention Python doesn't have one
-  * discuss dictionary-based dispatch
+It is always a good idea to use brackets to clarify what you mean, even though you can rely on the order of precedence above.  Brackets can make complex expressions in your code easier to read and understand, and reduce the opportunity for errors.
 
-* Conditional Operators Shortcut
-  * "x if y else z"
+DeMorgan's law for manipulating boolean expressions
+---------------------------------------------------
 
-* Errors
-  * SyntaxError
-  * discussion of Python's exception hierarchy
-  * explain where Python fits in
-  * static error checking (pyflakes, pep8)
+The ``not`` operator can make expressions more difficult to understand, especially if it is used multiple times.  Try only to use the ``not`` operator where it makes sense to have it.  Most people find it easier to read positive statements than negative ones.  Sometimes you can use the opposite relational operator to avoid using the ``not`` operator, for example::
 
-* Testing and Debugging Programs
-  * Add discussion of unit vs functional vs integrated tests
+    if not mark < 50:
+        print("You passed")
+
+    # is the same as
+
+    if mark >= 50:
+        print("You passed")
+
+This table shows each relational operator and its opposite:
+
+========  ========
+Operator  Opposite
+========  ========
+``==``    ``!=``
+``>``     ``<=``
+``<``     ``>=``
+========  ========
+
+There are other ways to rewrite boolean expressions.  The 19th-century logician DeMorgan proved two properties of negation that we can use.
+
+Consider this example in English: *it is not both cool and rainy today.* Does this sentence mean the same thing as *it is not cool and not rainy today?*  No, the first sentence says that both conditions are not true, but either one of them could be true.  The correct equivalent sentence is *it is not cool or not rainy today.*
+
+We have just used DeMorgan's law to distribute NOT over the first sentence.  Formally, DeMorgan's laws state:
+
+1. NOT (a AND b) = (NOT a) OR (NOT b)
+2. NOT (a OR b) = (NOT a) AND (NOT b)
+
+We can use these laws to distribute the ``not`` operator over boolean expressions in Python.  For example::
+
+    if not (age > 0 and age <= 120):
+        print("Invalid age")
+
+    # can be rewritten as
+
+    if age <= 0 or age > 120:
+        print("Invalid age")
+
+Instead of negating each operator, we used its opposite, eliminating ``not`` altogether.
+
+.. Todo:: Is there anything else to be said about booleans?  Should we add an aside about (the lack of) chars to the previous chapter where we discuss strings?
+
+Errors
+======
+
+Errors or mistakes in a program are often referred to as bugs. They are almost always the fault of the programmer. The process of finding and eliminating errors is called debugging. Errors can be classified into three major groups:
+
+* Syntax errors
+* Runtime errors
+* Logical errors
+
+Syntax errors
+-------------
+
+Python will find these kinds of errors when it tries to parse your program, and exit with an error message without running anything.  Syntax errors are mistakes in the use of the Python language, and are analogous to spelling or grammar mistakes in a language like English: for example, the sentence *Would you some tea?* does not make sense -- it is missing a verb.
+
+Common Python syntax errors include:
+
+* leaving out a keyword
+* putting a keyword in the wrong place
+* leaving out a symbol, such as a colon, comma or brackets
+* misspelling a keyword
+* incorrect indentation
+
+Python will do its best to tell you where the error is located, but sometimes its messages can be misleading: for example, if you forget to escape a quotation mark inside a string you may get a syntax error referring to a place later in your code, even though that is not the real source of the problem.  If you can't see anything wrong on the line specified in the error message, try backtracking through the previous few lines.  As you program more, you will get better at identifying and fixing errors.
+
+Here are some examples of syntax errors in Python::
+
+    # missing 'def' keyword in function definition
+    myfunction(x, y):
+        return x + y
+
+    # 'else' clause without an 'if'
+    else:
+        print("Hello!")
+
+    # missing colon
+    if mark >= 50
+        print("You passed!")
+
+    # spelling mistake
+    if arriving:
+        print("Hi!")
+    esle:
+        print("Bye!")
+
+    # indentation mistake
+    if flag:
+    print("Flag is set!")
+
+Runtime errors
+--------------
+
+If a program is syntactically correct -- that is, free of syntax errors -- it will be run by the Python interpreter.  However, the program may exit unexpectedly during execution if it encounters a *runtime error* -- a problem which was not detected when the program was parsed, but is only revealed when a particular line is executed.  When a program comes to a halt because of a runtime error, we say that it has crashed.
+
+Consider the English instruction *flap your arms and fly to Australia.*  While the instruction is structurally correct and you can understand its meaning perfectly, it is impossible for you to follow it.
+
+Some examples of Python runtime errors:
+
+* division by zero
+* performing an operation on incompatible types
+* using an identifier which has not been defined
+* accessing a list element, dictionary value or object attribute which doesn't exist
+* trying to access a file which doesn't exist
+
+Runtime errors often creep in if you don't consider all possible values that a variable could contain, especially when you are processing user input.  You should always try to add checks to your code to make sure that it can deal with bad input and edge cases gracefully.  We will look at this in more detail in the chapter about exception handling.
+
+Logical errors
+--------------
+
+Logical errors are the most difficult to fix. They occur when the program runs without crashing, but produces an incorrect result.  The error is caused by a mistake in the program's logic.  You won't get an error message, because no syntax or runtime error has occurred.  You will have to find the problem on your own by reviewing all the relevant parts of your code -- although some tools can flag suspicious code which looks like it could cause unexpected behaviour.
+
+Sometimes there can be absolutely nothing wrong with your Python implementation of an algorithm -- the algorithm itself can be incorrect.  However, more frequently these kinds of errors are caused by programmer carelessness.  Here are some examples of mistakes which lead to logical errors:
+
+* using the wrong variable name
+* indenting a block to the wrong level
+* using integer division instead of floating point division
+* getting operator precedence wrong
+* making a mistake in a boolean expression
+* off-by-one, and other numerical errors
+
+If you misspell an identifier name, you may get a runtime error or a logical error, depending on whether the misspelled name is defined.
+
+A common source of variable name mix-ups and incorrect indentation is frequent copying and pasting of large blocks of code.  If you have many duplicate lines with minor differences, it's very easy to miss a necessary change when you are editing your pasted lines.  You should always try to factor out excessive duplication using functions and loops -- we will look at this in more detail later.
+
+Testing and debugging programs
+==============================
+
+Debugging
+---------
+
+* follow error messages
+* static error checking: pyflakes, pep8
+* print statements
+* pdb
+
+Testing
+-------
+
+* Something about unit tests
+* Black box testing
+* Glass box testing
+* Add discussion of unit vs functional vs integrated tests
+
+.. Todo:: Exercise; exception hierarchy will go in chapter about extensions; [explain where Python fits in??]
+
