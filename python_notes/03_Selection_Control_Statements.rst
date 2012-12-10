@@ -702,14 +702,6 @@ A common source of variable name mix-ups and incorrect indentation is frequent c
 Testing and debugging programs
 ==============================
 
-Debugging
----------
-
-* follow error messages
-* static error checking: pyflakes, pep8
-* print statements
-* pdb
-
 Testing
 -------
 
@@ -717,6 +709,14 @@ Testing
 * Black box testing
 * Glass box testing
 * Add discussion of unit vs functional vs integrated tests
+
+Debugging
+---------
+
+* follow error messages
+* static error checking: pyflakes, pep8
+* print statements
+* pdb
 
 .. Todo:: Exercise; exception hierarchy will go in chapter about extensions; [explain where Python fits in??]
 
