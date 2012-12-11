@@ -80,7 +80,32 @@ The variable used in the loop condition is the number ``i``, which you use to co
 
 It is very important that you increment ``i`` at the end.  If you did not, ``i`` would always be equal to ``1``, the condition would always be true, and your program would never terminate -- we call this an infinite loop.  Whenever you write a ``while`` loop, make sure that the variable you use in your condition is updated inside the loop body!
 
-In the example above, we know beforehand that we are going to stop the loop when ``i`` gets to ``10`` -- so it would really be more appropriate to use a ``for`` loop (which will be introduced in the next section) to add these numbers together -- that is the loop structure which is more commonly used for counting loops.  Here is a more realistic example::
+Here are a few common errors which might result in an infinite loop::
+
+    x = 0
+    while x < 3:
+        y += 1 # wrong variable updated
+
+    product = 1
+    count = 1
+
+    while count <= 10:
+        product *= count
+        # forgot to update count
+
+    x = 0
+    while x < 5:
+        print(x)
+    x += 1 # update statement is indented one level too little, so it's outside the loop body
+
+    x = 0
+    while x != 5:
+        print(x)
+        x += 2 # x will never equal 5, because we are counting in even numbers!
+
+You might be wondering why the Python interpreter cannot catch infinite loops. This is known as the halting problem. It is impossible for a computer to detect all possible infinite loops in another program. It is up to the programmer to avoid infinite loops.
+
+In many of the examples above, we are counting to a predetermined number, so it would really be more appropriate for us to use a ``for`` loop (which will be introduced in the next section) -- that is the loop structure which is more commonly used for counting loops.  Here is a more realistic example::
 
     # numbers is a list of numbers -- we don't know what the numbers are!
 
