@@ -80,35 +80,50 @@ The variable used in the loop condition is the number ``i``, which you use to co
 
 It is very important that you increment ``i`` at the end.  If you did not, ``i`` would always be equal to ``1``, the condition would always be true, and your program would never terminate -- we call this an infinite loop.  Whenever you write a ``while`` loop, make sure that the variable you use in your condition is updated inside the loop body!
 
+In the example above, we know beforehand that we are going to stop the loop when ``i`` gets to ``10`` -- so it would really be more appropriate to use a ``for`` loop (which will be introduced in the next section) to add these numbers together -- that is the loop structure which is more commonly used for counting loops.  Here is a more realistic example::
+
+    # numbers is a list of numbers -- we don't know what the numbers are!
+
+    total = 0
+    i = 0
+
+    while i < len(numbers) and total < 100:
+        total += numbers[i]
+        i +=1
+
+Here we add up numbers from a list until the total reaches 100.  We don't know how many times we will have to execute the loop, because we don't know the values of the numbers.  Note that we might reach the end of the list of numbers before the total reaches 100 -- if we try to access an element beyond the end of the list we will get an error, so we should add a check to make sure that this doesn't happen.
+
 
 The ``for`` statement
 =====================
 
-Here is an example of a ``for`` statement which counts from 1 to 8:
+Python's other loop statement is the ``for`` statement.  You should use it when you need to do something for some predefined number of steps.  Before we look at Python's ``for`` loop syntax, we will briefly look at the way *for* loops work in other languages.
+
+Here is an example of a *for* loop in Java::
+
+    for (int count = 1; count <= 8; count++) {
+        System.out.println(count);
+    }
+
+You can see that this kind of *for* loop has a lot in common with a *while* loop -- in fact, you could say that it's just a special case of a *while* loop.  The initialisation step, the condition and the update step are all defined in the section in parentheses on the first line.
+
+*for* loops are often used to perform an operation on every element of some kind of sequence. If you wanted to iterate over a list using the classic-style *for* loop, you would have to count from zero to the end of the list, and then access each list element by its index.
+
+In Python, ``for`` loops make this use case simple and easy by allowing you to iterate over sequences directly.  Here is an example of a ``for`` statement which counts from 1 to 8:
 
     for i in range(8):
         print(i + 1) # range(8) starts at 0 and ends at 7
 
 ``range`` is a special kind of Python function called a *generator* -- it returns an *iterator* object, which *yields* a series of values until it stops.  In this case, the iterator will yield the integers from ``0`` to ``7``, one at a time.  When the end of the iterator is reached, the ``for`` loop will exit.
 
-Many languages have *for* loops which are very different to ``for`` loops in Python -- they can only iterate over numbers, and you have to initialise the number range and specify the end condition explicitly.  Here is an example of a *for* loop in Java::
-
-    for (int count = 1; count <= 8; count++) {
-        System.out.println(count);
-    }
-
-.. Todo:: squeeze in the flow chart somehow; translate the initialisation, condition and update to iteration over list elements.  Maybe do while loop first?
-
-If you wanted to iterate over a list of strings in a language like this, you would have to iterate over the list indices, and then access each list element by its index inside the loop.
-
-In Python, a ``for`` loop simply iterates over a sequence -- any sequence.  It can be an iterator, which returns one value at a time, or a list.  You can iterate over a list of strings directly, like this:
+You can use ``for`` to iterate over any kind of sequence, whether it's an iterator or a list.  You can iterate over a list of strings directly, like this:
 
     pets = ["cat", "dog", "budgie"]
 
     for pet in pets:
         print(pet)
 
-At each iteration of the loop, the next element of the list ``pets`` is assigned to the variable ``pet``, which you can then access inside the loop body.  This is functionally identical to this:
+At each iteration of the loop, the next element of the list ``pets`` is assigned to the variable ``pet``, which you can then access inside the loop body.  The example above is functionally identical to this:
 
     for i in range(len(pets)): # i will iterate over 0, 1 and 2
         pet = pets[i]
