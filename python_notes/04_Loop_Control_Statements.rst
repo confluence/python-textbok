@@ -233,7 +233,11 @@ Many other languages offer a structure called a *do-while* loop, or a *repeat-un
 
 We have moved the condition *inside* the loop body, and we can check it at the end, *after* asking the user for input.  We have replaced the condition in the ``while`` statement with ``True`` -- which is, of course, always true.  Now the ``while`` statement  will *never* terminate after checking the condition -- it can *only* terminate if the ``break`` statement is triggered.
 
-This trick can help us to make this particular loop use case look better, but it has its disadvantages.  If we accidentally leave out the ``break`` statement, or write the loop in such a way that it can never be triggered, we will have an infinite loop!  This code can also be more difficult to understand, because the actual condition which makes the loop terminate is hidden inside the body of the loop.  You should use this construct sparingly.
+This trick can help us to make this particular loop use case look better, but it has its disadvantages.  If we accidentally leave out the ``break`` statement, or write the loop in such a way that it can never be triggered, we will have an infinite loop!  This code can also be more difficult to understand, because the actual condition which makes the loop terminate is hidden inside the body of the loop.  You should therefore use this construct sparingly.  Sometimes it's possible to rewrite the loop in such a way that the condition can be checked before the loop body *and* repetition is avoided::
+
+    age = None # we can initialise age to something which is not a valid number
+    while not valid_number(age): # now we can use the condition before asking the user anything
+        age = input("Please enter your age: ")
 
 List comprehensions
 ===================
