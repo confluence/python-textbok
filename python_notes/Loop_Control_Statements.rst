@@ -134,32 +134,32 @@ You can see that this kind of *for* loop has a lot in common with a *while* loop
 
 *for* loops are often used to perform an operation on every element of some kind of sequence. If you wanted to iterate over a list using the classic-style *for* loop, you would have to count from zero to the end of the list, and then access each list element by its index.
 
-In Python, ``for`` loops make this use case simple and easy by allowing you to iterate over sequences directly.  Here is an example of a ``for`` statement which counts from 1 to 8:
+In Python, ``for`` loops make this use case simple and easy by allowing you to iterate over sequences directly.  Here is an example of a ``for`` statement which counts from 1 to 8::
 
     for i in range(8):
         print(i + 1) # range(8) starts at 0 and ends at 7
 
 ``range`` is a special kind of Python function called a *generator* -- it returns an *iterator* object, which *yields* a series of values until it stops.  In this case, the iterator will yield the integers from ``0`` to ``7``, one at a time.  When the end of the iterator is reached, the ``for`` loop will exit.
 
-You can use ``for`` to iterate over any kind of sequence, whether it's an iterator or a list.  You can iterate over a list of strings like this:
+You can use ``for`` to iterate over any kind of sequence, whether it's an iterator or a list.  You can iterate over a list of strings like this::
 
     pets = ["cat", "dog", "budgie"]
 
     for pet in pets:
         print(pet)
 
-At each iteration of the loop, the next element of the list ``pets`` is assigned to the variable ``pet``, which you can then access inside the loop body.  The example above is functionally identical to this:
+At each iteration of the loop, the next element of the list ``pets`` is assigned to the variable ``pet``, which you can then access inside the loop body.  The example above is functionally identical to this::
 
     for i in range(len(pets)): # i will iterate over 0, 1 and 2
         pet = pets[i]
         print(pet)
 
-That is similar to the way ``for`` loops are written in, for example, Java.  You should avoid doing this, as it's more difficult to read, and unnecessarily complex.  If for some reason you need the index inside the loop as well as the list element itself, you can use the ``enumerate`` function to number the elements:
+That is similar to the way ``for`` loops are written in, for example, Java.  You should avoid doing this, as it's more difficult to read, and unnecessarily complex.  If for some reason you need the index inside the loop as well as the list element itself, you can use the ``enumerate`` function to number the elements::
 
     for i, pet in enumerate(pets):
         pets[i] = pet.upper() # rewrite the list in all caps
 
-``enumerate`` also returns an iterator -- each item it returns is a ``tuple``, or pair of values -- the first is the element index (starting at zero) and the second is the element itself.  In the loop above, at each iteration the value of the index is assigned to the variable ``i``, and the element is assigned to the variable ``pet``, as before.
+``enumerate`` also returns an iterator -- each item it returns is a ``tuple``, or pair of values. The first is the element index (starting at zero) and the second is the element itself.  In the loop above, at each iteration the value of the index is assigned to the variable ``i``, and the element is assigned to the variable ``pet``, as before.
 
 Why couldn't we just write ``pet = pet.upper()``?  That would just assign a new value to the variable ``pet`` inside the loop, without changing the original list.
 
