@@ -14,7 +14,7 @@ Contents:
     Introduction
     Python_Basics
     Selection_Control_Statements
-    Sequences
+    Collections
     Loop_Control_Statements
     Functions
     Classes
