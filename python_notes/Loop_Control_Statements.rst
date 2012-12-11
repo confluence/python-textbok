@@ -214,7 +214,7 @@ Note that if we replaced ``break`` with ``continue`` in the first example, we wo
 .. Todo:: exercise
 
 Using ``break`` to simulate a *do-while* loop
--------------------------------------------
+---------------------------------------------
 
 Recall that a ``while`` loop checks the condition *before* executing the loop body for the first time.  Sometimes this is convenient, but sometimes it's not.  What if you always need to execute the loop body at least once? ::
 
