@@ -60,6 +60,9 @@ Lists are mutable -- you can modify elements, add elements to them or remove ele
     # remove an element
     del animals[2]
 
+    # remove an element and assign it to a variable
+    my_animal = animals.pop(0)
+
 You can mix the types of values that you store in a list::
 
     my_list = ['cat', 12, 35.8]
@@ -67,7 +70,20 @@ You can mix the types of values that you store in a list::
 List methods and functions
 --------------------------
 
+Lists vs arrays
+---------------
 
+Tuples
+======
+
+Conversions
+-----------
+
+Sets
+====
+
+Dictionaries
+============
 
 
 FROM ROUGH NOTES:
