@@ -333,8 +333,6 @@ Here are some commonly used methods of dictionary objects::
 
 The last three methods return special sequence types which are read-only *views* of various properties of the dictionary.  We most often access these properties because we want to iterate over them (something we will discuss in the next chapter), but we can also convert them to other sequence types if we need to.
 
-.. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these sequences, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above).
-
 We can check if a key is in the dictionary using ``in`` and ``not in``::
 
     print("purple" in marbles)
@@ -344,13 +342,9 @@ We can also check if a value is in the dictionary using ``in`` in conjunction wi
 
     print("Smith" in surnames.values())
 
-We should never use ``keys`` to check key membership, because it's very inefficient::
+You should avoid using ``mykey in mydict.keys()`` to check for key membership, however, because it's less efficient than ``mykey in mydict``.
 
-    # This performs a direct dictionary access
-    print("purple" in marbles)
-
-    # This searches through all the keys sequentially!
-    print("purple" in marbles.keys())
+.. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these sequences, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above). In Python 2 you should *really* not use ``mykey in mydict.keys()`` to check for key membership -- if you do, you will be searching the entire list of keys sequentially, which is much slower than a direct dictionary lookup.
 
 Converting between collection types
 ===================================
