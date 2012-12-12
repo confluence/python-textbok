@@ -331,7 +331,7 @@ Here are some commonly used methods of dictionary objects::
     # All the items in the dictionary
     marbles.items()
 
-The last three methods return special sequence types which are read-only *views* of various properties of the dictionary.  We most often access these properties because we want to iterate over them (something we will discuss in the next chapter), but we can also convert them to other sequence types if we need to.
+The last three methods return special sequence types which are read-only *views* of various properties of the dictionary.  We cannot edit them directly, but they will be updated when we modify the dictionary.  We most often access these properties because we want to iterate over them (something we will discuss in the next chapter), but we can also convert them to other sequence types if we need to.
 
 We can check if a key is in the dictionary using ``in`` and ``not in``::
 
