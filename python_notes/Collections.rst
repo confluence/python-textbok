@@ -333,7 +333,7 @@ Here are some commonly used methods of dictionary objects::
 
 The last three methods return special sequence types which are read-only *views* of various properties of the dictionary.  We most often access these properties because we want to iterate over them (something we will discuss in the next chapter), but we can also convert them to other sequence types if we need to.
 
-.. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these values, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above).
+.. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these sequences, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above).
 
 We can check if a key is in the dictionary using ``in`` and ``not in``::
 
