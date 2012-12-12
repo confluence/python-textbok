@@ -100,6 +100,11 @@ When comparing variables using ``==``, we are doing a *value* comparison: we are
 
 It is generally the case (with some caveats) that if two variables are the same object, they are also equal.  The reverse is not true -- two variables could be equal in value, but not the same object.
 
+To test whether two objects are *not* the same object, you can use the ``is not`` operator::
+
+    if a is not b:
+        print("a and b are not the same object.")
+
 .. Note:: In many cases, variables of built-in immutable types which have the same value will also be identical.  In some cases this is because the Python interpreter saves memory (and comparison time) by representing multiple values which are equal by the same object.  You shouldn't rely on this behaviour and make value comparisons using ``is`` -- if you want to compare values, always use ``==``.
 
 .. Todo:: Activity 1

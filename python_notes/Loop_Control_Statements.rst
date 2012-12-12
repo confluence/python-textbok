@@ -239,26 +239,7 @@ This trick can help us to make this particular loop use case look better, but it
     while not valid_number(age): # now we can use the condition before asking the user anything
         age = input("Please enter your age: ")
 
-List comprehensions
-===================
+Comprehensions
+==============
 
-.. Todo:: should the section about lists and dictionaries go earlier?
-
-FROM ROUGH NOTES:
-
-* The for statement
-  * discuss differences between Python and C/Java/C++ for loops.
-
-* The while statement
-
-* Add section of looping pitfalls
-  * not editing mutable sequences while you iterate over them.
-  * infinite loops
-
-* Do-while loops
-  * Replace with mention of do-while in other languages and while True equivalent.
-
-* The break and continue statements
-
-* Add a section for list comprehensions
-  * Potential replacement for some simple for loops.
+.. Todo:: This whole section. Don't forget to mention tuple, set and dict comprehensions at the end.
