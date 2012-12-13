@@ -1,6 +1,6 @@
-====================================
-Lists, tuples, dictionaries and sets
-====================================
+===========
+Collections
+===========
 
 We have already encountered some simple Python types like numbers, strings and booleans.  Now we will see how we can group multiple values together in a *collection* -- like a *list* of numbers, or a *dictionary* which we can use to store and retrieve key-value pairs.  Many useful collections are built-in types in Python, and we will encounter them quite often.
 
@@ -14,6 +14,9 @@ The Python list type is called ``list``.  It is a type of sequence -- we can use
 
     # a list of integers
     numbers = [1, 7, 34, 20, 12]
+
+    # an empty list
+    my_list = []
 
     # a list of variables we defined somewhere else
     things = [
@@ -183,7 +186,7 @@ Many other languages don't have a built-in type which behaves like Python's list
 
 Arrays are less easy to use in many ways, but they also have some advantages: because they are so simple, and there are so many restrictions on what you can do with them, the computer can handle them very efficiently. That means that it is often much faster to use an array than to use an object which behaves like a list.  A lot of programmers use them when it is important for their programs to be fast.
 
-Python has a built-in ``array`` type.  It's not quite as restricting as an array in C or Java -- you have to specify a type for the contents of the arrya, and you can only use it to store numeric values, but you can resize it dynamically, like a list.  You will probably never need to use it.
+Python has a built-in ``array`` type.  It's not quite as restricting as an array in C or Java -- you have to specify a type for the contents of the array, and you can only use it to store numeric values, but you can resize it dynamically, like a list.  You will probably never need to use it.
 
 Tuples
 ======
@@ -195,6 +198,9 @@ Python has another sequence type which is called ``tuple``.  Tuples are similar 
 We can use tuples in much the same way as we use lists, except that we can't modify them::
 
     animals = ('cat', 'dog', 'fish')
+
+    # an empty tuple
+    my_tuple = ()
 
     # we can access a single element
     print(animals[0])
@@ -268,6 +274,16 @@ It is important to note that unlike lists and tuples sets are *not ordered*.  Wh
     print(sorted(animals))
 
 The ``sorted`` function returns a ``list`` object.
+
+How do we make an empty set?  We have to use the ``set`` function.  Dictionaries, which we will discuss in the next section, used curly brackets before sets adopted them, so an empty set of curly brackets is actually an empty dictionary::
+
+    # this is an empty dictionary
+    a = {}
+
+    # this is how you make an empty set
+    b = set()
+
+You can use the ``list, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
 
 Dictionaries
 ============
@@ -349,8 +365,21 @@ You should avoid using ``mykey in mydict.keys()`` to check for key membership, h
 Converting between collection types
 ===================================
 
-* remember string
-* an empty set with set()
+Implicit conversions
+--------------------
+
+If you try to iterate over a collection in a ``for`` loop (something we will discuss in the next section), Python will try to convert it into something that you can iterate over if it knows how to.  For example, the dictionary views we saw above are not actually iterators, but Python knows how to make them into iterators -- so you can use them in a ``for`` loop without having to convert them yourself.
+
+Sometimes the iterator you get by default may not be what you expected -- if you iterate over a dictionary in a ``for`` loop, you will iterate over the *keys*.  If what you actually want to do is iterate over the values, or key and value pairs, you will have to specify that yourself by using the dictionary's ``values`` or ``items`` view instead.
+
+Explicit conversions
+--------------------
+
+You can convert between the different sequence types quite easily by using the type functions to ``cast`` sequences to the desired types -- just like you would use ``float`` and ``int``
+
+Another look at strings
+-----------------------
+
 
 FROM ROUGH NOTES:
 

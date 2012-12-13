@@ -1,5 +1,5 @@
 ***********************
-Loop Control Statements
+Loop control statements
 ***********************
 
 Introduction
@@ -177,6 +177,17 @@ Sometimes you can avoid this by iterating over a *copy* of the list instead, but
 
 .. Todo:: exercise; and we definitely need to discuss lists before this chapter.
 
+Iterators
+=========
+
+.. Todo:: move iterator discussion here
+
+
+Comprehensions
+==============
+
+.. Todo:: This whole section. Don't forget to mention tuple, set and dict comprehensions at the end.
+
 The ``break`` and ``continue`` statements
 =========================================
 
@@ -238,8 +249,3 @@ This trick can help us to make this particular loop use case look better, but it
     age = None # we can initialise age to something which is not a valid number
     while not valid_number(age): # now we can use the condition before asking the user anything
         age = input("Please enter your age: ")
-
-Comprehensions
-==============
-
-.. Todo:: This whole section. Don't forget to mention tuple, set and dict comprehensions at the end.
