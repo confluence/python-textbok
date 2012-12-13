@@ -1,5 +1,5 @@
 ****************************
-Selection Control Statements
+Selection control statements
 ****************************
 
 Introduction

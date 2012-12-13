@@ -1,6 +1,8 @@
 *************
-Python Basics
+Python basics
 *************
+
+.. Todo:: break this up into two chapters -- it's really long!
 
 Introduction
 ============
