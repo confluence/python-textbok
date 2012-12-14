@@ -401,6 +401,8 @@ We can also convert a sequence to a dictionary, but only if it's a sequence of *
     # but this will work
     dict([(1, 2), (3, 4)])
 
+We will revisit conversions in the next chapter, when we learn about *comprehensions* -- an efficient syntax for filtering sequences or dictionaries.  By using the right kind of comprehension, you can filter a collection and convert it to a different type of collection at the same time.
+
 Another look at strings
 -----------------------
 
@@ -419,16 +421,31 @@ Remember that strings are immutable -- modifying characters in-place isn't allow
     # this will give us an error
     s[0] = "b"
 
-We can easily convert a string to a sequence type like a list::
+We can easily convert a string to a list of characters::
 
     abc_list = list("abracadabra")
 
-* JOIN
+What if we want to convert a list of characters into a string? Using the ``str`` function on the list will just give us a printable string of the list, including commas, quotes and brackets.  To join a sequence of characters (or longer strings) together into a single string, we have to use ``join``.
 
-FROM ROUGH NOTES:
+``join`` is not a function or a sequence method -- it's a *string* method which takes a sequence of strings as a parameter.  When we call a string's ``join`` method, we are using that string to glue the strings in the sequence together.  For example, to join a list of single characters into a string, with no spaces between them, we call the ``join`` method on the *empty string*::
 
-* Replace with discussion of all the cool Python collections:
-  * lists, dicts, sets
-* Maybe move further up the discussion
-* Should the linked list algorithm be replaced with something more relevant?
-  * Maybe a tree or graph implementation?
+    l = ['a', 'b', 'r', 'a', 'c', 'a', 'd', 'a', 'b', 'r', 'a']
+
+    s = "".join(l)
+    print(s)
+
+We can use any string we like to join a sequence of strings together::
+
+    animals = ('cat', 'dog', 'fish')
+
+    # a space-separated list
+    print(" ".join(animals))
+
+    # a comma-separated list
+    print(",".join(animals))
+
+    # a comma-separated list with spaces
+    print(", ".join(animals))
+
+
+.. Todo:: Exercises. This chapter is a replacement for the array chapter, so we need to go through that chapter and see if there's anything that needs to be added.  Should the linked list algorithm be replaced with something more relevant? Maybe a tree or graph implementation?
