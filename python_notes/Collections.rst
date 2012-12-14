@@ -368,18 +368,62 @@ Converting between collection types
 Implicit conversions
 --------------------
 
-If you try to iterate over a collection in a ``for`` loop (something we will discuss in the next section), Python will try to convert it into something that you can iterate over if it knows how to.  For example, the dictionary views we saw above are not actually iterators, but Python knows how to make them into iterators -- so you can use them in a ``for`` loop without having to convert them yourself.
+If we try to iterate over a collection in a ``for`` loop (something we will discuss in the next chapter), Python will try to convert it into something that we can iterate over if it knows how to.  For example, the dictionary views we saw above are not actually iterators, but Python knows how to make them into iterators -- so we can use them in a ``for`` loop without having to convert them ourselves.
 
-Sometimes the iterator you get by default may not be what you expected -- if you iterate over a dictionary in a ``for`` loop, you will iterate over the *keys*.  If what you actually want to do is iterate over the values, or key and value pairs, you will have to specify that yourself by using the dictionary's ``values`` or ``items`` view instead.
+Sometimes the iterator we get by default may not be what we expected -- if we iterate over a dictionary in a ``for`` loop, we will iterate over the *keys*.  If what we actually want to do is iterate over the values, or key and value pairs, we will have to specify that ourselves by using the dictionary's ``values`` or ``items`` view instead.
 
 Explicit conversions
 --------------------
 
-You can convert between the different sequence types quite easily by using the type functions to ``cast`` sequences to the desired types -- just like you would use ``float`` and ``int``
+We can convert between the different sequence types quite easily by using the type functions to ``cast`` sequences to the desired types -- just like we would use ``float`` and ``int`` to convert numbers::
+
+    animals = ['cat', 'dog', 'goldfish', 'canary', 'cat']
+
+    animals_set = set(animals)
+    animals_unique_list = list(animals_set)
+    animals_unique_tuple = tuple(animals_unique_list)
+
+We have to be more careful when converting a dictionary to a sequence: do we want to use the keys, the values or pairs of keys and values? ::
+
+    marbles = {"red": 34, "green": 30, "brown": 31, "yellow": 29 }
+
+    colours = list(marbles) # the keys will be used by default
+    counts = tuple(marbles.values()) # but you can use a view to get the values
+    marbles_set = set(marbles.items()) # or the key-value pairs
+
+If you convert the key-value pairs of a dictionary to a sequence, each pair will be converted to a tuple containing the key followed by the value.
+
+We can also convert a sequence to a dictionary, but only if it's a sequence of *pairs* -- each pair must itself be a sequence with two values::
+
+    # Python doesn't know how to convert this into a dictionary
+    dict([1, 2, 3, 4])
+
+    # but this will work
+    dict([(1, 2), (3, 4)])
 
 Another look at strings
 -----------------------
 
+Strings share some properties with sequence types, and can be treated as sequences under certain circumstances.  For example, we can find the length of a string or the index of a character in the string, and we can access individual elements of strings or slices::
+
+    s = "abracadabra"
+
+    print(len(s))
+    print(s.index("a"))
+
+    print(s[0])
+    print(s[3:5])
+
+Remember that strings are immutable -- modifying characters in-place isn't allowed::
+
+    # this will give us an error
+    s[0] = "b"
+
+We can easily convert a string to a sequence type like a list::
+
+    abc_list = list("abracadabra")
+
+* JOIN
 
 FROM ROUGH NOTES:
 
