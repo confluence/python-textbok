@@ -280,12 +280,15 @@ You can think of the comprehension as a compact form of ``for`` loop, which has 
 
 List comprehensions can be used to replace loops that are a lot more complicated than this -- even nested loops.  However, the more complex the loop, the more complicated the corresponding list comprehension is likely to be.  A long and convoluted list comprehension can be very difficult for someone reading your code to understand -- sometimes it's better just to write the loop out in full.
 
-The final product of a comprehension doesn't have to be a list.  You can create dictionaries or generators in a very similar way -- a generator expression uses round brackets instead of square brackets, and a dict comprehension uses curly brackets and separates the key and the value using a colon::
+The final product of a comprehension doesn't have to be a list.  You can create dictionaries or generators in a very similar way -- a generator expression uses round brackets instead of square brackets, a set comprehension uses curly brackets, and a dict comprehension uses curly brackets *and* separates the key and the value using a colon::
 
     numbers = [1, 5, 2, 12, 14, 7, 18]
 
     # a generator comprehension
     doubles_generator = (2 * number for number in numbers)
+
+    # a set comprehension
+    doubles_generator = {2 * number for number in numbers}
 
     # a dict comprehension which uses the number as the key and the doubled number as the value
     doubles_dict = {number: 2 * number for number in numbers}
@@ -294,7 +297,7 @@ If your generator expression is a parameter being passed to a function, like ``s
 
     sum_doubles = sum(2 * number for number in numbers)
 
-.. Note:: dict comprehensions were introduced in Python 3.  In Python 2 you have to create a list of tuples instead and convert it to a dict.
+.. Note:: dict and set comprehensions were introduced in Python 3.  In Python 2 you have to create a list or generator instead and convert it to a set or a dict yourself.
 
 
 The ``break`` and ``continue`` statements
