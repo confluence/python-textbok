@@ -19,9 +19,9 @@ Contents:
     Functions
     Classes
     Sorting_and_Searching
+    Special_Methods
     Object_Oriented_Programming
     Exception_Handling
-    Undefined
     Undefined
     Undefined
     Introduction_to_GUI_Programming
