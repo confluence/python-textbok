@@ -175,6 +175,20 @@ The ``reversed`` function actually returns an iterator object, not a list (we wi
     print(animals)
     print(pets)
 
+Using arithmetic operators with lists
+-------------------------------------
+
+Some of the arithmetic operators we have used on numbers before can also be used on lists, but the effect may not always be what you expect::
+
+    # you can concatenate two lists by adding them
+    print([1, 2, 3] + [4, 5, 6])
+
+    # you can concatenate a list with itself by multiplying it by an integer
+    print([1, 2, 3] * 3)
+
+    # not all arithmetic operators can be used on lists -- this will give you an error!
+    print([1, 2, 3] - [2, 3])
+
 Lists vs arrays
 ---------------
 
@@ -471,5 +485,76 @@ We can use any string we like to join a sequence of strings together::
     # a comma-separated list with spaces
     print(", ".join(animals))
 
+Two-dimensional sequences
+-------------------------
+
+Most of the sequences we have seen so far have been one-dimensional: each sequence is a row of elements.  What if we want to use a sequence to represent a two-dimensional data structure, like a weekly timetable, which has both rows and columns?  The easiest way to do this is to make a sequence in which each element is also a sequence.  For example, we can create a list of lists::
+
+    my_table = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12],
+    ]
+
+The outer list has four elements, and each of these elements is a list with three elements (which are numbers).  To access one of these numbers, you need to use two indices -- one for the outer list, and one for the inner list::
+
+    print(my_table[0][0])
+
+    # lists are mutable, so you can do this
+    my_table[0][0] = 42
+
+We have already seen an example of this in the previous chapter, when we created a list of tuples to convert into a dict.
+
+When we use a two-dimensional sequence to represent tabular data, each inner sequence will have the same length, because a table is rectangular -- but nothing is stopping us from constructing two-dimensional sequences which don't have this property::
+
+    my_2d_list = [
+        [0],
+        [1, 2, 3, 4],
+        [5, 6],
+    ]
+
+We can also make a three-dimensional sequence by making a list of lists of lists::
+
+    my_3d_list = [
+        [[1, 2], [3, 4]],
+        [[5, 6], [7, 8]],
+    ]
+
+    print(my_3d_list[0][0][0])
+
+Of course we can also make a list of lists of lists of lists and so forth -- we can nest lists as many times as we like.
+
+If we wanted to make a two-dimensional list to represent a timetable, we could either have days as the outer list and time slots as the inner list or the other way around -- we would have to remember which range we picked to be the rows and which the columns.
+
+Suppose that we wanted to initialise the timetable with an empty string in each time slot -- let us say that we have 24 hour-long time slots in each day.  That's seven lists of 24 elements each -- quite long and unwieldy to define using literals, the way we defined the smaller lists in the examples above!
+
+This brings us to a common pitfall.  You may recall from a previous section that we can use the multiplication operator on lists -- this can be a convenient way to construct a long list in which all the elements are the same::
+
+    my_long_list = [0] * 100 # a long list of zeros
+    print(my_long_list)
+
+You might think of using this method to construct our timetable.  We can certainly use it to create a list of empty strings to represent a day::
+
+    day = [""] * 24
+    print(day)
+
+But what happens if we repeat a day seven times to make a week?
+
+    timetable = day * 7
+    print(timetable)
+
+Everything looks fine so far, so what's the problem?  Well, let's see what happens when we try to schedule a meeting for Monday afternoon::
+
+    timetable[0][15] = "meeting with Jane"
+    print(timetable)
+
+Every day has the same afternoon meeting!  How did that happen?  When we multiplied our day list by seven, we filled our timetable with *the same list object*, repeated seven times.  All the elements in our timetable are the same day, so no matter which one we modify we modify all of them at once.
+
+Why didn't this matter when we made the day list by multiplying the same empty string 24 times?  Because strings are immutable.  We can only change the values of the strings in the day list by assigning them new values -- we can't modify them in-place, so it doesn't matter that they all start off as the same string object.  But because we *can* modify lists in-place, it does matter that all our day lists are the same list.  What we actually want is seven *copies* of a day list in our timetable::
+
+    timetable = [[""] * 24 for day in range(7)]
+
+Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter -- for now, it is important for us to know that this method creates a *new* list of empty strings for each day, unlike the multiplication operator.
 
 .. Todo:: Exercises. This chapter is a replacement for the array chapter, so we need to go through that chapter and see if there's anything that needs to be added.  Should the linked list algorithm be replaced with something more relevant? Maybe a tree or graph implementation?
