@@ -13,7 +13,9 @@ Contents:
 
     Introduction
     Python_Basics
+    Variables_and_Scope
     Selection_Control_Statements
+    Errors_Exceptions_Testing
     Collections
     Loop_Control_Statements
     Functions
@@ -21,7 +23,6 @@ Contents:
     Sorting_and_Searching
     Special_Methods
     Object_Oriented_Programming
-    Exception_Handling
     Undefined
     Undefined
     Introduction_to_GUI_Programming

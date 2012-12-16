@@ -81,7 +81,7 @@ Because lists are mutable, we can *modify* a list variable without assigning the
     animals.append('aardvark')
     print(pets) # pets remains unchanged, because it refers to a copy, not the original list
 
-We can mix the types of values that you store in a list::
+We can mix the types of values that we store in a list::
 
     my_list = ['cat', 12, 35.8]
 
@@ -116,7 +116,7 @@ There are many built-in functions which you can use on lists and other sequences
     # are all of these values true?
     all([1,0,1,0,1])
 
-List objects also have methods which you can call::
+List objects also have useful methods which you can call::
 
     numbers = [1, 2, 3, 4, 5]
 
@@ -147,13 +147,13 @@ List objects also have methods which you can call::
     # if the value appears more than once, only the first one will be removed
     numbers.remove(5)
 
-If you want to sort or reverse a list, you can either call a method on the list to modify in *in-place*, or use a function to return a modified copy of the list while leaving the original list untouched::
+If you want to sort or reverse a list, you can either call a method on the list to modify it *in-place*, or use a function to return a modified copy of the list while leaving the original list untouched::
 
     numbers = [3, 2, 4, 1]
 
     # these return a modified copy, which we can print
     print(sorted(numbers))
-    print(list(reversed(numbers))
+    print(list(reversed(numbers)))
 
     # the original list is unmodified
     print(numbers)
@@ -164,7 +164,7 @@ If you want to sort or reverse a list, you can either call a method on the list 
 
     print(numbers)
 
-The ``reversed`` function actually returns an iterator object, not a list (we will look at iterators later in this chapter), so we have to convert it to a list before we can print the contents.  To do this, we call the ``list`` type like a function, just like we would call ``int`` or ``float`` to convert numbers.  We can also use ``list`` as another way to make a copy of a list::
+The ``reversed`` function actually returns a generator, not a list (we will look at generators in the next chapter), so we have to convert it to a list before we can print the contents.  To do this, we call the ``list`` type like a function, just like we would call ``int`` or ``float`` to convert numbers.  We can also use ``list`` as another way to make a copy of a list::
 
     animals = ['cat', 'dog', 'goldfish', 'canary']
     pets = list(animals)
@@ -280,7 +280,7 @@ We can perform various set operations on sets::
     print(big_numbers & even_numbers)
 
     # numbers which are big or even but not both
-    print(big numbers ^ even_numbers)
+    print(big_numbers ^ even_numbers)
 
 It is important to note that unlike lists and tuples sets are *not ordered*.  When we print a set, the order of the elements will be random.  If we want to process the contents of a set in a particular order, we will first need to convert it to a list or tuple and sort it::
 
@@ -297,12 +297,12 @@ How do we make an empty set?  We have to use the ``set`` function.  Dictionaries
     # this is how you make an empty set
     b = set()
 
-You can use the ``list, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
+You can use the ``list``, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
 
 Ranges
 ======
 
-``range`` is another kind of immutable sequence type. It is very specialised -- you use it to create ranges of integers.  Ranges are also *iterator* objects.  We will find out more about iterators in the next chapter, but for now you just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out::
+``range`` is another kind of immutable sequence type. It is very specialised -- you use it to create ranges of integers.  Ranges are also *generators*.  We will find out more about generators in the next chapter, but for now you just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out::
 
     # print the integers from 0 to 9
     print(list(range(10)))
@@ -402,10 +402,12 @@ If we try to iterate over a collection in a ``for`` loop (something we will disc
 
 Sometimes the iterator we get by default may not be what we expected -- if we iterate over a dictionary in a ``for`` loop, we will iterate over the *keys*.  If what we actually want to do is iterate over the values, or key and value pairs, we will have to specify that ourselves by using the dictionary's ``values`` or ``items`` view instead.
 
+.. Todo:: I'm not convinced that there's any point to having this subsection here. Maybe this should be mentioned in the loop chapter. "Iteration" isn't even defined here.
+
 Explicit conversions
 --------------------
 
-We can convert between the different sequence types quite easily by using the type functions to ``cast`` sequences to the desired types -- just like we would use ``float`` and ``int`` to convert numbers::
+We can convert between the different sequence types quite easily by using the type functions to *cast* sequences to the desired types -- just like we would use ``float`` and ``int`` to convert numbers::
 
     animals = ['cat', 'dog', 'goldfish', 'canary', 'cat']
 
@@ -488,7 +490,7 @@ We can use any string we like to join a sequence of strings together::
 Two-dimensional sequences
 -------------------------
 
-Most of the sequences we have seen so far have been one-dimensional: each sequence is a row of elements.  What if we want to use a sequence to represent a two-dimensional data structure, like a weekly timetable, which has both rows and columns?  The easiest way to do this is to make a sequence in which each element is also a sequence.  For example, we can create a list of lists::
+Most of the sequences we have seen so far have been one-dimensional: each sequence is a row of elements.  What if we want to use a sequence to represent a two-dimensional data structure, which has both rows and columns?  The easiest way to do this is to make a sequence in which each element is also a sequence.  For example, we can create a list of lists::
 
     my_table = [
         [1, 2, 3],
@@ -525,7 +527,7 @@ We can also make a three-dimensional sequence by making a list of lists of lists
 
 Of course we can also make a list of lists of lists of lists and so forth -- we can nest lists as many times as we like.
 
-If we wanted to make a two-dimensional list to represent a timetable, we could either have days as the outer list and time slots as the inner list or the other way around -- we would have to remember which range we picked to be the rows and which the columns.
+If we wanted to make a two-dimensional list to represent a weekly timetable, we could either have days as the outer list and time slots as the inner list or the other way around -- we would have to remember which range we picked to be the rows and which the columns.
 
 Suppose that we wanted to initialise the timetable with an empty string in each time slot -- let us say that we have 24 hour-long time slots in each day.  That's seven lists of 24 elements each -- quite long and unwieldy to define using literals, the way we defined the smaller lists in the examples above!
 
@@ -539,7 +541,7 @@ You might think of using this method to construct our timetable.  We can certain
     day = [""] * 24
     print(day)
 
-But what happens if we repeat a day seven times to make a week?
+But what happens if we repeat a day seven times to make a week? ::
 
     timetable = day * 7
     print(timetable)
