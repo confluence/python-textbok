@@ -15,16 +15,16 @@ Contents:
     Python_Basics
     Variables_and_Scope
     Selection_Control_Statements
-    Errors_Exceptions_Testing
     Collections
     Loop_Control_Statements
     Functions
+    Errors_Exceptions_Testing
     Classes
     Sorting_and_Searching
     Special_Methods
     Object_Oriented_Programming
-    Undefined
-    Undefined
+    Useful_Libraries_I
+    Useful_Libraries_II
     Introduction_to_GUI_Programming
 
 .. Todo:: finalize what goes into some of the later chapters

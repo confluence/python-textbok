@@ -209,7 +209,7 @@ Broader Issues
 * Writing functional code
   * Nested functions
 
-* classes: a chapter or section about overriding str, comparison methods, iter, etc..
+* classes: a chapter or section about overriding str, comparison methods, iter, exceptions, etc..
 
 * Split chapters more sensibly for Python
   * group sequence types
@@ -217,3 +217,5 @@ Broader Issues
 * Do we want something about C extensions?
 * Do we want something about regular expressions?
 * Mention version control?
+
+* one or two chapters about useful standard libraries: datetime, regex, csv parsing, os and sys (how system-agnostic can we make it?) including writing scripts and command-line parameters
