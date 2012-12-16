@@ -177,8 +177,37 @@ Sometimes you can avoid this by iterating over a *copy* of the list instead, but
 
 .. Todo:: exercise
 
-Iterables and iterators
-=======================
+Nested loops
+============
+
+We saw in the previous chapter that we can create multi-dimensional sequences -- sequences in which each element is another sequence.  How do we iterate over all the values of a multi-dimensional sequence?  We need to use loops inside other loops.  When we do this, we say that we are *nesting* loops.
+
+Consider the timetable example from the previous chapter -- let us say that the timetable contains seven days, and each day contains 24 time slots.  Each time slot is a string, which is empty if there is nothing scheduled for that slot.  How can we iterate over all the time slots and print out all our scheduled events? ::
+
+    # first let's define weekday names
+    WEEKDAYS = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+
+    # now we iterate over each day in the timetable
+    for day in timetable:
+        # and over each timeslot in each day
+        for i, event in enumerate(day):
+            if event: # if the slot is not an empty string
+                print("%s at %02d:00 -- %s" % (WEEKDAYS[day], i, event))
+
+Note that we have two ``for`` loops -- the inner loop will be executed once for every step in the outer loop's iteration.  Also note that we are using the ``enumerate`` function when iterating over the days -- because we need both the index of each time slot (so that we can print the hour) and the contents of that slot.
+
+You may have noticed that we look up the name of the weekday once for every iteration of the inner loop -- but the name only changes once for every iteration of the outer loop.  We can make our loop a little more efficient by moving this lookup out of the inner loop, so that we only perform it seven times and not 168 times! ::
+
+        for day in timetable:
+            day_name = WEEKDAYS[day]
+            for i, event in enumerate(day):
+                if event:
+                    print("%s at %02d:00 -- %s" % (day_name, i, event))
+
+This doesn't make much difference when you are looking up a value in a short tuple, but it could make a big difference if it were an expensive, time-consuming calculation and you were iterating over hundreds or thousands of values.
+
+Iterables, iterators and generators
+===================================
 
 In Python, any type which can be iterated over with a ``for`` loop is an *iterable*.  Lists, tuples, strings and dicts are all commonly used iterable types.  Iterating over a list or a tuple simply means processing each value in turn.
 
@@ -208,9 +237,15 @@ You can use all these iterables almost interchangeably because they all use the 
 
 * The *iterable* has a method for accessing an item by its index.  For example, a list just returns the item which is stored in a particular position.  A range, on the other hand, *calculates* the integer in the range which corresponds to a particular index.
 
-* The *iterator* "keeps your place" in the sequence, and has a method which lets you access the next element.  There can be multiple iterators associated with a single iterable at the same time -- each one in a different place in the iteration.
+* The *iterator* "keeps your place" in the sequence, and has a method which lets you access the next element.  There can be multiple iterators associated with a single iterable at the same time -- each one in a different place in the iteration.  For example, you can iterate over the same list in both levels of a nested loop -- each loop uses its own *iterator*, and they do not interfere with each other::
 
-We will look in more detail how these methods are defined in a later chapter, when we discuss writing custom objects.  For now, here are some more examples of built-in generators defined in Python's ``itertools`` module::
+    animals = ['cat', 'dog', 'fish']
+
+    for first_animal in animals:
+        for second_animal in animals:
+            print("Yesterday I bought a %s. Today I bought a %s." % (first_animal, second_animal))
+
+We will look in more detail at how these methods are defined in a later chapter, when we discuss writing custom objects.  For now, here are some more examples of built-in generators defined in Python's ``itertools`` module::
 
     # we need to import the module in order to use it
     import itertools
@@ -238,35 +273,6 @@ We will look in more detail how these methods are defined in a later chapter, wh
         print i # print all the numbers and then all the animals
 
 Some of these generators can go on for ever, so if you use them in a ``for`` loop you will need some other check to make the loop terminate!
-
-Nested loops
-============
-
-We saw in the previous chapter that we can create multi-dimensional sequences -- sequences in which each element is another sequence.  How do we iterate over all the values of a multi-dimensional sequence?  We need to use loops inside other loops.  When we do this, we say that we are *nesting* loops.
-
-Consider the timetable example from the previous chapter -- let us say that the timetable contains seven days, and each day contains 24 time slots.  Each time slot is a string, which is empty if there is nothing scheduled for that slot.  How can we iterate over all the time slots and print out all our scheduled events? ::
-
-    # first let's define weekday names
-    WEEKDAYS = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-
-    # now we iterate over each day in the timetable
-    for day in timetable:
-        # and over each timeslot in each day
-        for i, event in enumerate(day):
-            if event: # if the slot is not an empty string
-                print("%s at %02d:00: %s" % (WEEKDAYS[day], i, event))
-
-Note that we have two ``for`` loops -- the inner loop will be executed once for every step in the outer loop's iteration.  Also note that we are using the ``enumerate`` function when iterating over the days -- because we need both the index of each time slot (so that we can print the hour) and the contents of that slot.
-
-You may have noticed that we look up the name of the weekday once for every iteration of the inner loop -- but the name only changes once for every iteration of the outer loop.  We can make our loop a little more efficient by moving this lookup out of the inner loop, so that we only perform it seven times and not 168 times! ::
-
-        for day in timetable:
-            day_name = WEEKDAYS[day]
-            for i, event in enumerate(day):
-                if event:
-                    print("%s at %02d:00: %s" % (day_name, i, event))
-
-This doesn't make much difference when you are looking up a value in a short tuple, but it could make a big difference if it were an expensive, time-consuming calculation and you were iterating over hundreds or thousands of values.
 
 Comprehensions
 ==============
@@ -299,7 +305,7 @@ A comprehension is a kind of filter which we can define on an iterable based on 
     even_numbers = [number for number in numbers if number % 2 == 0]
     vowel_animals = [animal.title() for animal in animals if animal[0] in 'aeiou']
 
-The comprehension is the part written between square brackets on each line.  Each of these comprehensions results in a new ``list`` object (in this example, each is assigned to a variable).
+The comprehension is the part written between square brackets on each line.  Each of these comprehensions results in the creation of a new ``list`` object.
 
 You can think of the comprehension as a compact form of ``for`` loop, which has been rearranged slightly.
 
@@ -327,6 +333,8 @@ If your generator expression is a parameter being passed to a function, like ``s
     sum_doubles = sum(2 * number for number in numbers)
 
 .. Note:: dict and set comprehensions were introduced in Python 3.  In Python 2 you have to create a list or generator instead and convert it to a set or a dict yourself.
+
+.. Todo:: exercise idea: join a list of numbers -- need to use comprehension to convert them all to strings first
 
 The ``break`` and ``continue`` statements
 =========================================
