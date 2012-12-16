@@ -136,12 +136,12 @@ You can see that this kind of *for* loop has a lot in common with a *while* loop
 
 In Python, ``for`` loops make this use case simple and easy by allowing you to iterate over sequences directly.  Here is an example of a ``for`` statement which counts from 1 to 8::
 
-    for i in range(8):
-        print(i + 1) # range(8) starts at 0 and ends at 7
+    for i in range(1, 9):
+        print(i)
 
-``range`` is a special kind of Python function called a *generator* -- it returns an *iterator* object, which *yields* a series of values until it stops.  In this case, the iterator will yield the integers from ``0`` to ``7``, one at a time.  When the end of the iterator is reached, the ``for`` loop will exit.
+As we saw in the previous chapter, ``range`` is an immutable sequence type used for ranges of integers -- in this case, the range is counting from ``1`` to ``8``. The ``for`` loop will step through each of the numbers in turn, performing the print action for each one.  When the end of the range is reached, the ``for`` loop will exit.
 
-You can use ``for`` to iterate over any kind of sequence, whether it's an iterator or a list.  You can iterate over a list of strings like this::
+You can use ``for`` to iterate over other kinds of sequences too.  You can iterate over a list of strings like this::
 
     pets = ["cat", "dog", "budgie"]
 
@@ -159,7 +159,7 @@ That is similar to the way ``for`` loops are written in, for example, Java.  You
     for i, pet in enumerate(pets):
         pets[i] = pet.upper() # rewrite the list in all caps
 
-``enumerate`` also returns an iterator -- each item it returns is a ``tuple``, or pair of values. The first is the element index (starting at zero) and the second is the element itself.  In the loop above, at each iteration the value of the index is assigned to the variable ``i``, and the element is assigned to the variable ``pet``, as before.
+Like ``range``, ``enumerate`` also returns an iterator -- each item it generates is a tuple in which the first value is the index of the element (starting at zero) and the second is the element itself. In the loop above, at each iteration the value of the index is assigned to the variable ``i``, and the element is assigned to the variable ``pet``, as before.
 
 Why couldn't we just write ``pet = pet.upper()``?  That would just assign a new value to the variable ``pet`` inside the loop, without changing the original list.
 
@@ -175,18 +175,127 @@ This brings us to a common ``for`` loop pitfall: modifying a list while you're i
 
 Sometimes you can avoid this by iterating over a *copy* of the list instead, but it won't help you in this case -- as you delete elements from the original list, it will shrink, so the indices from the unmodified list copy will soon exceed the length of the modified list and you will get an error.  In general, if you want to select a subset of elements from a list on the basis of some criterion, you should use a *list comprehension* instead. We will look at them at the end of this chapter.
 
-.. Todo:: exercise; and we definitely need to discuss lists before this chapter.
+.. Todo:: exercise
 
-Iterators
-=========
+Iterables and iterators
+=======================
 
-.. Todo:: move iterator discussion here
+In Python, any type which can be iterated over with a ``for`` loop is an *iterable*.  Lists, tuples, strings and dicts are all commonly used iterable types.  Iterating over a list or a tuple simply means processing each value in turn.
 
+Sometimes we use a sequence to store a series of values which don't follow any particular pattern: each value is unpredictable, and can't be calculated on the fly.  In cases like this, we have no choice but to store each value in a list or tuple.  If the list is very large, this can use up a lot of memory.
+
+What if the values in our sequence *do* follow a pattern, and *can* be calculated on the fly?  We can save a lot of memory by calculating values only when we need them, instead of calculating them all up-front: instead of storing a big list, we can store only the information we need for the calculation.
+
+Python has a lot of built-in iterable types that generate values on demand -- they are often referred to as *generators*.  We have already seen some examples, like ``range`` and ``enumerate``.  You can mostly treat a generator just like any other sequence if you only need to access its elements one at a time -- for example, if you use it in a ``for`` loop::
+
+    # These two loops will do exactly the same thing:
+
+    for i in (1, 2, 3, 4, 5):
+        print(i)
+
+    for i in range(1, 6):
+        print(i)
+
+You may notice a difference if you try to print out the generator's contents -- by default all you will get is Python's standard string representation of the object, which shows you the object's type and its unique identifier.  To print out all the values of generator, we need to convert it to a sequence type like a list, which will force all of the values to be generated::
+
+    # this will not be very helpful
+    print(range(100))
+
+    # this will show you all the generated values
+    print(list(range(100)))
+
+You can use all these iterables almost interchangeably because they all use the same interface for iterating over values: every *iterable* object has a method which can be used to return an *iterator* over that object.  The iterable and the iterator together form a consistent interface which can be used to loop over a sequence of values -- whether those values are all stored in memory or calculated as they are needed:
+
+* The *iterable* has a method for accessing an item by its index.  For example, a list just returns the item which is stored in a particular position.  A range, on the other hand, *calculates* the integer in the range which corresponds to a particular index.
+
+* The *iterator* "keeps your place" in the sequence, and has a method which lets you access the next element.  There can be multiple iterators associated with a single iterable at the same time -- each one in a different place in the iteration.
+
+We will look in more detail how these methods are defined in a later chapter, when we discuss writing custom objects.  For now, here are some more examples of built-in generators defined in Python's ``itertools`` module::
+
+    # we need to import the module in order to use it
+    import itertools
+
+    # unlike range, count doesn't have an upper bound, and is not restricted to integers
+    for i in itertools.count(1):
+        print(i) # 1, 2, 3....
+
+    for i in itertools.count(1, 0.5):
+        print(i) # 1.0, 1.5, 2.0....
+
+    # cycle repeats the values in another iterable over and over
+    for animal in itertools.cycle(['cat', 'dog']):
+        print(animal) # 'cat', 'dog', 'cat', 'dog'...
+
+    # repeat repeats a single item
+    for i in itertools.repeat(1): # ...forever
+        print(i) # 1, 1, 1....
+
+    for i in itertools.repeat(1, 3): # or a set number of times
+        print(i) # 1, 1, 1
+
+    # chain chains multiple iterables together
+    for i in itertools.chain(numbers, animals):
+        print i # print all the numbers and then all the animals
+
+Some of these generators can go on for ever, so if you use them in a ``for`` loop you will need some other check to make the loop terminate!
 
 Comprehensions
 ==============
 
-.. Todo:: This whole section. Don't forget to mention tuple, set and dict comprehensions at the end.
+Suppose that we have a list of numbers, and we want to build a new list by doubling all the values in the first list.  Or that we want to extract all the even numbers from a list of numbers.  Or that we want to find and capitalise all the animal names in a list of animal names that start with a vowel.  We can do each of these things by iterating over the original list, performing some kind of check on each element in turn, and appending values to a new list as we go::
+
+    numbers = [1, 5, 2, 12, 14, 7, 18]
+
+    doubles = []
+    for number in numbers:
+        doubles.append(2 * number)
+
+    even_numbers = []
+    for number in numbers:
+        if number % 2 == 0:
+            even_numbers.append(number)
+
+    animals = ['aardvark', 'cat', 'dog', 'opossum']
+
+    vowel_animals = []
+    for animal in animals:
+        if animal[0] in 'aeiou':
+            vowel_animals.append(animal.title())
+
+That's quite an unwieldy way to do something very simple.  Fortunately, we can rewrite simple loops like this to use a cleaner and more readable syntax by using *comprehensions*.
+
+A comprehension is a kind of filter which we can define on an iterable based on some condition.  The result is another iterable.  Here are some examples of list comprehensions::
+
+    doubles = [2 * number for number in numbers]
+    even_numbers = [number for number in numbers if number % 2 == 0]
+    vowel_animals = [animal.title() for animal in animals if animal[0] in 'aeiou']
+
+The comprehension is the part written between square brackets on each line.  Each of these comprehensions results in a new ``list`` object (in this example, each is assigned to a variable).
+
+You can think of the comprehension as a compact form of ``for`` loop, which has been rearranged slightly.
+
+* The first part (``2 * number`` or ``number`` or ``animal.title()``) defines what is going to be inserted into the new list at each step of the loop.  This is usually some function of each item in the original iterable as it is processed.
+* The middle part (``for number in numbers`` or ``for animal in animals``) corresponds to the first line of a ``for`` loop, and defines what iterable is being iterated over and what variable name each item is given inside the loop.
+* The last part (nothing or ``if number % 2 == 0`` or ``if animal[0] in 'aeiou'``) is a condition which filters out some of the original items.  Only items for which the condition is true will be processed (as described in the first part) and included in the new list.  You don't have to include this part -- in the first example, we want to double *all* the numbers in the original list.
+
+List comprehensions can be used to replace loops that are a lot more complicated than this -- even nested loops.  However, the more complex the loop, the more complicated the corresponding list comprehension is likely to be.  A long and convoluted list comprehension can be very difficult for someone reading your code to understand -- sometimes it's better just to write the loop out in full.
+
+The final product of a comprehension doesn't have to be a list.  You can create dictionaries or generators in a very similar way -- a generator expression uses round brackets instead of square brackets, and a dict comprehension uses curly brackets and separates the key and the value using a colon::
+
+    numbers = [1, 5, 2, 12, 14, 7, 18]
+
+    # a generator comprehension
+    doubles_generator = (2 * number for number in numbers)
+
+    # a dict comprehension which uses the number as the key and the doubled number as the value
+    doubles_dict = {number: 2 * number for number in numbers}
+
+If your generator expression is a parameter being passed to a function, like ``sum``, you can leave the round brackets out::
+
+    sum_doubles = sum(2 * number for number in numbers)
+
+.. Note:: dict comprehensions were introduced in Python 3.  In Python 2 you have to create a list of tuples instead and convert it to a dict.
+
 
 The ``break`` and ``continue`` statements
 =========================================

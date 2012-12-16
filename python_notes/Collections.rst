@@ -25,7 +25,7 @@ The Python list type is called ``list``.  It is a type of sequence -- we can use
         third_variable, # this trailing comma is legal in Python
     ]
 
-To refer to an element in the list, we use the list identifier followed by the index inside square brackets.  Indices are integers which start from zero::
+To refer to an element in the list, we use the list identifier followed by the index inside square brackets.  Indices are integers which *start from zero*::
 
     print(animals[0]) # cat
     print(numbers[1]) # 7
@@ -285,6 +285,22 @@ How do we make an empty set?  We have to use the ``set`` function.  Dictionaries
 
 You can use the ``list, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
 
+Ranges
+======
+
+``range`` is another kind of immutable sequence type. It is very specialised -- you use it to create ranges of integers.  Ranges are also *iterator* objects.  We will find out more about iterators in the next chapter, but for now you just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out::
+
+    # print the integers from 0 to 9
+    print(list(range(10)))
+
+    # print the integers from 1 to 10
+    print(list(range(1, 11)))
+
+    # print the odd integers from 1 to 10
+    print(list(range(1, 11, 2)))
+
+We create a range by calling the ``range`` function.  As you can see, if we pass a single parameter to the ``range`` function, it is used as the upper bound.  If we use two parameters, the first is the lower bound and the second is the upper bound.  If we use three, the third parameter is the step size.  The default lower bound is zero, and the default step size is one.  Note that the range *includes* the lower bound and *excludes* the upper bound.
+
 Dictionaries
 ============
 
@@ -406,7 +422,7 @@ We will revisit conversions in the next chapter, when we learn about *comprehens
 Another look at strings
 -----------------------
 
-Strings share some properties with sequence types, and can be treated as sequences under certain circumstances.  For example, we can find the length of a string or the index of a character in the string, and we can access individual elements of strings or slices::
+Strings are also a kind of sequence type -- they are sequences of characters, and share some properties with other sequences.  For example, we can find the length of a string or the index of a character in the string, and we can access individual elements of strings or slices::
 
     s = "abracadabra"
 
@@ -420,6 +436,14 @@ Remember that strings are immutable -- modifying characters in-place isn't allow
 
     # this will give us an error
     s[0] = "b"
+
+The membership operator has special behaviour when applied to strings: you can use it to determine if a string contains a single character as an element, but you can also use it to check if a string contains a substring::
+
+    print('a' in 'abcd') # True
+    print('ab' in 'abcd') # also True
+
+    # this doesn't work for lists
+    print(['a', 'b'] in ['a', 'b', 'c', 'd']) # False
 
 We can easily convert a string to a list of characters::
 
