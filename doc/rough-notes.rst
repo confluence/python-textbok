@@ -208,6 +208,9 @@ Broader Issues
 * Writing procedural code
 * Writing functional code
   * Nested functions
+
+* classes: a chapter or section about overriding str, comparison methods, iter, etc..
+
 * Split chapters more sensibly for Python
   * group sequence types
 * Discussion of .pyc files.
