@@ -152,7 +152,12 @@ Note that in the example above if a ``ValueError`` occurs we won't know whether 
     except ZeroDivisionError:
         print("The dividend may not be zero!")
 
-Exception handling gives us an alternative way to deal with error-prone situations in our code.  Instead of adding checks before doing something to make sure that an error doesn't occur, we just try to do it -- and if an error does occur we handle it.  This can allow us to write simpler and more readable code.  Let's look at a more complicated input example -- one in which we want to keep asking the user for input until the input is correct.  We will try to write this example using the two different approaches::
+In general, it is a better idea to use exception handlers to protect small blocks of code against specific errors than to wrap large blocks of code and write vague, generic error recovery code.  It may sometimes seem inefficient and verbose to write many small *try-except* statements instead of a single catch-all statement, but we can mitigate this to some extent by making effective use of loops and functions to reduce the amount of code duplication.
+
+Error checks vs exception handling
+----------------------------------
+
+Exception handling gives us an alternative way to deal with error-prone situations in our code.  Instead of performing more checks before we do something to make sure that an error will not occur, we just try to do it -- and if an error does occur we handle it.  This can allow us to write simpler and more readable code.  Let's look at a more complicated input example -- one in which we want to keep asking the user for input until the input is correct.  We will try to write this example using the two different approaches::
 
     # with checks
 
@@ -179,9 +184,74 @@ In the first code snippet, we have to write quite a convoluted check to test whe
 The ``else`` and ``finally`` statements
 ---------------------------------------
 
-* common exceptions
-* raising exceptions
-* note that writing exceptions will be discussed later
+There are two other clauses that we can add to a *try-except* block: ``else`` and ``finally``.  ``else`` will be executed only if the ``try`` clause doesn't raise an exception::
+
+    try:
+        age = int(input("Please enter your age: "))
+    except ValueError:
+        print("Hey, that wasn't a number!")
+    else:
+        print("I see that you are %d years old." % age)
+
+We want to print a message about the user's age only if the integer conversion succeeds.  In the first exception handler example, we put this print statement directly after the conversion inside the ``try`` block.  In both cases, the statement will only be executed if the conversion statement doesn't raise an exception, but putting it in the ``else`` block is better practice -- it means that the only code inside the ``try`` block is the single line that is the potential source of the error that we want to handle.
+
+When we edit this program in the future, we may introduce additional statements that should also be executed if the age input is successfully converted.  Some of these statements may also potentially raise a ``ValueError``.  If we don't notice this, and put them inside the ``try`` clause, the ``except`` clause will also handle these errors if they occur.  This is likely to cause some odd and unexpected behaviour.  By putting all this extra code in the ``else`` clause instead, we avoid taking this risk.
+
+The ``finally`` clause will be executed at the end of the *try-except* block no matter what -- if there is no exception, if an exception is raised and handled, if an exception is raised and not handled, and even if we exit the block using ``break``, ``continue`` or ``return``.  We can use the ``finally`` clause for cleanup code that we always want to be executed::
+
+    try:
+        age = int(input("Please enter your age: "))
+    except ValueError:
+        print("Hey, that wasn't a number!")
+    else:
+        print("I see that you are %d years old." % age)
+    finally:
+        print("It was really nice talking to you.  Goodbye!")
+
+Using the exception object
+--------------------------
+
+Python's exception objects contain more information than just the error type.  They also come with some kind of message -- we have already seen some of these messages displayed when our programs have crashed.  Often these messages aren't very user-friendly -- if we want to report an error to the user we usually need to write a more descriptive message which explains how the error is related to what the user did.  For example, if the error was caused by incorrect input, it is helpful to tell the user which of the input values was incorrect.
+
+Sometimes the exception message contains useful information which we want to display to the user.  In order to access the message, we need to be able to access the exception object.  We can assign the object to a variable that we can use inside the ``except`` clause like this::
+
+    try:
+        age = int(input("Please enter your age: "))
+    except ValueError as err:
+        print(err)
+
+``err`` is not a string, but Python knows how to convert it into one -- the string representation of an exception is the message, which is exactly what we want.  We can also combine the exception message with our own message::
+
+    try:
+        age = int(input("Please enter your age: "))
+    except ValueError as err:
+        print("You entered incorrect age input: %s" % err)
+
+Note that inserting a variable into a formatted string using ``%s`` also converts the variable to a string.
+
+Raising exceptions
+------------------
+
+We can raise exceptions ourselves using the ``raise`` statement::
+
+    try:
+        age = int(input("Please enter your age: "))
+        if age < 0:
+            raise ValueError("%d is not a valid age. Age must be positive or zero.")
+    except ValueError as err:
+        print("You entered incorrect age input: %s" % err)
+    else:
+        print("I see that you are %d years old." % age)
+
+We can raise our own ``ValueError`` if the age input is a valid integer, but it's negative.  When we do this, it has exactly the same effect as any other exception -- the flow of control will immediately exit the ``try`` clause at this point and pass to the ``except`` clause.  This ``except`` clause can match our exception as well, since it is also a ``ValueError``.
+
+We picked ``ValueError`` as our exception type because it's the most appropriate for this kind of error.  There's nothing stopping us from using a completely inappropriate exception class here, but we should try to be consistent. Here are a few common exception types which we are likely to raise in our own code::
+
+* ``TypeError``: this is an error which indicates that a variable has the wrong *type* for some operation.  We might raise it in a function if a parameter is not of a type that we know how to handle.
+* ``ValueError``: this error is used to indicate that a variable has the right *type* but the wrong *value*.  For example, we used it when ``age`` was an integer, but the wrong *kind* of integer.
+* ``NotImplementedError``: we will see in the next chapter how we use this exception to indicate that a class's method has to be implemented in a child class.
+
+We can also write our own custom exception classes which are based on existing exception classes -- we will see some examples of this in a later chapter.
 
 Testing and debugging programs
 ==============================
