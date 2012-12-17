@@ -88,6 +88,8 @@ A common source of variable name mix-ups and incorrect indentation is frequent c
 Handling exceptions
 ===================
 
+.. Todo:: maybe this should be moved after classes? Arrgh!
+
 Until now, the programs that we have written have generally ignored the fact that things can go wrong.  We have have tried to prevent runtime errors by checking data which may be incorrect before we used it, but we haven't yet seen how we can handle errors when they do occur -- our programs so far have just crashed suddenly whenever they have encountered one.
 
 There are some situations in which runtime errors are likely to occur.  Whenever we try to read a file or get input from a user, there is a chance that something unexpected will happen -- the file may have been moved or deleted, and the user may enter data which is not in the right format.  Good programmers should add safeguards to their programs so that common situations like this can be handled gracefully -- a program which crashes whenever it encounters an easily forseeable problem is not very pleasant to use.  Most users expect programs to be robust enough to recover from these kinds of setbacks.
