@@ -410,7 +410,7 @@ We can use our knowledge of loops to simplify some kinds of redundant code.  Con
     height = input("Please enter your height: ")
     weight = input("Please enter your weight: ")
 
-There's a lot of repetition in this snippet of code.  Each line is exactly the same except for the name of the variable and the name of each property we ask for (and these values match each other, so there's really only one difference).  When we write code like this we're likely to do a lot of copying and pasting, and it's easy to make a mistake.  If we ever want to change something, we'll need to change each line.
+There's a lot of repetition in this snippet of code.  Each line is exactly the same except for the name of the variable and the name of the property we ask for (and these values match each other, so there's really only one difference).  When we write code like this we're likely to do a lot of copying and pasting, and it's easy to make a mistake.  If we ever want to change something, we'll need to change each line.
 
 How can we improve on this?  We can separate the parts of these lines that differ from the parts that don't, and use a loop to iterate over them.  Instead of storing the user input in separate variables, we are going to use a dictionary -- we can easily use the property names as keys, and it's a sensible way to group these values::
 
