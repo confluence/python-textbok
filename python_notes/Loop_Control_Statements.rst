@@ -397,3 +397,28 @@ This trick can help us to make this particular loop use case look better, but it
     age = None # we can initialise age to something which is not a valid number
     while not valid_number(age): # now we can use the condition before asking the user anything
         age = input("Please enter your age: ")
+
+Using loops to simplify code
+----------------------------
+
+We can use our knowledge of loops to simplify some kinds of redundant code.  Consider this example, in which we prompt a user for some personal details::
+
+    name = input("Please enter your name: ")
+    surname = input("Please enter your surname: ")
+    # let's store these as strings for now, and convert them to numbers later
+    age = input("Please enter your age: ")
+    height = input("Please enter your height: ")
+    weight = input("Please enter your weight: ")
+
+There's a lot of repetition in this snippet of code.  Each line is exactly the same except for the name of the variable and the name of each property we ask for (and these values match each other, so there's really only one difference).  When we write code like this we're likely to do a lot of copying and pasting, and it's easy to make a mistake.  If we ever want to change something, we'll need to change each line.
+
+How can we improve on this?  We can separate the parts of these lines that differ from the parts that don't, and use a loop to iterate over them.  Instead of storing the user input in separate variables, we are going to use a dictionary -- we can easily use the property names as keys, and it's a sensible way to group these values::
+
+    person = {}
+
+    for property in ["name", "surname", "age", "height", "weight"]:
+        person[property] = input("Please enter your %s: " % property)
+
+Now there is no unnecessary duplication.  We can easily change the string that we use as a prompt, or add more code to execute for each property -- we will only have to edit the code in one place, not in five places.  To add another property, all we have to do is add another name to the list.
+
+.. Todo:: exercise ideas: add type conversion and exception handling to the snippet above.  The exception handling one should be put in the exception chapter.
