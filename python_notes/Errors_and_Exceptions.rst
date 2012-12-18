@@ -255,23 +255,15 @@ We picked ``ValueError`` as our exception type because it's the most appropriate
 
 We can also write our own custom exception classes which are based on existing exception classes -- we will see some examples of this in a later chapter.
 
-Testing and debugging programs
-==============================
+.. Todo:: moved this after basic classes, so rewrite to reflect this and add section on defining your own hierarchy.  Add more stuff from the old exceptions chapter.
 
-Testing
--------
-
-* Something about unit tests
-* Black box testing
-* Glass box testing
-* Add discussion of unit vs functional vs integrated tests
-
-Debugging
----------
+Debugging programs
+------------------
 
 * follow error messages
 * static error checking: pyflakes, pep8
 * print statements
 * pdb
+* add a note that testing is coming up in later chapter
 
-.. Todo:: Exercise; exception hierarchy will go in chapter about extensions; [explain where Python fits in??]
+.. Todo:: Exercise; [explain where Python fits in??]
