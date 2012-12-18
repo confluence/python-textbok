@@ -18,11 +18,12 @@ Contents:
     Collections
     Loop_Control_Statements
     Functions
-    Errors_Exceptions_Testing
+    Errors_and_Exceptions
     Classes
     Sorting_and_Searching
     Special_Methods
     Object_Oriented_Programming
+    Packaging_and_Testing
     Useful_Libraries_I
     Useful_Libraries_II
     Introduction_to_GUI_Programming
