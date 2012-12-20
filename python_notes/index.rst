@@ -16,18 +16,15 @@ Contents:
     Variables_and_Scope
     Selection_Control_Statements
     Collections
+    Sorting_and_Searching_Algorithms
     Loop_Control_Statements
+    Errors_and_Exceptions
     Functions
     Classes
-    Errors_and_Exceptions
-    Sorting_and_Searching
     Object_Oriented_Programming
-    Special_Methods
     Packaging_and_Testing
     Useful_Libraries
     Introduction_to_GUI_Programming
-
-.. Todo:: a whole chapter on sorting and searching? Really? This should probably just be a section in Collections or Loops.  Maybe a chapter about algorithms? Put stuff about hashes there as well?  Exercises?
 
 Indices and tables
 ==================

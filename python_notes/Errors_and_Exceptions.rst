@@ -1,6 +1,6 @@
-******************************
-Errors, exceptions and testing
-******************************
+*********************
+Errors and exceptions
+*********************
 
 Errors
 ======
@@ -87,8 +87,6 @@ A common source of variable name mix-ups and incorrect indentation is frequent c
 
 Handling exceptions
 ===================
-
-.. Todo:: maybe this should be moved after classes? Arrgh!
 
 Until now, the programs that we have written have generally ignored the fact that things can go wrong.  We have have tried to prevent runtime errors by checking data which may be incorrect before we used it, but we haven't yet seen how we can handle errors when they do occur -- our programs so far have just crashed suddenly whenever they have encountered one.
 
@@ -255,7 +253,7 @@ We picked ``ValueError`` as our exception type because it's the most appropriate
 
 We can also write our own custom exception classes which are based on existing exception classes -- we will see some examples of this in a later chapter.
 
-.. Todo:: moved this after basic classes, so rewrite to reflect this and add section on defining your own hierarchy.  Add more stuff from the old exceptions chapter.
+.. Todo:: moved this before functions. Make sure that makes sense.  Add more stuff from the old exceptions chapter (e.g. re-raising exceptions).  Add stuff about defining your own exception hierarchy somewhere after OO chapter.
 
 Debugging programs
 ------------------
