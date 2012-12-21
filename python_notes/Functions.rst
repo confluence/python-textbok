@@ -108,15 +108,185 @@ All functions do actually return *something*, even if we don't define a return v
 
 When a ``return`` statement is reached, the flow of control immediately exits the function -- any further statements in the function body will be skipped.  We can sometimes use this to our advantage to reduce the number of conditional statements we need to use inside a function::
 
-    # todo
+    def divide(dividend, divisor):
+        if not divisor:
+            return None, None # instead of dividing by zero
+
+        quotient = dividend // divisor
+        remainder = dividend % divisor
+        return quotient, remainder
+
+If the ``if`` clause is executed, the first ``return`` will cause the function to exit -- so whatever comes after the ``if`` clause doesn't need to be inside an ``else``.  The remaining statements can simply be in the main body of the function, since they can only be reached if the ``if`` clause is not executed.
+
+This technique can be useful whenever we want to check parameters at the beginning of a function -- it means that we don't have to indent the main part of the function inside an ``else`` block.  Sometimes it's more appropriate to raise an exception instead of returning a value like ``None`` if there is something wrong with one of the parameters::
+
+    def divide(dividend, divisor):
+        if not divisor:
+            raise ValueError("The divisor cannot be zero!")
+
+        quotient = dividend // divisor
+        remainder = dividend % divisor
+        return quotient, remainder
+
+Having multiple exit points scattered throughout your function can make your code difficult to read -- most people expect a single ``return`` right at the end of a function.  You should use this technique sparingly.
 
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
 Default parameters
 ------------------
 
-* default parameters
-* args and kwargs
-* function scope
-* recursion?
-* decorators
+The combination of the function name and the number of parameters that it takes is called the *function signature*.  In statically typed languages, there can be multiple functions with the same name in the same scope as long as they have different numbers or types of parameters (in these languages, parameter types and return types are also part of the signature).
+
+In Python, there can only be one function with a particular name defined in the scope -- if you define another function with the same name, you will overwrite the first function.  You must call this function with the correct number of parameters, otherwise you will get an error.
+
+Sometimes there is a good reason to want to have two versions of the same function with different sets of parameters.  You can achieve something similar to this by making some parameters *optional*.  To make a parameter optional, we need to supply a default value for it.  Optional parameters must come after all the required parameters in the function definition::
+
+    def make_greeting(title, name, surname, formal=True):
+        if formal:
+            return "Hello, %s %s!" % (title, surname)
+
+        return "Hello, %s!" % name
+
+    print(make_greeting("Mr", "John", "Smith"))
+    print(make_greeting("Mr", "John", "Smith", False))
+
+When we call the function, we can leave the optional parameter out -- if we do, the default value will be used.  If we include the parameter, our value will override the default value.
+
+We can define multiple optional parameters::
+
+    def make_greeting(title, name, surname, formal=True, time=None):
+        if formal:
+            fullname =  "%s %s" % (title, surname)
+        else:
+            fullname = name
+
+        if time is None:
+            greeting = "Hello"
+        else:
+            greeting = "Good %s" % time
+
+        return "%s, %s!" % (greeting, fullname)
+
+    print(make_greeting("Mr", "John", "Smith"))
+    print(make_greeting("Mr", "John", "Smith", False))
+    print(make_greeting("Mr", "John", "Smith", False, "evening"))
+
+What if we want to pass in the *second* optional parameter, but not the *first*?  So far we have been passing *positional* parameters to all these functions -- a tuple of values which are matched up with parameters in the function signature based on their *positions*.  We can also, however, pass these values in as *keyword* parameters -- we can explicitly specify the parameter names along with the values::
+
+    print(make_greeting(title="Mr", name="John", surname="Smith"))
+    print(make_greeting(title="Mr", name="John", surname="Smith", formal=False, time="evening"))
+
+We can mix positional and keyword parameters, but the keyword parameters must come *after* any positional parameters::
+
+    # this is OK
+    print(make_greeting("Mr", "John", surname="Smith"))
+    # this will give you an error
+    print(make_greeting(title="Mr", "John", "Smith"))
+
+We can specify keyword parameters in any order -- they don't have to match the order in the function definition::
+
+    print(make_greeting(surname="Smith", name="John", title="Mr"))
+
+Now we can easily pass in the second optional parameter and not the first::
+
+    print(make_greeting("Mr", "John", "Smith", time="evening"))
+
+``*args`` and ``**kwargs``
+--------------------------
+
+Sometimes we may want to pass a variable-length list of positional or keyword parameters into a function.  We can put ``*`` before a parameter name to indicate that it is a variable-length tuple of positional parameters, and we can use ``**`` to indicate that a parameter is a variable-length dictionary of keyword parameters.  By convention, the parameter name we use for the tuple is ``args`` and the name we use for the dictionary is ``kwargs``::
+
+    def print_args(*args):
+        for arg in args:
+            print(arg)
+
+    def print_kwargs(**kwargs):
+        for k, v in kwargs.items():
+            print("%s: %s" % (k, v))
+
+Inside the function, we can access ``args`` as a normal tuple, but the ``*`` means that ``args`` isn't passed into the function as a single parameter which is a tuple: instead, it is passed in as a series of individual parameters.  Similarly, ``**`` means that ``kwargs`` is passed in as a series of individual keyword parameters, rather than a single parameter which is a dictionary::
+
+    print_args("one", "two", "three")
+    print_args("one", "two", "three", "four")
+
+    print_kwargs(name="Jane", surname="Doe")
+    print_kwargs(age=10)
+
+We can use ``*`` or ``**`` when we are *calling* a function to *unpack* a sequence or a dictionary into a series of individual parameters::
+
+    my_list = ["one", "two", "three"]
+    print_args(*my_list)
+
+    my_dict = {"name": "Jane", "surname": "Doe"}
+    print_kwargs(**my_dict)
+
+This makes it easier to build lists of parameters programatically.  Note that we can use this for *any* function, not just one which uses ``*args`` or ``**kwargs``::
+
+    my_dict = {
+        "title": "Mr",
+        "name": "John",
+        "surname": "Smith",
+        "formal": False,
+        "time": "evening",
+    }
+
+    print(make_greeting(**my_dict))
+
+We can mix ordinary parameters, ``*args`` and ``**kwargs`` in the same function.  In the function definition, ``*args`` and ``**kwargs`` must come after all the other parameters, and ``**kwargs`` must come after ``*args``.  You cannot have more than one variable-length list parameter or more than one variable dict parameter (recall that you can call them whatever you like)::
+
+
+    def print_everything(name, time="morning", *args, **kwargs):
+        print("Good %s, %s." % (time, name))
+
+        for arg in args:
+            print(arg)
+
+        for k, v in kwargs.items():
+            print("%s: %s" % (k, v))
+
+If we use a ``*`` expression when you call a function, it must come after all the positional parameters, and if we use a ``**`` expression it must come right at the end::
+
+    def print_everything(*args, **kwargs):
+        for arg in args:
+            print(arg)
+
+        for k, v in kwargs.items():
+            print("%s: %s" % (k, v))
+
+    # we can write all the parameters individually
+    print_everything("cat", "dog", day="Tuesday")
+
+    t = ("cat", "dog")
+    d = {"day": "Tuesday"}
+
+    # we can unpack a tuple and a dictionary
+    print_everything(*t, **d)
+    # or just one of them
+    print_everything(*t, day="Tuesday")
+    print_everything("cat", "dog", **d)
+
+    # we can mix * and ** with explicit parameters
+    print_everything("Jane", *t, **d)
+    print_everything("Jane", *t, time="evening", **d)
+    print_everything(time="evening", *t, **d)
+
+    # none of these are allowed:
+    print_everything(*t, "Jane", **d)
+    print_everything(*t, **d, time="evening")
+
+.. Todo:: are these actually the right rules? How do function signatures work with args, kwargs and inheritance?
+
+Function scope
+--------------
+
+Recursion
+---------
+
+* brief example
+
+Decorators
+----------
+
+* brief example, and examples of existing decorators?  Just a note that method decorators will be discussed in next chapter?
+
+.. Todo:: Exercises

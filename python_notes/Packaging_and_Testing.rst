@@ -1,3 +1,15 @@
+Packaging
+=========
+
+* arranging code in files
+* setup.py install
+
+Documentation
+=============
+
+* docstrings
+* sphinx
+
 Testing programs
 ================
 
