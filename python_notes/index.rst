@@ -1,10 +1,7 @@
-.. Object-Oriented Programming in Python master file, created by
-   sphinx-quickstart on Sat Oct  6 11:01:59 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Object-Oriented Programming in Python
 
 Object-Oriented Programming in Python
-=================================================================
+=====================================
 
 Contents:
 
