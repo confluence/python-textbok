@@ -132,6 +132,43 @@ Having multiple exit points scattered throughout your function can make your cod
 
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
+Function scope
+--------------
+
+* about the stack? Recap variable scope with a focus on functions?
+
+Recursion
+---------
+
+We can make a function call itself.  This is known as *recursion*. A common example is a function which calculates numbers in the Fibonacci sequence: the zeroth number is ``0``, the first number is ``1``, and each subsequent number is the sum of the previous two numbers::
+
+    def fibonacci(n):
+        if n == 0:
+            return 0
+
+        if n == 1:
+            return 1
+
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+Whenever we write a recursive function, we need to include some kind of condition which will allow it to *stop* recursing -- an end case in which the function *doesn't* call itself.  In this example, that happens at the beginning of the sequence: the first two numbers are *not* calculated from any previous numbers -- they are constants.
+
+What would happen if we omitted that condition from our function?  When we got to *n = 2*, we would keep calling the function, trying to calculate ``fibonacci(0)``, ``fibonacci(-1)``, and so on.  In theory, the function would end up recursing forever and never terminate, but in practice the program will crash with a ``RuntimeError`` and a message that we have exceeded the maximum recursion depth.  This is because Python's stack has a finite size -- if we keep placing instances of the function on the stack we will eventually fill it up and cause a *stack overflow*.  Python protects itself from stack overflows by setting a limit on the number of times that a function is allowed to recurse.
+
+Writing fail-safe recursive functions is difficult.  What if we called the function above with a parameter of ``-1``?  We haven't included any error checking which guards against this, so we would skip over the end cases and try to calculate ``fibonacci(-2)``, ``fibonacci(-3)``, and keep going.
+
+Any recursive function can be re-written in an *iterative* way which avoids recursion.  For example::
+
+    def fibonacci(n):
+        current, next = 0, 1
+
+        for i in range(n):
+            current, next = next, current + next
+
+        return current
+
+This function uses *iteration* to count up to the desired value of *n*, updating variables to keep track of the calculation.  All the iteration happens within a single instance of the function.  Note that we assign new values to both variables at the same time, so that we can use both old values to calculate both new values on the right-hand side.
+
 Default parameters
 ------------------
 
@@ -275,14 +312,6 @@ If we use a ``*`` expression when you call a function, it must come after all th
     print_everything(*t, **d, time="evening")
 
 .. Todo:: are these actually the right rules? How do function signatures work with args, kwargs and inheritance?
-
-Function scope
---------------
-
-Recursion
----------
-
-* brief example
 
 Decorators
 ----------
