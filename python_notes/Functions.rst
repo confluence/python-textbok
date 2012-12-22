@@ -34,6 +34,13 @@ In general, classes (of which types are a subset) are callable -- when we call a
 
     raise ValueError("There's something wrong with your number!")
 
+Because functions are objects in Python, we can treat them just like any other object -- we can assign a function as the value of a variable. To refer to a function without calling it, we just use the function name without round brackets::
+
+    my_function = print_a_message
+
+    # later we can call the function using the variable name
+    my_function()
+
 Input parameters
 ----------------
 
@@ -132,8 +139,10 @@ Having multiple exit points scattered throughout your function can make your cod
 
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
-Function scope
---------------
+Function scope and the stack
+----------------------------
+
+
 
 * about the stack? Recap variable scope with a focus on functions?
 
