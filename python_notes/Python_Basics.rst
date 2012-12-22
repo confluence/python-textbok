@@ -5,7 +5,7 @@ Python basics
 Introduction
 ============
 
-In this unit, we introduce the basics of the Python programming
+In this chapter, we introduce the basics of the Python programming
 language. At this point you should already have set up a development
 environment for writing and running your Python code. It will be
 assumed in the text that this is the case. If you are having trouble
@@ -60,9 +60,9 @@ Python code is correctly structured and will run::
 
 Many other languages require a lot more structure in their simplest
 programs, but in Python this single line, which prints a short
-message, is sufficient.  It is not, however, a very good example of
-Python's syntax -- so here is a slightly more complex program which
-does (almost) exactly the same thing::
+message, is sufficient.  It is not, however, a very informative
+example of Python's syntax -- so here is a slightly more complex
+program which does (almost) exactly the same thing::
 
     # Here is the main function.
     def my_function():
@@ -155,10 +155,9 @@ Syntax error    Bad practice  Good practice
 ==============  ============  ==============
 Person Record   PRcrd         PersonRecord
 DEFAULT-HEIGHT  Default_Ht    DEFAULT_HEIGHT
+class           Class         AlgebraCourse
 2totalweight    num2          total_weight
 ==============  ============  ==============
-
-.. Todo:: Exercise 1
 
 .. Note:: Be careful not to redefine existing variables accidentally
           by reusing their names.  This applies not only to your own
@@ -169,6 +168,15 @@ DEFAULT-HEIGHT  Default_Ht    DEFAULT_HEIGHT
           functions later in your program.  Redefining variables
           (accidentally and on purpose) will be discussed in greater
           detail in the section about scope.
+
+Exercise 1
+^^^^^^^^^^
+
+Write down why each of the entries in the left column will raise a
+syntax error if used as an identifier.
+
+Solutions can be found at the end of the chapter.
+
 
 Flow of Control
 ---------------
@@ -750,3 +758,19 @@ Organising your Python code
 .. Todo:: Say something about None (here or in the next chapter).
 
 .. Todo:: translate exercises
+
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+==============  ================================
+Syntax error    Reason
+==============  ================================
+Person Record   Identifier contains a space.
+DEFAULT-HEIGHT  Identifier contains a dash.
+class           Identifier is a keyword.
+2totalweight    Identifier starts with a number.
+==============  ================================
