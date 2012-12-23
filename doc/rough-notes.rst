@@ -197,8 +197,8 @@ Chapter 14: Introduction to GUI Programming with Swing
 Broader Issues
 ==============
 
-* docstrings need to be mentioned somewhere
-* file I/O -- just after print in ch2?
+* docstrings need to be mentioned somewhere -- currently in packaging/testing chapter
+* file I/O -- in Python Basics? Chop up Python Basics some more?
 
 * add more detail about scope within classes to the class chapter, where it will make more sense.
 
