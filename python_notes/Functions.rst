@@ -278,8 +278,7 @@ This makes it easier to build lists of parameters programatically.  Note that we
 
     print(make_greeting(**my_dict))
 
-We can mix ordinary parameters, ``*args`` and ``**kwargs`` in the same function.  In the function definition, ``*args`` and ``**kwargs`` must come after all the other parameters, and ``**kwargs`` must come after ``*args``.  You cannot have more than one variable-length list parameter or more than one variable dict parameter (recall that you can call them whatever you like)::
-
+We can mix ordinary parameters, ``*args`` and ``**kwargs`` in the same function definition. ``*args`` and ``**kwargs`` must come after all the other parameters, and ``**kwargs`` must come after ``*args``.  You cannot have more than one variable-length list parameter or more than one variable dict parameter (recall that you can call them whatever you like)::
 
     def print_everything(name, time="morning", *args, **kwargs):
         print("Good %s, %s." % (time, name))
@@ -320,11 +319,67 @@ If we use a ``*`` expression when you call a function, it must come after all th
     print_everything(*t, "Jane", **d)
     print_everything(*t, **d, time="evening")
 
+If a function takes only ``*args`` and ``**kwargs`` as its parameters, it can be called with *any set of parameters*.  One or both of ``args`` and ``kwargs`` can be empty, so the function will accept any combination of positional and keyword parameters, including no parameters at all.  This can be useful if we are writing a very generic function, like ``print_everything`` in the example above.
+
 .. Todo:: are these actually the right rules? How do function signatures work with args, kwargs and inheritance?
 
 Decorators
 ----------
 
-* brief example, and examples of existing decorators?  Just a note that method decorators will be discussed in next chapter?
+Sometimes we may need to modify several functions in the same way -- for example, we may want to perform a particular action before and after executing each of the functions, or pass in an extra parameter, or convert the output to another format.
+
+We may also have good reasons not to write the modification into all the functions -- maybe it would make the function definitions very verbose and unwieldy, and maybe we would like the option to apply the modification quickly and easily to any function (and remove it just as easily).
+
+To solve this problem, we can write a function which modifies functions.  We call a function like this a *decorator*.  Our function will take a function object as a parameter, and will return a new function object -- we can then assign the new function value to the old function's name to replace the old function with the new function.  For example, here is a decorator which logs the function name and its arguments to a log file whenever the function is used::
+
+    # we define a decorator
+    def log(original_function):
+        def new_function(*args, **kwargs):
+            with open("log.txt", "w") as logfile:
+                logfile.write("Function '%s' called with positional arguments %s and keyword arguments %s.\n" % (original_function.__name__, args, kwargs))
+
+            return original_function(*args, **kwargs)
+
+        return new_function
+
+    # here is a function to decorate
+    def my_function(message):
+        print(message)
+
+    # and here is how we decorate it
+    my_function = log(my_function)
+
+Inside our decorator (the outer function) we define a replacement function and return it.  The replacement function (the inner function) writes a log message and then simply calls the original function and returns its value.
+
+Note that the decorator function is only called once, when we replace the original function with the decorated function, but that the inner function will be called every time we use ``my_function``.  The inner function can access both variables in its own scope (like ``args`` and ``kwargs``) and variables in the decorator's scope (like ``original_function``).
+
+Because the inner function takes ``*args`` and ``**kwargs`` as its parameters, we can use this decorator to decorate any function, no matter what its parameter list is.  The inner function accepts any parameters, and simply passes them to the original function.  We will still get an error inside the original function if we pass in the wrong parameters.
+
+There is a shorthand syntax for applying decorators to functions: we can use the ``@`` symbol together with the decorator name before the definition of each function that we want to decorate::
+
+    @log
+    def my_function(message):
+        print(message)
+
+``@log`` before the function definition means exactly the same thing as ``my_function = log(my_function)`` after the function definition.
+
+We can pass additional parameters to our decorator.  For example, we may want to specify a custom log file to use in our logging decorator::
+
+    def log(original_function, logfilename="log.txt"):
+        def new_function(*args, **kwargs):
+            with open(logfilename, "w") as logfile:
+                logfile.write("Function '%s' called with positional arguments %s and keyword arguments %s.\n" % (original_function.__name__, args, kwargs))
+
+            return original_function(*args, **kwargs)
+
+        return new_function
+
+    @log("someotherfilename.txt")
+    def my_function(message):
+        print(message)
+
+Python has several built-in decorators which are commonly used to decorate class methods.  We will learn about them in the next chapter.
+
+.. Note:: a decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
 
 .. Todo:: Exercises
