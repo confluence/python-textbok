@@ -42,7 +42,7 @@ Because functions are objects in Python, we can treat them just like any other o
     my_function()
 
 Input parameters
-----------------
+================
 
 It is very seldom the case that the task that we want to perform with a function is always exactly the same.  There are usually minor differences to what we need to do under different circumstances.  We don't want to write a slightly different function for each of these slightly different cases -- that would defeat the object of the exercise!  Instead, we want to pass information into the function and use it inside the function to tailor the function's behaviour to our exact needs.  We express this information as a series of *input parameters*.
 
@@ -73,7 +73,7 @@ The advantage of this is that we don't have to write a lot of different ``print_
 This is why it is important for us to test our code thoroughly -- something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if it is incorrect.
 
 Return values
--------------
+=============
 
 The function examples we have seen above don't return any values -- they just result in a message being printed.  We often want to use a function to calculate some kind of value and then *return* it to us, so that we can store it in a variable and use it later.  Output which is returned from a function is called a *return value*.  We can rewrite the ``print_sum`` function to return the result of its addition instead of printing it::
 
@@ -140,7 +140,7 @@ Having multiple exit points scattered throughout your function can make your cod
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
 Function scope and the stack
-----------------------------
+============================
 
 
 
@@ -179,7 +179,7 @@ Any recursive function can be re-written in an *iterative* way which avoids recu
 This function uses *iteration* to count up to the desired value of *n*, updating variables to keep track of the calculation.  All the iteration happens within a single instance of the function.  Note that we assign new values to both variables at the same time, so that we can use both old values to calculate both new values on the right-hand side.
 
 Default parameters
-------------------
+==================
 
 The combination of the function name and the number of parameters that it takes is called the *function signature*.  In statically typed languages, there can be multiple functions with the same name in the same scope as long as they have different numbers or types of parameters (in these languages, parameter types and return types are also part of the signature).
 
@@ -237,8 +237,31 @@ Now we can easily pass in the second optional parameter and not the first::
 
     print(make_greeting("Mr", "John", "Smith", time="evening"))
 
+Mutable types and default parameters
+------------------------------------
+
+We should be careful when using mutable types as default parameter values in function definitions if we intend to modify them in-place::
+
+    def add_pet_to_list(pet, pets=[]):
+        pets.append(pet)
+        return pets
+
+    list_with_cat = add_pet_to_list(cat)
+    list_with_dog = add_pet_to_list(dog)
+
+    print(list_with_cat)
+    print(list_with_dog) # oops
+
+Remember that although we can execute a function *body* many times, a function *definition* is executed only once -- that means that the empty list which is created in this function definition will be the same list for all instances of the function.  What we really want to do in this case is to create an empty list inside the function body::
+
+    def add_pet_to_list(pet, pets=None):
+        if pets is None:
+            pets = []
+        pets.append(pet)
+        return pets
+
 ``*args`` and ``**kwargs``
---------------------------
+==========================
 
 Sometimes we may want to pass a variable-length list of positional or keyword parameters into a function.  We can put ``*`` before a parameter name to indicate that it is a variable-length tuple of positional parameters, and we can use ``**`` to indicate that a parameter is a variable-length dictionary of keyword parameters.  By convention, the parameter name we use for the tuple is ``args`` and the name we use for the dictionary is ``kwargs``::
 
@@ -324,7 +347,7 @@ If a function takes only ``*args`` and ``**kwargs`` as its parameters, it can be
 .. Todo:: are these actually the right rules? How do function signatures work with args, kwargs and inheritance?
 
 Decorators
-----------
+==========
 
 Sometimes we may need to modify several functions in the same way -- for example, we may want to perform a particular action before and after executing each of the functions, or pass in an extra parameter, or convert the output to another format.
 

@@ -111,6 +111,8 @@ In the ``age`` example above we have to check if an ``_age`` attribute exists on
 
 Initialising all our attributes in ``__init__``, even if we just set them to empty values, makes our code less error-prone. It also makes it easier to read an understand -- we can see at a glance what attributes our object has.
 
+An ``__init__`` method doesn't have to take any parameters (except ``self``) and it can be completely absent (in which case the default, which does nothing, will be used).
+
 Class attributes
 ================
 
@@ -132,13 +134,60 @@ We define class attributes in the body of a class, at the same indentation level
 
 As you can see, we access the class attribute ``TITLES`` just like we would access an instance attribute -- it is made available as a property on the instance object, which we access inside the method through the ``self`` variable.
 
-Class attributes are often used like this, to define constants which are associated with a particular object.  They can also sometimes be used to provide default attribute values::
+All the ``Person`` objects we create will share the same ``TITLES`` class attribute.
+
+Class attributes are often used to define constants which are closely associated with a particular class.  They can also sometimes be used to provide default attribute values::
+
+    class Person():
+        deceased = False
+
+        def mark_as_deceased(self):
+            self.deceased = True
+
+When we set an attribute on an instance which has the same name as a class attribute, we are *overriding* the class attribute with an instance attribute, which will take precedence over it. If we create two ``Person`` objects and call the ``mark_as_deceased`` method on one of them, we will not affect the other one.  We should, however, be careful when a class attribute is of a mutable type -- because if we modify it in-place, we *will* affect all objects of that class at the same time. Remember that all instances share the same class attributes.
+
+    class Person():
+        pets = []
+
+        def add_pet(self, pet):
+            self.pets.append(pet)
+
+    jane = Person()
+    bob = Person()
+
+    jane.add_pet("cat")
+    print(jane.pets)
+    print(bob.pets) # oops!
+
+What we *should* do in cases like this is initialise the mutable attribute *as an instance attribute*, inside ``__init__``.  Then every instance will have its own separate copy::
 
     class Person():
 
+        def __init__(self):
+            self.pets = []
 
+        def add_pet(self, pet):
+            self.pets.append(pet)
 
-* beware of mutable types
+    jane = Person()
+    bob = Person()
+
+    jane.add_pet("cat")
+    print(jane.pets)
+    print(bob.pets)
+
+Note that method definitions are in the same scope as class attribute definitions, so we can use class attribute names as variables in method definitions (without ``self``, which is only defined *inside* the methods)::
+
+    class Person():
+        TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
+
+        def __init__(self, title, name, surname, allowed_titles=TITLES):
+            if title not in allowed_titles:
+                raise ValueError("%s is not a valid title." % title)
+
+            self.title = title
+            self.name = name
+            self.surname = surname
 
 Class decorators
 ================
