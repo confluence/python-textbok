@@ -136,7 +136,21 @@ As you can see, we access the class attribute ``TITLES`` just like we would acce
 
 All the ``Person`` objects we create will share the same ``TITLES`` class attribute.
 
-Class attributes are often used to define constants which are closely associated with a particular class.  They can also sometimes be used to provide default attribute values::
+Class attributes are often used to define constants which are closely associated with a particular class.  Although we can use class attributes from class instances, we can also use them from class objects, without creating an instance::
+
+    # we can access a class attribute from an instance
+    person.TITLES
+
+    # but we can also access it from the class
+    Person.TITLES
+
+Note that the class object doesn't have access to any *instance* attributes -- those are only created when an instance is created! ::
+
+    # This will give us an error
+    Person.name
+    Person.surname
+
+Class attributes can also sometimes be used to provide default attribute values::
 
     class Person():
         deceased = False
@@ -189,6 +203,8 @@ Note that method definitions are in the same scope as class attribute definition
             self.name = name
             self.surname = surname
 
+Can we have class *methods*? Yes, we can.  In the next section we will see how to define them using a decorator.
+
 Class decorators
 ================
 
@@ -197,16 +213,141 @@ In the previous chapter we learned about decorators -- functions which are used 
 ``@classmethod``
 ----------------
 
+Just like we can define class *attributes*, which are shared between all instances of a class, we can define class *methods*.  We do this by using the ``@classmethod`` decorator to decorate an ordinary method::
+
+A class method still has its calling object as the first parameter, but by convention we rename this parameter from ``self`` to ``cls``.  If we call the class method from an instance, this parameter will contain the instance object, but if we call it from the class it will contain the class object.  By calling the parameter ``cls`` we remind ourselves that it is not guaranteed to have any *instance* attributes.
+
+What are class methods good for?  Sometimes there are tasks associated with a class which we can perform using constants and other class attributes, without needing to create any class instances.  If we had to use instance methods for these tasks, we would need to create an instance for no reason, which would be wasteful.  Sometimes we write classes purely to group related constants together with functions which act on them -- we may never instantiate these classes at all.
+
+Sometimes it is useful to write a class method which creates an instance of the class after processing the input so that it is in the right format to be passed to the class constructor.  This allows the constructor to be straightforward and not have to implement any complicated parsing or clean-up code::
+
+    class Person():
+
+        def __init__(self, name, surname, birthdate, address, telephone, email):
+            self.name = name
+            # (...)
+
+        @classmethod
+        def from_text_file(cls, filename):
+            # extract all the parameters from the text file
+            return cls(*params) # this is the same as calling Person(*params)
+
 ``@staticmethod``
 -----------------
 
-``@attribute``
+A static method doesn't have the calling object passed into it as the first parameter.  This means that it doesn't have access to the rest of the class or instance at all.  We can call them from an instance or a class object, but they are most commonly called from class objects, like class methods.
+
+If we are using a class to group together related methods which don't need to access each other or any other data on the class, we may want to use this technique.  The advantage of using static methods is that we eliminate unnecessary ``cls`` or ``self`` parameters from our method definitions.  The disadvantage is that if we do occasionally want to refer to another class method or attribute inside a static method we have to write the class name out in full, which can be much more verbose than using the ``cls`` variable which is available to us inside a class method.
+
+Here is a brief example comparing the three method types::
+
+    class Person():
+        TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
+
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        def fullname(self): # instance method
+            # instance object accessible through self
+            return "%s %s" % (self.name, self.surname)
+
+        @classmethod
+        def allowed_titles_starting_with(cls, startswith): # class method
+            # class or instance object accessible through cls
+            return [t for t in cls.TITLES if t.startswith(startswith)]
+
+        @staticmethod
+        def allowed_titles_ending_with(endswith): # static method
+            # no parameter for class or instance object
+            # we have to use Person directly
+            return [t for t in Person.TITLES if t.endswith(endswith)]
+
+
+    jane = Person("Jane", "Smith")
+
+    print(jane.fullname())
+
+    print(jane.allowed_titles_starting_with("M"))
+    print(Person.allowed_titles_starting_with("M"))
+
+    print(jane.allowed_titles_ending_with("s"))
+    print(Person.allowed_titles_ending_with("s"))
+
+``@property``
 --------------
 
-* e.g. apply to age
+Sometimes we use a method to generate a property of an object dynamically, calculating it from the object's other properties.  Sometimes you can simply use a method to access a single attribute and return it.  You can also use a different method to update the value of the attribute instead of accessing it directly.  Methods like this are called *getters* and *setters*, because they "get" and "set" the values of attributes, respectively.
 
+In some languages you are encouraged to use getters and setters for all attributes, and never to access their values directly -- and there are language features which can make attributes inaccessible except through setters and getters.  In Python, accessing simple attributes directly is perfectly acceptable, and writing getters and setters for all of them is considered unnecessarily verbose.  Setters can be inconvenient because they don't allow use of compound assignment operators::
 
-* special decorators: class methods, static methods, attributes
+    class Person():
+        def __init__(self, height):
+            self.height = height
+
+        def get_height(self):
+            return self.height
+
+        def set_height(self, height):
+            self.height = height
+
+    jane = Person(153) # Jane is 153cm tall
+
+    jane.height += 1 # Jane grows by a centimetre
+    jane.set_height(jane.height + 1) # Jane grows again
+
+As we can see, incrementing the height attribute through a setter is much more verbose. Of course we could write a *second* setter which increments the attribute by the given parameter -- but we would have to do something similar for every attribute and every kind of modification that we want to perform.  We would have a similar issue with in-place modifications, like adding values to lists.
+
+Something which is often considered an *advantage* of setters and getters is that we can change the way that an attribute is generated inside the object without affecting any code which uses the object.  For example, suppose that we initially created a ``Person`` class which has a ``fullname`` attribute, but later we want to change the class to have separate ``name`` and ``surname`` attributes which we combine to create a full name.  If we always access the ``fullname`` attribute through a setter, we can just rewrite the setter -- none of the code which calls the setter will have to be changed.
+
+But what if our code accesses the ``fullname`` attribute directly?  We can write a ``fullname`` method which returns the right value, but a method has to be *called*.  Fortunately, the ``@property`` decorator lets us make a method behave like an attribute::
+
+    class Person():
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        @property
+        def fullname(self):
+            return "%s %s" % (self.name, self.surname)
+
+    jane = Person("Jane", "Smith")
+    print(jane.fullname) # no brackets!
+
+There are also decorators which we can use to define a setter and a deleter for our attribute (a deleter will delete the attribute from our object). The getter, setter and deleter methods must all have the same name::
+
+    class Person():
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        @property
+        def fullname(self):
+            return "%s %s" % (self.name, self.surname)
+
+        @fullname.setter
+        def fullname(self, value):
+            # this is much more complicated in real life
+            name, surname = value.split(" ", 1)
+            self.name = name
+            self.surname = surname
+
+        @fullname.deleter
+        def fullname(self):
+            del self.name
+            del self.surname
+
+    jane = Person("Jane", "Smith")
+    print(jane.fullname)
+
+    jane.fullname = "Jane Doe"
+    print(jane.fullname)
+    print(jane.name)
+    print(jane.surname)
+
+Inspecting an object
+====================
+
 * dir; special attributes and methods
 (after dir, briefly mention inheritance in next chapter and that all classes inherit from object)
 * overriding special methods (str, iter, comparisons, etc..)
