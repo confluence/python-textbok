@@ -25,7 +25,7 @@ Here is an example of a simple custom class which stores information about a per
 
     import datetime # we will use this for date objects
 
-    class Person():
+    class Person:
 
         def __init__(self, name, surname, birthdate, address, telephone, email):
             self.name = name
@@ -58,15 +58,13 @@ Here is an example of a simple custom class which stores information about a per
     print(person.email)
     print(person.age())
 
-    print(dir(person))
+We start the class definition with the ``class`` keyword, followed by the class name and a colon.  We would list any parent classes in between round brackets before the colon, but this class doesn't have any, so we can leave them out.
 
-We start the class definition with the ``class`` keyword, followed by the class name, round brackets and a colon.  We would list any parent classes in between the brackets, but this class doesn't have any, so the brackets are empty.
-
-Inside the class body, we define two functions -- these are our objects's methods.  We have defined to methods -- the first is called ``__init__``, which is a special method.  When we call the class object, a new instance of the class is created, and the ``__init__`` method on this new object is immediately executed with all the parameters that we passed to the class object.  The purpose of this method is thus to set up a new object using data that we have provided.  ``__init__`` is sometimes called the object's *constructor*.
-
-.. Todo:: is that technically correct?  What is the difference between construction and initialisation?
+Inside the class body, we define two functions -- these are our objects's methods.  The first is called ``__init__``, which is a special method.  When we call the class object, a new instance of the class is created, and the ``__init__`` method on this new object is immediately executed with all the parameters that we passed to the class object.  The purpose of this method is thus to set up a new object using data that we have provided.
 
 The second method is a custom method which calculates the age of our person using the birthdate and the current date.
+
+.. Note:: ``__init__`` is sometimes called the object's *constructor*, because it is used similarly to the way that constructors are used in other languages, but that is not technically correct -- it's better to call it the *initializer*.  There is a different method called ``__new__`` which is more analogous to a constructor, but it is hardly ever used.
 
 You may have noticed that both of these method definitions have ``self`` as the first parameter, and we use this variable inside the method bodies -- but we don't appear to pass this parameter in.  This is because whenever we call a method on an object, *the object itself* is automatically passed in as the first parameter.  This gives us a way to access the object's properties from inside the object's methods.
 
@@ -111,7 +109,7 @@ In the ``age`` example above we have to check if an ``_age`` attribute exists on
 
 Initialising all our attributes in ``__init__``, even if we just set them to empty values, makes our code less error-prone. It also makes it easier to read an understand -- we can see at a glance what attributes our object has.
 
-An ``__init__`` method doesn't have to take any parameters (except ``self``) and it can be completely absent (in which case the default, which does nothing, will be used).
+An ``__init__`` method doesn't have to take any parameters (except ``self``) and it can be completely absent.
 
 Class attributes
 ================
@@ -120,7 +118,7 @@ All the attributes which are defined on a ``Person`` instance are *instance attr
 
 We define class attributes in the body of a class, at the same indentation level as method definitions (one level up from the insides of methods)::
 
-    class Person():
+    class Person:
 
         TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
 
@@ -152,7 +150,7 @@ Note that the class object doesn't have access to any *instance* attributes -- t
 
 Class attributes can also sometimes be used to provide default attribute values::
 
-    class Person():
+    class Person:
         deceased = False
 
         def mark_as_deceased(self):
@@ -160,7 +158,7 @@ Class attributes can also sometimes be used to provide default attribute values:
 
 When we set an attribute on an instance which has the same name as a class attribute, we are *overriding* the class attribute with an instance attribute, which will take precedence over it. If we create two ``Person`` objects and call the ``mark_as_deceased`` method on one of them, we will not affect the other one.  We should, however, be careful when a class attribute is of a mutable type -- because if we modify it in-place, we *will* affect all objects of that class at the same time. Remember that all instances share the same class attributes.
 
-    class Person():
+    class Person:
         pets = []
 
         def add_pet(self, pet):
@@ -175,7 +173,7 @@ When we set an attribute on an instance which has the same name as a class attri
 
 What we *should* do in cases like this is initialise the mutable attribute *as an instance attribute*, inside ``__init__``.  Then every instance will have its own separate copy::
 
-    class Person():
+    class Person:
 
         def __init__(self):
             self.pets = []
@@ -192,7 +190,7 @@ What we *should* do in cases like this is initialise the mutable attribute *as a
 
 Note that method definitions are in the same scope as class attribute definitions, so we can use class attribute names as variables in method definitions (without ``self``, which is only defined *inside* the methods)::
 
-    class Person():
+    class Person:
         TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
 
         def __init__(self, title, name, surname, allowed_titles=TITLES):
@@ -221,7 +219,7 @@ What are class methods good for?  Sometimes there are tasks associated with a cl
 
 Sometimes it is useful to write a class method which creates an instance of the class after processing the input so that it is in the right format to be passed to the class constructor.  This allows the constructor to be straightforward and not have to implement any complicated parsing or clean-up code::
 
-    class Person():
+    class Person:
 
         def __init__(self, name, surname, birthdate, address, telephone, email):
             self.name = name
@@ -241,7 +239,7 @@ If we are using a class to group together related methods which don't need to ac
 
 Here is a brief example comparing the three method types::
 
-    class Person():
+    class Person:
         TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
 
         def __init__(self, name, surname):
@@ -281,7 +279,7 @@ Sometimes we use a method to generate a property of an object dynamically, calcu
 
 In some languages you are encouraged to use getters and setters for all attributes, and never to access their values directly -- and there are language features which can make attributes inaccessible except through setters and getters.  In Python, accessing simple attributes directly is perfectly acceptable, and writing getters and setters for all of them is considered unnecessarily verbose.  Setters can be inconvenient because they don't allow use of compound assignment operators::
 
-    class Person():
+    class Person:
         def __init__(self, height):
             self.height = height
 
@@ -302,7 +300,7 @@ Something which is often considered an *advantage* of setters and getters is tha
 
 But what if our code accesses the ``fullname`` attribute directly?  We can write a ``fullname`` method which returns the right value, but a method has to be *called*.  Fortunately, the ``@property`` decorator lets us make a method behave like an attribute::
 
-    class Person():
+    class Person:
         def __init__(self, name, surname):
             self.name = name
             self.surname = surname
@@ -316,7 +314,7 @@ But what if our code accesses the ``fullname`` attribute directly?  We can write
 
 There are also decorators which we can use to define a setter and a deleter for our attribute (a deleter will delete the attribute from our object). The getter, setter and deleter methods must all have the same name::
 
-    class Person():
+    class Person:
         def __init__(self, name, surname):
             self.name = name
             self.surname = surname
@@ -348,8 +346,107 @@ There are also decorators which we can use to define a setter and a deleter for 
 Inspecting an object
 ====================
 
-* dir; special attributes and methods
-(after dir, briefly mention inheritance in next chapter and that all classes inherit from object)
-* overriding special methods (str, iter, comparisons, etc..)
+We can check what properties are defined on an object using the ``dir`` function::
 
-(stuff about inheritance, etc. goes into chapter about OO?)
+    class Person:
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        def fullname(self):
+            return "%s %s" % (self.name, self.surname)
+
+    jane = Person("Jane", "Smith")
+
+    print(dir(jane))
+
+Now we can see our attributes and our method -- but what's all that other stuff?  We will discuss *inheritance* in the next chapter, but for now all you need to know is that any class that you define has ``object`` as its parent class even if you don't explicitly say so -- so your class will have a lot of default attributes and methods that any Python object has.
+
+.. Note:: in Python 2 we have to inherit from ``object`` explicitly, otherwise our class will be almost completely empty except for our own custom properties.  Classes which don't inherit from ``object`` are called "old-style classes", and using them is not recommended.  If we were to write the person class in Python 2 we would write the first line as ``class Person(object):``.
+
+This is why you can just leave out the ``__init__`` method out of your class if you don't have any initialisation to do -- the default that you inherited from ``object`` (which does nothing) will be used instead.  If you do write your own ``__init__`` method, it will *override* the default method.  We also call this *overloading*.
+
+Many default methods and attributes that are found in built-in Python objects have names which begin and end in double underscores, like ``__init__`` or ``__str__``.  These names indicate that these properties have a special meaning -- you shouldn't create your own methods or attributes with the same names unless you mean to overload them.  These properties are usually methods, and they are sometimes called *magic methods*.
+
+We can use ``dir`` on any object. You can try to use it on all kinds of objects which we have already seen before, like numbers, lists, strings and functions, to see what built-in properties these objects have in common.
+
+Here are some examples of special object properties:
+
+* ``__init__``: the initialisation method of an object, which is called when the object is created.
+* ``__str__``: the string representation method of an object, which is called when you use the ``str`` function to convert that object to a string.
+* ``__class__``: an attribute which stores the the class (or type) of an object -- this is what is returned when you use the ``type`` function on the object.
+* ``__eq__``: a method which determines whether this object is equal to another.  There are also other methods for determining if it's not equal, less than, etc.. These methods are used in object comparisons, for example when we use the equality operator ``==`` to check if two objects are equal.
+* ``__add__`` is a method which allows this object to be added to another object. There are equivalent methods for all the other arithmetic operators.  Not all objects support all arithemtic operations -- numbers have all of these methods defined, but other objects may only have a subset.
+* ``__iter__``: a method which returns an iterator over the object -- we will find it on strings, lists and other iterables.  It is executed when we use the ``iter`` function on the object.
+* ``__len__``: a method which calculates the length of an object -- we will find it on sequences.  It is executed when we use the ``len`` function of an object.
+* ``__dict__``: a dictionary which contains all the custom attributes and methods which we define on an object, with their names as keys.  It can be useful if we want to iterate over all the properties in our class.
+
+Overriding magic methods
+========================
+
+We have already seen how to overload the ``__init__`` method so that we can customise it to initialise our class.  We can also overload other special methods.  For example, the purpose of the ``__str__`` method is to output a useful string representation of our object. but by default if we use the ``str`` function on a person object (which will call the ``__str__`` method), all that we will get is the class name and an ID. That's not very useful!  Let's write a custom ``__str__`` method which shows the values of all of the object's properties::
+
+    import datetime
+
+    class Person:
+        def __init__(self, name, surname, birthdate, address, telephone, email):
+            self.name = name
+            self.surname = surname
+            self.birthdate = birthdate
+
+            self.address = address
+            self.telephone = telephone
+            self.email = email
+
+        def __str__(self):
+            return "%s %s, born %s\nAddress: %s\nTelephone: %s\nEmail:%s" % (self.name, self.surname, self.birthdate, self.address, self.telephone, self.email)
+
+    jane = Person(
+        "Jane",
+        "Doe",
+        datetime.date(1992, 3, 12), # year, month, day
+        "No. 12 Short Street, Greenville",
+        "555 456 0987",
+        "jane.doe@example.com"
+    )
+
+    print(jane)
+
+Note that when we insert the birthdate object into the output string with ``%s`` it will itself be converted to a string, so we don't need to do it ourselves (unless we want to change the format).
+
+It is also often useful to overload the comparison methods, so that we can use comparison operators on our person objects.  By default, our person objects are only equal if they are the same object, and you can't test whether one person object is greater than another because person objects have no default order.
+
+Suppose that we want our person objects to be equal if all their attributes have the same values, and we want to be able to order them alphabetically by surname and then by first name.  All of the magic comparison methods are independent of each other, so we will need to overload all of them if we want all of them to work -- but fortunately once we have defined equality and one of the basic order methods the rest are easy to do.  Each of these methods takes two parameters -- ``self`` for the current object, and ``other`` for the other object::
+
+    class Person:
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        def __eq__(self, other): # does self == other?
+            return self.name == other.name and self.surname == other.surname
+
+        def __gt__(self, other): # is self > other?
+            if self.surname == other.surname:
+                return self.name > other.name
+            return self.surname > other.surname
+
+        # now we can define all the other methods in terms of the first two
+
+        def __ne__(self, other): # does self != other?
+            return not self == other # this calls self.__eq__(other)
+
+        def __le__(self, other): # is self <= other?
+            return not self > other # this calls self.__gt__(other)
+
+        def __lt__(self, other): # is self < other?
+            return not (self > other or self == other)
+
+        def __ge__(self, other): # is self >= other?
+            return not self < other
+
+Note that ``other`` is not guaranteed to be another person object, and we haven't put in any checks to make sure that it is.  Our method will crash if the other object doesn't have a ``name`` or ``surname`` attribute, but if they are present the comparison will work.  Whether that makes sense or not is something that we will need to think about if we create similar types of objects.
+
+Sometimes it makes sense to exit with an error if the other object is not of the same type as our object, but sometimes we can compare two compatible objects even if they are not of the same type.  For example, it makes sense to compare ``1`` and ``2.5`` because they are both numbers, even though one is an integer and the other is a float.
+
+.. Note:: Python 2 also has a ``__cmp__`` method which was introduced to the language before the individual comparison methods (called *rich comparisons*) described above. It is used if the rich comparisons are not defined.  You should overload it in a way which is consistent with the rich comparison methods, otherwise you may encounter some very strange behaviour.

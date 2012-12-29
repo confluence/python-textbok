@@ -26,8 +26,9 @@ consistency with other courses in the department, we will be using
 Python 3.  Python 2 is still widely used, and although Python 3 is not
 fully backwards compatible the two versions are very similar -- so
 should you ever encounter Python 2 code you should find it quite
-familiar.  We will discuss some of the major differences later in this
-chapter.
+familiar.  We will mention important differences between the two
+versions throughout this course.  We will always refer to the *latest*
+version of Python 2, which at the time of writing was *2.7*.
 
 Getting started with Python
 ===========================
