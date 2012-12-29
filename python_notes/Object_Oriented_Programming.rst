@@ -2,20 +2,152 @@
 Object-oriented programming
 ***************************
 
-* note that OO is not compulsory in Python, suggest that it is a good idea for sufficiently complex programs
+Introduction
+============
 
-* basic oo concept: encapsulation -- object manages own internals; access through an interface; no messing with internals from outside.
+As you have seen from the earliest code examples in this course, it is not compulsory to organise your code into classes when you program in Python.  You can use functions by themselves, in what is called a *procedural* programming approach.  However, while a procedural style can suffice for writing short, simple programs, an object-oriented programming (OOP) approach becomes more valuable the more your program grows in size and complexity.
 
-* moved this from previous chapter; needs some revision:
+The more data and functions comprise your code, the more important it is to arrange them into logical subgroups, making sure that data and functions which are related are grouped together and that data and functions which are not related don't interfere with each other.  Modular code is easier to understand and modify, and lends itself more to reuse -- and code reuse is valuable because it reduces development time.
 
-The ``age`` function is a good example of the philosophy of object-oriented programming.  If we want to use the data stored in an object to perform some kind of action or calculate some kind of derived value, we define a method associated with the object which does this. Then whenever we want to perform this action we call the method on the object. We do not retrieve the information from inside the object and write separate code to perform the action outside of the object.  This means that the functionality is defined *in one place* and not multiple places, and it is defined in a logical place -- the place where the data is kept.  We say that the object "knows how" to do things with its own data, and it's a bad idea for us to
+As a worst-case scenario, imagine a program with a hundred functions and a hundred separate global variables all in the same file.  This would be a very difficult program to maintain.  All the variables could potentially be modified by all the functions even if they shouldn't be, and in order to pick unique names for all the variables, some of which might have a very similar purpose but be used by different functions, we would probably have to resort to poor naming practices.  It would probably be easy to confuse these variables with each other, since it would be difficult to see which functions use which variables.
 
-* Interclass relationships
-    ** Introduce this as a more theoretical examination of how classes can be related to each other
-    ** rewrite this so that it's actually understandable
+We could try to make this code more modular even without object orientation.  We could group related variables together into aggregate data structures.  In the past, some other languages, like C++, introduced a ``struct`` type which eventually became indistinguishable from a class, but which initially didn't have any methods -- only attributes.  This allowed programmers to construct compound variables out of many individual variables, and was the first step towards object orientation.  In Python, we often use dictionaries for ad-hoc grouping of related data.
+
+We could also split up the functions and data into separate *namespaces* instead of having them all defined inside the same *global namespace*.  This often coincides with splitting the code physically into multiple files.  In Python we do this by splitting code up into *modules*.
+
+The main additional advantage of object orientation, as we saw in the previous chapter, is that it combines data with the functions which act upon that data in a single structure.  This makes it easy for us to find related parts of our code, since they are physically defined in close proximity to one another, and also makes it easier for us to write our code in such a way that the data inside each object is accessed as much as possible only through that object's methods.  We will discuss this principle, which we call *encapsulation*, in the next section.
+
+Some people believe that OOP is a more intuitive programming style to learn, because people find it easy to reason about objects and relationships between them.  OOP is thus sometimes considered to be a superior approach because it allows new programmers to become proficient more quickly.
+
+Basic OOP principles
+--------------------
+
+The most important principle of object orientation is *encapsulation*: the idea that data inside the object should only be accessed through a public *interface* -- that is, the object's methods.
+
+The ``age`` function we saw in the previous chapter is a good example of this philosophy.  If we want to use the data stored in an object to perform an action or calculate a derived value, we define a method associated with the object which does this. Then whenever we want to perform this action we call the method on the object. We consider it bad practice to retrieve the information from inside the object and write separate code to perform the action outside of the object.
+
+Encapsulation is a good idea for several reasons:
+
+* the functionality is defined *in one place* and not in multiple places.
+* it is defined in a logical place -- the place where the data is kept.
+* data inside our object is not modified unexpectedly by external code in a completely different part of our program.
+* when we use a method, we only need to know what result the method will produce -- we don't need to know details about the object's internals in order to use it.  We could switch to using another object which is completely different on the inside, and not have to change any code because both objects have the same interface.
+
+We can say that the object "knows how" to do things with its own data, and it's a bad idea for us to access its internals and do things with the data ourselves.  If an object doesn't have an interface method which does what we want to do, we should add a new method or update an existing one.
+
+Some languages have features which allow us to enforce encapsulation strictly.  In Java or C++, we can define access permissions on object attributes, and make it illegal for them to be accessed from outside the object's methods.  In Java it is also considered good practice to write setters and getters for all attributes, even if the getter simply retrieves the attribute and the setter just assigns it the value of the parameter which you pass in.
+
+In Python, encapsulation is not enforced by the language, but there is a convention that we can use to indicate that a property is intended to be private and is not part of the object's public interface: we begin its name with an underscore.
+
+It is also customary to set and get simple attribute values directly, and only write setter and getter methods for values which require some kind of calculation.  In the last chapter we learned how to use the property decorator to replace a simple attribute with a method without changing the object's interface.
+
+Relationships between objects
+-----------------------------
+
+In the next section we will look at different ways that classes can be related to each other.  In Python, there are two main types of relationships between classes: *composition* and *inheritance*.
+
+Composition
+===========
+
+Composition is a way of *aggregating* objects together by making some objects attributes of other objects.  We saw in the previous chapter how we can make a ``datetime.date`` object an attribute of our ``Person`` object, and use it to store a person's birthdate.  We can say that a person *has a* birthdate -- if we can express a relationship between two classes using the phrase *has-a*, it is a composition relationship.
+
+Relationships like this can be one-to-one, one-to-many or many-to-many, and they can be unidirectional or bidirectional, depending on the specifics of the the roles which the objects fulfil.
+
+According to some formal definitions the term *composition* implies that the two objects are quite strongly linked -- one object can be thought of as *belonging* exclusively to the other object.  If the owner object ceases to exist, the owned object will probably cease to exist as well.  If the link between two objects is weaker, and neither object has exclusive ownership of the other, it can also be called *aggregation*.
+
+Here are four classes which show several examples of aggregation and composition::
+
+    class Student:
+        def __init__(self, name, student_number)
+            self.name = name
+            self.student_number = student_number
+            self.classes = []
+
+        def enrol(self, course_running):
+            self.classes.append(course_running)
+            course_running.add_student(self)
+
+
+    class Department:
+        def __init__(self, name, department_code):
+            self.name = name
+            self.department_code = department_code
+            self.courses = {}
+
+        def.add_course(self, description, course_code, credits):
+            self.courses[course_code] = Course(description, course_code, credits, department)
+            return self.courses[course_code]
+
+
+    class Course:
+        def __init__(self, description, course_code, credits, department):
+            self.description = description
+            self.course_code = course_code
+            self.credits = credits
+            self.department = department
+            self.department.add_course(self)
+
+            self.runnings = []
+
+        def add_running(self, year):
+            self.runnings.append(CourseRunning(self, year))
+            return self.runnings[-1]
+
+
+    class CourseRunning:
+        def __init__(self, course, year):
+            self.course = course
+            self.year = year
+            self.students = []
+
+        def add_student(self, student):
+            self.students.append(student)
+
+
+    maths_dept = Department("Mathematics and Applied Mathematics", "MAM")
+    mam1000w = maths_dept.add_course("Mathematics 1000", "MAM1000W", 1)
+    mam1000w_2013 = mam1000w.add_running(2013)
+
+    bob = Student("Bob", "Smith")
+    bob.enrol(mam1000w_2013)
+
+Why are there two classes which both describe a course?  This is an example of the way that translation of real-life concepts into objects in your code may not always be as straightforward as it appears.  Would it have made sense to have a single course object which has both description, code and department attributes and a list of students?
+
+There are two distinct concepts, both of which can be called a "course",  that we need to represent: one is the theoretical *idea* of a course, which is offered by a department every year and always has the same name and code, and the other is the course as it is run *in a particular year*, each time with a different group of enrolled students.  We have represented these two concepts by two separate classes which are linked to each other.  ``Course`` is the theoretical description of a course, and ``CourseRunning`` is the concrete instance of a course.
+
+We have defined several relationships between these classes:
+
+* A student can be enrolled in several courses (``CourseRunning`` objects), and a course (``CourseRunning``) can have multiple students enrolled in it in a particular year, so this is a many-to-many relationship.  A student knows about all his or her courses, and a course has a record of all enrolled students, so this is a bidirectional relationship.  These objects aren't very strongly coupled -- a student can exist independently of a course, and a course can exist independently of a student.
+
+* A department offers multiple courses (``Course`` objects), but in our implementation a course can only have a single department -- this is a one-to-many relationship.  It is also bidirectional.  Furthermore, these objects are more strongly coupled -- you can say that a department *owns* a course.  The course cannot exist without the department.
+
+* A similar relationship exists between a course and its "runnings": it is also bidirectional, one-to-many and strongly coupled -- it wouldn't make sense for "MAM1000W run in 2013" to exist on its own in the absence of "MAM100W".
+
+What words like "exist" and "owns" actually mean for our code can vary.  An object which "owns" another object could be responsible for creating that object when it requires it and destroying it when it is no longer needed -- but these words can also be used to describe a logical relationship between concepts which is not necessarily literally implemented in that way in the code.
+
+.. Todo:: maybe make a UML diagram for this (yuck). There should be a sphinx plugin.
+
+Inheritance
+===========
+
+*Inheritance* is a way of arranging objects in a hierarchy from the most general to the most specific.  An object which *inherits* from another object is considered to be a *subtype* of that object.  As we saw in the previous chapter, all objects in Python inherit from ``object``.  We can say that a string, an integer or a ``Person`` instance *is an* ``object`` instance.  When we can describe the relationship between two objects using the phrase *is-a*, that relationship is inheritance.
+
+We also often say that a class is a *subclass* or *child class* of a class from which it inherits, or that the other class is its *superclass* or *parent class*.  We can refer to the most generic class at the base of a hierarchy as a *base class*.
+
+Inheritance can help us to represent objects which have some differences and some similarities in the way they work.  We can put all the functionality that the objects have in common in a base class, and then define one or more subclasses with their own custom functionality.
+
+Inheritance is also a way of reusing existing code easily.  If we already have a class which does *almost* what we want, we can create a subclass in which we partially override some of its behaviour, or perhaps add some new functionality.
+
+Here is a simple example of inheritance::
+
+    # urgh, we need a non-terrible example of inheritance. Server? Parser? The best kinds of hierarchies are things that are designed to be subclassed.
+
+
 
 * Inheritance
     ** all the important basic things about inheritance
     ** admonition not to overuse inheritance; discussion of alternatives
+        *** note that if you split stuff up over a deep hierarchy it makes the program hard to read
+        *** note that you shouldn't gratuitously subclass just to have different attribute values -- that's what parameters are for
 
 * "Abstract classes" except call the section something else because there aren't any
