@@ -82,15 +82,37 @@ Now that we have written a ``setup.py`` file, we can run it in order to install 
 
 If everything has gone well, we should now be able to import ``ourprog`` from anywhere on our system.
 
+.. Todo:: should Virtualenv go here?
 
 Documentation
 =============
 
-* docstrings
-* sphinx
+Code documentation is often treated as an afterthought.  While we are writing a program, it can seem to us that what our functions and classes do is obvious, and that writing down a lengthy explanation for each one is a waste of time.  We may feel very differently when we look at our code again after a break of several months, or when we are forced to read and understand somebody else's undocumented code!
 
-Testing programs
-================
+We have already seen how we can insert comments into Python code using the ``#`` symbol.  Comments like this are useful for annotating individual lines, but they are not well-suited to longer explanations, or systematic documentation of all structures in our code.  For that, we use *docstrings*.
+
+Docstrings
+----------
+
+A docstring is just an ordinary string -- it is usually written between triple quotes, because triple quotes are good for defining multiline string literals.  What makes a docstring special is its position in the code.  There are many tools which can parse Python code for strings which appear immediately after the definition of a module, class, function or method and aggregate them into an automatically generated body of documentation.
+
+Documentation written like this can be easier to maintain than a completely separate document which is written by hand.  The docstring for each individual class or function is defined next to the function in our code, where we are likely to see it and notice if it is out of sync and needs to be updated.  Docstrings can also function as comments -- other people will be able to see them while reading our source code.  Interactive shells which use Python can also display docstrings when the user queries the usage of a function or class.
+
+There are several different tools which parse docstrings -- the one which is currently used the most is called Sphinx.  In this course we won't go into detail about how to use Sphinx to generate documents, but we will see how to write docstrings in a format which is compatible with Sphinx.
+
+Docstring examples
+------------------
+
+Each docstring should contain a short description of the structure.  If the structure is a function, it should document all the parameters and the return value.  Because Python isn't statically typed, it is important to provide information about the parameters that a function accepts.
+
+Here are some examples of docstrings of various types::
+
+
+
+.. Todo:: in this and other sections, "further reading" with links to documentation on the web.
+
+Testing
+=======
 
 * Something about unit tests
 * Black box testing
