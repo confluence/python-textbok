@@ -345,10 +345,10 @@ following instruction::
 
     print("Hello!")
 
-As you can see the ``print`` function takes in a string literal as an
-argument.  It prints the string literal, and by default also prints a
-newline character at the end -- this is why the console's cursor
-appears on a new line after you have printed something.
+As you can see the ``print`` function takes in a string as an
+argument.  It prints the string, and by default also prints a newline
+character at the end -- this is why the console's cursor appears on a
+new line after you have printed something.
 
 To query the user for information, use the ``input`` function::
 
@@ -388,7 +388,41 @@ can also use it to write to a file.  Here is a simple example::
     with open('myfile.txt', 'w') as myfile:
         print("Hello!", file=myfile)
 
-.. Todo:: add a bigger section about simple file I/O here
+Quite a lot is happening in these two lines. In the ``with`` statement
+(which we will look at in more detail in the chapter on errors and
+exceptions) the file ``myfile.txt`` is opened for writing and assigned
+to the variable ``myfile``. Inside the ``with`` block, ``Hello!``
+followed by a newline is written to the file. The ``w`` character
+passed to ``open`` indicates that the file should be opened for
+writing.
+
+As an alternative to using ``print``, files have a ``write`` method (a
+function attached to the file object that can be accessed using the
+``.`` operator -- methods will be explained in more detail in the
+chapter on object orientated programming) that can be used as follows::
+
+    with open('myfile.txt', 'w') as myfile:
+        myfile.write("Hello!")
+
+Unlike ``print``, the ``write`` method does add a newline to the
+string written.
+
+We can read data from a file by opening it for reading and using the
+file's ``read`` method::
+
+    with open('myfile.txt', 'r') as myfile:
+        data = myfile.read()
+
+This reads the contents of the file into the variable ``data``. Note
+that this time we have passed ``r`` to the ``open`` function. This
+indicates that the file should be opened for reading.
+
+.. Note::
+
+    Python will raise an error if you attempt to open a file that has
+    not been created yet for reading. Opening a file for writing that
+    will create the file if it does not exist yet.
+
 
 Built-in types
 --------------
