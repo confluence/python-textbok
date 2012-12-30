@@ -192,8 +192,8 @@ The ``__init__`` method of the base class initialises all the instance variables
 
 In each of our overridden ``__init__`` methods we use those of the method's parameters which are specific to our class inside the method, and then pass the remaining parameters to the parent class's ``__init__`` method.  A common convention is to add the specific parameters for each successive subclass to the *beginning* of the parameter list, and define all the other parameters using ``*args`` and ``**kwargs`` -- then the subclass doesn't need to know the details about the parent class's parameters.  Because of this, if we add a new parameter to the superclass's ``__init__``, we will only need to add it to all the places where we create that class or one of its subclasses -- we won't also have to update all the child class definitions to include the new parameter.
 
-More about inheritance, and when to avoid it
-============================================
+More about inheritance
+======================
 
 Multiple inheritance
 --------------------
@@ -278,7 +278,7 @@ If an object inherits from ``2DShape``, it will gain that class's default ``area
 
 .. Todo:: add an exercise for creating an exception hierarchy
 
-Why not inheritance?
+Avoiding inheritance
 ====================
 
 Inheritance can be a useful technique, but it can also be an unnecessary complication.  As we have already discussed, multiple inheritance can cause a lot of ambiguity and confusion, and hierarchies which use multiple inheritance should be designed carefully to minimise this.
