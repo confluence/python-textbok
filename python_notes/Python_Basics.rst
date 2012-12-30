@@ -528,7 +528,11 @@ Sometimes it's a good idea to add brackets to arithmetic expressions
 even if they're not compulsory, because it makes the code more
 understandable.
 
-.. Todo:: Exercise 5
+Exercise 4
+^^^^^^^^^^
+
+.. Todo:: Exercise 4 (valid integers, operator precedence)
+
 
 Floating-point numbers
 ======================
@@ -602,7 +606,11 @@ You can use the integer division operator on floating-point numbers,
 and vice versa. The two division operators are at the same level in
 the order of precedence.
 
-.. Todo:: Exercise 6
+Exercise 5
+^^^^^^^^^^
+
+.. Todo:: Exercise 5 (valid floats, operator precedence, combine with ints)
+
 
 Strings
 =======
@@ -709,7 +717,11 @@ These string literals will be identical::
 
     string_two = '"Hello," said Jane.\n"Hi," said Bob.'
 
-.. Todo:: Exercise 4
+Exercise 6
+^^^^^^^^^^
+
+.. Todo:: Exercise 6
+
 
 String operations
 -----------------
@@ -791,3 +803,18 @@ The correctly indented code is::
 
     print(happy_day("sunday"))
     print(happy_day("monday"))
+
+Answer to exercise 4
+--------------------
+
+.. todo: ints
+
+Answer to exercise 5
+--------------------
+
+.. todo: floats
+
+Answer to exercise 6
+--------------------
+
+.. todo: strings
