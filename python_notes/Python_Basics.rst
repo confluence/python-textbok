@@ -14,6 +14,9 @@ the course forum. Throughout this course, you are strongly encouraged
 to try what you have learnt by writing an actual program. You can only
 learn how to program by actually doing it yourself.
 
+Each chapter contains several exercises to help you
+practice. Solutions are found at the end of the chapter.
+
 .. Todo:: removed learning objectives; possibly they should be added
           to all the chapters.  Move the bit about being able to run
           code, etc. to end of next subsection.
@@ -176,8 +179,6 @@ Exercise 1
 Write down why each of the entries in the left column will raise a
 syntax error if used as an identifier.
 
-Solutions can be found at the end of the chapter.
-
 
 Flow of control
 ---------------
@@ -234,7 +235,36 @@ instruction on a line (but that is usually bad style)::
     # This is legal, but you shouldn't do it
     c = 1; d = 5
 
-.. Todo: Exercise 2 and Exercise 3
+Exercise 2
+^^^^^^^^^^
+
+Write down the two statements inside the block created by the
+``append_chickens`` function::
+
+    no_chickens = "No chickens here ..."
+
+    def append_chickens(text):
+        text = text + " Rawwwk!"
+        return text
+
+    print(append_chickens(no_chickens))
+
+
+Exercise 3
+^^^^^^^^^^
+
+The following Python program is not indented correctly. Re-write it so
+that it is correctly indented::
+
+    def happy_day(day):
+    if day == "monday":
+    return ":("
+    if day != "monday":
+    return ":D"
+
+    print(happy_day("sunday"))
+    print(happy_day("monday"))
+
 
 Letter case
 -----------
@@ -739,3 +769,25 @@ DEFAULT-HEIGHT  Identifier contains a dash.
 class           Identifier is a keyword.
 2totalweight    Identifier starts with a number.
 ==============  ================================
+
+Answer to exercise 2
+--------------------
+
+The two statements inside the block defined by the ``append_chickens`` function are::
+
+    text = text + " Rawwwk!"
+    return text
+
+Answer to exercise 3
+--------------------
+
+The correctly indented code is::
+
+    def happy_day(day):
+        if day == "monday":
+            return ":("
+        if day != "monday":
+            return ":D"
+
+    print(happy_day("sunday"))
+    print(happy_day("monday"))
