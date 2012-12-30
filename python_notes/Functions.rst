@@ -13,7 +13,9 @@ We use the ``def`` statement to indicate the start of a function definition. The
 
 Functions *do things*, so you should always choose a function name which explains as simply as accurately as possible *what the function does*.  This will usually be a verb or some phrase containing a verb.  If you change a function so much that the name no longer accurately reflects what it does, you should consider updating the name -- although this may sometimes be inconvenient.
 
-This particular function always does exactly the same thing: it prints the message ``"Hello, world!"``. To call the function we use its name followed by round brackets (with any parameters that the function takes in between them)::
+This particular function always does exactly the same thing: it prints the message ``"Hello, world!"``.
+
+Defining a function does not make it run -- when the flow of control reaches the function definition and executes it, Python just learns about the function and what it will do when we run it.  To run a function, we have to *call* it.  To call the function we use its name followed by round brackets (with any parameters that the function takes in between them)::
 
     print_a_message()
 
@@ -40,6 +42,30 @@ Because functions are objects in Python, we can treat them just like any other o
 
     # later we can call the function using the variable name
     my_function()
+
+Because defining a function does not cause it to execute, we can use an identifier inside a function even if it hasn't been defined yet -- as long as it becomes defined by the time we run the function.  For example, if we define several functions which all call each other, the order in which we define them doesn't matter as long as they are all defined before we start using them::
+
+    def my_function():
+        my_other_function()
+
+    def my_other_function():
+        print("Hello!")
+
+    # this is fine, because my_other_function is now defined
+    my_function()
+
+If we were to move that function call up, we would get an error::
+
+    def my_function():
+        my_other_function()
+
+    # this is not fine, because my_other_function is not defined yet!
+    my_function()
+
+    def my_other_function():
+        print("Hello!")
+
+Because of this, it's a good idea to put all function definitions near the top of your program, so that they are executed before any of your other statements.
 
 Input parameters
 ================
@@ -139,12 +165,14 @@ Having multiple exit points scattered throughout your function can make your cod
 
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
-Function scope and the stack
-============================
+The stack
+=========
 
+Python stores information about functions which have been called in a *call stack*.  Whenever a function is called, a new *stack frame* is added to the stack -- all of the function's parameters are added to it, and as the body of the function is executed, local variables will be created there.  When the function finishes executing, its stack frame is discarded, and the flow of control returns to wherever you were before you called the function, at the previous level of the stack.
 
+If you recall the section about variable scope from the beginning of the course, this explains a little more about the way that variable names are resolved.  When you use an identifier, Python will first look for it on the current level of the stack, and if it doesn't find it it will check the previous level, and so on -- until either the variable is found or it isn't found anywhere and you get an error.  This is why a local variable will always take precedence over a global variable with the same name.
 
-* about the stack? Recap variable scope with a focus on functions?
+Python also searches the stack whenever it handles an exception: first it checks if the exception can be handled in the current function, and if it cannot, it terminates the function and tries the next one down -- until either the exception is handled on some level or the program itself has to terminate.  The traceback you see when an exception is printed shows the path that Python took through the stack.
 
 Recursion
 ---------

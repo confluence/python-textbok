@@ -276,6 +276,8 @@ If an object inherits from ``2DShape``, it will gain that class's default ``area
         def area(self):
             return self.width ** 2
 
+.. Todo:: add an exercise for creating an exception hierarchy
+
 Why not inheritance?
 ====================
 

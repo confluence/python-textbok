@@ -76,6 +76,8 @@ The ``age`` function doesn't take any parameters except ``self`` -- it only uses
 
 Note that the ``birthdate`` attribute is itself an object. The ``date`` class is defined in the ``datetime`` module, and we create a new instance of this class to use as the birthdate parameter when we create an instance of the ``Person`` class. We don't have to assign it to an intermediate variable before using it as a parameter to ``Person``; we can just create it when we call ``Person``, just like we create the string literals for the other parameters.
 
+Remember that defining a function doesn't make the function run.  Defining a class also doesn't make anything run -- it just tells Python about the class.  The class will not be defined until Python has executed the entirety of the definition, so you can be sure that you can reference any method from any other method on the same class, or even reference the class inside a method of the class.  By the time you call that method, the entire class will definitely be defined.
+
 Instance attributes
 ===================
 
