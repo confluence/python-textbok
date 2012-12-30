@@ -307,19 +307,48 @@ Debugging tools
 
 There are some automated tools which can help us to debug errors, and also to keep our code as correct as possible to minimise the chances of new errors creeping in.  Some of these tools analyse our program's syntax, reporting errors and bad programming style, while others let us analyse the program as it is running.
 
-pyflakes
-^^^^^^^^
+Pyflakes, pylint, PyChecker and pep8
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Pyflakes is a simple code checking tool which
+These four utilities analyse code for syntax errors as well as some kinds of runtime errors.  They also print warnings about bad coding style, and about inefficient and potentially incorrect code -- for example, variables and imported modules which are never used.
 
-pep8
-^^^^
+`Pyflakes <http://pypi.python.org/pypi/pyflakes>`_ parses code instead of importing it, which means that it can't detect as many errors as other tools -- but it is also safer to use, since there is no risk that it will execute broken code which does permanent damage to our system.  This is mostly relevant when we use it as part of an automated system.  It also means that Pyflakes is faster than other checkers.
+
+`Pylint <http://pypi.python.org/pypi/pylint>`_ and `PyChecker <http://pypi.python.org/pypi/PyChecker>`_ do import the code that they check, and they produce more extensive lists of errors and warnings. They are used by programmers who find the functionality of pyflakes to be too basic.
+
+`Pep8 <http://pypi.python.org/pypi/pep8>`_ specifically targets bad coding style -- it checks whether our code conforms to `Pep 8 <http://www.python.org/dev/peps/pep-0008/>`_, a specification document for good coding style.
+
+Here is how we use these programs on the commandline::
+
+    pyflakes myprogram.py
+    pylint myprogram.py
+    pychecker myprogram.py
+    pep8 myprogram.py
 
 pdb
 ^^^
 
+`pdb <http://docs.python.org/3.3/library/pdb.html>`_ is a built-in Python module which we can use to debug a program while it's running.  We can either import the module and use its functions from inside our code, or invoke it as a script when running our code file.  We can use pdb to step through our program, either line by line or in larger increments, inspect the state at each step, and perform a "post-mortem" of the program if it crashes.
+
+Here is how we would use pdb in our code::
+
+    import pdb
+
+    def our_function():
+        bad_idea = 3 + "4"
+
+    pdb.run('our_function()')
+
+Here is how we would run it as a script::
+
+    python3 -m pdb ourprogram.py
+
+More extensive documentation, including the full list of commands which can be used inside the debugger, can be found at the link above.
+
 Logging
 =======
+
+
 
 
 .. Todo:: Exercise; [explain where Python fits in??]
