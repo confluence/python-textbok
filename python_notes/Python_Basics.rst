@@ -43,6 +43,11 @@ Running programs from files
           something about how to use the interactive interpreter.
           Include something about an IDE (Wing?).
 
+Installing new packages
+-----------------------
+
+* Mention pip, easy_install and system package managers.
+
 
 Essentials of a Python Program
 ==============================
