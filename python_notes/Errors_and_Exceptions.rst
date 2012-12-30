@@ -217,6 +217,11 @@ The ``finally`` clause will be executed at the end of the *try-except* block no 
     finally:
         print("It was really nice talking to you.  Goodbye!")
 
+The ``with`` statement
+----------------------
+
+.. todo: Write about the with statement
+
 Using the exception object
 --------------------------
 
