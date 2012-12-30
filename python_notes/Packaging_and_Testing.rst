@@ -64,7 +64,7 @@ The other file, ``setup.py``, is the specification for our package.  Here is a m
     setup(name='ourprog',
         version='0.1',
         description='Our first program',
-        url='http://ourwebsite.com',
+        url='http://example.com',
         author='Jane Smith',
         author_email='jane.smith@example.com',
         license='GPL',
@@ -103,11 +103,62 @@ There are several different tools which parse docstrings -- the one which is cur
 Docstring examples
 ------------------
 
-Each docstring should contain a short description of the structure.  If the structure is a function, it should document all the parameters and the return value.  Because Python isn't statically typed, it is important to provide information about the parameters that a function accepts.
+The Sphinx markup language is a variant of reStructuredText (reST) with some extra keywords defined. There is no set, compulsory Sphinx docstring format -- we can put any kind of Sphinx syntax inside the docstrings.  A docstring should at the very least contain a basic description of the structure being documented.
 
-Here are some examples of docstrings of various types::
+If the structure is a function, it is helpful to describe all the parameters and the return value, and also mention if the function can raise any exceptions.  Because Python isn't statically typed, it is important to provide information about the parameters that a function accepts.
 
+We can also provide a much longer explanation after summarising all the basic information -- we can go into as much detail as we like; there is no length limit.
 
+Here are some examples of docstrings form various objects::
+
+    """This is a module for our Person class.
+    .. moduleauthor: Jane Smith <jane.smith@example.com>
+    """
+
+    import datetime
+
+    class Person:
+        """This is a class which represents a person. It is a bit of a silly class.
+        It stores some personal information, and can calculate a person's age.
+        """
+
+        def __init__(self, name, surname, birthdate, address, telephone, email):
+            """This method creates a new person.
+
+            :param name: first name
+            :type name: str
+            :param surname: surname
+            :type surname: str
+            :param birthdate: date of birth
+            :type birthdate: datetime.date
+            :param address: physical address
+            :type address: str
+            :param telephone: telephone number
+            :type telephone: str
+            :param email: email address
+            :type email: str
+            """
+
+            self.name = name
+            self.surname = surname
+            self.birthdate = birthdate
+
+            self.address = address
+            self.telephone = telephone
+            self.email = email
+
+        def age(self):
+            """This method calculates the person's age from the birthdate and the current date.
+
+            :returns: int -- the person's age in years
+            """
+            today = datetime.date.today()
+            age = today.year - self.birthdate.year
+
+            if today < datetime.date(today.year, self.birthdate.month, self.birthdate.day):
+                age -= 1
+
+            return age
 
 .. Todo:: in this and other sections, "further reading" with links to documentation on the web.
 
