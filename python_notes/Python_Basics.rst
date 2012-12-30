@@ -522,6 +522,15 @@ results in an integer solution.
           and ``//`` *always* performs integer division -- even if the
           dividend and divisor are floats!
 
+.. Note:: Some other languages (e.g. C, Java) store each integer in a
+          small fixed amount of memory. This limits the size of the
+          integer that may be stored. Common limits are ``2**8``,
+          ``2**16``, ``2**32`` and ``2**64``. Python has no fixed
+          limit can stored surprisingly large integers such as
+          ``2**1000000`` as long as there is enough memory and
+          processing power available on the machine where it is
+          running.
+
 
 Operator precedence
 -------------------
