@@ -267,12 +267,57 @@ We can also write our own custom exception classes which are based on existing e
 Debugging programs
 ==================
 
-We can
+Syntax errors are usually quite straightforward to debug: the error message shows us the line in the file where the error is, and it should be easy to find it and fix it.
 
-* follow error messages
-* static error checking: pyflakes, pep8
-* print statements
-* pdb
-* add a note that testing is coming up in later chapter
+Runtime errors can be a little more difficult to debug: the error message and the traceback can tell us exactly where the error occurred, but that doesn't necessarily tell us what the problem is.  Sometimes they are caused by something obvious, like an incorrect identifier name, but sometimes they are triggered by a particular state of the program -- it's not always clear which of many variables has an unexpected value.
+
+Logical errors are the most difficult to fix because they don't cause any errors that can be traced to a particular line in the code.  All that we know is that the code is not behaving as it should be -- sometimes tracking down the area of the code which is causing the incorrect behaviour can take a long time.
+
+It is important to test your code to make sure that it behaves the way that you expect.  A quick and simple way of testing that a function is doing the right thing, for example, is to insert a print statement after every line which outputs the intermediate results which were calculated on that line.  Most programmers intuitively do this as they are writing a function, or perhaps if they need to figure out why it isn't doing the right thing::
+
+    def hypotenuse(x, y):
+        print("x is %f and y is %f" % (x, y))
+        x_2 = x**2
+        print(x_2)
+        y_2 = y**2
+        print(y_2)
+        z_2 = x_2 + y_2
+        print(z_2)
+        z = math.sqrt(z_2)
+        print(z)
+        return z
+
+This is a quick and easy thing to do, and even experienced programmers are guilty of doing it every now and then, but this approach has several disadvantages:
+
+* As soon as the function is working, we are likely to delete all the print statements, because we don't want our program to print all this debugging information all the time.  The problem is that code often changes -- the next time we want to test this function we will have to add the print statements all over again.
+
+* To avoid rewriting the print statements if we happen to need them again, we may be tempted to comment them out instead of deleting them -- leaving them to clutter up our code, and possibly become so out of sync that they end up being completely useless anyway.
+
+* To print out all these intermediate values, we had to spread out the formula inside the function over many lines. Sometimes it is useful to break up a calculation into several steps, if it is very long and putting it all on one line makes it hard to read, but sometimes it just makes our code unnecessarily verbose.  Here is what the function above would normally look like::
+
+    def hypotenuse(x, y):
+        return math.sqrt(x**2 + y**2)
+
+How can we do this better?  If we want to *inspect* the values of variables at various steps of a program's execution, we can use a tool like ``pdb``.  If we want our program to print out informative messages, possibly to a file, and we want to be able to control the level of detail at runtime without having to change anything in the code, we can use *logging*.
+
+Most importantly, to check that our code is working correctly now and will *keep* working correctly, we should write a permanent suite of tests which we can run on our code regularly.  We will discuss testing in more detail in a later chapter.
+
+Debugging tools
+---------------
+
+There are some automated tools which can help us to debug errors, and also to keep our code as correct as possible to minimise the chances of new errors creeping in.  Some of these tools analyse our program's syntax, reporting errors and bad programming style, while others let us analyse the program as it is running.
+
+pyflakes
+^^^^^^^^
+
+pep8
+^^^^
+
+pdb
+^^^
+
+Logging
+=======
+
 
 .. Todo:: Exercise; [explain where Python fits in??]
