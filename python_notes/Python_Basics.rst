@@ -455,6 +455,13 @@ try to perform operations on variables which have incompatible types
 (for example, if you try to add a number to a string), Python will
 exit with a type error instead of trying to guess what you mean.
 
+The function ``type`` can be used to determine the type of an
+object. For example::
+
+    print(type(1))
+    print(type("a"))
+
+
 Integers
 ========
 
