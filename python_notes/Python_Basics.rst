@@ -48,12 +48,8 @@ Installing new packages
 
 * Mention pip, easy_install and system package managers.
 
-
-Essentials of a Python Program
+Essentials of a Python program
 ==============================
-
-Simple programs
-----------------
 
 In most of today's written languages, words by themselves do not make
 sense unless they are in certain order and surrounded by correct
@@ -74,8 +70,7 @@ program which does (almost) exactly the same thing::
     def my_function():
         print("Hello, World!")
 
-    if __name__ == "__main__":
-        my_function()
+    my_function()
 
 This type of program is often referred to as a skeleton program,
 because one can build upon it to create a more complex program.
@@ -184,7 +179,7 @@ syntax error if used as an identifier.
 Solutions can be found at the end of the chapter.
 
 
-Flow of Control
+Flow of control
 ---------------
 
 In Python, statements are written as a list, in the way that a person
@@ -195,27 +190,6 @@ last instruction is completed. We refer to the order in which the
 computer executes instructions as the flow of control. When the
 computer is executing a particular instruction, we can say that
 control is at that instruction.
-
-``"__main__"``
---------------
-
-A computer program may be spread across several files and consist of
-many different functions and classes. Somewhere in the program there
-must be a starting point -- an instruction which the computer will
-execute first.  In some languages this is a function with a special
-name (usually ``main``).  In Python, there is no name reserved for
-this purpose, and you don't even need to have a function at all -- you
-may simply write a list of statements, and they will be executed in
-order.
-
-The second example shows a typical way of designating code to be a
-Python program's "main function": ``__name__`` is a special variable
-which is set to the value ``"__main__"`` when the file is executed by
-Python directly.  If you run the file containing this program,
-everything inside the ``if`` statement will be executed -- the
-function will be called, and the message will be printed.  However, if
-you were to import the function ``my_function`` from a different file,
-this statement would not be executed.
 
 Indentation and (lack of) semicolons
 ------------------------------------
@@ -262,7 +236,7 @@ instruction on a line (but that is usually bad style)::
 
 .. Todo: Exercise 2 and Exercise 3
 
-Letter Case
+Letter case
 -----------
 
 Unlike some languages (such as Pascal), Python is case-sensitive. This
@@ -313,7 +287,7 @@ in Python, you should split it into multiple shorter lines and put a
           keyboard shortcut which allows you to comment or uncomment
           all the text you have selected.
 
-Reading and Writing
+Reading and writing
 -------------------
 
 Many programs display text on the screen either to give some
@@ -336,8 +310,6 @@ These are examples of string literals::
     "Welcome to John's Calculating Machine."
     'Enter the first number:'
 
-.. Todo:: How much stuff about streams do we actually need to put here?
-
 We can tell the computer to print "Hello!" on the console with the
 following instruction::
 
@@ -346,22 +318,14 @@ following instruction::
 As you can see the ``print`` function takes in a string literal as an
 argument.  It prints the string literal, and by default also prints a
 newline character at the end -- this is why the console's cursor
-appears on a new line after you have printed something.  If you want
-to print a message *without* a newline at the end, you can pass an
-optional ``end`` parameter into the ``print`` function::
-
-    print("Hello!", end='')
-
-Now ``print`` will print an empty string (i.e. nothing) instead of a
-newline -- you should see your cursor appear immediately after the
-message.
+appears on a new line after you have printed something.
 
 To query the user for information, use the ``input`` function::
 
     first_number = input('Enter the first number: ')
 
 There are several things to note.  First, unlike the ``print``
-function, the ``input function`` does *not* print a newline
+function, the ``input`` function does *not* print a newline
 automatically -- the text will be entered directly after the prompt.
 That is why we have added a trailing space after the colon.  Second,
 the function always returns a string -- we will have to convert it to
@@ -385,31 +349,6 @@ function without a parameter::
           first.  It can be very dangerous -- the user could enter
           absolutely anything, including malicious code!
 
-String Formatting
------------------
-
-You will often need to print a message which is not a fixed string --
-perhaps you want to include some numbers or other values which are
-stored in variables.  The recommended way to include these variables
-in your message is to use string formatting syntax::
-
-    name = "Jane"
-    age = 23
-    print("Hello! My name is %s." % name)
-    print("Hello! My name is %s and I am %d years old." % (name, age))
-
-The symbols in the string which start with percent signs (``%``) are
-placeholders, and the variables which are to be inserted into those
-positions are given after the string formatting operator, ``%``, in
-the same order in which they appear in the string.  If there is only
-one variable, it doesn't require any kind of wrapper, but if you have
-more than one you need to put them in a tuple (between round
-brackets).  The placeholders symbols have different letters depending
-on the type of the variable -- ``name`` is a string, but ``age`` is an
-integer.  All the variables will be converted to strings before being
-combined with the rest of the message.  We will discuss types in more
-detail soon.
-
 Files
 -----
 
@@ -419,78 +358,10 @@ can also use it to write to a file.  Here is a simple example::
     with open('myfile.txt', 'w') as myfile:
         print("Hello!", file=myfile)
 
-
-More on String Literals
------------------------
-
-Escape Sequences
-^^^^^^^^^^^^^^^^
-
-An escape sequence (of characters) can be used to denote a special
-character which cannot be typed easily on a keyboard or one which has
-been reserved for other purposes.  For example, you may want to insert
-a newline into your string::
-
-    print('This is one line.\nThis is another line.')
-
-If your string is enclosed in single quotes, you will have to escape
-apostrophes, and you need to do the same for double quotes in a string
-enclosed in double quotes.  An escape sequence starts with a backslash
-(``\``)::
-
-    print('"Hi! I\'m Jane," she said.')
-    print("\"Hi! I'm Jane,\" she said.")
-
-If you did not escape one of these quotes, Python would treat it as
-the end quote of your string -- and shortly afterwards it would fail
-to parse the rest of the statement and give you a syntax error::
-
-    >>> print('"Hi! I'm Jane," she said.')
-      File "<stdin>", line 1
-        print('"Hi! I'm Jane," she said.')
-                      ^
-    SyntaxError: invalid syntax
-
-Some common escape sequences:
-
-========  =================
-Sequence  Meaning
-========  =================
-``\\``    literal backslash
-``\'``    single quote
-``\"``    double quote
-``\n``    newline
-``\t``    tab
-========  =================
-
-You can also use escape sequences to output unicode characters.
-
-.. Todo:: argh, how do line endings work on Windows?
-
-
-Triple quotes
-^^^^^^^^^^^^^
-
-In cases where you need to define a long literal spanning multiple
-lines, or containing many quotes, it may be simplest and most legible
-to enclose it in triple quotes (either single or double quotes, but of
-course they must match).  Inside the triple quotes, all whitespace is
-treated literally -- if you type a newline it will be reflected in
-your string.  You also don't have to escape any quotes.  Be careful
-that you don't include anything that you don't mean to -- any
-indentation will also go inside your string!
-
-These string literals will be identical::
-
-    string_one = '''"Hello," said Jane.
-    "Hi," said Bob.'''
-
-    string_two = '"Hello," said Jane.\n"Hi," said Bob.'
-
-.. Todo:: Exercise 4
+.. Todo:: add a bigger section about simple file I/O here
 
 Built-in types
-==============
+--------------
 
 There are many kinds of information that a computer can process, like
 numbers and characters. In Python (and other programming languages),
@@ -521,7 +392,7 @@ try to perform operations on variables which have incompatible types
 exit with a type error instead of trying to guess what you mean.
 
 Integers
---------
+========
 
 An integer (``int`` type) is a whole number such as ``1``, ``5``,
 ``1350`` or ``-34``. ``1.5`` is not an integer because it has a
@@ -529,7 +400,7 @@ decimal point. Numbers with decimal points are floating-point
 numbers. Even ``1.0`` is a floating-point number and not an integer.
 
 Integer operations
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Python can display an integer with the ``print`` function, but only if
 it is the only argument::
@@ -582,7 +453,7 @@ results in an integer solution.
 
 
 Operator precedence
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Another important thing to keep in mind is operator precedence. For
 example, does ``1 + 2 // 3`` mean ``(1 + 2) // 3`` or ``1 + (2 //
@@ -630,7 +501,7 @@ understandable.
 .. Todo:: Exercise 5
 
 Floating-point numbers
-----------------------
+======================
 
 Floating-point numbers (``float`` type) are numbers with a decimal
 point or an exponent (or both). Examples are ``5.0``, ``10.24``,
@@ -677,7 +548,7 @@ Note that any rounding only affects the display of the numbers. The
 precision of the number itself is not affected.
 
 Floating-point operations and precedence
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
 
 Arithmetic operations for floating-point numbers are the same as those
 for integers: addition, subtraction, multiplication, division and
@@ -703,8 +574,8 @@ the order of precedence.
 
 .. Todo:: Exercise 6
 
-Using strings
--------------
+Strings
+=======
 
 A string is a sequence of characters. You should already be familiar
 with string literals from working with them in the last section.  In
@@ -723,7 +594,94 @@ length of 1.
           had to use the ``unicode`` type. In Python 3, the ``str``
           type uses Unicode.
 
-String Operations
+String formatting
+-----------------
+
+You will often need to print a message which is not a fixed string --
+perhaps you want to include some numbers or other values which are
+stored in variables.  The recommended way to include these variables
+in your message is to use string formatting syntax::
+
+    name = "Jane"
+    age = 23
+    print("Hello! My name is %s." % name)
+    print("Hello! My name is %s and I am %d years old." % (name, age))
+
+The symbols in the string which start with percent signs (``%``) are
+placeholders, and the variables which are to be inserted into those
+positions are given after the string formatting operator, ``%``, in
+the same order in which they appear in the string.  If there is only
+one variable, it doesn't require any kind of wrapper, but if you have
+more than one you need to put them in a tuple (between round
+brackets).  The placeholders symbols have different letters depending
+on the type of the variable -- ``name`` is a string, but ``age`` is an
+integer.  All the variables will be converted to strings before being
+combined with the rest of the message.
+
+Escape sequences
+----------------
+
+An escape sequence (of characters) can be used to denote a special
+character which cannot be typed easily on a keyboard or one which has
+been reserved for other purposes.  For example, you may want to insert
+a newline into your string::
+
+    print('This is one line.\nThis is another line.')
+
+If your string is enclosed in single quotes, you will have to escape
+apostrophes, and you need to do the same for double quotes in a string
+enclosed in double quotes.  An escape sequence starts with a backslash
+(``\``)::
+
+    print('"Hi! I\'m Jane," she said.')
+    print("\"Hi! I'm Jane,\" she said.")
+
+If you did not escape one of these quotes, Python would treat it as
+the end quote of your string -- and shortly afterwards it would fail
+to parse the rest of the statement and give you a syntax error::
+
+    >>> print('"Hi! I'm Jane," she said.')
+      File "<stdin>", line 1
+        print('"Hi! I'm Jane," she said.')
+                      ^
+    SyntaxError: invalid syntax
+
+Some common escape sequences:
+
+========  =================
+Sequence  Meaning
+========  =================
+``\\``    literal backslash
+``\'``    single quote
+``\"``    double quote
+``\n``    newline
+``\t``    tab
+========  =================
+
+You can also use escape sequences to output unicode characters.
+
+Triple quotes
+-------------
+
+In cases where you need to define a long literal spanning multiple
+lines, or containing many quotes, it may be simplest and most legible
+to enclose it in triple quotes (either single or double quotes, but of
+course they must match).  Inside the triple quotes, all whitespace is
+treated literally -- if you type a newline it will be reflected in
+your string.  You also don't have to escape any quotes.  Be careful
+that you don't include anything that you don't mean to -- any
+indentation will also go inside your string!
+
+These string literals will be identical::
+
+    string_one = '''"Hello," said Jane.
+    "Hi," said Bob.'''
+
+    string_two = '"Hello," said Jane.\n"Hi," said Bob.'
+
+.. Todo:: Exercise 4
+
+String operations
 -----------------
 
 We have already introduced a string operation - concatenation
@@ -756,19 +714,15 @@ In Python, strings are *immutable* -- that means that you can't modify
 a string once it has been created.  However, you can assign a new
 string value to an existing variable name.
 
-Reading and writing from files
-==============================
+.. Todo:: modules and tests are in a separate chapter -- should anything
+be said here?
 
-.. Todo:: write a section on reading and writing files
-
-Organising your Python code
-===========================
-
-.. Todo:: put stuff about modules here; mention tests
-
-.. Todo:: Say something about None (here or in the next chapter).
+.. Todo:: should this be split again into two chapters, with all the
+string and number stuff in another chapter?
 
 .. Todo:: translate exercises
+
+.. Todo:: change you to we almost everywhere
 
 
 Answers to exercises

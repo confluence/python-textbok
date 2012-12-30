@@ -649,3 +649,5 @@ If, however, you want to distinguish between the case when your variable is ``No
         print("My string is empty!")
     else:
         print("My string is '%s'." % my_string)
+
+.. Todo:: change you to we almost everywhere

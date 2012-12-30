@@ -422,3 +422,5 @@ How can we improve on this?  We can separate the parts of these lines that diffe
 Now there is no unnecessary duplication.  We can easily change the string that we use as a prompt, or add more code to execute for each property -- we will only have to edit the code in one place, not in five places.  To add another property, all we have to do is add another name to the list.
 
 .. Todo:: exercise ideas: add type conversion and exception handling to the snippet above.  The exception handling one should be put in the exception chapter.
+
+.. Todo:: change you to we almost everywhere
