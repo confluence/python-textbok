@@ -177,7 +177,10 @@ Here is a simple example of inheritance::
 
 
     jane = Student(Student.POSTGRADUATE, "Jane", "Smith", "SMTJNX045")
+    jane.enrol(a_postgrad_course)
+
     bob = Lecturer(StaffMember.PERMANENT, "Bob". "Jones", "123456789")
+    bob.assign_teaching(an_undergrad_course)
 
 Our base class is ``Person``, which represents any person associated with a university.  We create a subclass to represent students and one to represent staff members, and then a subclass of ``StaffMember`` for people who teach courses (as opposed to staff members who have administrative positions.)
 
@@ -216,8 +219,6 @@ If we use multiple inheritance, it is often a good idea for us to design our cla
 
 
     class LearnerMixin:
-        UNDERGRADUATE, POSTGRADUATE = range(2)
-
         def __init__(self):
             self.classes = []
 
@@ -234,20 +235,112 @@ If we use multiple inheritance, it is often a good idea for us to design our cla
 
 
     class Tutor(Person, LearnerMixin, TeacherMixin):
-        def __init__(self, *args, *kwargs)
+        def __init__(self, *args, *kwargs):
+            super(Tutor, self).__init__(*args, *kwargs)
 
-Composition over inheritance
-----------------------------
+    jane = Tutor("Jane", "Smith", "SMTJNX045")
+    jane.enrol(a_postgrad_course)
+    jane.assign_teaching(an_undergrad_course)
 
-* convert mix-ins to attributes?
+Now Tutor inherits from one "main" class, ``Person``, and two mix-ins which are not related to ``Person``.  Each mix-in is responsible for providing a specific piece of optional functionality.  Our mix-ins still have ``__init__`` methods, because each one has to initialise a list of courses (we saw in the previous chapter that we can't do this with a class attribute).  Many mix-ins just provide additional methods and don't initialise anything. This sometimes means that they depend on other properties which already exist in the class which inherits from them.
+
+We could extend this example with more mix-ins which represent the ability to pay fees, the ability to get paid for services, and so on -- we could then create a relatively flat hierarchy of classes for different kinds of people which inherit from ``Person`` and some number of mix-ins.
+
+Abstract classes and interfaces
+-------------------------------
+
+In some languages it is possible to create a class which can't be instantiated.  That means that we can't use this class directly to create an object -- we can only inherit from the class, and use the subclasses to create objects.
+
+Why would we want to do this?  Sometimes we want to specify a set of properties that an object needs to have in order to be suitable for some task -- for example, we may have written a function which expects one of its parameters to be an object with certain methods that our function will need to use.  We can create a class which serves as a *template* for suitable objects by defining a list of methods that these objects must implement.  This class is not intended to be instantiated because all our method definitions are empty -- all the *insides* of the methods must be implemented in a subclass.
+
+The abstract class is thus an *interface* definition -- some languages also have a type of structure called an interface, which is very similar.  We say that a class *implements* an interface if it inherits from the class which specifies that interface.
+
+In Python we can't prevent anyone from instantiating a class, but we can create something similar to an abstract class by using ``NotImplementedError`` inside our method definitions.  For example, here are some "abstract" classes which can be used as templates for shapes::
+
+    class 2DShape:
+        def area(self):
+            raise NotImplementedError()
+
+    class 3DShape:
+        def volume(self):
+            raise NotImplementedError()
+
+Any two-dimensional shape has an area, and any three-dimensional shape has a volume.  The formulae for working out area and volume differ depending on what shape we have, and objects for different shapes may have completely different attributes.
+
+If an object inherits from ``2DShape``, it will gain that class's default ``area`` method -- but the default method raises an error which makes it clear to the user that a custom method must be defined in the child object::
+
+    class Square(2DShape):
+        def __init__(self, width):
+            self.width = width
+
+        def area(self):
+            return self.width ** 2
+
+Why not inheritance?
+====================
+
+Inheritance can be a useful technique, but it can also be an unnecessary complication.  As we have already discussed, multiple inheritance can cause a lot of ambiguity and confusion, and should be kept to a minimum.
+
+A deep hierarchy with many layers of subclasses may be difficult to read and understand.  In our first inheritance example, to understand how the ``Lecturer`` class works we have to read through *three* different classes instead of one.  If our classes are long and split into several different files, it can be hard to figure out which subclass is responsible for a particular piece of behaviour.  You should avoid creating hierarchies which are more than one or two classes deep.
+
+In some statically typed languages inheritance is very popular because it allows the programmer to work around some of the restrictions of static typing.  If a lecturer and a student are both a kind of person, we can write a function which accepts a parameter of type ``Person`` and have it work on both lecturer and student objects because they both inherit from ``Person``.  This is known as *polymorphism*.
+
+In Python inheritance is not compulsory for polymorphism, because Python is not statically typed.  A function can work on both lecturer and student objects if they both have the appropriate attributes and methods even if these objects *don't* share a parent class, and are completely unrelated.  When you check parameters yourself, you are encouraged not to check an object's type directly, but instead to check for the presence of the methods and attributes that your function needs to use -- that way you are not forcing the parameter objects into an inheritance hierarchy when this is unnecessary.
+
+Replacing inheritance with composition
+--------------------------------------
+
+Sometimes we can replace inheritance with composition and achieve a similar result -- this approach is sometimes considered preferable.  In the mix-in example, we split up the possible behaviours of a person into logical groups.  Instead of implementing these sets of behaviours as mix-ins and having our class inherit from them, we can add them as *attributes* to the ``Person`` class::
 
 
-* Inheritance
-    ** all the important basic things about inheritance
-    ** admonition not to overuse inheritance; discussion of alternatives
-        *** composition over inheritance, esp. multiple inheritance
-        *** note that if you split stuff up over a deep hierarchy it makes the program hard to read
-        *** note that you shouldn't gratuitously subclass just to have different attribute values -- that's what parameters are for
-        *** note that inheritance is not compulsory for polymorphism in Python
+    class Learner:
+        def __init__(self):
+            self.classes = []
 
-* "Abstract classes" except call the section something else because there aren't any
+        def enrol(self, course):
+            self.classes.append(course)
+
+
+    class Teacher:
+        def __init__(self):
+            self.courses_taught = []
+
+        def assign_teaching(self, course):
+            self.courses_taught.append(course)
+
+
+    class Person:
+        def __init__(self, name, surname, number, learner=None, teacher=None):
+            self.name = name
+            self.surname = surname
+            self.number = number
+
+            self.learner = learner
+            self.teacher = teacher
+
+    jane = Person("Jane", "Smith", "SMTJNX045", Learner(), Teacher())
+    jane.learner.enrol(a_postgrad_course)
+    jane.teacher.assign_teaching(an_undergrad_course)
+
+Now instead of calling the ``enrol`` and ``assign_teaching`` methods on our person object directly, we *delegate* to the object's ``learner`` and ``teacher`` attributes.  We could also implement additional methods in the ``Person`` class which hide the delegation, and perhaps raise an error message if an optional attribute does not exist::
+
+    class Person:
+        def __init__(self, name, surname, number, learner=None, teacher=None):
+            self.name = name
+            self.surname = surname
+            self.number = number
+
+            self.learner = learner
+            self.teacher = teacher
+
+        def enrol(self, course):
+            if not hasattr(self, "learner"):
+                raise NotImplementedError()
+
+            self.learner.enrol(course)
+
+        def assign_teaching(self, course):
+            if not hasattr(self, "teacher"):
+                raise NotImplementedError()
+
+            self.teacher.assign_teaching(course)
