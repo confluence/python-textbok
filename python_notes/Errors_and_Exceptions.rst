@@ -310,6 +310,8 @@ There are some automated tools which can help us to debug errors, and also to ke
 pyflakes
 ^^^^^^^^
 
+Pyflakes is a simple code checking tool which
+
 pep8
 ^^^^
 

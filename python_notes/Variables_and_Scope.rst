@@ -505,3 +505,5 @@ This usually behaves in the way that you would expect: non-zero numbers are ``Tr
     bool("Jane") # True
     bool("0") # True!
     bool("False") # Also True!
+
+.. Todo:: change you to we almost everywhere
