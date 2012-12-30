@@ -279,7 +279,7 @@ If an object inherits from ``2DShape``, it will gain that class's default ``area
 Why not inheritance?
 ====================
 
-Inheritance can be a useful technique, but it can also be an unnecessary complication.  As we have already discussed, multiple inheritance can cause a lot of ambiguity and confusion, and should be kept to a minimum.
+Inheritance can be a useful technique, but it can also be an unnecessary complication.  As we have already discussed, multiple inheritance can cause a lot of ambiguity and confusion, and hierarchies which use multiple inheritance should be designed carefully to minimise this.
 
 A deep hierarchy with many layers of subclasses may be difficult to read and understand.  In our first inheritance example, to understand how the ``Lecturer`` class works we have to read through *three* different classes instead of one.  If our classes are long and split into several different files, it can be hard to figure out which subclass is responsible for a particular piece of behaviour.  You should avoid creating hierarchies which are more than one or two classes deep.
 
