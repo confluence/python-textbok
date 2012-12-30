@@ -364,7 +364,7 @@ Now we can see our attributes and our method -- but what's all that other stuff?
 
 .. Note:: in Python 2 we have to inherit from ``object`` explicitly, otherwise our class will be almost completely empty except for our own custom properties.  Classes which don't inherit from ``object`` are called "old-style classes", and using them is not recommended.  If we were to write the person class in Python 2 we would write the first line as ``class Person(object):``.
 
-This is why you can just leave out the ``__init__`` method out of your class if you don't have any initialisation to do -- the default that you inherited from ``object`` (which does nothing) will be used instead.  If you do write your own ``__init__`` method, it will *override* the default method.  We also call this *overloading*.
+This is why you can just leave out the ``__init__`` method out of your class if you don't have any initialisation to do -- the default that you inherited from ``object`` (which does nothing) will be used instead.  If you do write your own ``__init__`` method, it will *override* the default method.  Sometimes we also call this *overloading*.
 
 Many default methods and attributes that are found in built-in Python objects have names which begin and end in double underscores, like ``__init__`` or ``__str__``.  These names indicate that these properties have a special meaning -- you shouldn't create your own methods or attributes with the same names unless you mean to overload them.  These properties are usually methods, and they are sometimes called *magic methods*.
 

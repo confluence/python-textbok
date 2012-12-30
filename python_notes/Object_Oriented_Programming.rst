@@ -121,7 +121,7 @@ We have defined several relationships between these classes:
 
 * A department offers multiple courses (``Course`` objects), but in our implementation a course can only have a single department -- this is a one-to-many relationship.  It is also bidirectional.  Furthermore, these objects are more strongly coupled -- you can say that a department *owns* a course.  The course cannot exist without the department.
 
-* A similar relationship exists between a course and its "runnings": it is also bidirectional, one-to-many and strongly coupled -- it wouldn't make sense for "MAM1000W run in 2013" to exist on its own in the absence of "MAM100W".
+* A similar relationship exists between a course and its "runnings": it is also bidirectional, one-to-many and strongly coupled -- it wouldn't make sense for "MAM1000W run in 2013" to exist on its own in the absence of "MAM1000W".
 
 What words like "exist" and "owns" actually mean for our code can vary.  An object which "owns" another object could be responsible for creating that object when it requires it and destroying it when it is no longer needed -- but these words can also be used to describe a logical relationship between concepts which is not necessarily literally implemented in that way in the code.
 
@@ -140,14 +140,114 @@ Inheritance is also a way of reusing existing code easily.  If we already have a
 
 Here is a simple example of inheritance::
 
-    # urgh, we need a non-terrible example of inheritance. Server? Parser? The best kinds of hierarchies are things that are designed to be subclassed.
+    class Person:
+        def __init__(self, name, surname, number):
+            self.name = name
+            self.surname = surname
+            self.number = number
 
+
+    class Student(Person):
+        UNDERGRADUATE, POSTGRADUATE = range(2)
+
+        def __init__(self, student_type, *args, **kwargs):
+            self.student_type = student_type
+            self.classes = []
+            super(Student, self).__init__(*args, **kwargs)
+
+        def enrol(self, course):
+            self.classes.append(course)
+
+
+    class StaffMember(Person):
+        PERMANENT, TEMPORARY = range(2)
+
+        def __init__(self, employment_type, *args, **kwargs)
+            self.employment_type = employment_type
+            super(StaffMember, self).__init__(*args, **kwargs)
+
+
+    class Lecturer(StaffMember):
+        def __init__(self, *args, **kwargs):
+            self.courses_taught = []
+            super(Lecturer, self).__init__(*args, **kwargs)
+
+        def assign_teaching(self, course):
+            self.courses_taught.append(course)
+
+
+    jane = Student(Student.POSTGRADUATE, "Jane", "Smith", "SMTJNX045")
+    bob = Lecturer(StaffMember.PERMANENT, "Bob". "Jones", "123456789")
+
+Our base class is ``Person``, which represents any person associated with a university.  We create a subclass to represent students and one to represent staff members, and then a subclass of ``StaffMember`` for people who teach courses (as opposed to staff members who have administrative positions.)
+
+We represent both student numbers and staff numbers by a single attribute, ``number``, which we define in the base class, because it makes sense for us to treat them as a unified form of identification for any person.  We use different attributes for the kind of student (undergraduate or postgraduate) that someone is and whether a staff member is a permanent or a temporary employee, because these are different sets of options.
+
+We have also added a method to ``Student`` for enrolling a student in a course, and a method to ``Lecturer`` for assigning a course to be taught by a lecturer.
+
+The ``__init__`` method of the base class initialises all the instance variables that are common to all subclasses.  In each subclass we *override* the ``__init__`` method so that we can use it to initialise that class's attributes -- but we want the parent class's attributes to be initialised as well, so we need to call the parent's ``__init__`` method from ours.  To find the right method, we use the ``super`` function -- when we pass in the current class and object as parameters, it will return a proxy object with the correct ``__init__`` method, which we can then call.
+
+In each of our overridden ``__init__`` methods we use those of the method's parameters which are specific to our class inside the method, and then pass the remaining parameters to the parent class's ``__init__`` method.  A common convention is to add the specific parameters for each successive subclass to the *beginning* of the parameter list, and define all the other parameters using ``*args`` and ``**kwargs`` -- then the subclass doesn't need to know the details about the parent class's parameters.  Because of this, if we add a new parameter to the superclass's ``__init__``, we will only need to add it to all the places where we create that class or one of its subclasses -- we won't also have to update all the child class definitions to include the new parameter.
+
+More about inheritance, and when to avoid it
+============================================
+
+Multiple inheritance
+--------------------
+
+The previous example might seem like a good way to represent students and staff members at first glance, but if we started to extend this system we would soon encounter some complications.  At a real university, the divisions between staff and students and administrative and teaching staff are not always clear-cut.  A student who tutors a course is also a kind of temporary staff member.  A staff member can enrol in a course.  A staff member can have *both* an administrative role in the department *and* a teaching position.
+
+In Python it is possible for a class to inherit from multiple other classes.  We could, for example, create a class called ``Tutor``, which inherits from both ``Student`` and ``StaffMember``.  Multiple inheritance isn't too difficult to understand if a class inherits from multiple classes which have completely different properties, but things get complicated if two parent classes implement the same method or attribute.
+
+If classes ``B`` and ``C`` inherit from ``A`` and class ``D`` inherits from ``B`` and ``C``, and both ``B`` and ``C`` have a method ``do_something``, which ``do_something`` will ``D`` inherit?  This ambiguity is known as the *diamond problem*, and different languages resolve it in different ways.  In our ``Tutor`` class we would encounter this problem with the ``__init__`` method.
+
+Fortunately the ``super`` function knows how to deal gracefully with multiple inheritance. If we use it inside the ``Tutor`` class's ``__init__`` method, all of the parent classes' ``__init__`` methods should be called in a sensible order.  We would then end up with a class which has all the attributes and methods found in both ``Student`` and ``StaffMember``.
+
+Mix-ins
+-------
+
+If we use multiple inheritance, it is often a good idea for us to design our classes in a way which avoids the kind of ambiguity described above.  One way of doing this is to split up optional functionality into *mix-ins*.  A Mix-in is a class which is not intended to stand on its own -- it exists to add extra functionality to another class through multiple inheritance.  For example, let us try to rewrite the example above so that each set of related things that a person can do at a university is written as a mix-in::
+
+    class Person:
+        def __init__(self, name, surname, number):
+            self.name = name
+            self.surname = surname
+            self.number = number
+
+
+    class LearnerMixin:
+        UNDERGRADUATE, POSTGRADUATE = range(2)
+
+        def __init__(self):
+            self.classes = []
+
+        def enrol(self, course):
+            self.classes.append(course)
+
+
+    class TeacherMixin:
+        def __init__(self):
+            self.courses_taught = []
+
+        def assign_teaching(self, course):
+            self.courses_taught.append(course)
+
+
+    class Tutor(Person, LearnerMixin, TeacherMixin):
+        def __init__(self, *args, *kwargs)
+
+Composition over inheritance
+----------------------------
+
+* convert mix-ins to attributes?
 
 
 * Inheritance
     ** all the important basic things about inheritance
     ** admonition not to overuse inheritance; discussion of alternatives
+        *** composition over inheritance, esp. multiple inheritance
         *** note that if you split stuff up over a deep hierarchy it makes the program hard to read
         *** note that you shouldn't gratuitously subclass just to have different attribute values -- that's what parameters are for
+        *** note that inheritance is not compulsory for polymorphism in Python
 
 * "Abstract classes" except call the section something else because there aren't any
