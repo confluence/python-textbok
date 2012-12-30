@@ -107,7 +107,7 @@ To handle possible exceptions, we use a *try-except* block::
     except ValueError:
         print("Hey, that wasn't a number!")
 
-Python will *try* to process all the statements inside the ``try`` block.  If a ``ValueError`` occurs at any point as it is executing them, the flow of control will immediately pass to the ``except`` block, and any remaining statements in the ``try`` block will be skipped.
+Python will *try* to process all the statements inside the *try* block.  If a ``ValueError`` occurs at any point as it is executing them, the flow of control will immediately pass to the *except* block, and any remaining statements in the *try* block will be skipped.
 
 In this example, we know that the error is likely to occur when we try to convert the user's input to an integer.  If the input string is not a number, this line will trigger a ``ValueError`` -- that is why we specified it as the type of error that we are going to handle.
 
@@ -153,6 +153,15 @@ Note that in the example above if a ``ValueError`` occurs we won't know whether 
         print("The dividend may not be zero!")
 
 In general, it is a better idea to use exception handlers to protect small blocks of code against specific errors than to wrap large blocks of code and write vague, generic error recovery code.  It may sometimes seem inefficient and verbose to write many small *try-except* statements instead of a single catch-all statement, but we can mitigate this to some extent by making effective use of loops and functions to reduce the amount of code duplication.
+
+How an exception is handled
+---------------------------
+
+When an exception occurs, the normal flow of execution is interrupted. Python checks to see if the line of code which caused the exception is inside a *try* block.  If it is, it checks to see if any of the *except* blocks associated with the *try* block can handle that type of exception.  If an appropriate handler is found, the exception is handled, and the program continues from the next statement after the block.
+
+If there is no such handler, or if the line of code was *not* in a *try* block, Python will go up one level of scope: if the line of code which caused the exception was inside a *function*, that function will exit immediately, and the line which *called* the function will be treated as if *it* had thrown the exception.  Python will check if *that* line is inside a *try* block, and so on.
+
+If an exception is thrown by a line which is in the main body of your program, not inside a function, the program will terminate.  When the exception message is printed, you should also see a *traceback* -- a list which shows the path the exception has taken, all the way back to the original line which caused the error.
 
 Error checks vs exception handling
 ----------------------------------
@@ -253,10 +262,12 @@ We picked ``ValueError`` as our exception type because it's the most appropriate
 
 We can also write our own custom exception classes which are based on existing exception classes -- we will see some examples of this in a later chapter.
 
-.. Todo:: moved this before functions. Make sure that makes sense.  Add more stuff from the old exceptions chapter (e.g. re-raising exceptions).  Add stuff about defining your own exception hierarchy somewhere after OO chapter.
+.. Todo::   Add more stuff from the old exceptions chapter (e.g. re-raising exceptions).  Add stuff about defining your own exception hierarchy in OO chapter as an exercise, after inheritance.
 
 Debugging programs
-------------------
+==================
+
+We can
 
 * follow error messages
 * static error checking: pyflakes, pep8

@@ -25,7 +25,6 @@ The Python list type is called ``list``.  It is a type of sequence -- we can use
         third_variable, # this trailing comma is legal in Python
     ]
 
-
 As you can see, we have used plural nouns to name most of our list variables.  This is a common convention, and it's useful to follow it in most cases.
 
 To refer to an element in the list, we use the list identifier followed by the index inside square brackets.  Indices are integers which *start from zero*::
