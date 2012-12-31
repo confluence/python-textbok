@@ -49,7 +49,13 @@ Running programs from files
 Installing new packages
 -----------------------
 
-* Mention pip, easy_install and system package managers.
+.. todo:: mention pip, easy_install and system package managers.
+
+Further reading
+---------------
+
+.. todo:: links to Python tutorial and documentation
+
 
 Essentials of a Python program
 ==============================
@@ -396,13 +402,14 @@ followed by a newline is written to the file. The ``w`` character
 passed to ``open`` indicates that the file should be opened for
 writing.
 
-As an alternative to using ``print``, files have a ``write`` method (a
-function attached to the file object that can be accessed using the
-``.`` operator -- methods will be explained in more detail in the
-chapter on object orientated programming) that can be used as follows::
+As an alternative to ``print``, we can use a file's ``write``
+method as follows::
 
     with open('myfile.txt', 'w') as myfile:
         myfile.write("Hello!")
+
+A method is a function attached to an object -- methods will be
+explained in more detail in the chapter about classes.
 
 Unlike ``print``, the ``write`` method does add a newline to the
 string written.
@@ -420,8 +427,8 @@ indicates that the file should be opened for reading.
 .. Note::
 
     Python will raise an error if you attempt to open a file that has
-    not been created yet for reading. Opening a file for writing that
-    will create the file if it does not exist yet.
+    not been created yet for reading. Opening a file for writing will
+    create the file if it does not exist yet.
 
 
 Built-in types
@@ -856,12 +863,6 @@ assign the new value to the variable, like this::
 In Python, strings are *immutable* -- that means that you can't modify
 a string once it has been created.  However, you can assign a new
 string value to an existing variable name.
-
-.. Todo:: modules and tests are in a separate chapter -- should anything
-be said here?
-
-.. Todo:: should this be split again into two chapters, with all the
-string and number stuff in another chapter?
 
 .. Todo:: translate exercises
 
