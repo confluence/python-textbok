@@ -212,9 +212,74 @@ We could construct a separate test case for every possible path, but this rapidl
 
 .. Todo:: exercise
 
-Organising tests
-----------------
+Writing unit tests
+------------------
 
-* directory layout
-* code example
-* test running example
+We can write unit tests in Python using the built-in ``unittest`` module.  We typically put all our tests in a file hierarchy which is separate from our main program.  For example, if we were to add tests to our packaging example above, we would probably create a test module for each of our three program modules, and put them all in a separate test directory::
+
+    ourprog/
+        ourprog/
+            __init__.py
+            db.py
+            gui.py
+            rules.py
+            test/
+                __init__.py
+                test_db.py
+                test_gui.py
+                test_rules.py
+        setup.py
+
+Suppose that our ``rules.py`` file contains a single class::
+
+    class Person:
+        TITLES = ('Dr', 'Mr', 'Mrs', 'Ms')
+
+        def __init__(self, name, surname):
+            self.name = name
+            self.surname = surname
+
+        def fullname(self, title):
+            if title not in self.TITLES:
+                raise ValueError("Unrecognised title: '%s'" % title)
+
+            return "%s %s %s" % (title, self.name, self.surname)
+
+
+Our ``test_rules.py`` file should look something like this::
+
+    import unittest
+    from ourprog.rules import Person
+
+    class TestRules(unittest.TestCase):
+
+        def setUp(self):
+            self.person = Person("Jane", "Smith")
+
+        def test_init(self):
+            self.assertEqual(self.person.name, "Jane")
+            self.assertEqual(self.person.surname, "Smith")
+
+        def test_fullname(self):
+            self.assertEqual(self.person.fullname("Ms"), "Ms Jane Smith")
+            self.assertEqual(self.person.fullname("Mrs"), "Mrs Jane Smith")
+            self.assertRaises(ValueError, self.person.fullname, "HRH")
+
+We import the ``unittest`` module, and also the class which we are going to test.  This example assumes that we have packaged our code and installed it on our system, so that Python can find ``ourprog.rules``.
+
+In the ``unittest`` package, the ``TestCase`` class serves as a container for tests which need to share some data.  For each collection of tests that we want to write, we define a class which inherits from ``TestCase`` and define all our tests as methods on that class.
+
+In this example, all the tests in this ``TestCase`` test the same class, and there is one test per method (including the initialisation method) -- but there is no compulsory format.
+
+We set up the class which we are going to test in the ``setUp`` method -- this special method will be executed before each test is run.  There is also a ``tearDown`` method, which we can use if we need to do something *after* each test.
+
+Inside each test, we use the *assertion* methods of ``TestCase`` to check if certain things are true about our program's behaviour.  As soon as one assertion statement fails, the whole test fails.  We will often use ``assertEqual``, but there are many other assertion methods like ``assertNotEqual``, ``assertTrue`` or ``assertIn``.  ``assertRaises`` lets us check that a function raises an exception.  Note that when we use this assertion method we don't call the function (because it would raise an exception!) -- we just pass in the function name and its parameters.
+
+There are many ways of running the tests once we have written them.  Here is a simple way of running all the tests from a single file: at the bottom of ``test_rules.py``, we can add::
+
+    if __name__ == '__main__':
+        unittest.main()
+
+Now if we execute ``test_rules.py`` with Python, ``unittest`` will run the ``TestCase`` which we have defined.
+
+We often want to run all the tests for the whole project in sequence.
