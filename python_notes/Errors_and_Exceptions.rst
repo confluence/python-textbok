@@ -353,7 +353,43 @@ More extensive documentation, including the full list of commands which can be u
 Logging
 =======
 
+Sometimes it is valuable for a program to output messages to a console or a file as it runs. These messages can be used as a record of the program's execution, and help us to find errors.  Sometimes a bug occurs intermittently, and we don't know what triggers it -- if we only add debugging output to our program when we want to begin an active search for the bug, we may be unable to reproduce it.  If our program logs messages to a file all the time, however, we may find that some helpful information has been recorded when we check the log after the bug has occurred.
 
+Some kinds of messages are more important than others -- errors are noteworthy events which should almost always be logged.  Messages which record that an operation has been completed successfully may sometimes be useful, but are not as important as errors.  Detailed messages which debug every step of a calculation can be interesting if we are trying to debug the calculation, but if they were printed all the time they would fill the console with noise (or make our log file really, really big).
 
+We can use Python's ``logging`` module to add logging to our program in an easy and consistent way.  Logging statements are almost like print statements, but whenever we log a message we specify a *level* for the message.  When we run our program, we set a desired log level for the program.  Only messages which have a level *greater than or equal to* the level which we have set will appear in the log.  This means that we can temporarily switch on detailed logging and switch it off again just by changing the log level in one place.
 
-.. Todo:: Exercise; [explain where Python fits in??]
+There is a consistent set of logging level names which most languages use.  In order, from the highest value (most severe) to the lowest value (least severe), they are:
+
+* CRITICAL -- for very serious errors
+* ERROR -- for less serious errors
+* WARNING -- for warnings
+* INFO -- for important informative messages
+* DEBUG -- for detailed debugging messages
+
+These names are used for integer constants defined in the ``logging`` module.  The module also provides methods which we can use to log messages.  By default these messages are printed to the console, and the default log level is ``WARNING``.  We can configure the module to customise its behaviour -- for example, we can write the messages to a file instead, raise or lower the log level and change the message format.  Here is a simple logging example::
+
+    import logging
+
+    # log messages to a file, ignoring anything less severe than ERROR
+    logging.basicConfig(filename='myprogram.log', level=logging.ERROR)
+
+    # these messages should appear in our file
+    logging.error("The washing machine is leaking!")
+    logging.critical("The house is on fire!")
+
+    # but these ones won't
+    logging.warning("We're almost out of milk.")
+    logging.info("It's sunny today.")
+    logging.debug("I had eggs for breakfast.")
+
+There's also a special ``exception`` method which is used for logging exceptions.  The level used for these messages is ``ERROR``, but additional information about the exception is added to them.  This method is intended to be used inside exception handlers instead of ``error``::
+
+    try:
+        age = int(input("How old are you? "))
+    except ValueError as err:
+        logging.exception(err)
+
+If we have a large project, we may want to set up a more complicated system for logging -- perhaps we want to format certain messages differently, log different messages to different files, or log to multiple locations at the same time.  The logging module also provides us with *logger* and *handler* objects for this purpose.  We can use multiple loggers to create our messages, customising each one independently.  Different handlers are associated with different logging locations.  We can connect up our loggers and handlers in any way we like -- one logger can use many handlers, and multiple loggers can use the same handler.
+
+.. Todo:: Exercises
