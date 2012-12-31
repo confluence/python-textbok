@@ -157,7 +157,7 @@ In general, it is a better idea to use exception handlers to protect small block
 How an exception is handled
 ---------------------------
 
-When an exception occurs, the normal flow of execution is interrupted. Python checks to see if the line of code which caused the exception is inside a *try* block.  If it is, it checks to see if any of the *except* blocks associated with the *try* block can handle that type of exception.  If an appropriate handler is found, the exception is handled, and the program continues from the next statement after the block.
+When an exception occurs, the normal flow of execution is interrupted. Python checks to see if the line of code which caused the exception is inside a *try* block.  If it is, it checks to see if any of the *except* blocks associated with the *try* block can handle that type of exception.  If an appropriate handler is found, the exception is handled, and the program continues from the next statement after the end of that *try-except*.
 
 If there is no such handler, or if the line of code was *not* in a *try* block, Python will go up one level of scope: if the line of code which caused the exception was inside a *function*, that function will exit immediately, and the line which *called* the function will be treated as if *it* had thrown the exception.  Python will check if *that* line is inside a *try* block, and so on.
 
