@@ -165,7 +165,56 @@ Here are some examples of docstrings form various objects::
 Testing
 =======
 
-* Something about unit tests
-* Black box testing
-* Glass box testing
-* Add discussion of unit vs functional vs integrated tests
+Automated tests are a beneficial addition to any program. They not only help us to discover errors, but also make it easier for us to modify code -- we can run the tests after making a change to make sure that we haven't broken anything.  This is vital in any large project, especially if there are many people working on the same code.  Without tests, it can be very difficult for anyone to find out what other parts of the system a change could affect, and introducing any modification is thus a potential risk.  This makes development on the project move very slowly, and changes often introduce bugs.
+
+Adding automated tests can seem like a waste of time in a small project, but they can prove invaluable if the project becomes larger or if we have to return to it to make a small change after a long absence.  They can also serve as a form of documentation -- by reading through test cases we can get an idea of how our program is supposed to behave. Some people even advocate writing tests *first*, thereby creating a specification for what the program is supposed to do, and filling in the actual program code afterwards.
+
+We may find this approach a little extreme, but we shouldn't go too far in the opposite direction -- if we wait until we have written the entire program before writing any tests, we probably won't bother writing them at all.  It is a good idea to write portions of our code and the tests for them at approximately the same time -- then we can test our code while we are developing it.  Most programmers write at least temporary tests during development to make sure that a new function is working correctly -- we saw in a previous chapter how we can use print statements as a quick, but impermanent form of debugging.  It is better practice to write a permanent test instead -- once we have set up the testing framework, it really doesn't require a lot more effort.
+
+In order for our code to be suitable for automated testing, we need to organise it in logical subunits which are easy to import and use independently from outside the program.  We should already be doing this by using functions and classes, and avoiding reliance on global variables.  If a function relies only on its input parameters to produce some kind of result, we can easily import this function into a separate testing module, and check that various examples of input produce the expected results.  Each matching set of input and expected output is called a *test case*.
+
+Tests which are applied to individual components in our code are known as *unit tests* -- they verify that each of the components is working correctly.  Testing the interaction between different components in a system is known as *integration testing*.  A test can be called a *functional test* if it tests a particular feature, or *function* of the code -- this is usually a relatively high-level specification of a requirement, not an actual single function.
+
+In this section we will mostly look at unit testing, but we can apply similar techniques at any level of automated tests.  When we are writing unit tests, as a rule of thumb, we should have a test for every function in our code (including each method of each class).
+
+It is also good practice to write a new test whenever we fix a bug -- the test should specifically check for the bug which we have just fixed.  If the bug was caused by something which is a common mistake, it's possible that someone will make the same mistake again in the future -- our test will help to prevent that.  This is a form of *regression testing*, which aims to ensure that our code doesn't break when we add changes.
+
+Selecting test cases
+--------------------
+
+How do we select test cases?  There are two major approaches that we can follow: *black-box* or *glass-box* testing.  We can also use a combination of the two.
+
+In black-box testing, we treat our function like an opaque "black box".  We don't use our knowledge of how the function is written to pick test cases -- we only think about what the function is supposed to do.  A strategy commonly used in black-box testing is is *equivalence testing* and *boundary value analysis*.
+
+An *equivalence class* is a set of input values which should all produce similar output, and there are *boundaries* between neighbouring equivalence classes.  Input values which lie near these boundaries are the most likely to produce incorrect output, because it's easy for a programmer to use ``<`` instead of ``<=`` or start counting from ``1`` instead of ``0``, both of which could cause an *off-by-one* error.  If we test an input value from inside each equivalence class, and additionally test values just before, just after and on each boundary, we can be reasonably sure that we have covered all the bases.
+
+.. Todo:: the program for this function should be in an exercise in the selection statement chapter. Add a reference.
+
+For example, consider a simple function which calculates a grade from a percentage mark.  If we were to use equivalence testing and boundary analysis on this function, we would pick the test cases like this:
+
+=================  ======  ==============  ===================  ===================
+Equivalence class  sample  lower boundary  just above boundary  just below boundary
+=================  ======  ==============  ===================  ===================
+mark > 100         150     100             101                  99
+80 <= mark <= 100  90      80              81                   79
+70 <= mark < 80    75      70              71                   69
+60 <= mark < 70    65      60              61                   59
+50 <= mark < 60    55      50              51                   49
+0 <= mark < 50     25      0               1                    -1
+mark < 0           -50
+=================  ======  ==============  ===================  ===================
+
+In glass-box testing, we pick our test cases by analysing the code inside our function.  The most extensive form of this strategy is *path coverage*, which aims to test every possible path through the function.
+
+A function without any selection or loop statements has only one path. Testing such a function is relatively easy -- if it runs correctly once, it will probably run correctly every time.  If the function contains a selection or loop statement, there will be more than one possible path passing through it: something different will happen if an *if* condition is true or if it is false, and a loop will execute a variable number of times.  For a function like this, a single test case might not execute every statement in the code.
+
+We could construct a separate test case for every possible path, but this rapidly becomes impractical. Each *if* statement doubles the number of paths -- if our function had 10 *if* statements, we would need more than a thousand test cases, and if it had 20, we would need over a million!  A more viable alternative is the *statement coverage* strategy, which only requires us to pick enough test cases to ensure that each *statement* inside our function is executed at least once.
+
+.. Todo:: exercise
+
+Organising tests
+----------------
+
+* directory layout
+* code example
+* test running example
