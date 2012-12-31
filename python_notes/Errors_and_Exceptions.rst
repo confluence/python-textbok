@@ -159,7 +159,7 @@ How an exception is handled
 
 When an exception occurs, the normal flow of execution is interrupted. Python checks to see if the line of code which caused the exception is inside a *try* block.  If it is, it checks to see if any of the *except* blocks associated with the *try* block can handle that type of exception.  If an appropriate handler is found, the exception is handled, and the program continues from the next statement after the end of that *try-except*.
 
-If there is no such handler, or if the line of code was *not* in a *try* block, Python will go up one level of scope: if the line of code which caused the exception was inside a *function*, that function will exit immediately, and the line which *called* the function will be treated as if *it* had thrown the exception.  Python will check if *that* line is inside a *try* block, and so on.
+If there is no such handler, or if the line of code was *not* in a *try* block, Python will go up one level of scope: if the line of code which caused the exception was inside a *function*, that function will exit immediately, and the line which *called* the function will be treated as if *it* had thrown the exception.  Python will check if *that* line is inside a *try* block, and so on.  When a function is called, it is placed on Python's *stack*, which we will discuss in the chapter about functions. Python traverses this stack when it tries to handle an exception.
 
 If an exception is thrown by a line which is in the main body of your program, not inside a function, the program will terminate.  When the exception message is printed, you should also see a *traceback* -- a list which shows the path the exception has taken, all the way back to the original line which caused the error.
 
@@ -189,6 +189,14 @@ Exception handling gives us an alternative way to deal with error-prone situatio
             print("%s is not an integer." % s)
 
 In the first code snippet, we have to write quite a convoluted check to test whether the user's input is an integer -- first we strip off a minus sign if it exists, and then we check if the rest of the string consists only of digits.  But there's a very simple criterion which is also what we really want to know: will this string cause a ``ValueError`` if we try to convert it to an integer?  In the second snippet we can in effect check for exactly the right condition instead of trying to replicate it ourselves -- something which isn't always easy to do.  For example, we could easily have forgotten that integers can be negative, and written the check in the first snippet incorrectly.
+
+Here are a few other advantages of exception handling:
+
+* It separates normal code from code that handles errors.
+
+* Exceptions can easily be passed along functions in the stack until they reach a function which knows how to handle them. The intermediate functions don't need to have any error-handling code.
+
+* Exceptions come with lots of useful error information built in -- for example, they can print a traceback which helps us to see exactly where the error occurred.
 
 The ``else`` and ``finally`` statements
 ---------------------------------------
@@ -267,7 +275,13 @@ We picked ``ValueError`` as our exception type because it's the most appropriate
 
 We can also write our own custom exception classes which are based on existing exception classes -- we will see some examples of this in a later chapter.
 
-.. Todo::   Add more stuff from the old exceptions chapter (e.g. re-raising exceptions).  Add stuff about defining your own exception hierarchy in OO chapter as an exercise, after inheritance.
+Something we may want to do is raise an exception that we have just intercepted -- perhaps because we want to handle it partially in the current function, but also want to respond to it in the code which called the function::
+
+    try:
+        age = int(input("Please enter your age: "))
+    except ValueError as err:
+        print("You entered incorrect age input: %s" % err)
+        raise err
 
 Debugging programs
 ==================
