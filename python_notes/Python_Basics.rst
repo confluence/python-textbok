@@ -581,7 +581,15 @@ understandable.
 Exercise 4
 ^^^^^^^^^^
 
-.. Todo:: Exercise 4 (valid integers, operator precedence)
+#. Which of the following numbers are valid Python integers: ``110``, ``1.0``,
+   ``17.5``, ``-39``, ``-2.3``
+
+#. What are the results of the following operations and explain why:
+   #. ``15 + 20 * 3``
+   #. ``13 // 2 + 3``
+   #. ``31 + 10 // 3``
+   #. ``20 % 7 // 3``
+   #. ``2 ** 3 ** 2``
 
 
 Floating-point numbers
@@ -857,7 +865,18 @@ The correctly indented code is::
 Answer to exercise 4
 --------------------
 
-.. todo: ints
+#. The valid Python integers are: ``110`` and ``-39``
+
+#. What are the results of the following operations and explain why:
+   #. ``15 + 20 * 3``: ``75`` -- ``*`` has higher precedence than ``+``.
+   #. ``13 // 2 + 3``: ``9`` -- ``//`` has higher precedence than ``+``.
+   #. ``31 + 10 // 3``: ``34`` -- as above.
+   #. ``20 % 7 // 3``: ``2`` -- ``//`` and ``%`` have equal precedence
+      but are left-associative (so the left-most operation is
+      performed first).
+   #. ``2 ** 3 ** 2``: ``512`` -- ``**`` is right-associative so the
+      right-most exponential is performed first.
+
 
 Answer to exercise 5
 --------------------
