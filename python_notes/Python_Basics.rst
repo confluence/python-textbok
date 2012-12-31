@@ -591,6 +591,9 @@ Exercise 4
    #. ``20 % 7 // 3``
    #. ``2 ** 3 ** 2``
 
+#. What happens when you evaluate ``1 // 0`` in the Python console?
+   Why does this happen?
+
 
 Floating-point numbers
 ======================
@@ -654,20 +657,60 @@ program. Generally, you should use an integer for counting and
 measuring discrete whole numbers. Use floating-point numbers for
 measuring things that are continuous.
 
-You can combine integers and numbers in arithmetic expressions without
-having to convert them -- this is something that Python will do for
-you automatically.  If you perform an arithmetic operation on an
-integer and a floating-point number, the result will always be a
-floating-point number.
+You can combine integers and floating-point numbers in arithmetic
+expressions without having to convert them -- this is something that
+Python will do for you automatically.  If you perform an arithmetic
+operation on an integer and a floating-point number, the result will
+always be a floating-point number.
 
 You can use the integer division operator on floating-point numbers,
 and vice versa. The two division operators are at the same level in
 the order of precedence.
 
+.. Note::
+
+    Python floating-point numbers confirm to standardized format named
+    ``IEEE 754``. The standard represents each floating-point number
+    using a small fixed amount of memory, so unlike Python's integers,
+    Python's floating point numbers have a limited range. The largest
+    floating-point number that can be represented in Python is
+    ``2**1023``.
+
+.. Note::
+
+    Python includes three other types for dealing with numbers:
+
+    * ``complex`` (like floating-point but for complex numbers, try ``1+5j``)
+    * ``Fraction`` (for rational numbers, available in the ``fractions`` module)
+    * ``Decimal`` (for decimal floating-point arithmetic, available in
+      the ``decimal`` module).
+
+    Using these is beyond the scope of these notes but it's worthwhile
+    knowing they exist in case you have a use for them later.
+
+
 Exercise 5
 ^^^^^^^^^^
 
-.. Todo:: Exercise 5 (valid floats, operator precedence, combine with ints)
+#. Which of the following are Python floating-point numbers: ``1``,
+   ``1.0``, ``1.12e4``, ``-3.141759``, ``735``, ``0.57721566``, ``7.5e-3``
+
+#. What is the difference between integer and floating point division?
+   What is the operator used for integer division? What is the
+   operator used for floating point division?
+
+#. What are the results of the following operations and explain why:
+   #. ``1.5 + 2``
+   #. ``1.5 // 2.0``
+   #. ``1.5 / 2.0``
+   #. ``1.5 ** 2``
+   #. ``1 / 2``
+   #. ``-3 // 2``
+
+#. What happens when you evaluate ``1 / 0`` in the Python console?
+
+#. What happens when you evaluate ``1e1000``? What about ``-1e1000``?
+   And ``type(1e1000)``?
 
 
 Strings
@@ -877,11 +920,45 @@ Answer to exercise 4
    #. ``2 ** 3 ** 2``: ``512`` -- ``**`` is right-associative so the
       right-most exponential is performed first.
 
+#. A ``ZeroDivisionError`` is raised.
+
 
 Answer to exercise 5
 --------------------
 
-.. todo: floats
+#. Only ``1`` and ``735`` are not floating-point numbers (they are integers).
+
+#. In integer division the fractional part (remainder) is discarded
+   (although the result is always a float if one of the operands was a
+   float). The Python operator for integer division is ``//``. The
+   operator for floating-point division is ``/``.
+
+#. What are the results of the following operations and explain why:
+   #. ``1.5 + 2``: ``3.5`` -- the integer ``2`` is converted to a
+      floating-point number and then added to ``1.5``.
+   #. ``1.5 // 2.0``: ``0.0`` -- integer division is performed on the
+      two floating-point numbers and the result is returned (also as a
+      floating-point number).
+   #. ``1.5 / 2.0``: ``0.75`` -- floating-point division is performed
+      on the two numbers.
+   #. ``1.5 ** 2``: ``2.25``
+   #. ``1 / 2``: ``0.5`` -- floating-point division of two integers
+      returns a floating-point number.
+   #. ``-3 // 2``: ``-2`` -- integer division rounds the result down
+      even for negative numbers.
+
+#. A ``ZeroDivisionError`` is raised. Note that the error message is
+   slightly different to the one returned by ``1 // 0``.
+
+#. ``1e1000`` is too large to be represented as a floating-point
+   number. Instead the special floating-point value ``inf`` is
+   returned (``inf`` is short for ``infinity``). As you will have
+   noticed by inspecting its type, ``inf`` is really a floating-point
+   number in Python (and not the string ``"inf"``). ``-1e1000`` gives
+   a different special floating-point value, ``-inf``, which is short
+   for ``minus infinity``). These special values are defined by the
+   ``IEEE 754`` floating-point specification that Python follows.
+
 
 Answer to exercise 6
 --------------------
