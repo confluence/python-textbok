@@ -69,7 +69,8 @@ The other file, ``setup.py``, is the specification for our package.  Here is a m
         author_email='jane.smith@example.com',
         license='GPL',
         packages=['ourprog'],
-        zip_safe=False)
+        zip_safe=False,
+    )
 
 We create the package with a single call of the ``setup`` function, which we import from the ``setuptools`` module.  We pass in several parameters which describe our package.
 
@@ -248,10 +249,10 @@ Suppose that our ``rules.py`` file contains a single class::
 
 Our ``test_rules.py`` file should look something like this::
 
-    import unittest
-    from ourprog.rules import Person
+import unittest
+from ourprog.rules import Person
 
-    class TestRules(unittest.TestCase):
+    class TestPerson(unittest.TestCase):
 
         def setUp(self):
             self.person = Person("Jane", "Smith")
@@ -269,7 +270,7 @@ We import the ``unittest`` module, and also the class which we are going to test
 
 In the ``unittest`` package, the ``TestCase`` class serves as a container for tests which need to share some data.  For each collection of tests that we want to write, we define a class which inherits from ``TestCase`` and define all our tests as methods on that class.
 
-In this example, all the tests in this ``TestCase`` test the same class, and there is one test per method (including the initialisation method) -- but there is no compulsory format.
+In this example, all the tests in this ``TestCase`` test the same class, and there is one test per method (including the initialisation method) -- but there is no compulsory mapping.  You can use multiple ``TestCase`` classes to test each of your own classes, or perhaps have one ``TestCase`` for each set of related functionality.
 
 We set up the class which we are going to test in the ``setUp`` method -- this special method will be executed before each test is run.  There is also a ``tearDown`` method, which we can use if we need to do something *after* each test.
 
@@ -280,6 +281,49 @@ There are many ways of running the tests once we have written them.  Here is a s
     if __name__ == '__main__':
         unittest.main()
 
-Now if we execute ``test_rules.py`` with Python, ``unittest`` will run the ``TestCase`` which we have defined.
+Now if we execute ``test_rules.py`` with Python, ``unittest`` will run the ``TestCase`` which we have defined. The condition in the ``if`` statement detects whether we are running the file as a script, and prevents the ``main`` function from being executed if we import this module from another file.  We will learn more about writing scripts in the next chapter.
 
-We often want to run all the tests for the whole project in sequence.
+We can also execute the unittest module on the commandline and use it to import and run some or all of our tests.  By default the module will try to *discover* all the tests that can be imported from the current directory, but we can also specify one or more module, class or test method::
+
+    # these commands will try to find all our tests
+    python -m unittest
+    python -m unittest discover
+
+    # but we can be more specific
+    python -m unittest ourprog.test.test_rules
+    python -m unittest ourprog.test.test_rules.TestPerson
+    python -m unittest ourprog.test.test_rules.TestPerson.test_fullname
+
+    # we can also turn on verbose output with -v
+    python -m unittest -v test_rules
+
+The ``unittest`` package also allows us to group some or all of our tests into *suites*, so that we can run many related tests at once.  One way to add all the tests from our ``TestPerson`` class to a suite is to add this function to the ``test_rules.py`` file::
+
+    def suite():
+        suite = unittest.TestSuite()
+        suite.addTest(TestPerson)
+        return suite
+
+We could define a suite in ``ourprog/test/__init__py`` which contains all the tests from all our modules, either by combining suites from all the modules or just adding all the tests directly. The ``TestSuite`` class and the ``TestLoader`` class, which we can use to build suites, are both very flexible.  They allow us to construct test suites in many different ways.
+
+We can integrate our tests with our packaging code by adding a ``test_suite`` parameter to our ``setup`` call in ``setup.py``.  Despite its name, this parameter doesn't have to be a suite -- we can just specify the full name of our ``test`` module to include all our tests::
+
+    setup(name='ourprog',
+        # (...)
+        test_suite='ourprog.test',
+        # (...)
+    )
+
+Now we can build our package and run all our tests by passing the ``test`` parameter to ``setup.py``::
+
+    python setup.py test
+
+    # We can override what to run using -s
+    # For example, we can run a single module
+    python setup.py test -s ourprog.test.test_rules
+
+In previous versions of Python, we would have needed to define a test suite just to run all our tests at once, but in newer versions it is no longer necessary to define our own suites for simple test organisation.  We can now easily run all the tests, or a single module, class or method just by using ``unittest`` on the commandline or ``setup.py test``.  We may still find it useful to write custom suites for more complex tasks -- we may wish to group tests which are spread across multiple modules or classes, but which are all related to the same feature.
+
+.. Todo:: an example of how to actually run a custom suite?
+
+.. Todo:: exercises
