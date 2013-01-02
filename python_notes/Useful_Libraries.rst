@@ -1,6 +1,6 @@
-****************
-Useful libraries
-****************
+**************************************
+Useful modules in the Standard Library
+**************************************
 
 Python comes with a built-in selection of modules which provide commonly used functionality.  We have encountered some of these modules in previous chapters -- for example, ``itertools``, ``logging``, ``pdb`` and ``unittest``.  We will look at a few more examples in this chapter.  You can see the full list of available modules, and find out more details about each one, by reading the `Python Standard Library documentation <http://docs.python.org/3.3/library/index.html>`_.
 
