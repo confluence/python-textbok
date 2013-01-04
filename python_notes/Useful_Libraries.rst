@@ -121,6 +121,104 @@ When we load the ``random`` module we can *seed* it before we start generating v
 Matching string patterns: ``re``
 ================================
 
+The ``re`` module allows us to write *regular expressions*.  Regular expressions are a mini-language for matching strings, and can be used for finding and/or replacing of text.  If you learn how to use regular expressions in Python, you will find that they are quite similar to use in other languages.
+
+The full range of capabilities of regular expressions is quite extensive, and they are often criticised for their potential complexity, but with the knowledge of only a few basic concepts we can perform some very powerful string manipulations easily.
+
+Regular expressions are good for use on plain text, but a bad fit for parsing more structured text formats like XML -- you should always use a more specialised parsing library for those.
+
+The Python documentation for the ``re`` module not only explains how to use the module, but also contains a reference for the complete regular expression syntax which Python supports.
+
+A regular expression primer
+---------------------------
+
+A regular expression is a string which describes a pattern.  This pattern is compared to other strings, which may or may not match it.  A regular expression can contain normal characters (which are treated literally as specific letters, numbers or other symbols) as well as special symbols which have different meanings within the expression.
+
+Because many special symbols use the backslash (``\``) character, we often use *raw strings* to represent regular expressions in Python.  This eliminates the need to use extra backslashes to escape backslashes, which would make complicated regular expressions much more difficult to read. If a regular expression doesn't contain any backslashes, it doesn't matter whether we use a raw string or a normal string.
+
+Here are some very simple examples::
+
+    # this regular expression contains no special symbols
+    # it won't match anything except 'cat'
+    "cat"
+
+    # a . stands for any single character
+    # this will match 'cat', 'cbt', 'c3t', 'c!t' ...
+    "c.t"
+
+    # a * repeats the previous character 0 or more times
+    # it can be used after a normal character, or a special symbol like .
+    # this will match 'ct', 'cat', 'caat', 'caaaaaaaaat' ...
+    "ca*t"
+    # this will match 'sc', 'sac', 'sic', 'supercalifragilistic' ...
+    "s.*c"
+
+    # + is like *, but the character must occur at least once
+    # there must be at least one 'a'
+    "ca+t"
+
+    # more generally, we can use curly brackets {} to specify any number of repeats
+    # or a minimum and maximum
+    # this will match any five-letter word which starts with 'c' and ends with 't'
+    "c.{3}t"
+    # this will match any five-, six-, or seven-letter word ...
+    "c.{3,5}t"
+
+    # square brackets [] define a set of allowed values for a character
+    # they can contain normal characters, or ranges
+    # if ^ is the first character in the brackets, it *negates* the contents
+    # the character between 'c' and 't' must be a vowel
+    "c[aeiou]t"
+    # this matches any character that *isn't* a vowel, three times
+    "[^aeiou]{3}"
+    # This matches an uppercase UCT student number
+    "[B-DF-HJ-NP-TV-Z]{3}[A-Z]{3}[0-9]{3}"
+
+    # we use \ to escape any special regular expression character
+    # this would match 'c*t'
+    r"c\*t"
+    # note that we have used a raw string, so that we can write a literal backslash
+
+    # there are also some shorthand symbols for certain allowed subsets of characters:
+    # \d matches any digit
+    # \s matches any whitespace character, like space, tab or newline
+    # \w matches alphanumeric characters -- letters, digits or the underscore
+    # \D, \S and \W are the opposites of \d, \s and \w
+
+    # we can use round brackets () to *capture* portions of the pattern
+    # this is useful if we want to search and replace
+    # we can retrieve the contents of the capture in the replace step
+    # this will capture whatever would be matched by .*
+    "c(.*)t"
+
+    # ^ and $ denote the beginning or end of a string
+    # this will match a string which starts with 'c' and ends in 't'
+    "^c.*t$"
+
+Using the ``re`` module
+-----------------------
+
+Now that we have seen how to construct regular expression strings, we can start using them.  The ``re`` module provides us with several functions which allow us to use regular expressions in different ways:
+
+* ``match`` matches a regular expression against an entire string -- the regular expression will only match if the *whole string* matches.
+* ``search`` searches for the regular expression inside the string -- the regular expression will match if any subset of the string matches.
+* ``replace`` searches for the regular expression and replaces it with the provided replacement expression.
+* ``findall`` searches for all matches of the regular expression within the string.
+* ``compile`` allows us to convert our regular expression string to a pre-compiled regular expression *object*, which has methods analogous to the ``re`` module. Using this object is slightly more efficient.
+
+``match`` and ``search`` both return match objects which store information such as the contents of captured groups.  ``replace`` returns a modified copy of the original string, and ``findall`` returns a list of strings.  ``compile`` returns a compiled regular expression object.
+
+Here are some usage examples::
+
+* using functions
+* flags
+
+Regular expressions are *greedy* by default -- this means that if a part of a regular expression can match a variable number of characters, it will always try to match as many characters as possible.  That means that we sometimes need to take special care to make sure that a regular expression doesn't match too much.  For example::
+
+    # greed example
+
+.. Todo:: exercise -- write a function which takes a string parameter and returns True if the string is a valid Python variable name or False if it isn't.  Another exercise: swap two things around in a string (use capturing)
+
 Parsing CSV files: ``csv``
 ==========================
 

@@ -806,6 +806,19 @@ Sequence  Meaning
 
 You can also use escape sequences to output unicode characters.
 
+Raw strings
+-----------
+
+Sometimes we may need to define string literals which contain many backslashes -- escaping all of them can be tedious.  We can avoid this by using Python's *raw string* notation.  By adding an ``r`` before the opening quote of the string, we indicate that the contents of the string are exactly what we have written, and that backslashes have no special meaning.  For example::
+
+    # This string ends in a newline
+    "Hello!\n"
+
+    # This string ends in a backslash followed by an 'n'
+    r"Hello!\n"
+
+We most often use raw strings when we are passing strings to some other program which does its *own* processing of special sequences.  We want to leave all such sequences untouched in Python, to allow the other program to handle them.
+
 Triple quotes
 -------------
 
