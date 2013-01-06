@@ -121,11 +121,11 @@ When we load the ``random`` module we can *seed* it before we start generating v
 Matching string patterns: ``re``
 ================================
 
-The ``re`` module allows us to write *regular expressions*.  Regular expressions are a mini-language for matching strings, and can be used for finding and/or replacing of text.  If you learn how to use regular expressions in Python, you will find that they are quite similar to use in other languages.
+The ``re`` module allows us to write *regular expressions*.  Regular expressions are a mini-language for matching strings, and can be used to find and possibly replace text.  If you learn how to use regular expressions in Python, you will find that they are quite similar to use in other languages.
 
-The full range of capabilities of regular expressions is quite extensive, and they are often criticised for their potential complexity, but with the knowledge of only a few basic concepts we can perform some very powerful string manipulations easily.
+The full range of capabilities of regular expressions is quite extensive, and they are often criticised for their potential complexity, but with the knowledge of only a few basic concepts we can perform some very powerful string manipulation easily.
 
-Regular expressions are good for use on plain text, but a bad fit for parsing more structured text formats like XML -- you should always use a more specialised parsing library for those.
+.. Note:: Regular expressions are good for use on plain text, but a bad fit for parsing more structured text formats like XML -- you should always use a more specialised parsing library for those.
 
 The Python documentation for the ``re`` module not only explains how to use the module, but also contains a reference for the complete regular expression syntax which Python supports.
 
@@ -142,7 +142,7 @@ Here are some very simple examples::
     # it won't match anything except 'cat'
     "cat"
 
-    # a . stands for any single character
+    # a . stands for any single character (except the newline, by default)
     # this will match 'cat', 'cbt', 'c3t', 'c!t' ...
     "c.t"
 
@@ -163,6 +163,10 @@ Here are some very simple examples::
     "c.{3}t"
     # this will match any five-, six-, or seven-letter word ...
     "c.{3,5}t"
+
+    # One of the uses for ? is matching the previous character zero or one times
+    # this will match 'http' or 'https'
+    "https?"
 
     # square brackets [] define a set of allowed values for a character
     # they can contain normal characters, or ranges
@@ -195,27 +199,125 @@ Here are some very simple examples::
     # this will match a string which starts with 'c' and ends in 't'
     "^c.*t$"
 
+    # | means "or" -- it lets us choose between multiple options.
+    "cat|dog"
+
 Using the ``re`` module
 -----------------------
 
 Now that we have seen how to construct regular expression strings, we can start using them.  The ``re`` module provides us with several functions which allow us to use regular expressions in different ways:
 
-* ``match`` matches a regular expression against an entire string -- the regular expression will only match if the *whole string* matches.
-* ``search`` searches for the regular expression inside the string -- the regular expression will match if any subset of the string matches.
-* ``replace`` searches for the regular expression and replaces it with the provided replacement expression.
+* ``search`` searches for the regular expression inside a string -- the regular expression will match if any subset of the string matches.
+* ``match`` matches a regular expression against the entire string -- the regular expression will only match if the *whole string* matches.  ``re.match('something', some_string)`` is equivalent to ``re.search('^something$', some_string)``.
+* ``sub`` searches for the regular expression and replaces it with the provided replacement expression.
 * ``findall`` searches for all matches of the regular expression within the string.
+* ``split`` splits a string using any regular expression as a delimiter.
 * ``compile`` allows us to convert our regular expression string to a pre-compiled regular expression *object*, which has methods analogous to the ``re`` module. Using this object is slightly more efficient.
 
-``match`` and ``search`` both return match objects which store information such as the contents of captured groups.  ``replace`` returns a modified copy of the original string, and ``findall`` returns a list of strings.  ``compile`` returns a compiled regular expression object.
+As you can see, this module provides more powerful versions of some simple string operations: for example, we can also split a string or replace a substring using the built-in ``split`` and ``replace`` methods -- but we can only use them with *fixed* delimiters or search patterns and replacements.  With ``re.sub`` and ``re.split`` we can specify variable patterns instead of fixed strings.
+
+All of the functions take a regular expression as the first parameter.  ``match``, ``search``, ``findall`` and ``split`` also take the string to be searched as the second parameter -- but in the ``sub`` function this is the third parameter, the second being the replacement string.  All the functions also take an keyword parameter which specifies optional *flags*, which we will discuss shortly.
+
+``match`` and ``search`` both return match objects which store information such as the contents of captured groups.  ``sub`` returns a modified copy of the original string. ``findall`` and ``split`` return a list of strings.  ``compile`` returns a compiled regular expression object.
+
+The methods of a regular expression object are very similar to the functions of the module, but the first parameter (the regular expression string) of each method is dropped -- because it has already been compiled into the object.
 
 Here are some usage examples::
 
-* using functions
-* flags
+    import re
+
+    # match and search are quite similar
+    print(re.match("c.*t", "cravat")) # this will match
+    print(re.match("c.*t", "I have a cravat")) # this won't
+    print(re.search("c.*t", "I have a cravat")) # this will
+
+    # We can use a static string as a replacement...
+    print(re.sub("lamb", "squirrel", "Mary had a little lamb."))
+    # Or we can capture groups, and substitute their contents back in.
+    print(re.sub("(.*) (BITES) (.*)", r"\3 \2 \1", "DOG BITES MAN"))
+    # count is a keyword parameter which we can use to limit replacements
+    print(re.sub("a", "b", "aaaaaaaaaa"))
+    print(re.sub("a", "b", "aaaaaaaaaa", count=1))
+
+    # Here's a closer look at a match object.
+    my_match = re.match("(.*) (BITES) (.*)", "DOG BITES MAN")
+    print(my_match.groups())
+    print(my_match.group(1))
+
+    # We can name groups.
+    my_match = re.match("(?P<subject>.*) (?P<verb>BITES) (?P<object>.*)", "DOG BITES MAN")
+    print(my_match.group("subject"))
+    print(my_match.groupdict())
+    # We can still access named groups by their positions.
+    print(my_match.group(1))
+
+    # Sometimes we want to find all the matches in a string.
+    print(re.findall("[^ ]+@[^ ]+", "Bob <bob@example.com>, Jane <jane.doe@example.com>"))
+
+    # Sometimes we want to split a string.
+    print(re.split(", *", "one,two,  three, four"))
+
+    # We can compile a regular expression to an object
+    my_regex = re.compile("(.*) (BITES) (.*)")
+    # now we can use it in a very similar way to the module
+    print(my_regex.sub(r"\3 \2 \1", "DOG BITES MAN"))
+
+Greed
+-----
 
 Regular expressions are *greedy* by default -- this means that if a part of a regular expression can match a variable number of characters, it will always try to match as many characters as possible.  That means that we sometimes need to take special care to make sure that a regular expression doesn't match too much.  For example::
 
-    # greed example
+    # this is going to match everything between the first and last '"'
+    # but that's not what we want!
+    print(re.findall('".*"', '"one" "two" "three" "four"'))
+
+    # This is a common trick
+    print(re.findall('"[^"]*"', '"one" "two" "three" "four"'))
+
+    # We can also use ? after * or other expressions to make them *not greedy*
+    print(re.findall('".*?"', '"one" "two" "three" "four"'))
+
+Functions as replacements
+-------------------------
+
+We can also use ``re.sub`` to apply a *function* to a match instead of a string replacement.  The function must take a match object as a parameter, and return a string.  We can use this functionality to perform modifications which may be difficult or impossible to express as a replacement string::
+
+    def swap(m):
+        subject = m.group("object").title()
+        verb = m.group("verb")
+        object = m.group("subject").lower()
+        return "%s %s %s!" % (subject, verb, object)
+
+    print(re.sub("(?P<subject>.*) (?P<verb>.*) (?P<object>.*)!", swap, "Dog bites man!"))
+
+Flags
+-----
+
+Regular expressions have historically tended to be applied to text line by line -- newlines have usually required special handling.  In Python, the text is treated as a single unit by default, but we can change this and a few other options using *flags*.  These are the most commonly used:
+
+* ``re.IGNORECASE`` -- make the regular expression case-insensitive.  It is case-sensitive by default.
+* ``re.MULTILINE`` -- make ``^`` and ``$`` match the beginning and end of each line (excluding the newline at the end), as well as the beginning and end of the whole string (which is the default).
+* ``re.DOTALL`` -- make ``.`` match any character (by default it does not match newlines).
+
+Here are a few examples::
+
+    print(re.match("cat", "Cat")) # this won't match
+    print(re.match("cat", "Cat", re.IGNORECASE)) # this will
+
+    text = """numbers = 'one,
+    two,
+    three'
+    numbers = 'four,
+    five,
+    six'
+    not_numbers = 'cat,
+    dog'"""
+
+    print(re.findall("^numbers = '.*?'", text)) # this won't find anything
+    # we need both DOTALL and MULTILINE
+    print(re.findall("^numbers = '.*?'", text, re.DOTALL | re.MULTILINE))
+
+.. Note:: ``re`` functions only have a single keyword parameter for flags, but we can combine multiple flags into one using the ``|`` operator (bitwise *or*) -- this is because the values of these constants are actually integer powers of two.
 
 .. Todo:: exercise -- write a function which takes a string parameter and returns True if the string is a valid Python variable name or False if it isn't.  Another exercise: swap two things around in a string (use capturing)
 

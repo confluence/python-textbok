@@ -1,0 +1,15 @@
+OUTSTANDING CHAPTERS
+
+* introduction
+* sorting and searching algorithms
+* libraries -- IN PROGRESS
+* GUIs
+
+OUTSTANDING SECTIONS
+
+* how to use the interpreter; how to write files; how to install packages (basics)
+* lambdas (in functions)
+
+EXERCISES
+
+* most of them

@@ -489,6 +489,13 @@ We can use any string we like to join a sequence of strings together::
     # a comma-separated list with spaces
     print(", ".join(animals))
 
+The opposite of *joining* is *splitting*.  We can split up a string into a list of strings by using the ``split`` method.  If called without any parameters, ``split`` divides up a string into words, using any number of consecutive whitespace characters as a delimiter.  We can use additional parameters to specify a different delimiter as well as a limit on the maximum number of splits to perform::
+
+    print("cat    dog fish\n".split())
+    print("cat|dog|fish".split("|"))
+    print("cat, dog, fish".split(", "))
+    print("cat, dog, fish".split(", ", 1))
+
 Two-dimensional sequences
 -------------------------
 

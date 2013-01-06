@@ -433,4 +433,9 @@ Python has several built-in decorators which are commonly used to decorate class
 
 .. Note:: a decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
 
+Lambdas
+=======
+
+.. Todo:: write about lambdas
+
 .. Todo:: Exercises
