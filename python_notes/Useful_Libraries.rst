@@ -324,6 +324,35 @@ Here are a few examples::
 Parsing CSV files: ``csv``
 ==========================
 
+CSV stands for *comma-separated values* -- it's a very simple file format for storing tabular data.  Most spreadsheets can easily be converted to and from CSV format.
+
+In a typical CSV file, each line represents a row of values in the table, with the columns separated by commas.  Field values are often enclosed in double quotes, so that any literal commas or newlines inside them can be escaped::
+
+    "one","two","three"
+    "four, five","six","seven"
+
+Python's ``csv`` module takes care of all this in the background, and allows us to manipulate the data in a CSV file in a simple way, using the ``reader`` class::
+
+    import csv
+
+    with open("numbers.csv") as f:
+        r = csv.reader(f)
+        for row in r:
+            print row
+
+There is no single CSV standard -- the comma may be replaced with a different delimiter (such as a tab), and a different quote character may be used.  Both of these can be specified as optional keyword parameters to ``reader``.
+
+Similarly, we can *write* to a CSV file using the ``writer`` class::
+
+    with open('pets.csv', 'w') as f:
+        w = csv.writer(f)
+        w.writerow(['Fluffy', 'cat'])
+        w.writerow(['Max', 'dog'])
+
+We can use optional parameters to ``writer`` to specify the delimiter and quote character, and also whether to quote all fields or only fields with characters which need to be escaped.
+
+.. Todo:: some kind of exercise seems appropriate.
+
 Writing scripts: ``sys`` and ``argparse``
 =========================================
 
