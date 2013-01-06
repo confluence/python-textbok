@@ -2,8 +2,7 @@ OUTSTANDING CHAPTERS
 
 * introduction
 * sorting and searching algorithms
-* libraries -- IN PROGRESS
-* GUIs
+* GUIs - IN PROGRESS
 
 OUTSTANDING SECTIONS
 
