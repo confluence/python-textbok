@@ -394,13 +394,41 @@ The ``sys`` module is good enough when we only have a few simple arguments -- pe
 
 The ``argparse`` module allows us to define a wide range of compulsory and optional arguments.  A commonly used type of argument is the *flag*, which we can think of as equivalent to a keyword argument in Python.  A flag is optional, it has a name (sometimes both a long name and a short name) and it may have a value.  In Linux and OSX programs, flag names often start with a dash (long names usually start with two), and this convention is sometimes followed by Windows programs too.
 
-Here is a simple example of a program which uses ``argparse``::
+Here is a simple example of a program which uses ``argparse`` to define two positional arguments which must be integers, a flag which specifies an operation to be performed on the two numbers, and a flag to turn on verbose output::
 
     import argparse
+    import logging
 
     parser = argparse.ArgumentParser()
+    # two integers
+    parser.add_argument("num1", help="the first number", type=int)
+    parser.add_argument("num2", help="the second number", type=int)
+    # a string, limited to a list of options
+    parser.add_argument("op", help="the desired arithmetic operation", choices=['add', 'sub', 'mul', 'div'])
+    # an optional flag, true by default, with a short and a long name
+    parser.add_argument("-v", "--verbose", help="turn on verbose output", action="store_true")
 
-    parser.add_argument()
+    opts = parser.parse_args()
+
+    if opts.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
+    logging.debug("First number: %d" % opts.num1)
+    logging.debug("Second number: %d" % opts.num2)
+    logging.debug("Operation: %s" % opts.op)
+
+    if opts.op == "add":
+        result = opts.num1 + opts.num2
+    elif opts.op == "sub":
+        result = opts.num1 - opts.num2
+    elif opts.op == "mul":
+        result = opts.num1 * opts.num2
+    elif opts.op == "div":
+        result = opts.num1 / opts.num2
+
+    print(result)
+
+``argparse`` automatically defines a ``help`` parameter, which causes the program's usage instructions to be printed when we pass ``-h`` or ``--help`` to the script.  These instructions are automatically generated from the descriptions we supply in all the argument definitions.  We will also see informative error output if we don't pass in the correct arguments.  Try calling the script above with different arguments!
 
 .. Note:: if we are using Linux or OSX, we can turn our scripts into *executable files*.  Then we can execute them directly instead of passing them as parameters to Python.  To make our script executable we must mark it as executable using a system tool (``chmod``).  We must also add a line to the beginning of the file to let the operating system know that it should use Python to execute it.  This is typically ``#!/usr/bin/env python``.
 
