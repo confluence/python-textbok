@@ -356,9 +356,52 @@ We can use optional parameters to ``writer`` to specify the delimiter and quote 
 Writing scripts: ``sys`` and ``argparse``
 =========================================
 
-Interacting with the operating system: ``os``
-=============================================
+We have already seen a few scripts.  Technically speaking, any Python file can be considered a script, since it can be executed without compilation.  When we call a Python program a script, however, we usually mean that it contains statements other than function and class definitions -- scripts *do something* other than define structures to be reused.
 
+Scripts vs libraries
+--------------------
 
+We can combine class and function definitions with statements that use them in the same file, but in a large project it is considered good practice to keep them separate: to define all our classes in *library* files, and import them into the main program.  If we do put both classes and main program in one file, we can ensure that the program is only executed when the file is run as a script and not if it is imported from another file -- we saw an example of this earlier::
 
-* sqlite? xml parsing? Something to do with the web? Put all this in one section?
+    def MyClass:
+        # (...)
+
+    def MyOtherClass:
+        # (...)
+
+    if __name__ == '__main__':
+        my_object = MyClass()
+        # (...)
+        # do more things
+
+If our file is written purely for use as a script, and will never be imported, including this conditional statement is considered unnecessary.
+
+Simple command-line parameters
+------------------------------
+
+When we run a program on the commandline, we often want to pass in parameters, or *arguments*, just as we would pass parameters to a function inside our code.  For example, when we use the Python interpreter to run a file, we pass the filename in as an argument.  Unlike parameters passed to a function in Python, arguments passed to an application on the commandline are separated by spaces and listed after the program name without any brackets.
+
+The simplest way to access commandline arguments inside a script is through the ``sys`` module.  All the arguments in order are stored in the module's ``argv`` attribute.  We must remember that the first argument is always the name of the script file, and that all the arguments will be provided in string format.  Try saving this simple script and calling it with various arguments after the script name::
+
+    import sys
+
+    print sys.argv
+
+Complex command-line parameters
+-------------------------------
+
+The ``sys`` module is good enough when we only have a few simple arguments -- perhaps the name of a file to open, or a number which tells us how many times to execute a loop.  When we want to provide a variety of complicated arguments, some of them optional, we need a better solution.
+
+The ``argparse`` module allows us to define a wide range of compulsory and optional arguments.  A commonly used type of argument is the *flag*, which we can think of as equivalent to a keyword argument in Python.  A flag is optional, it has a name (sometimes both a long name and a short name) and it may have a value.  In Linux and OSX programs, flag names often start with a dash (long names usually start with two), and this convention is sometimes followed by Windows programs too.
+
+Here is a simple example of a program which uses ``argparse``::
+
+    import argparse
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument()
+
+.. Note:: if we are using Linux or OSX, we can turn our scripts into *executable files*.  Then we can execute them directly instead of passing them as parameters to Python.  To make our script executable we must mark it as executable using a system tool (``chmod``).  We must also add a line to the beginning of the file to let the operating system know that it should use Python to execute it.  This is typically ``#!/usr/bin/env python``.
+
+.. Todo:: decided to ditch ``os``.  Should we add anything else here?
