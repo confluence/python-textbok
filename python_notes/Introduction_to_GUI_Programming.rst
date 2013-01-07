@@ -2,7 +2,7 @@
 Introduction to GUI programming with ``tkinter``
 ************************************************
 
-We have previously seen how to write text-only programs which have a *command-line interface*, or CLI.  Now we will briefly look at creating a program with a *graphical user interface*, or GUI.  In this chapter we will use ``tkinter``, a simple *toolkit* which is in the Python standard library. There are many other toolkits available, but they often vary across platforms.  If you learn the basics of ``tkinter``, you should see many similarities should you try to use a different toolkit.
+We have previously seen how to write text-only programs which have a *command-line interface*, or CLI.  Now we will briefly look at creating a program with a *graphical user interface*, or GUI.  In this chapter we will use ``tkinter``, a module in the Python standard library which serves as an interface to Tk, a simple *toolkit*. There are many other toolkits available, but they often vary across platforms.  If you learn the basics of ``tkinter``, you should see many similarities should you try to use a different toolkit.
 
 We will see how to make a simple GUI which handles user input and output.  GUIs often use a form of OO programming which we call *event-driven*: the program responds to *events*, which are actions that a user takes.
 
