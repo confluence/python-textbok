@@ -15,8 +15,10 @@ In this programming paradigm, *signals* are sent between different objects.  Som
 
 Each event-firing object can be monitored by more than one listener, and a listener may be listening for more than one event, and may have a different action ready for each one.  The listening object should have a method which is invoked in response to each event -- we call such a method an *event handler*.
 
-We will not call event handlers ourselves in our code -- they will be called automatically in response to events fired by the GUI component.  We will make extensive use of inheritance in this code -- our GUI objects will be derived from the default ``tkinter`` objects, which already have a lot of the backbone of a typical GUI's functionality defined.  We will customise them to interact with our own internal objects.
-
 ``tkinter`` basics
 ------------------
+
+``tkinter`` provides us with a variety of common GUI elements which we can use to build our interface -- such as buttons, menus and various kinds of entry fields and display areas.  We call these elements *widgets*.  We are going to construct a *tree* of widgets for our GUI -- each widget will have a parent widget, all the way up to the *root window* of our application.  For example, a button or a text field needs to be *inside* some kind of containing window.
+
+The widget classes provide us with a lot of default functionality.  They have methods for configuring the GUI's appearance -- for example, arranging the elements according to some kind of *layout* -- and for handling various kinds of user-driven events.  Once we have constructed the backbone of our GUI, we will need to customise it by integrating it with our internal application class.
 
