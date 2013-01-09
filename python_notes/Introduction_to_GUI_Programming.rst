@@ -9,14 +9,14 @@ We will see how to make a simple GUI which handles user input and output.  GUIs 
 .. Note:: in some Linux distributions, like Ubuntu and Debian, the ``tkinter`` module is packaged separately to the rest of Python, and must be installed separately.
 
 Event-driven programming
-------------------------
+========================
 
 Anything that happens in a user interface is an *event*.  We say that an event is *fired* whenever the user does something -- for example, clicks on a button or types a keyboard shortcut.  Some events could also be triggered by occurrences which are not controlled by the user -- for example, a background task might complete, or a network connection might be established or lost.
 
-Our application needs to monitor all the events that we find interesting, and respond to them in some way if they occur.  To do this, we usually associate certain functions with particular events.  We call a function which performs an action in response to an event an *event handler* -- we *bind* handlers to events.
+Our application needs to monitor, or *listen* for, all the events that we find interesting, and respond to them in some way if they occur.  To do this, we usually associate certain functions with particular events.  We call a function which performs an action in response to an event an *event handler* -- we *bind* handlers to events.
 
 ``tkinter`` basics
-------------------
+==================
 
 ``tkinter`` provides us with a variety of common GUI elements which we can use to build our interface -- such as buttons, menus and various kinds of entry fields and display areas.  We call these elements *widgets*.  We are going to construct a *tree* of widgets for our GUI -- each widget will have a parent widget, all the way up to the *root window* of our application.  For example, a button or a text field needs to be *inside* some kind of containing window.
 
@@ -63,6 +63,9 @@ There are many ways in which we could organise our application class. In this ex
 
 .. Todo:: take screenshots of windows
 
+Widget classes
+--------------
+
 There are many different widget classes built into ``tkinter`` -- they should be familiar to you from other GUIs:
 
 * A ``Frame`` is a container widget which is placed inside a window, which can have its own border and background -- it is used to group related widgets together in an application's layout.
@@ -76,18 +79,105 @@ There are many different widget classes built into ``tkinter`` -- they should be
 * ``Checkbutton``, ``Radiobutton``, ``Listbox``, ``Entry`` and ``Scale`` are different kinds of input widgets -- they allow the user to enter information into the program.
 * ``Menu`` and ``Menubutton`` are used to create pull-down menus.
 
-Appearance
-----------
+Layout options
+==============
 
-* different kinds of layout
-* fonts and colours
+The GUI in the previous example has a relatively simple layout: we arranged the three widgets in a single column inside the window.  To do this, we used the ``pack`` method, which is one of the three different *geometry managers* available in ``tkinter``.  By default, ``pack`` arranges widgets vertically inside their parent container, from the top down, but we can change the alignment to the bottom, left or right by using the optional ``side`` parameter.  We can mix different alignments in the same container, but this may not work very well for complex layouts.  It should work reasonably well in our simple case, however::
+
+    from tkinter import LEFT, RIGHT
+
+    # (...)
+
+    self.label.pack()
+    self.greet_button.pack(side=LEFT)
+    self.close_button.pack(side=RIGHT)
+
+We can create quite complicated layouts with ``pack`` by grouping widgets together in frames and aligning the groups to our liking -- but we can avoid a lot of this complexity by using the ``grid`` method instead.  It allows us to position widgets in a more flexible way, using a *grid layout*.  This is the geometry manager recommended for complex interfaces::
+
+    from tkinter import W
+
+    # (...)
+
+    self.label.grid(columnspan=2, sticky=W)
+    self.greet_button.grid(row=1)
+    self.close_button.grid(row=1, column=1)
+
+We place each widget in a cell inside a table by specifying a row and a column -- the default row is the first available empty row, and the default column is ``0``.
+
+If a widget is smaller than its cell, we can customise how it is aligned using the ``sticky`` parameter -- the possible values are the cardinal directions (``N``, ``S``, ``E`` and ``W``), which we can combine through addition.  By default, the widget is centered both vertically and horizontally, but we can make it *stick* to a particular side by including it in the ``sticky`` parameter.  For example, ``sticky=W`` will cause the widget to be left-aligned horizontally, and ``sticky=W+E`` will cause it to be stretched to fill the whole cell horizontally.  We can also specify corners using ``NE``, ``SW``, etc..
+
+To make a widget span multiple columns or rows, we can use the ``columnspan`` and ``rowspan`` options -- in the example above, we have made the label span two columns so that it takes up the same space horizontally as both of the buttons underneath it.
+
+.. Note:: Never use both ``pack`` and ``grid`` inside the same window.  The algorithms which they use to calculate widget positions are not compatible with each other, and your program will hang forever as ``tkinter`` tries unsuccessfully to create a widget layout which satisfies both of them.
+
+The third geometry manager is ``place``, which allows us to provide explicit sizes and positions for widgets.  It is seldom a good idea to use this method for ordinary GUIs -- it's far too inflexible and time consuming to specify an absolute position for every element.  There are some specialised cases, however, in which it can come in useful.
+
+.. Todo:: Exercise
 
 Custom events
--------------
+=============
 
-* how to bind actions to new kinds of events
+So far we have only bound event handlers to events which are defined in ``tkinter`` by default -- the ``Button`` class already knows about button clicks, since clicking is an expected part of normal button behaviour.  We are not restricted to these particular events, however -- we can make widgets listen for other events and bind handlers to them, using the ``bind`` method which we can find on every widget class.
+
+Events are uniquely identified by a sequence name in string format -- the format is described by a mini-language which is not specific to Python.  Here are a few examples of common events:
+
+* ``"<Button-1>"``, ``"<Button-2>"`` and ``"<Button-3>"`` are events which signal that a particular mouse button has been pressed while the mouse cursor is positioned over the widget in question.  *Button 1* is the left mouse button, *Button 3* is the right, and *Button 2* the middle button -- but remember that not all mice have a middle button.
+* ``"<ButtonRelease-1>"`` indicates that the left button has been released.
+* ``"<B1-Motion>"`` indicates that the mouse was moved while the left button was pressed (we can use *B2* or *B3* for the other buttons).
+* ``"<Enter>"`` and ``"<Leave>"`` tell us that the mouse curson has entered or left the widget.
+* ``"<Key>"`` means that any key on the keyboard was pressed.  We can also listen for specific key presses, for example ``"<Return>"`` (the *enter* key), or combinations like ``"<Shift-Up>"`` (*shift-up-arrow*).  Key presses of most printable characters are expressed as the bare characters, without brackets -- for example, the letter ``a`` is just ``"a"``.
+* ``"<Configure>"`` means that the widget has changed size.
+
+We can now extend our simple example to make the label interactive -- let us make the label text cycle through a sequence of messages whenever it is clicked::
+
+    from tkinter import Tk, Label, Button, StringVar
+
+    class MyFirstGUI:
+        LABEL_TEXT = [
+            "This is our first GUI!",
+            "Actually, this is our second GUI.",
+            "We made it more interesting...",
+            "...by making this label interactive.",
+            "Go on, click on it again.",
+        ]
+        def __init__(self, master):
+            self.master = master
+            master.title("A simple GUI")
+
+            self.label_index = 0
+            self.label_text = StringVar()
+            self.label_text.set(self.LABEL_TEXT[self.label_index])
+            self.label = Label(master, textvariable=self.label_text)
+            self.label.bind("<Button-1>", self.cycle_label_text)
+            self.label.pack()
+
+            self.greet_button = Button(master, text="Greet", command=self.greet)
+            self.greet_button.pack()
+
+            self.close_button = Button(master, text="Close", command=master.quit)
+            self.close_button.pack()
+
+        def greet(self):
+            print("Greetings!")
+
+        def cycle_label_text(self, event):
+            self.label_index += 1
+            self.label_index %= len(self.LABEL_TEXT) # wrap around
+            self.label_text.set(self.LABEL_TEXT[self.label_index])
+
+    root = Tk()
+    my_gui = MyFirstGUI(root)
+    root.mainloop()
+
+Updating a label's text is a little convoluted -- we can't simply update the text using a normal Python string.  Instead, we have to provide the label with a special ``tkinter`` string variable object, and set a new value on the object whenever we want the text in the label to change.
+
+We have defined a handler which cycles to the next text string in the sequence, and used the ``bind`` method of the label to bind our new handler to left clicks on the label.  It is important to note that this handler takes an additional parameter -- an event object, which contains some information about the event.  We could use the same handler for many different events (for example, a few similar events which happen on different widgets), and use this parameter to distinguish between them.  Since in this case we are only using our handler for one kind of event, we will simply ignore the event parameter.
+
+.. Todo:: add link to list of key names / events
 
 Putting it all together
------------------------
+=======================
+
+Now we will look at a more extensive example which uses the
 
 * translate calculator example
