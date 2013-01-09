@@ -9,6 +9,11 @@ OUTSTANDING SECTIONS
 * how to use the interpreter; how to write files; how to install packages (basics)
 * lambdas (in functions)
 
+GLOBAL SEARCH AND REPLACE
+
+* replace "you" with "we" almost everywhere in earlier chapters
+* put term definitions in italics in earlier chapters
+
 EXERCISES
 
 * most of them
