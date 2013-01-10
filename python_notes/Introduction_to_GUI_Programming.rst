@@ -61,6 +61,8 @@ We didn't have to write any code to make the buttons fire click events or to bin
 
 There are many ways in which we could organise our application class. In this example, our class doesn't inherit from any ``tkinter`` objects -- we use *composition* to associate our tree of widgets with our class.  We could also use *inheritance* to extend one of the widgets in the tree with our custom functions.
 
+``root.mainloop()`` is a method on the main window which we execute when we want to run our application. This method will loop forever, waiting for events from the user, until the user exits the program -- either by closing the window, or by terminating the program with a keyboard interrupt in the console.
+
 .. Todo:: take screenshots of windows
 
 Widget classes
@@ -82,7 +84,9 @@ There are many different widget classes built into ``tkinter`` -- they should be
 Layout options
 ==============
 
-The GUI in the previous example has a relatively simple layout: we arranged the three widgets in a single column inside the window.  To do this, we used the ``pack`` method, which is one of the three different *geometry managers* available in ``tkinter``.  By default, ``pack`` arranges widgets vertically inside their parent container, from the top down, but we can change the alignment to the bottom, left or right by using the optional ``side`` parameter.  We can mix different alignments in the same container, but this may not work very well for complex layouts.  It should work reasonably well in our simple case, however::
+The GUI in the previous example has a relatively simple layout: we arranged the three widgets in a single column inside the window.  To do this, we used the ``pack`` method, which is one of the three different *geometry managers* available in ``tkinter``.  We have to use one of the available geometry managers to specify a position for each of our widgets, otherwise the widget will not appear in our window.
+
+By default, ``pack`` arranges widgets vertically inside their parent container, from the top down, but we can change the alignment to the bottom, left or right by using the optional ``side`` parameter.  We can mix different alignments in the same container, but this may not work very well for complex layouts.  It should work reasonably well in our simple case, however::
 
     from tkinter import LEFT, RIGHT
 
@@ -178,6 +182,91 @@ We have defined a handler which cycles to the next text string in the sequence, 
 Putting it all together
 =======================
 
-Now we will look at a more extensive example which uses the
+Now we can use all this information to create a simple calculator.  We will allow the user to enter a number in a text field, and either add it to or subtract it from a running total, which we will display.  We will also allow the user to reset the total::
 
-* translate calculator example
+    from tkinter import Tk, Label, Button, Entry, IntVar, END, W, E
+
+    class Calculator:
+
+        def __init__(self, master):
+            self.master = master
+            master.title("Calculator")
+
+            self.total = 0
+            self.entered_number = 0
+
+            self.total_label_text = IntVar()
+            self.total_label_text.set(self.total)
+            self.total_label = Label(master, textvariable=self.total_label_text)
+
+            self.label = Label(master, text="Total:")
+
+            vcmd = master.register(self.validate) # we have to wrap the command
+            self.entry = Entry(master, validate="key", validatecommand=(vcmd, '%P'))
+
+            self.add_button = Button(master, text="+", command=lambda: self.update("add"))
+            self.subtract_button = Button(master, text="-", command=lambda: self.update("subtract"))
+            self.reset_button = Button(master, text="Reset", command=lambda: self.update("reset"))
+
+            # LAYOUT
+
+            self.label.grid(row=0, column=0, sticky=W)
+            self.total_label.grid(row=0, column=1, columnspan=2, sticky=E)
+
+            self.entry.grid(row=1, column=0, columnspan=3, sticky=W+E)
+
+            self.add_button.grid(row=2, column=0)
+            self.subtract_button.grid(row=2, column=1)
+            self.reset_button.grid(row=2, column=2, sticky=W+E)
+
+        def validate(self, new_text):
+            if not new_text: # the field is being cleared
+                self.entered_number = 0
+                return True
+
+            try:
+                self.entered_number = int(new_text)
+                return True
+            except ValueError:
+                return False
+
+        def update(self, method):
+            if method == "add":
+                self.total += self.entered_number
+            elif method == "subtract":
+                self.total -= self.entered_number
+            else: # reset
+                self.total = 0
+
+            self.total_label_text.set(self.total)
+            self.entry.delete(0, END)
+
+    root = Tk()
+    my_gui = Calculator(root)
+    root.mainloop()
+
+We have defined two methods on our class: the first is used to validate the contents of the entry field, and the second is used to update our total.
+
+Validating text entry
+---------------------
+
+Our ``validate`` method checks that the contents of the entry field are a valid integer: whenever the user types something inside the field, the contents will only change if the new value is a valid number.  We have also added a special exception for when the value is nothing, so that the field can be cleared (by the user, or by us).  Whenever the value of the field changes, we store the integer value of the contents in ``self.entered_number``. We have to perform the conversion at this point anyway to see if it's a valid integer -- if we store the value now, we won't have to do the conversion again when it's time to update the total.
+
+How do we connect this validation function up to our entry field?  We use the ``validatecommand`` parameter.  The function we use for this command must return ``True`` if the entry's value is allowed to change and ``False`` otherwise, and it *must* be wrapped using a widget's ``register`` method (we have used this method on the window object).
+
+We can also optionally specify arguments which must be passed to the function -- to do this, we pass in a tuple containing the function and a series of strings which contain special codes.  When the function is called, these codes will be replaced by different pieces of information about the change which is being made to the entry value.  In our example, we only care about one piece of information: what the new value is going to be.  The code string for this is ``'%P'``, so we add it into the tuple.
+
+Another optional parameter which is passed to ``Entry`` is ``validate``, which specifies when validation should occur.  the default value is ``'none'`` (a string value, not Python's ``None``!), which means that no validation should be done.  We have selected ``'key'``, which will cause the entry to be validated whenever the user types something inside it -- but it will also be triggered when we clear the entry from inside our ``update`` method.
+
+Updating the total
+------------------
+
+We have written a single handler for updating the total, because what we have to do in all three cases is very similar.  However, the way that we update the value depends on which button was pressed -- that's why our handler needs a parameter.  This presents us with a problem -- unfortunately, ``tkinter`` has no option for specifying parameters to be passed to button commands (or *callbacks*).  We can solve the problem by wrapping the handler in three different functions, each of which calls the handler with a different parameter when it is called.  We have used lambda functions to create these wrappers because they are so simple.
+
+Inside the handler, we first update our running total using the integer value of the entry field (which is calculated and stored inside the ``validate`` method -- note that we initialise it to zero in the ``__init__`` method, so it's safe for the user to press the buttons without typing anything).  We know how to update the total because of the parameter which is passed into the handler.
+
+Once we have updated the total, we need to update the text displayed by the label to show the new total -- we do this by setting the new value on the ``IntVar`` linked to the label as its text variable.  This works just like the ``StringVar`` in the previous example, except that an ``IntVar`` is used with integer values, not strings.
+
+Finally, once we have used the number the user entered, we clear it from the entry field using the entry widget's delete method by deleting all the characters from the first index (zero) to the end (``END`` is a constant defined by ``tkinter``).  We should also clear our internal value for the last number to be entered -- fortunately, our deletion triggers the validation method, which already resets this number to zero if the entry is cleared.
+
+.. Todo:: exercise: explain why we had to use lambdas here and not just pass in self.update("foo") to each button.  Maybe another exercise to write out the function wrappers in full?  Changing the layout?
