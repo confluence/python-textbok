@@ -11,6 +11,8 @@ Our language of choice is Python -- a recent language which has been found to be
 What is a computer?
 ===================
 
+A computer is a general-purpose device which behaves according to the sets of instructions and data with which it is provided.  Computers execute instructions to process data.  Each computer has at its core a central processing unit (CPU) -- modern CPUs are built as a single microprocessor chip.
+
 Programming a computer
 ======================
 
