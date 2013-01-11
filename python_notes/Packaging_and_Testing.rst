@@ -249,8 +249,8 @@ Suppose that our ``rules.py`` file contains a single class::
 
 Our ``test_rules.py`` file should look something like this::
 
-import unittest
-from ourprog.rules import Person
+    import unittest
+    from ourprog.rules import Person
 
     class TestPerson(unittest.TestCase):
 

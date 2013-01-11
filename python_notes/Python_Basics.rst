@@ -957,6 +957,7 @@ Answer to exercise 4
 #. The valid Python integers are: ``110`` and ``-39``
 
 #. What are the results of the following operations and explain why:
+
    #. ``15 + 20 * 3``: ``75`` -- ``*`` has higher precedence than ``+``.
    #. ``13 // 2 + 3``: ``9`` -- ``//`` has higher precedence than ``+``.
    #. ``31 + 10 // 3``: ``34`` -- as above.
@@ -980,6 +981,7 @@ Answer to exercise 5
    operator for floating-point division is ``/``.
 
 #. What are the results of the following operations and explain why:
+
    #. ``1.5 + 2``: ``3.5`` -- the integer ``2`` is converted to a
       floating-point number and then added to ``1.5``.
    #. ``1.5 // 2.0``: ``0.0`` -- integer division is performed on the
