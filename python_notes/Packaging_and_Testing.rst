@@ -326,4 +326,4 @@ In previous versions of Python, we would have needed to define a test suite just
 
 .. Todo:: an example of how to actually run a custom suite?
 
-.. Todo:: exercises
+.. Todo:: exercises -- put testing example in here, but also ask for test code, obviously.
