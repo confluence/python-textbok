@@ -175,7 +175,16 @@ This brings us to a common ``for`` loop pitfall: modifying a list while you're i
 
 Sometimes you can avoid this by iterating over a *copy* of the list instead, but it won't help you in this case -- as you delete elements from the original list, it will shrink, so the indices from the unmodified list copy will soon exceed the length of the modified list and you will get an error.  In general, if you want to select a subset of elements from a list on the basis of some criterion, you should use a *list comprehension* instead. We will look at them at the end of this chapter.
 
-.. Todo:: exercise
+Exercise 1
+^^^^^^^^^^
+
+#. Write a program which sums the integers from 1 to 10 using a ``for`` loop (and prints the total at the end).
+
+#. Can you think of a way to do this without using a loop?
+
+#. Write a program which prompts the user for 10 floating point numbers and calculates their sum, product and average. Your program should only contain a single loop.
+
+#. Rewrite the previous program so that it has two loops -- one which collects and stores the numbers, and one which processes them.
 
 Nested loops
 ============
@@ -424,3 +433,54 @@ Now there is no unnecessary duplication.  We can easily change the string that w
 .. Todo:: exercise ideas: add type conversion and exception handling to the snippet above.  The exception handling one should be put in the exception chapter.
 
 .. Todo:: change you to we almost everywhere
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. Here is an example program::
+
+    total = 0
+
+    for i in range(1, 10 + 1):
+        total += i
+
+    print(total)
+
+#. Remember that we can use the ``sum`` function to sum a sequence::
+
+    print(sum(range(1, 10 + 1)))
+
+#. Here is an example program::
+
+    total = 0
+    product = 1
+
+    for i in range(1, 10 + 1):
+        num = float(input("Please enter number %d: " % i))
+        total += num
+        product *= num
+
+    average = total/10
+
+    print("Sum: %g\nProduct: %g\nAverage: %g" % (total, product, average))
+
+#. Here is an example program::
+
+    numbers = []
+
+    for i in range(10):
+        numbers[i] = float(input("Please enter number %d: " % (i + 1)))
+
+    total = 0
+    product = 1
+
+    for num in numbers:
+        total += num
+        product *= num
+
+    average = total/10
+
+    print("Sum: %g\nProduct: %g\nAverage: %g" % (total, product, average))

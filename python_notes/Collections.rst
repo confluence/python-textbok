@@ -568,4 +568,4 @@ Why didn't this matter when we made the day list by multiplying the same empty s
 
 Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter -- for now, it is important for us to know that this method creates a *new* list of empty strings for each day, unlike the multiplication operator.
 
-.. Todo:: Exercises. This chapter is a replacement for the array chapter, so we need to go through that chapter and see if there's anything that needs to be added.  Should the linked list algorithm be replaced with something more relevant? Maybe a tree or graph implementation?
+.. Todo:: Exercises. Which somehow don't involve for loops.
