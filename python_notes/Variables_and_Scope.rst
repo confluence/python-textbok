@@ -404,7 +404,12 @@ Finally, we output the results::
     # we add an extra blank line before the message with \n
     print("\nThanks for using the program.")
 
-.. Todo: Exercise 8
+Exercise 2
+^^^^^^^^^^
+
+#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that ``:math:`T_c = (5/9) * (T_f - 32)```, where ``:math:`T_c``` is the temperature in °C and ``:math:`T_f``` is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating point numbers.
+
+#. What could make this program crash? What would we need to do to handle this situation more gracefully?
 
 Type conversion
 ===============
@@ -529,6 +534,17 @@ This usually behaves in the way that you would expect: non-zero numbers are ``Tr
 
 .. Todo:: change you to we almost everywhere
 
+Exercise 3
+^^^^^^^^^^
+
+#. Convert ``"8.8"`` to a float.
+#. Convert ``8.8`` to an integer (with rounding).
+#. Convert ``"8.8`` to an integer (with rounding).
+#. Convert ``8.8`` to a string.
+#. Convert ``8`` to a string.
+#. Convert ``8`` to a float.
+#. Convert ``8`` to a boolean.
+
 Answers to exercises
 ====================
 
@@ -542,3 +558,31 @@ Answer to exercise 1
 #. As you will learn in the next chapter, ``if`` blocks are executed *conditionally*.  If ``c`` were not greater than ``3`` in this program, the ``if`` block would not be executed, and if that were to happen the variable ``d`` would never be created.
 
 #. We may use the variable later in the code, assuming that it always exists, and have our program crash unexpectedly if it doesn't.  It is considered poor coding practice to allow a variable to be defined or undefined depending on the outcome of a conditional statement.  It is better to ensure that is always defined, no matter what -- for example, by assigning it some default value at the start.  It is much easier and cleaner to check if a variable has the default value than to check whether it exists at all.
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    T_f = float(input("Please enter a temperature in °F: "))
+    T_c = (5/9) * (T_f - 32)
+    print("%g°F = %g°C" % (T_f, T_c))
+
+.. Note:: The formatting symbol ``%g`` is used with floats, and instructs Python to pick a sensible human-readable way to display the float.
+
+#. The program could crash if the user enters a value which cannot be converted to a floating-point number.  We would need to add some kind of error checking to make sure that this doesn't happen -- for example, by storing the string value and checking its contents.  If we find that the entered value is invalid, we can either print an error message and exit or keep prompting the user for input until valid input is entered.
+
+Answer to exercise 3
+--------------------
+
+Here are example answers::
+
+    import math
+
+    a_1 = float("8.8")
+    a_2 = math.round(8.8)
+    a_3 = math.round("8.8")
+    a_4 = "%g" % 8.8
+    a_5 = "%d" % 8
+    a_6 = float(8)
+    a_7 = bool(8)
