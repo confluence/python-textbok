@@ -161,7 +161,44 @@ This flowchart represents the same statement:
 
 The computer will execute one of the branches before proceeding to the next instruction.
 
-.. Todo:: Exercise 1
+Exercise 1
+^^^^^^^^^^
+
+#. Which of these fragments are valid and invalid first lines of ``if`` statements?  Explain why:
+
+    #. ``if (x > 4)``
+    #. ``if x == 2``
+    #. ``if (y =< 4)``
+    #. ``if (y = 5)``
+    #. ``if (3 <= a)``
+    #.  ``if (1 - 1)``
+    #. ``if ((1 - 1) <= 0)``
+    #. ``if (name == "James")``
+
+#. What is the output of the following code fragment? Explain why. ::
+
+    x = 2
+
+    if x > 3:
+        print("This number")
+    print("is greater")
+    print("than 3.")
+
+#. How can we simplify these code fragments? ::
+
+    #. ::
+
+        if bool(a) == True:
+            print("a is true")
+
+    #. ::
+
+        if x > 50:
+            b += 1
+            a = 5
+        else:
+            b -= 1
+            a = 5
 
 More on the ``if`` statement
 ============================
@@ -299,66 +336,6 @@ The default (catch-all) condition is the ``else`` clause at the end of the state
         print("Department: %s" % department_name)
 
 What if we unexpectedly encounter an informatics course, which has a course code of ``"INF"``?  The catch-all ``else`` clause will be executed, and we will immediately see a printed message that this course code is unsupported.  If the ``else`` clause were omitted, we might not have noticed that anything was wrong until we tried to use ``department_name`` and discovered that it had never been assigned a value.  Including the ``else`` clause helps us to pick up potential errors caused by missing options early.
-
-Switch statements and dictionary-based dispatch
------------------------------------------------
-
-``if`` ladders can get unwieldy if they become very long.  Many languages have a control statement called a switch, which tests the value of a single variable and makes a decision on the basis of that value. It is similar to an ``if`` ladder, but can be a little more readable, and is often optimised to be faster.
-
-Python does not have a switch statement, but you can achieve something similar by using a dictionary. This example will be clearer when you have read more about dictionaries, but all you need to know for now is that a dictionary is a store of key and value pairs -- you retrieve a value by its key, the way you would retrieve a list element by its index.  Here is how we can rewrite the course code example::
-
-    DEPARTMENT_NAMES = {
-        "CSC": "Computer Science",
-        "MAM": "Mathematics and Applied Mathematics",
-        "STA": "Statistical Sciences", # Trailing commas like this are allowed in Python!
-    }
-
-    if course_code in DEPARTMENT_NAMES: # this tests whether the variable is one of the dictionary's keys
-        print("Department: %s" % DEPARTMENT_NAMES[course_code])
-    else:
-        print("Unknown course code: %s" % course_code)
-
-You are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so you can even use this dispatch method to execute completely different statements in response to different values::
-
-    def reverse(string):
-        print("'%s' reversed is '%s'." % (string, string[::-1]))
-
-    def capitalise(string):
-        print("'%s' capitalised is '%s'." % (string, string.upper()))
-
-    ACTIONS = {
-        "r" = reverse, # use the function name without brackets to refer to the function without calling it
-        "c" = capitalise,
-    }
-
-    my_function = ACTIONS[my_action] # now we retrieve the function
-    my_function(my_string) # and now we call it
-
-.. Todo:: Exercise?
-
-
-The conditional operator
-------------------------
-
-Python has another way to write a selection in a program -- the conditional operator. It can be used within an expression (i.e. it can be evaluated) -- in contrast to ``if`` and ``if``-``else``, which are just statements and not expressions.  It is often called the *ternary* operator because it has *three* operands (binary operators have two, and unary operators have one). The syntax is as follows:
-
-*true expression* ``if`` *condition* ``else`` *false expression*
-
-For example::
-
-    result = "Pass" if (score >= 50) else "Fail"
-
-This means that if ``score`` is at least 50, ``result`` is assigned ``"Pass"``, otherwise it is assigned ``"Fail"``. This is equivalent to the following ``if`` statement:
-
-    if (score >= 50):
-        result = "Pass"
-    else:
-        result = "Fail"
-
-The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find your code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
-
-.. Todo: exercise 3?
-
 
 Boolean values, operators and expressions
 =========================================
@@ -619,6 +596,33 @@ We can use these laws to distribute the ``not`` operator over boolean expression
 
 Instead of negating each operator, we used its opposite, eliminating ``not`` altogether.
 
+Exercise 2
+^^^^^^^^^^
+
+#. For what values of ``input`` will this program print ``"True"``? ::
+
+    if not input > 5:
+        print("True")
+
+#. For what values of ``absentee_rate`` and ``overall_mark`` will this program print ``"You have passed the course."``? ::
+
+    if absentee_rate <= 5 and overall_mark >= 50:
+        print("You have passed the course.")
+
+#. For what values of ``x`` will this program print ``"True"``? ::
+
+    if x > 1 or x <= 8:
+        print("True")
+
+#. Eliminate ``not`` from each of these boolean expressions::
+
+    not total <= 2
+    not count > 40
+    not (value > 20.0 and total != 100.0)
+    not (angle > 180 and width == 5)
+    not (count == 5 and not (value != 10) or count > 50)
+    not (value > 200 or value < 0 and not total == 0)
+
 The None value
 ==============
 
@@ -650,4 +654,199 @@ If, however, you want to distinguish between the case when your variable is ``No
     else:
         print("My string is '%s'." % my_string)
 
+Switch statements and dictionary-based dispatch
+-----------------------------------------------
+
+``if`` ladders can get unwieldy if they become very long.  Many languages have a control statement called a switch, which tests the value of a single variable and makes a decision on the basis of that value. It is similar to an ``if`` ladder, but can be a little more readable, and is often optimised to be faster.
+
+Python does not have a switch statement, but you can achieve something similar by using a dictionary. This example will be clearer when you have read more about dictionaries, but all you need to know for now is that a dictionary is a store of key and value pairs -- you retrieve a value by its key, the way you would retrieve a list element by its index.  Here is how we can rewrite the course code example::
+
+    DEPARTMENT_NAMES = {
+        "CSC": "Computer Science",
+        "MAM": "Mathematics and Applied Mathematics",
+        "STA": "Statistical Sciences", # Trailing commas like this are allowed in Python!
+    }
+
+    if course_code in DEPARTMENT_NAMES: # this tests whether the variable is one of the dictionary's keys
+        print("Department: %s" % DEPARTMENT_NAMES[course_code])
+    else:
+        print("Unknown course code: %s" % course_code)
+
+You are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so you can even use this dispatch method to execute completely different statements in response to different values::
+
+    def reverse(string):
+        print("'%s' reversed is '%s'." % (string, string[::-1]))
+
+    def capitalise(string):
+        print("'%s' capitalised is '%s'." % (string, string.upper()))
+
+    ACTIONS = {
+        "r" = reverse, # use the function name without brackets to refer to the function without calling it
+        "c" = capitalise,
+    }
+
+    my_function = ACTIONS[my_action] # now we retrieve the function
+    my_function(my_string) # and now we call it
+
+The conditional operator
+------------------------
+
+Python has another way to write a selection in a program -- the conditional operator. It can be used within an expression (i.e. it can be evaluated) -- in contrast to ``if`` and ``if``-``else``, which are just statements and not expressions.  It is often called the *ternary* operator because it has *three* operands (binary operators have two, and unary operators have one). The syntax is as follows:
+
+*true expression* ``if`` *condition* ``else`` *false expression*
+
+For example::
+
+    result = "Pass" if (score >= 50) else "Fail"
+
+This means that if ``score`` is at least 50, ``result`` is assigned ``"Pass"``, otherwise it is assigned ``"Fail"``. This is equivalent to the following ``if`` statement:
+
+    if (score >= 50):
+        result = "Pass"
+    else:
+        result = "Fail"
+
+The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find your code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
+
+Exercise 3
+^^^^^^^^^^
+
+#. Rewrite the following fragment as an if-ladder (using ``elif`` statements)::
+
+    if temperature < 0:
+        print("Below freezing")
+    else:
+        if temperature < 10:
+            print("Very cold")
+        else:
+            if temperature < 20:
+                print(Chilly)
+            else:
+                if temperature < 30:
+                    print("Warm")
+                else:
+                    if temperature < 40:
+                        print("Hot")
+                    else:
+                        print("Too hot")
+
+#. Write a Python program to assign grades to students at the end of the year. The program must do the following:
+
+    #. Ask for a student number.
+    #. Ask for the student's tutorial mark.
+    #. Ask for the student's test mark.
+    #. Calculate whether the student's average so far is high enough for the student to be permitted to write the examination. If the average (mean) of the tutorial and test marks is lower than 40%, the student should automatically get an F grade, and the program should print the grade and exit without performing the following steps.
+    #. Ask for the student's examination mark.
+    #. Calculate the student's final mark. The tutorial and test marks should count for 25% of the final mark each, and the final examination should count for the remaining 50%
+    #. Calculate and print the student's grade, according to the following table:
+       ==================== ===========
+       Weighted final score Final grade
+       ==================== ===========
+       80 <= mark <= 100    A
+       70 <= mark < 80      B
+       60 <= mark < 70      C
+       50 <= mark < 60      D
+       mark < 50            E
+       ==================== ===========
+
 .. Todo:: change you to we almost everywhere
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#.
+
+    #. ``if (x > 4)`` -- valid
+    #. ``if x == 2`` -- valid (brackets are not compulsory)
+    #. ``if (y =< 4)`` -- invalid (``=<`` is not a valid operator; it should be ``<=``)
+    #. ``if (y = 5)`` -- invalid (``=`` is the assignment operator, not a comparison operator)
+    #. ``if (3 <= a)`` -- valid
+    #.  ``if (1 - 1)`` -- valid (``1 - 1`` evaluates to zero, which is false)
+    #. ``if ((1 - 1) <= 0)`` -- valid
+    #. ``if (name == "James")`` -- valid
+
+#.  The program will print out::
+        is greater
+        than 3.
+
+    This happens because the last two print statements are not indented -- they are outside the ``if`` statement, which means that they will always be executed.
+
+#. ::
+
+    #. We don't have to compare variables to boolean values and compare them to ``True`` explicitly.  This will be done implicitly if we just evaluate the variable in the condition of the ``if`` statement::
+
+        if a:
+            print("a is true")
+
+    #. We set ``a`` to the same value whether we execute the ``if`` block or the ``else`` block, so we can move this line outside the ``if`` statement and only write it once. ::
+
+        if x > 50:
+            b += 1
+        else:
+            b -= 1
+
+        a = 5
+
+Answer to exercise 2
+--------------------
+
+#. The program will print ``"True"`` if ``input`` is less than or equal to 5.
+
+#. The program will print ``"You have passed the course."`` if ``absentee_rate`` is less than or equal to ``5`` and ``overall_mark`` is greater than or equal to ``50``.
+
+#. The program will print ``"True"`` for any value of ``x``.
+
+#. ::
+
+    total > 2
+    count <= 40
+    value <= 20.0 or total == 100.0
+    angle <= 180 or width != 5
+    (count != 5 or value != 10) and count <= 50
+    value <= 200 and (value >= 0 or total == 0)
+
+Answer to exercise 3
+--------------------
+
+#. ::
+
+    if temperature < 0:
+        print("Below freezing")
+    elif temperature < 10:
+        print("Very cold")
+    elif temperature < 20:
+        print(Chilly)
+    elif temperature < 30:
+        print("Warm")
+    elif temperature < 40:
+        print("Hot")
+    else:
+        print("Too hot")
+
+#. Here is an example program::
+
+    student_number = input("Please enter a student number: ")
+    tutorial_mark = float(input("Please enter the student's tutorial mark: "))
+    test_mark = float(input("Please enter the student's test mark: "))
+
+    if (tutorial_mark + test_mark) / 2 < 40:
+        grade = "F"
+    else:
+        exam_mark = float(input("Please enter the student's final examination mark: "))
+        mark = (tutorial_mark + test_mark + 2 * exam_mark) / 4
+
+        if 80 <= mark <= 100:
+            grade = "A"
+        elif 70 <= mark < 80:
+            grade = "B"
+        elif 60 <= mark < 70:
+            grade = "C"
+        elif 50 <= mark < 60:
+            grade = "D"
+        else:
+            grade = "E"
+
+    print "%s's grade is %s." % (student_number, grade)
