@@ -67,6 +67,7 @@ Here is an example of variables in different scopes::
     print(c)
     print(d)
 
+.. Note:: The inside of a class body is also a new local variable scope.  Variables which are defined in the class body (but outside any class method) are called *class attributes*.  They can be referenced by their bare names within the same scope, but they can also be accessed from outside this scope if we use the attribute access operator (``.``) on a class or an instance (an object which uses that class as its type).  An attribute can also be set explicitly on an instance or class from inside a method.  Attributes set on instances are called *instance attributes*.  Class attributes are shared between all instances of a class, but each instance has its own separate instance attributes.  We will look at this in greater detail in the chapter about classes.
 
 The assignment operator
 -----------------------
@@ -78,7 +79,7 @@ As you saw in the previous sections, the assignment operator in Python is a sing
     a_number = total + 5      # a_number becomes the value of total + 5
     a_number = a_number + 1   # a_number becomes the value of a_number + 1
 
-The last statement might look a bit strange if you were to interpret ``=`` as a mathematical equals sign -- clearly a number cannot be equal to the same number plus one!  Remember that ``=`` is an assignment operator -- this statement is assigning a new value to the variable ``a_number`` which is equal to the old value of ``a_number`` plus one.
+The last statement might look a bit strange if you were to interpret ``=`` as a mathematical equals sign -- clearly a number cannot be equal to the same number plus one!  Remember that ``=`` is an assignment operator -- this statement is assigning a *new* value to the variable ``a_number`` which is equal to the *old* value of ``a_number`` plus one.
 
 Assigning an initial value to variable is called *initialising* the variable.  In some languages defining a variable can be done in a separate step before the first value assignment.  It is thus possible in those languages for a variable to be defined but not have a value -- which could lead to errors or unexpected behaviour if you try to use the value before it has been assigned.  In Python a variable is defined and assigned a value in a single step, so you will almost never encounter situations like this.
 
@@ -99,7 +100,6 @@ An assignment statement may have multiple targets separated by equals signs.  Th
 
     # this is illegal, because we can't set 0 to b:
     a = 0 = b
-
 
 Compound assignment operators
 -----------------------------
@@ -199,6 +199,27 @@ Because you haven't declared ``a`` to be global, the assignment in the second li
 Note that it is usually very bad practice to access global variables from inside functions, and even worse practice to modify them.  This makes it difficult to arrange your program into logically encapsulated parts which do not affect each other in unexpected ways.  If a function needs to access some external value, you should pass the value into the function as a parameter.  If the function is a method of an object, it is sometimes appropriate to make the value an attribute of the same object -- we will discuss this in the chapter about object orientation.
 
 .. Note:: There is also a ``nonlocal`` keyword in Python -- when you nest a function inside another function, it allows you to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If you use the ``global`` keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If you use the ``nonlocal`` keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.
+
+Exercise 1
+^^^^^^^^^^
+
+#. Describe the scope of the variables ``a``, ``b``, ``c`` and ``d`` in this example::
+
+    def my_function(a):
+        b = a - 2
+        return b
+
+    c = 3
+
+    if c > 2:
+        d = my_function(5)
+        print(d)
+
+#. What is the lifetime of these variables?  When will they be created and destroyed?
+
+#. Can you guess what would happen if we were to assign ``c`` a value of ``1`` instead?
+
+#. Why would this be a problem?  Can you think of a way to avoid it?
 
 Modifying values
 ================
@@ -507,3 +528,17 @@ This usually behaves in the way that you would expect: non-zero numbers are ``Tr
     bool("False") # Also True!
 
 .. Todo:: change you to we almost everywhere
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. ``a`` is a local variable in the scope of ``my_function`` because it is an argument name.  ``b`` is also a local variable inside ``my_function``, because it is assigned a value inside ``my_function``. ``c`` and ``d`` are both global variables.  It doesn't matter that ``d`` is created inside an ``if`` block, because the inside of an ``if`` block is not a new scope -- everything inside the block is part of the same scope as the outside (in this case the global scope).  Only function definitions (which start with ``def``) and class definitions (which start with ``class``) indicate the start of a new level of scope.
+
+#. Both ``a`` and ``b`` will be created every time ``my_function`` is called and destroyed when ``my_function`` has finished executing.  ``c`` is created when it is assigned the value ``3``, and exists for the remainder of the program's execution.  ``d`` is created inside the ``if`` block (when it is assigned the value which is returned from the function), and also exists for the remainder of the program's execution.
+
+#. As you will learn in the next chapter, ``if`` blocks are executed *conditionally*.  If ``c`` were not greater than ``3`` in this program, the ``if`` block would not be executed, and if that were to happen the variable ``d`` would never be created.
+
+#. It is considered poor coding practice to allow a variable to be defined or undefined depending on the outcome of a conditional statement.  We may use the variable later in the code, assuming that it always exists, and have our program crash unexpectedly if it doesn't.  It is better to ensure that is always defined, no matter what -- for example, by assigning it some default value at the start.  It is much easier and cleaner to check if a variable has the default value than to check whether it exists at all.
