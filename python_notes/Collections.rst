@@ -204,6 +204,20 @@ Arrays are less easy to use in many ways, but they also have some advantages: be
 
 Python has a built-in ``array`` type.  It's not quite as restricting as an array in C or Java -- you have to specify a type for the contents of the array, and you can only use it to store numeric values, but you can resize it dynamically, like a list.  You will probably never need to use it.
 
+Exercise 1
+^^^^^^^^^^
+
+#. Create a list ``a`` which contains the first three odd positive integers and a list ``b`` which contains the first three even positive integers.
+#. Create a new list ``c`` which combines the numbers from both lists (order is unimportant).
+#. Create a new list ``d`` which is a sorted copy of ``c``, leaving ``c`` unchanged.
+#. Reverse ``d`` in-place.
+#. Set the fourth element of ``c`` to ``42``.
+#. Append ``10`` to the end of ``d``.
+#. Append ``7``, ``8`` and ``9`` to the end of ``c``.
+#. Print the first three elements of ``c``.
+#. Print the last element of ``d`` without using its length.
+#. Print the length of ``d``.
+
 Tuples
 ======
 
@@ -259,6 +273,16 @@ To let Python know that we want to create a tuple, we have to add a trailing com
 
     print((3,))
 
+Exercise 2
+^^^^^^^^^^
+
+#. Create a tuple ``a`` which contains the first four positive integers and a tuple ``b`` which contains the next four positive integers.
+#. Create a tuple ``c`` which combines all the numbers from ``a`` and ``b`` in any order.
+#. Create a tuple ``d`` which is a sorted copy of ``c``.
+#. Print the third element of ``d``.
+#. Print the last three elements of ``d`` without using its length.
+#. Print the length of ``d``.
+
 Sets
 ====
 
@@ -301,6 +325,17 @@ How do we make an empty set?  We have to use the ``set`` function.  Dictionaries
 
 You can use the ``list``, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
 
+Exercise 3
+^^^^^^^^^^
+
+#. Create a set ``a`` which contains the first four positive integers and a set ``b`` which contains the first four odd positive integers.
+#. Create a set ``c`` which combines all the numbers which are in ``a`` or ``b`` (or both).
+#. Create a set ``d`` which contains all the numbers in ``a`` but not in ``b``.
+#. Create a set ``e`` which contains all the numbers in ``b`` but not in ``a``.
+#. Create a set ``f`` which contains all the numbers which are both in ``a`` and in ``b``.
+#. Create a set ``g`` which contains all the numbers which are either in ``a`` or in ``b`` but not in both.
+#. Print the number of elements in ``c``.
+
 Ranges
 ======
 
@@ -316,6 +351,13 @@ Ranges
     print(list(range(1, 11, 2)))
 
 We create a range by calling the ``range`` function.  As you can see, if we pass a single parameter to the ``range`` function, it is used as the upper bound.  If we use two parameters, the first is the lower bound and the second is the upper bound.  If we use three, the third parameter is the step size.  The default lower bound is zero, and the default step size is one.  Note that the range *includes* the lower bound and *excludes* the upper bound.
+
+Exercise 4
+^^^^^^^^^^
+
+#. Create a range ``a`` which starts from ``0`` and goes on for 20 numbers.
+#. Create a range ``b`` which starts from ``3`` and ends on ``12``.
+#. Create a range ``c`` which contains every third integer starting from ``2`` and ending at ``50``.
 
 Dictionaries
 ============
@@ -393,6 +435,11 @@ We can also check if a value is in the dictionary using ``in`` in conjunction wi
 You should avoid using ``mykey in mydict.keys()`` to check for key membership, however, because it's less efficient than ``mykey in mydict``.
 
 .. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these sequences, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above). In Python 2 you should *really* not use ``mykey in mydict.keys()`` to check for key membership -- if you do, you will be searching the entire list of keys sequentially, which is much slower than a direct dictionary lookup.
+
+Exercise 5
+^^^^^^^^^^
+
+.. Todo:: do this exercise
 
 Converting between collection types
 ===================================
@@ -497,7 +544,7 @@ The opposite of *joining* is *splitting*.  We can split up a string into a list 
     print("cat, dog, fish".split(", ", 1))
 
 Two-dimensional sequences
--------------------------
+=========================
 
 Most of the sequences we have seen so far have been one-dimensional: each sequence is a row of elements.  What if we want to use a sequence to represent a two-dimensional data structure, which has both rows and columns?  The easiest way to do this is to make a sequence in which each element is also a sequence.  For example, we can create a list of lists::
 
@@ -569,3 +616,70 @@ Why didn't this matter when we made the day list by multiplying the same empty s
 Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter -- for now, it is important for us to know that this method creates a *new* list of empty strings for each day, unlike the multiplication operator.
 
 .. Todo:: Exercises. Which somehow don't involve for loops.
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+::
+
+    a = [1, 3, 5]
+    b = [2, 4, 6]
+
+    c = a + b
+
+    d = sorted(c)
+    d.reverse()
+
+    c[3] = 42
+    d.append(10)
+    d.extend([7, 8, 9])
+
+    print(c[:2])
+    print(d[-1])
+    print(len(d))
+
+Answer to exercise 2
+--------------------
+
+::
+
+    a = (1, 2, 3, 4)
+    b = (5, 6, 7, 8)
+
+    c = a + b
+    d = sorted(c)
+
+    print(d[3])
+    print(d[-3:])
+    print(len(d))
+
+Answer to exercise 3
+--------------------
+
+::
+
+    a = {1, 2, 3, 4}
+    b = {1, 3, 5, 7}
+
+    c = a | b
+    d = a - b
+    e = b - a
+    f = a & b
+    g = a ^ b
+
+    print(len(c))
+
+Answer to exercise 4
+--------------------
+
+::
+
+    a = range(20)
+    b = range(3, 13)
+    c = range(2, 51, 3)
+
+Answer to exercise 5
+--------------------
