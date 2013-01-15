@@ -118,6 +118,12 @@ In many of the examples above, we are counting to a predetermined number, so it 
 
 Here we add up numbers from a list until the total reaches 100.  We don't know how many times we will have to execute the loop, because we don't know the values of the numbers.  Note that we might reach the end of the list of numbers before the total reaches 100 -- if we try to access an element beyond the end of the list we will get an error, so we should add a check to make sure that this doesn't happen.
 
+Exercise 1
+^^^^^^^^^^
+
+#. Write a program which uses a ``while`` loop to sum the squares of integers (starting from ``1``) until the total exceeds 200.  Print the final total and the last number to be squared and added.
+
+#. Write a program which keeps prompting the user to guess a word.  The user is allowed up to ten guesses -- write your code in such a way that the secret word and the number of allowed guesses are easy to change.  Print messages to give the user feedback.
 
 The ``for`` statement
 =====================
@@ -175,7 +181,7 @@ This brings us to a common ``for`` loop pitfall: modifying a list while you're i
 
 Sometimes you can avoid this by iterating over a *copy* of the list instead, but it won't help you in this case -- as you delete elements from the original list, it will shrink, so the indices from the unmodified list copy will soon exceed the length of the modified list and you will get an error.  In general, if you want to select a subset of elements from a list on the basis of some criterion, you should use a *list comprehension* instead. We will look at them at the end of this chapter.
 
-Exercise 1
+Exercise 2
 ^^^^^^^^^^
 
 #. Write a program which sums the integers from 1 to 10 using a ``for`` loop (and prints the total at the end).
@@ -214,6 +220,13 @@ You may have noticed that we look up the name of the weekday once for every iter
                     print("%s at %02d:00 -- %s" % (day_name, i, event))
 
 This doesn't make much difference when you are looking up a value in a short tuple, but it could make a big difference if it were an expensive, time-consuming calculation and you were iterating over hundreds or thousands of values.
+
+Exercise 3
+^^^^^^^^^^
+
+#. Write a program which uses a nested ``for`` loop to populate a three-dimensional list representing a calendar: the top-level list should contain a sub-list for each month, and each month should contain four weeks.  Each week should be an empty list.
+
+#. Modify your code to make it easier to access a month in the calendar by a human-readable month name, and each week by a name which is numbered starting from 1.  Add an event (in the form of a string description) to the second week in July.
 
 Iterables, iterators and generators
 ===================================
@@ -443,6 +456,38 @@ Answer to exercise 1
 #. Here is an example program::
 
     total = 0
+    number = 0
+
+    while total < 200:
+        number += 1
+        total += number**2
+
+    print("Total: %d" % total)
+    print("Last number: %d" % number)
+
+#. Here is an example program::
+
+    GUESSES_ALLOWED = 10
+    SECRET_WORD = "caribou"
+
+    guesses_left = GUESSES_ALLOWED
+    guessed_word = None
+
+    while guessed_word != SECRET_WORD and guesses_left:
+        guessed_word = input("Guess a word: ")
+
+        if guessed_word == SECRET_WORD:
+            print("You guessed! Congratulations!")
+        else:
+            guesses_left -= 1
+            print("Incorrect! You have %d guesses left." % guesses_left)
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    total = 0
 
     for i in range(1, 10 + 1):
         total += i
@@ -484,3 +529,27 @@ Answer to exercise 1
     average = total/10
 
     print("Sum: %g\nProduct: %g\nAverage: %g" % (total, product, average))
+
+Answer to exercise 3
+--------------------
+
+#. Here is an example program::
+
+    calendar = []
+
+    for m in range(12):
+        month = []
+
+        for w in range(4):
+            month.append([])
+
+        calendar.append(month)
+
+#. Here is an example program::
+
+    (JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST,
+    SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER) = range(12)
+
+    (WEEK_1, WEEK_2, WEEK_3, WEEK_4) = range(4)
+
+    calendar[July][WEEK_2].append("Go on holiday!")
