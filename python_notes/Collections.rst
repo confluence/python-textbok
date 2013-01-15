@@ -439,7 +439,22 @@ You should avoid using ``mykey in mydict.keys()`` to check for key membership, h
 Exercise 5
 ^^^^^^^^^^
 
-.. Todo:: do this exercise
+#. Create a dict ``directory`` which stores telephone numbers (as string values), and populate it with these key-value pairs:
+
+==========  ================
+Name        Telephone number
+==========  ================
+Jane Doe    +27 555 5367
+John Smith  +27 555 6254
+Bob Stone   +27 555 5689
+==========  ================
+
+#. Change Jane's number to *+27 555 1024*
+#. Add a new entry for a person called *Anna Cooper* with the phone number *+27 555 3237*
+#. Print Bob's number.
+#. Print Bob's number in such a way that ``None`` would be printed if Bob's name was not in the dictionary.
+#. Print all the keys. The format is unimportant, as long as they're all visible.
+#. Print all the values.
 
 Converting between collection types
 ===================================
@@ -543,6 +558,20 @@ The opposite of *joining* is *splitting*.  We can split up a string into a list 
     print("cat, dog, fish".split(", "))
     print("cat, dog, fish".split(", ", 1))
 
+Exercise 6
+^^^^^^^^^^
+
+#. Convert a list which contains the numbers ``1``, ``1``, ``2``, ``3`` and ``3``, and convert it to a tuple ``a``.
+#. Convert ``a`` to a list ``b``. Print its length.
+#. Convert ``b`` to a set ``c``. Print its length.
+#. Convert ``c`` to a list ``d``. Print its length.
+#. Create a range which starts at ``1`` and ends at ``10``. Convert it to a list ``e``.
+#. Create the ``directory`` dict from the previous example. Create a list ``t`` which contains all the key-value pairs from the dictionary as tuples.
+#. Create a list ``v`` of all the values in the dictionary.
+#. Create a list ``k`` of all the keys in he dictionary.
+#. Create a string ``s`` which contains the word ``"antidisestablishmentarianism"``. Use the ``sorted`` function on it. What is the output type? Concatenate the letters in the output to a string ``s2``.
+#. Split the string ``"the quick brown fox jumped over the lazy dog"`` into a list ``w`` of individual words.
+
 Two-dimensional sequences
 =========================
 
@@ -615,7 +644,10 @@ Why didn't this matter when we made the day list by multiplying the same empty s
 
 Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter -- for now, it is important for us to know that this method creates a *new* list of empty strings for each day, unlike the multiplication operator.
 
-.. Todo:: Exercises. Which somehow don't involve for loops.
+Exercise 7
+^^^^^^^^^^
+
+#. Create a list ``a`` of tuples: the first should be a tuple
 
 Answers to exercises
 ====================
@@ -682,4 +714,57 @@ Answer to exercise 4
     c = range(2, 51, 3)
 
 Answer to exercise 5
+--------------------
+
+::
+
+    directory = {
+        "Jane Doe": "+27 555 5367",
+        "John Smith": "+27 555 6254",
+        "Bob Stone": "+27 555 5689",
+    }
+
+    directory["Jane Doe"] = "+27 555 1024"
+    directory["Anna Cooper"] = "+27 555 3237"
+
+    print(directory["Bob Stone"])
+    print(directory.get("Bob Stone", None))
+
+    print(directory.keys())
+    print(directory.values())
+
+Answer to exercise 6
+--------------------
+
+::
+
+    a = tuple([1, 1, 2, 3, 3])
+
+    b = list(a)
+    print(len(b))
+
+    c = set(b)
+    print(len(c))
+
+    d = list(c)
+    print len(d)
+
+    e = list(range(1, 11))
+
+    directory = {
+        "Jane Doe": "+27 555 5367",
+        "John Smith": "+27 555 6254",
+        "Bob Stone": "+27 555 5689",
+    }
+
+    t = list(directory.items()
+    v = list(directory.values())
+    k = list(directory)
+
+    s = "antidisestablishmentarianism"
+    s2 = "".join(sorted(s))
+
+    w = "the quick brown fox jumped over the lazy dog".split()
+
+Answer to exercise 7
 --------------------
