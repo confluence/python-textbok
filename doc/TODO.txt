@@ -13,6 +13,7 @@ GLOBAL SEARCH AND REPLACE
 
 * replace "you" with "we" almost everywhere in earlier chapters
 * put term definitions in italics in earlier chapters
+* add hyperlinks between exercises and answers and whenever something is referenced?
 
 EXERCISES
 

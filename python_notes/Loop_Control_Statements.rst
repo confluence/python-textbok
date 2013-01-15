@@ -290,11 +290,28 @@ We will look in more detail at how these methods are defined in a later chapter,
     for i in itertools.repeat(1, 3): # or a set number of times
         print(i) # 1, 1, 1
 
-    # chain chains multiple iterables together
+    # chain combines multiple iterables sequentially
     for i in itertools.chain(numbers, animals):
-        print i # print all the numbers and then all the animals
+        print(i) # print all the numbers and then all the animals
 
 Some of these generators can go on for ever, so if you use them in a ``for`` loop you will need some other check to make the loop terminate!
+
+There is also a built-in function called ``zip`` which allows us to combine multiple iterables pairwise. It also outputs a generator:
+
+    for i in zip((1, 2, 3), (4, 5, 6)):
+        print(i)
+
+    for i in zip(range(5), range(5, 10), range(10, 15)):
+        print(i)
+
+The combined iterable will be the same length as the shortest of the component iterables -- if any of the component iterables are longer than that, their trailing elements will be discarded.
+
+Exercise 4
+^^^^^^^^^^
+
+#. Create a tuple of month names and a tuple of the number of days in each month (assume that February has 28 days). Using a single ``for`` loop, construct a dictionary which has the month names as keys and the corresponding day numbers as values.
+
+#. Now do the same thing without using a ``for`` loop.
 
 Comprehensions
 ==============
@@ -356,7 +373,14 @@ If your generator expression is a parameter being passed to a function, like ``s
 
 .. Note:: dict and set comprehensions were introduced in Python 3.  In Python 2 you have to create a list or generator instead and convert it to a set or a dict yourself.
 
-.. Todo:: exercise idea: join a list of numbers -- need to use comprehension to convert them all to strings first
+Exercise 5
+^^^^^^^^^^
+
+#. Create a string which contains the first ten positive integers separated by commas and spaces. Remember that you can't join numbers -- you have to convert them to strings first.  Print the output string.
+
+#. Rewrite the calendar program from exercise 3 using nested comprehensions instead of nested loops.  Try to append a string to one of the week lists, to make sure that you haven't reused the same list instead of creating a separate list for each week.
+
+#. Now do something similar to create a calendar which is a list with 52 empty sublists (one for each week in the whole year).
 
 The ``break`` and ``continue`` statements
 =========================================
@@ -552,4 +576,56 @@ Answer to exercise 3
 
     (WEEK_1, WEEK_2, WEEK_3, WEEK_4) = range(4)
 
-    calendar[July][WEEK_2].append("Go on holiday!")
+    calendar[JULY][WEEK_2].append("Go on holiday!")
+
+Answer to exercise 4
+--------------------
+
+#. Here is an example program::
+
+    months = ("January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October",
+              "November", "December")
+
+    num_days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+    month_dict = {}
+
+    for month, days in zip(months, days):
+        month_dict[month] = days
+
+#. Here is an example program::
+
+    months = ("January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October",
+              "November", "December")
+
+    num_days = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+    # the zipped output is a sequence of two-element tuples,
+    # so we can just use a dict conversion.
+    month_dict = dict(zip(months, days))
+
+Answer to exercise 5
+--------------------
+
+#. Here is an example program::
+
+    number_string = ", ".join(str(n) for n in range(1, 11))
+    print(number_string)
+
+
+#. Here is an example program::
+
+    calendar = [[[] for w in range(4)] for m in range(12)]
+
+    (JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST,
+    SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER) = range(12)
+
+    (WEEK_1, WEEK_2, WEEK_3, WEEK_4) = range(4)
+
+    calendar[JULY][WEEK_2].append("Go on holiday!")
+
+#. ::
+
+    calendar = [[] for w in range(4) for m in range(12)]
