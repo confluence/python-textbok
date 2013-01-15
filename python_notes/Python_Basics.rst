@@ -872,7 +872,6 @@ In Python, strings are *immutable* -- that means that you can't modify
 a string once it has been created.  However, you can assign a new
 string value to an existing variable name.
 
-
 Exercise 6
 ^^^^^^^^^^
 
