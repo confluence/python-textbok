@@ -23,30 +23,29 @@ Common Python syntax errors include:
 * leaving out a symbol, such as a colon, comma or brackets
 * misspelling a keyword
 * incorrect indentation
+* empty block
+
+.. Note:: it is illegal for any block (like an ``if`` body, or the body of a function) to be left completely empty.  If you want a block to do nothing, you can use the ``pass`` statement inside the block.
+
 
 Python will do its best to tell you where the error is located, but sometimes its messages can be misleading: for example, if you forget to escape a quotation mark inside a string you may get a syntax error referring to a place later in your code, even though that is not the real source of the problem.  If you can't see anything wrong on the line specified in the error message, try backtracking through the previous few lines.  As you program more, you will get better at identifying and fixing errors.
 
 Here are some examples of syntax errors in Python::
 
-    # missing 'def' keyword in function definition
     myfunction(x, y):
         return x + y
 
-    # 'else' clause without an 'if'
     else:
         print("Hello!")
 
-    # missing colon
     if mark >= 50
         print("You passed!")
 
-    # spelling mistake
     if arriving:
         print("Hi!")
     esle:
         print("Bye!")
 
-    # indentation mistake
     if flag:
     print("Flag is set!")
 
@@ -84,6 +83,38 @@ Sometimes there can be absolutely nothing wrong with your Python implementation 
 If you misspell an identifier name, you may get a runtime error or a logical error, depending on whether the misspelled name is defined.
 
 A common source of variable name mix-ups and incorrect indentation is frequent copying and pasting of large blocks of code.  If you have many duplicate lines with minor differences, it's very easy to miss a necessary change when you are editing your pasted lines.  You should always try to factor out excessive duplication using functions and loops -- we will look at this in more detail later.
+
+Exercise 1
+^^^^^^^^^^
+
+#. Find all the syntax errors in the code snippet above, and explain why they are errors.
+
+#. Find potential sources of runtime errors in this code snippet::
+
+    dividend = float(input("Please enter the dividend: "))
+    divisor = float(input("Please enter the divisor: "))
+    quotient = dividend / divisor
+    quotient_rounded = math.round(quotient)
+
+#. Find potential sources of runtime errors in this code snippet::
+
+    for x in range(a, b):
+        print("(%f, %f, %f)" % my_list[x])
+
+#. Find potential sources of logic errors in this code snippet::
+
+    product = 0
+    for i in range(10):
+        product *= i
+
+    sum_squares = 0
+    for i in range(10):
+        i_sq = i**2
+    sum_squares += i_sq
+
+    nums = 0
+    for num in range(10):
+        num += num
 
 Handling exceptions
 ===================
@@ -406,4 +437,34 @@ There's also a special ``exception`` method which is used for logging exceptions
 
 If we have a large project, we may want to set up a more complicated system for logging -- perhaps we want to format certain messages differently, log different messages to different files, or log to multiple locations at the same time.  The logging module also provides us with *logger* and *handler* objects for this purpose.  We can use multiple loggers to create our messages, customising each one independently.  Different handlers are associated with different logging locations.  We can connect up our loggers and handlers in any way we like -- one logger can use many handlers, and multiple loggers can use the same handler.
 
-.. Todo:: Exercises
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. There are five syntax errors:
+
+    #. Missing ``def`` keyword in function definition
+    #. ``else`` clause without an ``if``
+    #. Missing colon after ``if`` condition
+    #. Spelling mistake ("esle")
+    #. The ``if`` block is empty because the ``print`` statement is not indented correctly
+
+#.
+
+    #. The values entered by the user may not be valid integers or floating point numbers.
+    #. The user may enter zero for the divisor.
+    #. If the ``math`` library hasn't been imported, ``math.round`` is undefined.
+
+#.
+
+    #. ``a``, ``b`` and ``my_list`` need to be defined before this snippet.
+    #. The attempt to access the list element with index ``x`` may fail during one of the loop iterations if the range from ``a`` to ``b`` exceeds the size of ``my_list``.
+    #. The string formatting operation inside the ``print`` statement expects ``my_list[x]`` to be a tuple with three numbers. If it has too many or too few elements, or isn't a tuple at all, the attempt to format the string will fail.
+
+#.
+
+    #. If you are accumulating a number total by multiplication, not addition, you need to initialise the total to ``1``, not ``0``.  This product will always be zero!
+    #. The line which adds ``i_sq`` to ``sum_squares`` is not aligned correctly, and will only add the last value of ``i_sq`` after the loop has concluded.
+    #. The wrong variable is used: at each loop iteration the current number in the range is added to itself and ``nums`` remains unchanged.

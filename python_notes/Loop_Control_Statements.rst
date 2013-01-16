@@ -380,7 +380,7 @@ Exercise 5
 
 #. Rewrite the calendar program from exercise 3 using nested comprehensions instead of nested loops.  Try to append a string to one of the week lists, to make sure that you haven't reused the same list instead of creating a separate list for each week.
 
-#. Now do something similar to create a calendar which is a list with 52 empty sublists (one for each week in the whole year).
+#. Now do something similar to create a calendar which is a list with 52 empty sublists (one for each week in the whole year). Hint: how would you modify the nested ``for`` loops?
 
 The ``break`` and ``continue`` statements
 =========================================
@@ -416,8 +416,6 @@ This fragment will print all the numbers from ``1`` to ``10`` *except* ``5``.  I
 
 Note that if we replaced ``break`` with ``continue`` in the first example, we would get an infinite loop -- because the ``continue`` statement would be triggered before ``x`` could be updated. ``x`` would stay equal to ``5``, and keep triggering the ``continue`` statement, for ever!
 
-.. Todo:: exercise
-
 Using ``break`` to simulate a *do-while* loop
 ---------------------------------------------
 
@@ -444,6 +442,11 @@ This trick can help us to make this particular loop use case look better, but it
     while not valid_number(age): # now we can use the condition before asking the user anything
         age = input("Please enter your age: ")
 
+Exercise 6
+^^^^^^^^^^
+
+#. Write a program which repeatedly prompts the user for an integer. If the integer is even, print the integer. If the integer is odd, don't print anything. Exit the program if the user enters the integer ``99``.
+
 Using loops to simplify code
 ----------------------------
 
@@ -466,6 +469,11 @@ How can we improve on this?  We can separate the parts of these lines that diffe
         person[property] = input("Please enter your %s: " % property)
 
 Now there is no unnecessary duplication.  We can easily change the string that we use as a prompt, or add more code to execute for each property -- we will only have to edit the code in one place, not in five places.  To add another property, all we have to do is add another name to the list.
+
+Exercise 7
+^^^^^^^^^^
+
+#. Modify the example above to include type conversion of the properties: age should be an integer, height and weight should be floats, and name and surname should be strings.
 
 .. Todo:: exercise ideas: add type conversion and exception handling to the snippet above.  The exception handling one should be put in the exception chapter.
 
@@ -629,3 +637,34 @@ Answer to exercise 5
 #. ::
 
     calendar = [[] for w in range(4) for m in range(12)]
+
+Answer to exercise 6
+--------------------
+
+#. Here is an example program::
+
+    while (True):
+        num = int(input("Enter an integer: "))
+        if num == 99:
+            break
+        if num % 2:
+            continue
+        print num
+
+Answer to exercise 7
+--------------------
+
+#. Here is an example program::
+
+    person = {}
+
+    properties = [
+        ("name", str),
+        ("surname", str),
+        ("age", int),
+        ("height", float),
+        ("weight", float),
+    ]
+
+    for property, type in properties:
+        person[property] = type(input("Please enter your %s: " % property))
