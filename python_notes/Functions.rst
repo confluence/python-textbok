@@ -67,6 +67,14 @@ If we were to move that function call up, we would get an error::
 
 Because of this, it's a good idea to put all function definitions near the top of your program, so that they are executed before any of your other statements.
 
+Exercise 1
+^^^^^^^^^^
+
+#. Create a function called ``func_a``, which prints a message.
+#. Call the function.
+#. Assign the function object as a value to the variable ``b``, without calling the function.
+#. Now call the function using the variable ``b``.
+
 Input parameters
 ================
 
@@ -97,6 +105,14 @@ In Python, parameters have no declared types.  We can pass any kind of variable 
 The advantage of this is that we don't have to write a lot of different ``print_sum`` functions, one for each different pair of types, when they would all be identical otherwise.  The disadvantage is that since Python doesn't check parameter types against the function definition when a function is called, we may not immediately notice if the wrong type of parameter is passed in -- if, for example, another person interacting with code that we have written uses parameter types that we did not anticipate, or if we accidentally get the parameters out of order.
 
 This is why it is important for us to test our code thoroughly -- something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if it is incorrect.
+
+Exercise 2
+^^^^^^^^^^
+
+#. Create a function called ``hypotenuse``, which takes two numbers as parameters and prints the square root of the sum of their squares.
+#. Call this function with two floats.
+#. Call this function with two integers.
+#. Call this function with one integer and one float.
 
 Return values
 =============
@@ -165,6 +181,14 @@ Having multiple exit points scattered throughout your function can make your cod
 
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
+Exercise 3
+^^^^^^^^^^
+
+#. Rewrite the ``hypotenuse`` function from exercise 2 so that it returns a value instead of printing it.  Add exception handling so that the function returns ``None`` if it is called with parameters of the wrong type.
+#. Call the function with two numbers, and print the result.
+#. Call the function with two strings, and print the result.
+#. Call the function with a number and a string, and print the result.
+
 The stack
 =========
 
@@ -205,6 +229,11 @@ Any recursive function can be re-written in an *iterative* way which avoids recu
         return current
 
 This function uses *iteration* to count up to the desired value of *n*, updating variables to keep track of the calculation.  All the iteration happens within a single instance of the function.  Note that we assign new values to both variables at the same time, so that we can use both old values to calculate both new values on the right-hand side.
+
+Exercise 4
+^^^^^^^^^^
+
+#. Write a recursive function which calculates the factorial of a given number.  Use exception handling to raise an appropriate exception if the input parameter is not a positive integer, but allow the user to enter floats as long as they are whole numbers.
 
 Default parameters
 ==================
@@ -438,4 +467,66 @@ Lambdas
 
 .. Todo:: write about lambdas
 
-.. Todo:: Exercises
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+Here is an example program::
+
+    def func_a():
+        print("This is my awesome function.")
+
+    func_a()
+
+    b = func_a
+
+    b()
+
+Answer to exercise 2
+--------------------
+
+Here is an example program::
+
+    import math
+
+    def hypotenuse(x, y):
+        print(math.sqrt(x**2 + y**2))
+
+    hypotenuse(12.3, 45.6)
+    hypotenuse(12, 34)
+    hypotenuse(12, 34.5)
+
+Answer to exercise 3
+--------------------
+
+Here is an example program::
+
+    import math
+
+    def hypotenuse(x, y):
+        try:
+            return math.sqrt(x**2 + y**2)
+        except TypeError:
+            return None
+
+    print(hypotenuse(12, 34))
+    print(hypotenuse("12", "34"))
+    print(hypotenuse(12, "34"))
+
+Answer to exercise 3
+--------------------
+
+#. Here is an example program::
+
+    def factorial(n):
+        ni = int(n)
+
+        if ni != n or ni <= 0:
+            raise ValueError("%s is not a positive integer." % n)
+
+        if ni == 1:
+            return 1
+
+        return ni * factorial(ni - 1)
