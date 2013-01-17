@@ -503,7 +503,7 @@ Answer to exercise 1
 
 #.
 
-    #. If you are accumulating a number total by multiplication, not addition, you need to initialise the total to ``1``, not ``0``.  This product will always be zero!
+    #. If you are accumulating a number total by multiplication, not addition, you need to initialise the total to ``1``, not ``0``, otherwise the product will always be zero!
     #. The line which adds ``i_sq`` to ``sum_squares`` is not aligned correctly, and will only add the last value of ``i_sq`` after the loop has concluded.
     #. The wrong variable is used: at each loop iteration the current number in the range is added to itself and ``nums`` remains unchanged.
 

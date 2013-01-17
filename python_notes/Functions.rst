@@ -317,6 +317,20 @@ Remember that although we can execute a function *body* many times, a function *
         pets.append(pet)
         return pets
 
+Exercise 4
+^^^^^^^^^^
+
+#. Write a function called ``calculator``.  It should take the following parameters: two numbers, an arithmetic operation (which can be addition, subtraction, multiplication or division and is addition by default), and an output format (which can be integer or floating point, and is floating point by default).  Division should be floating point division.
+
+   The function should perform the requested operation on the two input numbers, and return a result in the requested format (if the format is integer, the result should be rounded and not just truncated).  Raise exceptions as appropriate if any of the parameters passed to the function are invalid.
+
+#. Call the function with the following sets of parameters, and check that the answer is what you expect:
+
+    #. ``2``, ``3.0``
+    #. ``2``, ``3.0``, output format is integer
+    #. ``2``, ``3.0``, operation is division
+    #. ``2``, ``3.0``, operation is division, output format is integer
+
 ``*args`` and ``**kwargs``
 ==========================
 
@@ -401,7 +415,10 @@ If we use a ``*`` expression when you call a function, it must come after all th
 
 If a function takes only ``*args`` and ``**kwargs`` as its parameters, it can be called with *any set of parameters*.  One or both of ``args`` and ``kwargs`` can be empty, so the function will accept any combination of positional and keyword parameters, including no parameters at all.  This can be useful if we are writing a very generic function, like ``print_everything`` in the example above.
 
-.. Todo:: are these actually the right rules? How do function signatures work with args, kwargs and inheritance?
+Exercise 5
+^^^^^^^^^^
+
+#. Rewrite the calculator function from exercise 4 so that it takes any number of number parameters as well as the same optional keyword parameters.  The function should apply the operation to the first two numbers, and then apply it again to the result and the next number, and so on. For example, if the numbers are ``6``, ``4``, ``9`` and ``1`` and the operation is subtraction the function should return ``6 - 4 - 9 - 1``.  If only one number is entered, it should be returned unmodified.  If no numbers are entered, raise an exception.
 
 Decorators
 ==========
@@ -462,10 +479,51 @@ Python has several built-in decorators which are commonly used to decorate class
 
 .. Note:: a decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
 
+Exercise 6
+^^^^^^^^^^
+
+#. Rewrite the ``log`` decorator example so that the decorator logs both the function name and parameters and the returned result.
+
+#. Test the decorator by applying it to a function which takes two arguments and returns their sum.  Print the result of the function, and what was logged to the file.
+
 Lambdas
 =======
 
-.. Todo:: write about lambdas
+We have already seen that when we want to use a number or a string in our program we can either write it as a *literal* in the place where we want to use it or use a *variable* that we have already defined in our code.  For example, ``print("Hello!")`` prints the literal string ``"Hello!"``, which we haven't stored in a variable anywhere, but ``print(message)`` prints whatever string is stored in the variable ``message``.
+
+We have also seen that we can store a function in a variable, just like any other object, by referring to it by its name (but not calling it).  Is there such a thing as a function literal?  Can we define a function on the fly when we want to pass it as a parameter or assign it to a variable, just like we did with the string ``"Hello!"``?
+
+The answer is *yes*, but only for very simple functions.  We can use the ``lambda`` keyword to define anonymous, one-line functions *inline* in our code::
+
+    a = lambda: print("Hi!")
+
+    # is the same as
+
+    def a():
+        print("Hi!")
+
+Lambdas can take parameters -- they are written between the ``lambda`` keyword and the colon, without brackets.  A lambda function may only contain a single expression, and the result of evaluating this expression is implicitly returned from the function (we don't use the ``return`` keyword)::
+
+    b = lambda x, y: x + y
+
+    # is the same as
+
+    def b(x, y):
+        return x + y
+
+Lambdas should only be used for very simple functions. If your lambda starts looking too complicated to be readable, you should rather write it out in full as a normal, named function.
+
+Exercise 7
+^^^^^^^^^^
+
+#. Define the following functions as lambdas, and assign them to variables:
+
+    #. Take one parameter; return its square
+    #. Take two parameters; return the square root of the sums of their squares
+    #. Take any number of parameters; return their average
+    #. Take a string parameter; return a string which contains the unique letters in the input string (in any order)
+
+#. Rewrite all these functions as named functions.
 
 Answers to exercises
 ====================
@@ -530,3 +588,131 @@ Answer to exercise 3
             return 1
 
         return ni * factorial(ni - 1)
+
+Answer to exercise 4
+--------------------
+
+#. Here is an example program::
+
+    import math
+
+    ADD, SUB, MUL, DIV = range(4)
+
+    def calculator(a, b, operation=ADD, output_format=float)
+        if operation == ADD:
+            result = a + b
+        elif operation == SUB:
+            result = a - b
+        elif operation == MUL:
+            result = a * b
+        elif operation == DIV:
+            result = a / b
+        else:
+            raise ValueError("Operation must be ADD, SUB, MUL or DIV.")
+
+        if output_format == float:
+            result = float(result)
+        elif output_format == int:
+            result = math.round(result)
+        else:
+            raise ValueError("Format must be float or int.")
+
+        return result
+
+#. You should get the following results::
+
+    #. ``5.0``
+    #. ``5``
+    #. ``0.6666666666666666``
+    #. ``1``
+
+Answer to exercise 5
+--------------------
+
+#. Here is an example program::
+
+    import math
+
+    ADD, SUB, MUL, DIV = range(4)
+
+    def calculator(*args, operation=ADD, output_format=float)
+        if not args:
+            raise ValueError("At least one number must be entered.")
+
+        result = args[0]
+
+        for n in args[1:]:
+            if operation == ADD:
+                result += n
+            elif operation == SUB:
+                result -= n
+            elif operation == MUL:
+                result *= n
+            elif operation == DIV:
+                result /= n
+            else:
+                raise ValueError("Operation must be ADD, SUB, MUL or DIV.")
+
+        if output_format == float:
+            result = float(result)
+        elif output_format == int:
+            result = math.round(result)
+        else:
+            raise ValueError("Format must be float or int.")
+
+        return result
+
+Answer to exercise 6
+--------------------
+
+#. Here is an example program::
+
+    def log(original_function, logfilename="log.txt"):
+        def new_function(*args, **kwargs):
+            result = original_function(*args, **kwargs)
+
+            with open(logfilename, "w") as logfile:
+                logfile.write("Function '%s' called with positional arguments %s and keyword arguments %s. The result was %s.\n" % (original_function.__name__, args, kwargs, result))
+
+            return result
+
+        return new_function
+
+#. Here is an example program::
+
+    @log
+    def add(x, y):
+        return x + y
+
+    print(add(3.5, 7))
+
+    with open("log.txt", "r") as logfile:
+        print(logfile.read())
+
+Answer to exercise 7
+--------------------
+
+#. Here is an example program::
+
+    import math
+
+    a = lambda x: x**2
+    b = lambda x, y: math.sqrt(x**2 + y**2)
+    c = lambda *args: sum(args)/len(args)
+    d = lambda s: "".join(set(s))
+
+#. Here is an example program::
+
+    import math
+
+    def a(x):
+        return x**2
+
+    def b(x, y):
+        return math.sqrt(x**2 + y**2)
+
+    def c(*args):
+        return sum(args)/len(args)
+
+    def d(s):
+        return "".join(set(s))
