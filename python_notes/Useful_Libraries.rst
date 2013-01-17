@@ -118,6 +118,8 @@ When we load the ``random`` module we can *seed* it before we start generating v
     random.random()
     random.random()
 
+.. Todo:: exercise -- guessing game from old loops chapter
+
 Matching string patterns: ``re``
 ================================
 

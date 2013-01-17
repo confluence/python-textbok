@@ -155,8 +155,6 @@ It is possible for one ``except`` clause to handle more than one kind of error: 
 
 A *try-except* block can also have multiple ``except`` clauses.  If an exception occurs, Python will check each ``except`` clause from the top down to see if the exception type matches.  If none of the ``except`` clauses match, the exception will be considered *unhandled*, and your program will crash::
 
-.. Todo:: I assume that Python searches the stack first to see if the exception is handled elsewhere. What has been mentioned about the stack already?  This section *really* needs to go after functions.
-
     try:
         dividend = int(input("Please enter the dividend: "))
         divisor = int(input("Please enter the divisor: "))
@@ -256,6 +254,30 @@ The ``finally`` clause will be executed at the end of the *try-except* block no 
     finally:
         print("It was really nice talking to you.  Goodbye!")
 
+Exercise 2
+^^^^^^^^^^
+
+#. Extend the program in exercise 7 of the loop control statements chapter to include exception handling.  Whenever the user enters input of the incorrect type, keep prompting the user for the same value until it is entered correctly.  Give the user sensible feedback.
+
+#. Add a *try-except* statement to the body of this function which handles a possible ``IndexError``, which could occur if the index provided exceeds the length of the list.  Print an error message if this happens::
+
+    def print_list_element(thelist, index):
+        print(thelist[index])
+
+#. This function adds an element to a list inside a dict of lists.  Rewrite it to use a *try-except* statement which handles a possible ``KeyError`` if the list with the name provided doesn't exist in the dictionary yet, instead of checking beforehand whether it does.  Include ``else`` and ``finally`` clauses in your *try-except* block.
+
+    def add_to_list_in_dict(thedict, listname, element):
+        if listname in thedict:
+            l = thedict[listname]
+            print("%s already has %d elements." % (listname, len(l)))
+        else:
+            thedict[listname] = []
+            print("Created %s." % listname)
+
+        thedict[listname].append(element)
+
+        print("Added %s to %s." % (element, listname))
+
 The ``with`` statement
 ----------------------
 
@@ -313,6 +335,13 @@ Something we may want to do is raise an exception that we have just intercepted 
     except ValueError as err:
         print("You entered incorrect age input: %s" % err)
         raise err
+
+Exercise 3
+^^^^^^^^^^
+
+#. Rewrite the program from the first question of exercise 2 so that it prints the text of Python's original exception inside the ``except`` clause instead of a custom message.
+
+#. Rewrite the program from the second question of exercise 2 so that the exception which is caught in the ``except`` clause is re-raised after the error message is printed.
 
 Debugging programs
 ==================
@@ -468,3 +497,88 @@ Answer to exercise 1
     #. If you are accumulating a number total by multiplication, not addition, you need to initialise the total to ``1``, not ``0``.  This product will always be zero!
     #. The line which adds ``i_sq`` to ``sum_squares`` is not aligned correctly, and will only add the last value of ``i_sq`` after the loop has concluded.
     #. The wrong variable is used: at each loop iteration the current number in the range is added to itself and ``nums`` remains unchanged.
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    person = {}
+
+    properties = [
+        ("name", str),
+        ("surname", str),
+        ("age", int),
+        ("height", float),
+        ("weight", float),
+    ]
+
+    for property, p_type in properties:
+        valid_value = None
+
+        while valid_value is None:
+            try:
+                value = input("Please enter your %s: " % property)
+                valid_value = p_type(value)
+            except ValueError:
+                print("Could not convert %s '%s' to type %s. Please try again." % (property, value, p_type.__name__))
+
+        person[property] = valid_value
+
+#. Here is an example program::
+
+    def print_list_element(thelist, index):
+        try:
+            print(thelist[index])
+        except IndexError:
+            print("The list has no element at index %d." % index)
+
+#. Here is an example program::
+
+    def add_to_list_in_dict(thedict, listname, element):
+        try:
+            l = thedict[listname]
+        except KeyError:
+            thedict[listname] = []
+            print("Created %s." % listname)
+        else:
+            print("%s already has %d elements." % (listname, len(l)))
+        finally:
+            thedict[listname].append(element)
+            print("Added %s to %s." % (element, listname))
+
+Answer to exercise 3
+--------------------
+
+#. Here is an example program::
+
+    person = {}
+
+    properties = [
+        ("name", str),
+        ("surname", str),
+        ("age", int),
+        ("height", float),
+        ("weight", float),
+    ]
+
+    for property, p_type in properties:
+        valid_value = None
+
+        while valid_value is None:
+            try:
+                value = input("Please enter your %s: " % property)
+                valid_value = p_type(value)
+            except ValueError as ve:
+                print(ve)
+
+        person[property] = valid_value
+
+#. Here is an example program::
+
+    def print_list_element(thelist, index):
+        try:
+            print(thelist[index])
+        except IndexError as ie:
+            print("The list has no element at index %d." % index)
+            raise ie
