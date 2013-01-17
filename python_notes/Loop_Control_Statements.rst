@@ -188,6 +188,8 @@ Exercise 2
 
 #. Can you think of a way to do this without using a loop?
 
+#. Write a program which finds the factorial of a given number. E.g. 3 factorial, or *3!* is equal to *3 x 2 x 1*; *5!* is equal to *5 x 4 x 3 x 2 x 1*, etc.. Your program should only contain a single loop.
+
 #. Write a program which prompts the user for 10 floating point numbers and calculates their sum, product and average. Your program should only contain a single loop.
 
 #. Rewrite the previous program so that it has two loops -- one which collects and stores the numbers, and one which processes them.
@@ -447,6 +449,19 @@ Exercise 6
 
 #. Write a program which repeatedly prompts the user for an integer. If the integer is even, print the integer. If the integer is odd, don't print anything. Exit the program if the user enters the integer ``99``.
 
+#. Some programs ask the user to input a variable number of data entries, and finally to enter a specific character or string (called a *sentinel*) which signifies that there are no more entries.  For example, you could be asked to enter your PIN followed by a hash (``#``). The hash is the sentinel which indicates that you have finished entering your PIN.
+
+   Write a program which averages positive integers.  Your program should prompt the user to enter integers until the user enters a negative integer.  The negative integer should be discarded, and you should print the average of all the previously entered integers.
+
+#. Implement a simple calculator with a menu.  Display the following options to the user, prompt for a selection, and carry out the requested action (e.g. prompt for two numbers and add them).  After each operation, return the user to the menu. Exit the program when the user selects ``0``. If the user enters a number which is not in the menu, ignore the input and redisplay the menu. You can assume that the user will enter a valid integer::
+
+    -- Calculator Menu --
+    0. Quit
+    1. Add two numbers
+    2. Subtract two numbers
+    3. Multiply two numbers
+    4. Divide two numbers
+
 Using loops to simplify code
 ----------------------------
 
@@ -474,8 +489,6 @@ Exercise 7
 ^^^^^^^^^^
 
 #. Modify the example above to include type conversion of the properties: age should be an integer, height and weight should be floats, and name and surname should be strings.
-
-.. Todo:: exercise ideas: add type conversion and exception handling to the snippet above.  The exception handling one should be put in the exception chapter.
 
 .. Todo:: change you to we almost everywhere
 
@@ -529,6 +542,16 @@ Answer to exercise 2
 #. Remember that we can use the ``sum`` function to sum a sequence::
 
     print(sum(range(1, 10 + 1)))
+
+#. Here is an example program::
+
+    num = int(input("Please enter an integer: "))
+
+    num_fac = 1
+    for i in range(1, num + 1):
+        num_fac *= i
+
+    print("%d! = %d" % (num, num_fac))
 
 #. Here is an example program::
 
@@ -651,6 +674,59 @@ Answer to exercise 6
             continue
         print num
 
+#. Here is an example program::
+
+    print("Please enter positive integers to be averaged. Enter a negative integer to terminate the list.")
+
+    nums = []
+
+    while True:
+        num = int(input("Enter a number: "))
+
+        if num < 0:
+            break
+
+        nums.append(num)
+
+    average = float(sum(nums))/len(nums)
+    print("average = %g" % average)
+
+#. Here is an example program::
+
+    menu = """-- Calculator Menu --
+    0. Quit
+    1. Add two numbers
+    2. Subtract two numbers
+    3. Multiply two numbers
+    4. Divide two numbers"""
+
+    selection = None
+
+    while selection != 0:
+        print(menu)
+        selection = int(input("Select an option: "))
+
+        if selection not in range(5):
+            print("Invalid option: %d" % selection)
+            continue
+
+        if selection == 0:
+            continue
+
+        a = float(input("Please enter the first number: "))
+        b = float(input("Please enter the second number: "))
+
+        if selection == 1:
+            result = a + b
+        elif selection == 2:
+            result = a - b
+        elif selection == 3:
+            result = a * b
+        elif selection == 4:
+            result = a / b
+
+        print("The result is %g." % result)
+
 Answer to exercise 7
 --------------------
 
@@ -666,5 +742,5 @@ Answer to exercise 7
         ("weight", float),
     ]
 
-    for property, type in properties:
-        person[property] = type(input("Please enter your %s: " % property))
+    for property, p_type in properties:
+        person[property] = p_type(input("Please enter your %s: " % property))
