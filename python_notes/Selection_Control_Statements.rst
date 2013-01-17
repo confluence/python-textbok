@@ -162,7 +162,7 @@ This flowchart represents the same statement:
 The computer will execute one of the branches before proceeding to the next instruction.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Which of these fragments are valid and invalid first lines of ``if`` statements?  Explain why:
 
@@ -184,7 +184,7 @@ Exercise 1
     print("is greater")
     print("than 3.")
 
-#. How can we simplify these code fragments? ::
+#. How can we simplify these code fragments?
 
     #. ::
 
@@ -597,7 +597,7 @@ We can use these laws to distribute the ``not`` operator over boolean expression
 Instead of negating each operator, we used its opposite, eliminating ``not`` altogether.
 
 Exercise 2
-^^^^^^^^^^
+----------
 
 #. For what values of ``input`` will this program print ``"True"``? ::
 
@@ -709,7 +709,7 @@ This means that if ``score`` is at least 50, ``result`` is assigned ``"Pass"``, 
 The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find your code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Rewrite the following fragment as an if-ladder (using ``elif`` statements)::
 
@@ -737,8 +737,9 @@ Exercise 3
     #. Ask for the student's test mark.
     #. Calculate whether the student's average so far is high enough for the student to be permitted to write the examination. If the average (mean) of the tutorial and test marks is lower than 40%, the student should automatically get an F grade, and the program should print the grade and exit without performing the following steps.
     #. Ask for the student's examination mark.
-    #. Calculate the student's final mark. The tutorial and test marks should count for 25% of the final mark each, and the final examination should count for the remaining 50%
+    #. Calculate the student's final mark. The tutorial and test marks should count for 25% of the final mark each, and the final examination should count for the remaining 50%.
     #. Calculate and print the student's grade, according to the following table:
+
        ==================== ===========
        Weighted final score Final grade
        ==================== ===========
@@ -768,13 +769,13 @@ Answer to exercise 1
     #. ``if ((1 - 1) <= 0)`` -- valid
     #. ``if (name == "James")`` -- valid
 
-#.  The program will print out::
-        is greater
-        than 3.
+#.  The program will print out:
+        | is greater
+        | than 3.
 
     This happens because the last two print statements are not indented -- they are outside the ``if`` statement, which means that they will always be executed.
 
-#. ::
+#.
 
     #. We don't have to compare variables to boolean values and compare them to ``True`` explicitly.  This will be done implicitly if we just evaluate the variable in the condition of the ``if`` statement::
 

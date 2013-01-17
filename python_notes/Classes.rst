@@ -213,7 +213,7 @@ In the previous chapter we learned about decorators -- functions which are used 
 ``@classmethod``
 ----------------
 
-Just like we can define class *attributes*, which are shared between all instances of a class, we can define class *methods*.  We do this by using the ``@classmethod`` decorator to decorate an ordinary method::
+Just like we can define class *attributes*, which are shared between all instances of a class, we can define class *methods*.  We do this by using the ``@classmethod`` decorator to decorate an ordinary method.
 
 A class method still has its calling object as the first parameter, but by convention we rename this parameter from ``self`` to ``cls``.  If we call the class method from an instance, this parameter will contain the instance object, but if we call it from the class it will contain the class object.  By calling the parameter ``cls`` we remind ourselves that it is not guaranteed to have any *instance* attributes.
 
@@ -452,3 +452,9 @@ Note that ``other`` is not guaranteed to be another person object, and we haven'
 Sometimes it makes sense to exit with an error if the other object is not of the same type as our object, but sometimes we can compare two compatible objects even if they are not of the same type.  For example, it makes sense to compare ``1`` and ``2.5`` because they are both numbers, even though one is an integer and the other is a float.
 
 .. Note:: Python 2 also has a ``__cmp__`` method which was introduced to the language before the individual comparison methods (called *rich comparisons*) described above. It is used if the rich comparisons are not defined.  You should overload it in a way which is consistent with the rich comparison methods, otherwise you may encounter some very strange behaviour.
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------

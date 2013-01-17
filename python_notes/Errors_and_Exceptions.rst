@@ -85,7 +85,7 @@ If you misspell an identifier name, you may get a runtime error or a logical err
 A common source of variable name mix-ups and incorrect indentation is frequent copying and pasting of large blocks of code.  If you have many duplicate lines with minor differences, it's very easy to miss a necessary change when you are editing your pasted lines.  You should always try to factor out excessive duplication using functions and loops -- we will look at this in more detail later.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Find all the syntax errors in the code snippet above, and explain why they are errors.
 
@@ -255,7 +255,7 @@ The ``finally`` clause will be executed at the end of the *try-except* block no 
         print("It was really nice talking to you.  Goodbye!")
 
 Exercise 2
-^^^^^^^^^^
+----------
 
 #. Extend the program in exercise 7 of the loop control statements chapter to include exception handling.  Whenever the user enters input of the incorrect type, keep prompting the user for the same value until it is entered correctly.  Give the user sensible feedback.
 
@@ -264,7 +264,7 @@ Exercise 2
     def print_list_element(thelist, index):
         print(thelist[index])
 
-#. This function adds an element to a list inside a dict of lists.  Rewrite it to use a *try-except* statement which handles a possible ``KeyError`` if the list with the name provided doesn't exist in the dictionary yet, instead of checking beforehand whether it does.  Include ``else`` and ``finally`` clauses in your *try-except* block.
+#. This function adds an element to a list inside a dict of lists.  Rewrite it to use a *try-except* statement which handles a possible ``KeyError`` if the list with the name provided doesn't exist in the dictionary yet, instead of checking beforehand whether it does.  Include ``else`` and ``finally`` clauses in your *try-except* block::
 
     def add_to_list_in_dict(thedict, listname, element):
         if listname in thedict:
@@ -337,7 +337,7 @@ Something we may want to do is raise an exception that we have just intercepted 
         raise err
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Rewrite the program from the first question of exercise 2 so that it prints the text of Python's original exception inside the ``except`` clause instead of a custom message.
 
@@ -467,7 +467,7 @@ There's also a special ``exception`` method which is used for logging exceptions
 If we have a large project, we may want to set up a more complicated system for logging -- perhaps we want to format certain messages differently, log different messages to different files, or log to multiple locations at the same time.  The logging module also provides us with *logger* and *handler* objects for this purpose.  We can use multiple loggers to create our messages, customising each one independently.  Different handlers are associated with different logging locations.  We can connect up our loggers and handlers in any way we like -- one logger can use many handlers, and multiple loggers can use the same handler.
 
 Exercise 4
-^^^^^^^^^^
+----------
 
 #. Write logging configuration for a program which logs to a file called ``log.txt`` and discards all logs less important than ``INFO``.
 

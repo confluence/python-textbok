@@ -68,7 +68,7 @@ If we were to move that function call up, we would get an error::
 Because of this, it's a good idea to put all function definitions near the top of your program, so that they are executed before any of your other statements.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Create a function called ``func_a``, which prints a message.
 #. Call the function.
@@ -107,7 +107,7 @@ The advantage of this is that we don't have to write a lot of different ``print_
 This is why it is important for us to test our code thoroughly -- something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if it is incorrect.
 
 Exercise 2
-^^^^^^^^^^
+----------
 
 #. Create a function called ``hypotenuse``, which takes two numbers as parameters and prints the square root of the sum of their squares.
 #. Call this function with two floats.
@@ -182,7 +182,7 @@ Having multiple exit points scattered throughout your function can make your cod
 .. Note:: in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as *procedures* instead.
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Rewrite the ``hypotenuse`` function from exercise 2 so that it returns a value instead of printing it.  Add exception handling so that the function returns ``None`` if it is called with parameters of the wrong type.
 #. Call the function with two numbers, and print the result.
@@ -231,7 +231,7 @@ Any recursive function can be re-written in an *iterative* way which avoids recu
 This function uses *iteration* to count up to the desired value of *n*, updating variables to keep track of the calculation.  All the iteration happens within a single instance of the function.  Note that we assign new values to both variables at the same time, so that we can use both old values to calculate both new values on the right-hand side.
 
 Exercise 4
-^^^^^^^^^^
+----------
 
 #. Write a recursive function which calculates the factorial of a given number.  Use exception handling to raise an appropriate exception if the input parameter is not a positive integer, but allow the user to enter floats as long as they are whole numbers.
 
@@ -318,7 +318,7 @@ Remember that although we can execute a function *body* many times, a function *
         return pets
 
 Exercise 4
-^^^^^^^^^^
+----------
 
 #. Write a function called ``calculator``.  It should take the following parameters: two numbers, an arithmetic operation (which can be addition, subtraction, multiplication or division and is addition by default), and an output format (which can be integer or floating point, and is floating point by default).  Division should be floating point division.
 
@@ -416,7 +416,7 @@ If we use a ``*`` expression when you call a function, it must come after all th
 If a function takes only ``*args`` and ``**kwargs`` as its parameters, it can be called with *any set of parameters*.  One or both of ``args`` and ``kwargs`` can be empty, so the function will accept any combination of positional and keyword parameters, including no parameters at all.  This can be useful if we are writing a very generic function, like ``print_everything`` in the example above.
 
 Exercise 5
-^^^^^^^^^^
+----------
 
 #. Rewrite the calculator function from exercise 4 so that it takes any number of number parameters as well as the same optional keyword parameters.  The function should apply the operation to the first two numbers, and then apply it again to the result and the next number, and so on. For example, if the numbers are ``6``, ``4``, ``9`` and ``1`` and the operation is subtraction the function should return ``6 - 4 - 9 - 1``.  If only one number is entered, it should be returned unmodified.  If no numbers are entered, raise an exception.
 
@@ -480,7 +480,7 @@ Python has several built-in decorators which are commonly used to decorate class
 .. Note:: a decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
 
 Exercise 6
-^^^^^^^^^^
+----------
 
 #. Rewrite the ``log`` decorator example so that the decorator logs both the function name and parameters and the returned result.
 
@@ -495,12 +495,12 @@ We have also seen that we can store a function in a variable, just like any othe
 
 The answer is *yes*, but only for very simple functions.  We can use the ``lambda`` keyword to define anonymous, one-line functions *inline* in our code::
 
-    a = lambda: print("Hi!")
+    a = lambda: 3
 
     # is the same as
 
     def a():
-        print("Hi!")
+        return 3
 
 Lambdas can take parameters -- they are written between the ``lambda`` keyword and the colon, without brackets.  A lambda function may only contain a single expression, and the result of evaluating this expression is implicitly returned from the function (we don't use the ``return`` keyword)::
 
@@ -514,7 +514,7 @@ Lambdas can take parameters -- they are written between the ``lambda`` keyword a
 Lambdas should only be used for very simple functions. If your lambda starts looking too complicated to be readable, you should rather write it out in full as a normal, named function.
 
 Exercise 7
-^^^^^^^^^^
+----------
 
 #. Define the following functions as lambdas, and assign them to variables:
 
@@ -598,7 +598,7 @@ Answer to exercise 4
 
     ADD, SUB, MUL, DIV = range(4)
 
-    def calculator(a, b, operation=ADD, output_format=float)
+    def calculator(a, b, operation=ADD, output_format=float):
         if operation == ADD:
             result = a + b
         elif operation == SUB:
@@ -619,7 +619,7 @@ Answer to exercise 4
 
         return result
 
-#. You should get the following results::
+#. You should get the following results:
 
     #. ``5.0``
     #. ``5``
@@ -635,7 +635,7 @@ Answer to exercise 5
 
     ADD, SUB, MUL, DIV = range(4)
 
-    def calculator(*args, operation=ADD, output_format=float)
+    def calculator(operation=ADD, output_format=float, *args):
         if not args:
             raise ValueError("At least one number must be entered.")
 

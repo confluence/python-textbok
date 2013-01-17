@@ -201,7 +201,7 @@ Note that it is usually very bad practice to access global variables from inside
 .. Note:: There is also a ``nonlocal`` keyword in Python -- when you nest a function inside another function, it allows you to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If you use the ``global`` keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If you use the ``nonlocal`` keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Describe the scope of the variables ``a``, ``b``, ``c`` and ``d`` in this example::
 
@@ -326,8 +326,6 @@ We haven't encountered any mutable types yet, but we will use them extensively i
     # We can change the values of attributes on the object
     my_object.some_property = 42
 
-.. Todo:: Exercise 7
-
 More about input
 ----------------
 
@@ -405,9 +403,9 @@ Finally, we output the results::
     print("\nThanks for using the program.")
 
 Exercise 2
-^^^^^^^^^^
+----------
 
-#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that ``:math:`T_c = (5/9) * (T_f - 32)```, where ``:math:`T_c``` is the temperature in °C and ``:math:`T_f``` is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating point numbers.
+#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that **T_c = (5/9) x (T_f - 32)**, where **T_c** is the temperature in °C and **T_f** is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating point numbers.
 
 #. What could make this program crash? What would we need to do to handle this situation more gracefully?
 
@@ -535,11 +533,11 @@ This usually behaves in the way that you would expect: non-zero numbers are ``Tr
 .. Todo:: change you to we almost everywhere
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Convert ``"8.8"`` to a float.
 #. Convert ``8.8`` to an integer (with rounding).
-#. Convert ``"8.8`` to an integer (with rounding).
+#. Convert ``"8.8"`` to an integer (with rounding).
 #. Convert ``8.8`` to a string.
 #. Convert ``8`` to a string.
 #. Convert ``8`` to a float.
@@ -568,7 +566,7 @@ Answer to exercise 2
     T_c = (5/9) * (T_f - 32)
     print("%g°F = %g°C" % (T_f, T_c))
 
-.. Note:: The formatting symbol ``%g`` is used with floats, and instructs Python to pick a sensible human-readable way to display the float.
+   .. Note:: The formatting symbol ``%g`` is used with floats, and instructs Python to pick a sensible human-readable way to display the float.
 
 #. The program could crash if the user enters a value which cannot be converted to a floating-point number.  We would need to add some kind of error checking to make sure that this doesn't happen -- for example, by storing the string value and checking its contents.  If we find that the entered value is invalid, we can either print an error message and exit or keep prompting the user for input until valid input is entered.
 

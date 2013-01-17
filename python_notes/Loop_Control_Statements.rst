@@ -119,7 +119,7 @@ In many of the examples above, we are counting to a predetermined number, so it 
 Here we add up numbers from a list until the total reaches 100.  We don't know how many times we will have to execute the loop, because we don't know the values of the numbers.  Note that we might reach the end of the list of numbers before the total reaches 100 -- if we try to access an element beyond the end of the list we will get an error, so we should add a check to make sure that this doesn't happen.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Write a program which uses a ``while`` loop to sum the squares of integers (starting from ``1``) until the total exceeds 200.  Print the final total and the last number to be squared and added.
 
@@ -182,13 +182,13 @@ This brings us to a common ``for`` loop pitfall: modifying a list while you're i
 Sometimes you can avoid this by iterating over a *copy* of the list instead, but it won't help you in this case -- as you delete elements from the original list, it will shrink, so the indices from the unmodified list copy will soon exceed the length of the modified list and you will get an error.  In general, if you want to select a subset of elements from a list on the basis of some criterion, you should use a *list comprehension* instead. We will look at them at the end of this chapter.
 
 Exercise 2
-^^^^^^^^^^
+----------
 
 #. Write a program which sums the integers from 1 to 10 using a ``for`` loop (and prints the total at the end).
 
 #. Can you think of a way to do this without using a loop?
 
-#. Write a program which finds the factorial of a given number. E.g. 3 factorial, or *3!* is equal to *3 x 2 x 1*; *5!* is equal to *5 x 4 x 3 x 2 x 1*, etc.. Your program should only contain a single loop.
+#. Write a program which finds the factorial of a given number. E.g. 3 factorial, or **3!** is equal to **3 x 2 x 1**; **5!** is equal to **5 x 4 x 3 x 2 x 1**, etc.. Your program should only contain a single loop.
 
 #. Write a program which prompts the user for 10 floating point numbers and calculates their sum, product and average. Your program should only contain a single loop.
 
@@ -224,7 +224,7 @@ You may have noticed that we look up the name of the weekday once for every iter
 This doesn't make much difference when you are looking up a value in a short tuple, but it could make a big difference if it were an expensive, time-consuming calculation and you were iterating over hundreds or thousands of values.
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Write a program which uses a nested ``for`` loop to populate a three-dimensional list representing a calendar: the top-level list should contain a sub-list for each month, and each month should contain four weeks.  Each week should be an empty list.
 
@@ -309,7 +309,7 @@ There is also a built-in function called ``zip`` which allows us to combine mult
 The combined iterable will be the same length as the shortest of the component iterables -- if any of the component iterables are longer than that, their trailing elements will be discarded.
 
 Exercise 4
-^^^^^^^^^^
+----------
 
 #. Create a tuple of month names and a tuple of the number of days in each month (assume that February has 28 days). Using a single ``for`` loop, construct a dictionary which has the month names as keys and the corresponding day numbers as values.
 
@@ -376,7 +376,7 @@ If your generator expression is a parameter being passed to a function, like ``s
 .. Note:: dict and set comprehensions were introduced in Python 3.  In Python 2 you have to create a list or generator instead and convert it to a set or a dict yourself.
 
 Exercise 5
-^^^^^^^^^^
+----------
 
 #. Create a string which contains the first ten positive integers separated by commas and spaces. Remember that you can't join numbers -- you have to convert them to strings first.  Print the output string.
 
@@ -445,7 +445,7 @@ This trick can help us to make this particular loop use case look better, but it
         age = input("Please enter your age: ")
 
 Exercise 6
-^^^^^^^^^^
+----------
 
 #. Write a program which repeatedly prompts the user for an integer. If the integer is even, print the integer. If the integer is odd, don't print anything. Exit the program if the user enters the integer ``99``.
 
@@ -480,13 +480,13 @@ How can we improve on this?  We can separate the parts of these lines that diffe
 
     person = {}
 
-    for property in ["name", "surname", "age", "height", "weight"]:
-        person[property] = input("Please enter your %s: " % property)
+    for prop in ["name", "surname", "age", "height", "weight"]:
+        person[prop] = input("Please enter your %s: " % prop)
 
 Now there is no unnecessary duplication.  We can easily change the string that we use as a prompt, or add more code to execute for each property -- we will only have to edit the code in one place, not in five places.  To add another property, all we have to do is add another name to the list.
 
 Exercise 7
-^^^^^^^^^^
+----------
 
 #. Modify the example above to include type conversion of the properties: age should be an integer, height and weight should be floats, and name and surname should be strings.
 
@@ -742,5 +742,5 @@ Answer to exercise 7
         ("weight", float),
     ]
 
-    for property, p_type in properties:
-        person[property] = p_type(input("Please enter your %s: " % property))
+    for prop, p_type in properties:
+        person[prop] = p_type(input("Please enter your %s: " % prop))

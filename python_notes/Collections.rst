@@ -205,7 +205,7 @@ Arrays are less easy to use in many ways, but they also have some advantages: be
 Python has a built-in ``array`` type.  It's not quite as restricting as an array in C or Java -- you have to specify a type for the contents of the array, and you can only use it to store numeric values, but you can resize it dynamically, like a list.  You will probably never need to use it.
 
 Exercise 1
-^^^^^^^^^^
+----------
 
 #. Create a list ``a`` which contains the first three odd positive integers and a list ``b`` which contains the first three even positive integers.
 #. Create a new list ``c`` which combines the numbers from both lists (order is unimportant).
@@ -274,7 +274,7 @@ To let Python know that we want to create a tuple, we have to add a trailing com
     print((3,))
 
 Exercise 2
-^^^^^^^^^^
+----------
 
 #. Create a tuple ``a`` which contains the first four positive integers and a tuple ``b`` which contains the next four positive integers.
 #. Create a tuple ``c`` which combines all the numbers from ``a`` and ``b`` in any order.
@@ -326,7 +326,7 @@ How do we make an empty set?  We have to use the ``set`` function.  Dictionaries
 You can use the ``list``, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
 
 Exercise 3
-^^^^^^^^^^
+----------
 
 #. Create a set ``a`` which contains the first four positive integers and a set ``b`` which contains the first four odd positive integers.
 #. Create a set ``c`` which combines all the numbers which are in ``a`` or ``b`` (or both).
@@ -353,7 +353,7 @@ Ranges
 We create a range by calling the ``range`` function.  As you can see, if we pass a single parameter to the ``range`` function, it is used as the upper bound.  If we use two parameters, the first is the lower bound and the second is the upper bound.  If we use three, the third parameter is the step size.  The default lower bound is zero, and the default step size is one.  Note that the range *includes* the lower bound and *excludes* the upper bound.
 
 Exercise 4
-^^^^^^^^^^
+----------
 
 #. Create a range ``a`` which starts from ``0`` and goes on for 20 numbers.
 #. Create a range ``b`` which starts from ``3`` and ends on ``12``.
@@ -437,22 +437,22 @@ You should avoid using ``mykey in mydict.keys()`` to check for key membership, h
 .. Note:: in Python 2, ``keys``, ``values`` and ``items`` return list copies of these sequences, ``iterkeys``, ``itervalues`` and ``iteritems`` return iterator objects, and ``viewkeys``, ``viewvalues`` and ``viewitems`` return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above). In Python 2 you should *really* not use ``mykey in mydict.keys()`` to check for key membership -- if you do, you will be searching the entire list of keys sequentially, which is much slower than a direct dictionary lookup.
 
 Exercise 5
-^^^^^^^^^^
+----------
 
 #. Create a dict ``directory`` which stores telephone numbers (as string values), and populate it with these key-value pairs:
 
-==========  ================
-Name        Telephone number
-==========  ================
-Jane Doe    +27 555 5367
-John Smith  +27 555 6254
-Bob Stone   +27 555 5689
-==========  ================
+   ==========  ================
+   Name        Telephone number
+   ==========  ================
+   Jane Doe    +27 555 5367
+   John Smith  +27 555 6254
+   Bob Stone   +27 555 5689
+   ==========  ================
 
 #. Change Jane's number to *+27 555 1024*
 #. Add a new entry for a person called *Anna Cooper* with the phone number *+27 555 3237*
 #. Print Bob's number.
-#. Print Bob's number in such a way that ``None`` would be printed if Bob's name was not in the dictionary.
+#. Print Bob's number in such a way that ``None`` would be printed if Bob's name were not in the dictionary.
 #. Print all the keys. The format is unimportant, as long as they're all visible.
 #. Print all the values.
 
@@ -559,7 +559,7 @@ The opposite of *joining* is *splitting*.  We can split up a string into a list 
     print("cat, dog, fish".split(", ", 1))
 
 Exercise 6
-^^^^^^^^^^
+----------
 
 #. Convert a list which contains the numbers ``1``, ``1``, ``2``, ``3`` and ``3``, and convert it to a tuple ``a``.
 #. Convert ``a`` to a list ``b``. Print its length.
@@ -645,7 +645,7 @@ Why didn't this matter when we made the day list by multiplying the same empty s
 Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter -- for now, it is important for us to know that this method creates a *new* list of empty strings for each day, unlike the multiplication operator.
 
 Exercise 7
-^^^^^^^^^^
+----------
 
 #. Create a list ``a`` which contains three tuples. The first tuple should contain a single element, the second two elements and the third three elements.
 #. Print the second element of the second element of ``a``.
@@ -750,7 +750,7 @@ Answer to exercise 6
     print(len(c))
 
     d = list(c)
-    print len(d)
+    print(len(d))
 
     e = list(range(1, 11))
 
@@ -760,7 +760,7 @@ Answer to exercise 6
         "Bob Stone": "+27 555 5689",
     }
 
-    t = list(directory.items()
+    t = list(directory.items())
     v = list(directory.values())
     k = list(directory)
 
