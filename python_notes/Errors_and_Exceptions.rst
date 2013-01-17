@@ -466,6 +466,15 @@ There's also a special ``exception`` method which is used for logging exceptions
 
 If we have a large project, we may want to set up a more complicated system for logging -- perhaps we want to format certain messages differently, log different messages to different files, or log to multiple locations at the same time.  The logging module also provides us with *logger* and *handler* objects for this purpose.  We can use multiple loggers to create our messages, customising each one independently.  Different handlers are associated with different logging locations.  We can connect up our loggers and handlers in any way we like -- one logger can use many handlers, and multiple loggers can use the same handler.
 
+Exercise 4
+^^^^^^^^^^
+
+#. Write logging configuration for a program which logs to a file called ``log.txt`` and discards all logs less important than ``INFO``.
+
+#. Rewrite the second program from exercise 2 so that it uses this logging configuration instead of printing messages to the console (except for the first print statement, which is the purpose of the function).
+
+#. Do the same with the third program from exercise 2.
+
 Answers to exercises
 ====================
 
@@ -582,3 +591,33 @@ Answer to exercise 3
         except IndexError as ie:
             print("The list has no element at index %d." % index)
             raise ie
+
+Answer to exercise 4
+--------------------
+
+#. Here is an example of the logging configuration::
+
+    import logging
+    logging.basicConfig(filename='log.txt', level=logging.INFO)
+
+#. Here is an example program::
+
+    def print_list_element(thelist, index):
+        try:
+            print(thelist[index])
+        except IndexError:
+            logging.error("The list has no element at index %d." % index)
+
+#. Here is an example program::
+
+    def add_to_list_in_dict(thedict, listname, element):
+        try:
+            l = thedict[listname]
+        except KeyError:
+            thedict[listname] = []
+            logging.info("Created %s." % listname)
+        else:
+            logging.info("%s already has %d elements." % (listname, len(l)))
+        finally:
+            thedict[listname].append(element)
+            logging.info("Added %s to %s." % (element, listname))
