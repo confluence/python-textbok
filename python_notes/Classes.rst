@@ -78,6 +78,20 @@ Note that the ``birthdate`` attribute is itself an object. The ``date`` class is
 
 Remember that defining a function doesn't make the function run.  Defining a class also doesn't make anything run -- it just tells Python about the class.  The class will not be defined until Python has executed the entirety of the definition, so you can be sure that you can reference any method from any other method on the same class, or even reference the class inside a method of the class.  By the time you call that method, the entire class will definitely be defined.
 
+Exercise 1
+----------
+
+#. Explain what the following variables refer to, and their scope:
+
+    #. ``Person``
+    #. ``person``
+    #. ``surname``
+    #. ``self``
+    #. ``age`` (the function name)
+    #. ``age`` (the variable used inside the function)
+    #. ``self.email``
+    #. ``person.email``
+
 Instance attributes
 ===================
 
@@ -88,6 +102,8 @@ In some languages you must provide a list of the object's attributes in the clas
     def age(self):
         if hasattr(self, "_age"):
             return self._age
+
+        today = datetime.date.today()
 
         age = today.year - self.birthdate.year
 
@@ -109,9 +125,14 @@ The ``__init__`` method will definitely be executed before anything else when we
 
 In the ``age`` example above we have to check if an ``_age`` attribute exists on the object before we try to use it, because if we haven't run the ``age`` method before it will not have been created yet. It would be much tidier if we called this method at least once from ``__init__``, to make sure that ``_age`` is created as soon as we create the object.
 
-Initialising all our attributes in ``__init__``, even if we just set them to empty values, makes our code less error-prone. It also makes it easier to read an understand -- we can see at a glance what attributes our object has.
+Initialising all our attributes in ``__init__``, even if we just set them to empty values, makes our code less error-prone. It also makes it easier to read and understand -- we can see at a glance what attributes our object has.
 
 An ``__init__`` method doesn't have to take any parameters (except ``self``) and it can be completely absent.
+
+Exercise 2
+----------
+
+#. Rewrite the ``Person`` class so that a person's age is calculated for the first time when a new person instance is created, and recalculated (when it is requested) if the day has changed since the last time that it was calculated.
 
 Class attributes
 ================
@@ -158,7 +179,7 @@ Class attributes can also sometimes be used to provide default attribute values:
         def mark_as_deceased(self):
             self.deceased = True
 
-When we set an attribute on an instance which has the same name as a class attribute, we are *overriding* the class attribute with an instance attribute, which will take precedence over it. If we create two ``Person`` objects and call the ``mark_as_deceased`` method on one of them, we will not affect the other one.  We should, however, be careful when a class attribute is of a mutable type -- because if we modify it in-place, we *will* affect all objects of that class at the same time. Remember that all instances share the same class attributes.
+When we set an attribute on an instance which has the same name as a class attribute, we are *overriding* the class attribute with an instance attribute, which will take precedence over it. If we create two ``Person`` objects and call the ``mark_as_deceased`` method on one of them, we will not affect the other one.  We should, however, be careful when a class attribute is of a mutable type -- because if we modify it in-place, we *will* affect all objects of that class at the same time. Remember that all instances share the same class attributes::
 
     class Person:
         pets = []
@@ -204,6 +225,20 @@ Note that method definitions are in the same scope as class attribute definition
             self.surname = surname
 
 Can we have class *methods*? Yes, we can.  In the next section we will see how to define them using a decorator.
+
+Exercise 3
+----------
+
+#. Explain the differences between the attributes ``name``, ``surname`` and ``profession``, and what values they can have in different instances of this class::
+
+    class Smith:
+        surname = "Smith"
+        profession = "smith"
+
+        def __init__(self, name, profession=None):
+            self.name = name
+            if profession is not None:
+                self.profession = profession
 
 Class decorators
 ================
@@ -345,6 +380,16 @@ There are also decorators which we can use to define a setter and a deleter for 
     print(jane.name)
     print(jane.surname)
 
+Exercise 4
+----------
+
+#. Create a class called ``Numbers``, which has a single class attribute called ``MULTIPLIER``, and constructor which takes the parameters ``x`` and ``y`` (these should all be numbers).
+
+    #. Write a method called ``add`` which returns the sum of the attributes ``x`` and ``y``.
+    #. Write a class method called ``multiply``, which takes a single number parameter ``a`` and returns the product of ``a`` and ``MULTIPLIER``.
+    #. Write a static method called ``subtract``, which takes two number parameters, ``b`` and ``c``, and returns ``b`` - ``c``.
+    #. Write a method called ``value`` which returns a tuple containing the values of ``x`` and ``y``. Make this method into a property, and write a setter and a deleter for manipulating the values of ``x`` and ``y``.
+
 Inspecting an object
 ====================
 
@@ -382,6 +427,16 @@ Here are some examples of special object properties:
 * ``__iter__``: a method which returns an iterator over the object -- we will find it on strings, lists and other iterables.  It is executed when we use the ``iter`` function on the object.
 * ``__len__``: a method which calculates the length of an object -- we will find it on sequences.  It is executed when we use the ``len`` function of an object.
 * ``__dict__``: a dictionary which contains all the custom attributes and methods which we define on an object, with their names as keys.  It can be useful if we want to iterate over all the properties in our class.
+
+Exercise 5
+----------
+
+#. Create an instance of the ``Person`` class from example 2.  Use the ``dir`` function on the instance.  Then use the ``dir`` function on the class.
+
+    #. What happens if you call the ``__str__`` method on the instance? Verify that you get the same result if you call the ``str`` function with the instance as a parameter.
+    #. What is the type of the instance?
+    #. What is the type of the class?
+    #. Write a function which prints out the names and values of all the custom attributes of any object that is passed in as a parameter.
 
 Overriding magic methods
 ========================
@@ -458,3 +513,109 @@ Answers to exercises
 
 Answer to exercise 1
 --------------------
+
+#.
+
+    #. ``Person`` is a class defined in the global scope. It is a global variable.
+    #. ``person`` is an instance of the ``Person`` class. It is also a global variable.
+    #. ``surname`` is a parameter passed into the ``__init__`` method -- it is a local variable in the scope if the ``__init__`` method.
+    #. ``self`` is a parameter passed into each instance method of the class -- it will be replaced by the instance object when the method is called on the object with the ``.`` operator.  It is a new local variable inside the scope of each of the methods -- it just always has the same value, and by convention it is always given the same name to reflect this.
+    #. ``age`` is a method of the ``Person`` class. It is a local variable in the scope of the class.
+    #. ``age`` (the variable used inside the function) is a local variable inside the scope of the ``age`` method.
+    #. ``self.email`` isn't really a separate variable. It's an example of how we can refer to attributes and methods of an object using a variable which refers to the object, the ``.`` operator and the name of the attribute or method. We use the ``self`` variable to refer to an object inside one of the object's own methods -- wherever the variable ``self`` is defined, we can use ``self.email``, ``self.age()``, etc..
+    #. ``person.email`` is another example of the same thing. In the global scope, our person instance is referred to by the variable name ``person``.  Wherever ``person`` is defined, we can use ``person.email``, ``person.age()``, etc..
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    import datetime
+
+    class Person:
+
+        def __init__(self, name, surname, birthdate, address, telephone, email):
+            self.name = name
+            self.surname = surname
+            self.birthdate = birthdate
+
+            self.address = address
+            self.telephone = telephone
+            self.email = email
+
+            # This isn't strictly necessary, but it clearly introduces these attributes
+            self._age = None
+            self._age_last_recalculated = None
+
+            self._recalculate_age()
+
+        def _recalculate_age(self):
+            today = datetime.date.today()
+            age = today.year - self.birthdate.year
+
+            if today < datetime.date(today.year, self.birthdate.month, self.birthdate.day):
+                age -= 1
+
+            self._age = age
+            self._age_last_recalculated = today
+
+        def age(self):
+            if (datetime.date.today() > self._age_last_recalculated):
+                self._recalculate_age()
+
+            return self._age
+
+Answer to exercise 3
+--------------------
+
+#. ``name`` is always an instance attribute which is set in the constructor, and each class instance can have a different name value.  ``surname`` is always a class attribute, and cannot be overridden in the constructor -- every instance will have a surname value of ``Smith``.  ``profession`` is a class attribute, but it can optionally be overridden by an instance attribute in the constructor.  Each instance will have a profession value of ``smith`` unless the optional ``surname`` parameter is passed into the constructor with a different value.
+
+Answer to exercise 4
+--------------------
+
+#. Here is an example program::
+
+    class Numbers:
+        MULTIPLIER = 3.5
+
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+        def add(self):
+            return self.x + self.y
+
+        @classmethod
+        def multiply(cls, a):
+            return cls.MULTIPLIER * a
+
+        @staticmethod
+        def subtract(b, c):
+            return b - c
+
+        @property
+        def value(self):
+            return (self.x, self.y)
+
+        @value.setter
+        def value(self, xy_tuple):
+            self.x, self.y = xy_tuple
+
+        @value.deleter
+        def value(self):
+            del self.x
+            del self.y
+
+Answer to exercise 5
+--------------------
+
+#.
+
+    #. You should see something like ``'<__main__.Person object at 0x7fcb233301d0>'``.
+    #. ``<class '__main__.Person'>`` -- ``__main__`` is Python's name for the program you are executing.
+    #. ``<class 'type'>`` -- any class has the type ``type``.
+    #. Here is an example program::
+
+            def print_object_attrs(any_object):
+                for k, v in any_object.__dict__.items():
+                    print("%s: %s" % (k, v))
