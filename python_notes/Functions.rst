@@ -2,6 +2,9 @@
 Functions
 *********
 
+Introduction
+============
+
 A function is a sequence of statements which performs some kind of task.  We use functions to eliminate code duplication -- instead of  writing all the statements at every place in our code where we want to perform the same task, we define them in one place and refer to them by the function name.  If we want to change how that task is performed, we will now mostly only need to change code in one place.
 
 Here is a definition of a simple function which takes no parameters and doesn't return any values::

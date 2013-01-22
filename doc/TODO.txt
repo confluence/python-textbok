@@ -6,8 +6,7 @@ OUTSTANDING CHAPTERS
 OUTSTANDING SECTIONS
 
 * how to use the interpreter; how to write files; how to install packages (basics)
-* lambdas (in functions)
-* iterator magic functions? In class chapter?
+* generators and yield, in the function chapter
 * with statement in the exceptions chapter
 
 GLOBAL SEARCH AND REPLACE
