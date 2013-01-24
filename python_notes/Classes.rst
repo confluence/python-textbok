@@ -129,6 +129,40 @@ Initialising all our attributes in ``__init__``, even if we just set them to emp
 
 An ``__init__`` method doesn't have to take any parameters (except ``self``) and it can be completely absent.
 
+``getattr``, ``setattr`` and ``hasattr``
+----------------------------------------
+
+What if we want to get or set the value of an attribute of an object without hard-coding its name?  We may sometimes want to loop over several attribute names and perform the same operation on all of them, as we do in this example which uses a dictionary::
+
+    for key in ["a", "b", "c"]:
+        print(mydict[key])
+
+How can we do something similar with an object?  We can't use the ``.`` operator, because it must be followed by the attribute name as a bare word.  If our attribute name is stored as a string value in a variable, we have to use the ``getattr`` function to retrieve the attribute value from an object::
+
+    for key in ["a", "b", "c"]:
+        print(getattr(myobject, key, None))
+
+Note that ``getattr`` is a built-in function, not a method on the object: it takes the object as its first parameter.  The second parameter is the name of the variable as a string, and the optional third parameter is the default value to be returned if the attribute does not exist.  If we do not specify a default value, ``getattr`` will raise an exception if the attribute does not exist.
+
+Similarly, ``setattr`` allows us to set the value of an attribute.  In this example, we copy data from a dictionary to an object::
+
+    for key in ["a", "b", "c"]:
+        setattr(myobject, key, mydict[key])
+
+The first parameter of ``setattr`` is the object, the second is the name of the function, and the third is the new value for the attribute.
+
+As we saw in the previous ``age`` function example, ``hasattr`` detects whether an attribute exists.
+
+There's nothing preventing us from using ``getattr`` on attributes even if the name can be hard-coded, but this is not recommended: it's an unnecessarily verbose and round-about way of accessing attributes::
+
+    getattr(myobject, "a")
+
+    # means the same thing as
+
+    myobject.a
+
+You should only use these functions if you have a good reason to do so.
+
 Exercise 2
 ----------
 
@@ -426,7 +460,7 @@ Here are some examples of special object properties:
 * ``__add__`` is a method which allows this object to be added to another object. There are equivalent methods for all the other arithmetic operators.  Not all objects support all arithemtic operations -- numbers have all of these methods defined, but other objects may only have a subset.
 * ``__iter__``: a method which returns an iterator over the object -- we will find it on strings, lists and other iterables.  It is executed when we use the ``iter`` function on the object.
 * ``__len__``: a method which calculates the length of an object -- we will find it on sequences.  It is executed when we use the ``len`` function of an object.
-* ``__dict__``: a dictionary which contains all the custom attributes and methods which we define on an object, with their names as keys.  It can be useful if we want to iterate over all the properties in our class.
+* ``__dict__``: a dictionary which contains all the instance attributes of an object, with their names as keys.  It can be useful if we want to iterate over all the attributes of an object. ``__dict__`` does not include any methods, class attributes or special default attributes like ``__class__``.
 
 Exercise 5
 ----------
@@ -507,6 +541,11 @@ Note that ``other`` is not guaranteed to be another person object, and we haven'
 Sometimes it makes sense to exit with an error if the other object is not of the same type as our object, but sometimes we can compare two compatible objects even if they are not of the same type.  For example, it makes sense to compare ``1`` and ``2.5`` because they are both numbers, even though one is an integer and the other is a float.
 
 .. Note:: Python 2 also has a ``__cmp__`` method which was introduced to the language before the individual comparison methods (called *rich comparisons*) described above. It is used if the rich comparisons are not defined.  You should overload it in a way which is consistent with the rich comparison methods, otherwise you may encounter some very strange behaviour.
+
+Exercise 6
+----------
+
+#. Write a class for creating completely generic objects: its ``__init__`` function should accept any number of keyword parameters, and set them on the object as attributes with the keys as names.  Write a ``__str__`` method for the class -- the string it returns should include the name of the class and the values of all the object's custom instance attributes.
 
 Answers to exercises
 ====================
@@ -619,3 +658,18 @@ Answer to exercise 5
             def print_object_attrs(any_object):
                 for k, v in any_object.__dict__.items():
                     print("%s: %s" % (k, v))
+
+Answer to exercise 6
+--------------------
+
+#. Here is an example program::
+
+    class AnyClass:
+        def __init__(self, **kwargs):
+            for k, v in kwargs.items():
+                setattr(self, k, v)
+
+        def __str__(self):
+            attrs = ["%s=%s" % (k, v) for (k, v) in self.__dict__.items()]
+            classname = self.__class__.__name__
+            return "%s: %s" % (classname, " ".join(attrs))
