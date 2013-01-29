@@ -201,6 +201,24 @@ The ``__init__`` method of the base class initialises all the instance variables
 
 In each of our overridden ``__init__`` methods we use those of the method's parameters which are specific to our class inside the method, and then pass the remaining parameters to the parent class's ``__init__`` method.  A common convention is to add the specific parameters for each successive subclass to the *beginning* of the parameter list, and define all the other parameters using ``*args`` and ``**kwargs`` -- then the subclass doesn't need to know the details about the parent class's parameters.  Because of this, if we add a new parameter to the superclass's ``__init__``, we will only need to add it to all the places where we create that class or one of its subclasses -- we won't also have to update all the child class definitions to include the new parameter.
 
+Exercise 2
+----------
+
+#. A very common use case for inheritance is the creation of a custom exception hierarchy.  Because we use the class of an exception to determine whether it should be caught by a particular ``except`` block, it is useful for us to define custom classes for exceptions which we want to raise in our code.  Using inheritance in our classes is useful because if an ``except`` block catches a particular exception class, it will also catch its child classes (because a child class *is* its parent class).  That means that we can efficiently write ``except`` blocks which handle groups of related exceptions, just by arranging them in a logical hierarchy.  Our exception classes should inherit from Python's built-in exception classes. They often won't need to contain any additional attributes or methods.
+
+   Write a simple program which loops over a list of user data (tuples containing a username, email and age) and adds each user to a directory if the user is at least 16 years old.  You do not need to store the age.  Write a simple exception hierarchy which defines a different exception for each of these error conditions:
+
+   #. the username is not unique
+   #. the age is not a positive integer
+   #. the user is under 16
+   #. the email address is not valid (a simple check for a username, the ``@`` symbol and a domain name is sufficient)
+
+   Raise these exceptions in your program where appropriate. Whenever an exception occurs, your program should move onto the next set of data in the list. Print a different error message for each different kind of exception.
+
+   Think about where else it would be a good idea to use a custom class, and what kind of collection type would be most appropriate for your directory.
+
+   You can consider an email address to be valid if it contains one ``@`` symbol and has a non-empty username and domain name -- you don't need to check for valid characters.  You can assume that the age is already an integer value.
+
 More about inheritance
 ======================
 
@@ -285,7 +303,8 @@ If an object inherits from ``2DShape``, it will gain that class's default ``area
         def area(self):
             return self.width ** 2
 
-.. Todo:: add an exercise for creating an exception hierarchy
+Exercise 3
+----------
 
 Avoiding inheritance
 ====================
@@ -436,3 +455,65 @@ Answer to exercise 1
 
     for song in album.tracks:
         playlist.add_song(song)
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    # Exceptions
+
+    class DuplicateUsernameError(Exception):
+        pass
+
+    class InvalidAgeError(Exception):
+        pass
+
+    class UnderageError(Exception):
+        pass
+
+    class InvalidEmailError(Exception):
+        pass
+
+    # A class for a user's data
+
+    class User:
+        def __init__(self, username, email):
+            self.username = username
+            self.email = email
+
+    example_list = [
+        ("jane", "jane@example.com", 21),
+        ("bob", "bob@example", 19),
+        ("jane", "jane2@example.com", 25),
+        ("steve", "steve@somewhere", 15),
+        ("joe", "joe", 23),
+        ("anna", "anna@example.com", -3),
+    ]
+
+    directory = {}
+
+    for username, email, age in example_list:
+        try:
+            if username in directory:
+                raise DuplicateUsernameError()
+            if age < 0:
+                raise InvalidAgeError()
+            if age < 16:
+                raise UnderageError()
+
+            email_parts = email.split('@')
+            if len(email_parts) != 2 or not email_parts[0] or not email_parts[1]:
+                raise InvalidEmailError()
+
+        except DuplicateUsernameError:
+            print("Username '%s' is in use." % username)
+        except InvalidAgeError:
+            print("Invalid age: %d" % age)
+        except UnderageError:
+            print("User %s is underage." % username)
+        except InvalidEmailError:
+            print("'%s' is not a valid email address." % email)
+
+        else:
+            directory[username] = User(username, email)
