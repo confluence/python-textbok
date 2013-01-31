@@ -306,6 +306,10 @@ If an object inherits from ``2DShape``, it will gain that class's default ``area
 Exercise 3
 ----------
 
+#. Write an "abstract" class, ``Box``, and use it to define some methods which any box object should have: ``add``, for adding any number of items to the box, ``empty``, for taking all the items out of the box and returning them as a list, and ``count``, for counting the items which are currently in the box.  Write a simple ``Item`` class which has a ``name`` attribute and a ``value`` attribute -- you can assume that all the items you will use will be ``Item`` objects.  Now write two subclasses of ``Box`` which use different underlying collections to store items: ``ListBox`` should use a list, and ``DictBox`` should use a dict.
+
+#. Write a function, ``repack_boxes``, which takes any number of boxes as parameters, gathers up all the items they contain, and redistributes them as evenly as possible over all the boxes.  Order is unimportant.  There are multiple ways of doing this.  Test your code with a ``ListBox`` with 20 items, a ``ListBox`` with 9 items and a ``DictBox`` with 5 items.  You should end up with two boxes with 11 items each, and one box with 12 items.
+
 Avoiding inheritance
 ====================
 
@@ -352,28 +356,12 @@ Sometimes we can replace inheritance with composition and achieve a similar resu
     jane.learner.enrol(a_postgrad_course)
     jane.teacher.assign_teaching(an_undergrad_course)
 
-Now instead of calling the ``enrol`` and ``assign_teaching`` methods on our person object directly, we *delegate* to the object's ``learner`` and ``teacher`` attributes.  We could also implement additional methods in the ``Person`` class which hide the delegation, and perhaps raise an error message if an optional attribute does not exist::
+Now instead of calling the ``enrol`` and ``assign_teaching`` methods on our person object directly, we *delegate* to the object's ``learner`` and ``teacher`` attributes.
 
-    class Person:
-        def __init__(self, name, surname, number, learner=None, teacher=None):
-            self.name = name
-            self.surname = surname
-            self.number = number
+Exercise 4
+----------
 
-            self.learner = learner
-            self.teacher = teacher
-
-        def enrol(self, course):
-            if not hasattr(self, "learner"):
-                raise NotImplementedError()
-
-            self.learner.enrol(course)
-
-        def assign_teaching(self, course):
-            if not hasattr(self, "teacher"):
-                raise NotImplementedError()
-
-            self.teacher.assign_teaching(course)
+#. Rewrite the ``Person`` class in the last example, implementing additional methods called ``enrol`` and ``assign_teaching`` which hide the delegation.  These methods should raise an appropriate error message if the delegation cannot be performed because the corresponding attribute has not been set.
 
 Answers to exercises
 ====================
@@ -517,3 +505,112 @@ Answer to exercise 2
 
         else:
             directory[username] = User(username, email)
+
+Answer to exercise 3
+--------------------
+
+#. Here is an example program::
+
+    class Box:
+        def add(self, *items):
+            raise NotImplementedError()
+
+        def empty(self):
+            raise NotImplementedError()
+
+        def count(self):
+            raise NotImplementedError()
+
+
+    class Item:
+        def __init__(self, name, value):
+            self.name = name
+            self.value = value
+
+
+    class ListBox(Box):
+        def __init__(self):
+            self._items = []
+
+        def add(self, *items):
+            self._items.extend(items)
+
+        def empty(self):
+            items = self._items
+            self._items = []
+            return items
+
+        def count(self):
+            return len(self._items)
+
+
+    class DictBox(Box):
+        def __init__(self):
+            self._items = {}
+
+        def add(self, *items):
+            self._items.update(dict((i.name, i) for i in items))
+
+        def empty(self):
+            items = list(self._items.values())
+            self._items = {}
+            return items
+
+        def count(self):
+            return len(self._items)
+
+#. Here is an example program::
+
+    def repack_boxes(*boxes):
+        items = []
+
+        for box in boxes:
+            items.extend(box.empty())
+
+        while items:
+            for box in boxes:
+                try:
+                    box.add(items.pop())
+                except IndexError:
+                    break
+
+    box1 = ListBox()
+    box1.add(Item(str(i), i) for i in range(20))
+
+    box2 = ListBox()
+    box2.add(Item(str(i), i) for i in range(9))
+
+    box1 = DictBox()
+    box1.add(Item(str(i), i) for i in range(5))
+
+    repack_boxes(box1, box2, box3)
+
+    print(box1.count())
+    print(box2.count())
+    print(box3.count())
+
+Answer to exercise 4
+--------------------
+
+#. Here is an example program::
+
+    class Person:
+        def __init__(self, name, surname, number, learner=None, teacher=None):
+            self.name = name
+            self.surname = surname
+            self.number = number
+
+            self.learner = learner
+            self.teacher = teacher
+
+        def enrol(self, course):
+            if not hasattr(self, "learner"):
+                raise NotImplementedError()
+
+            self.learner.enrol(course)
+
+        def assign_teaching(self, course):
+            if not hasattr(self, "teacher"):
+                raise NotImplementedError()
+
+            self.teacher.assign_teaching(course)
