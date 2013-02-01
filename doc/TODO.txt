@@ -18,3 +18,7 @@ GLOBAL SEARCH AND REPLACE
 EXERCISES
 
 * most of them
+
+ACTIVITIES
+
+* do we keep these?

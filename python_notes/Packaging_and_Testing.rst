@@ -211,8 +211,6 @@ A function without any selection or loop statements has only one path. Testing s
 
 We could construct a separate test case for every possible path, but this rapidly becomes impractical. Each *if* statement doubles the number of paths -- if our function had 10 *if* statements, we would need more than a thousand test cases, and if it had 20, we would need over a million!  A more viable alternative is the *statement coverage* strategy, which only requires us to pick enough test cases to ensure that each *statement* inside our function is executed at least once.
 
-.. Todo:: exercise
-
 Writing unit tests
 ------------------
 
@@ -324,6 +322,95 @@ Now we can build our package and run all our tests by passing the ``test`` param
 
 In previous versions of Python, we would have needed to define a test suite just to run all our tests at once, but in newer versions it is no longer necessary to define our own suites for simple test organisation.  We can now easily run all the tests, or a single module, class or method just by using ``unittest`` on the commandline or ``setup.py test``.  We may still find it useful to write custom suites for more complex tasks -- we may wish to group tests which are spread across multiple modules or classes, but which are all related to the same feature.
 
-.. Todo:: an example of how to actually run a custom suite?
+Exercise 1
+----------
 
-.. Todo:: exercises -- put testing example in here, but also ask for test code, obviously.
+In this exercise you will write a program which estimates the cost of a telephone call, and design and implement unit tests for the program.
+
+The phone company applies the following rules to a phone call to calculate the charge:
+
+* The minimum before-tax charge of 59.400 cents applies to all calls to any destination up to 50km away and 89.000 cents for any destination further than 50km away.
+* Calls are charged on a per-second basis at 0.759 cents per second (<= 50km) and 1.761 cents per second (> 50km)
+* Off-peak seconds (from 19:00:00 to 06:59:59 the next day) are given a discount of 60% (<= 50km) and 50% (> 50km) off the above rate
+* If the type of call was share-call AND the destination is more than 50km away, the cost to the user will be 50% (minimum charge still applies). However, share-calls over shorter distances are not discounted.
+* Finally, VAT of 14% is added to give the final cost.
+
+Your program should ask for the following input:
+
+* The starting time of the call (to be split up into hours, minutes and seconds)
+* The duration of the call (to be split up into hours, minutes and seconds)
+* Whether the duration was more than 50km away
+* Whether the call was share-call
+
+Hint: you can prompt the user to input hours, minutes and seconds at once by asking for a format like *HH:MM:SS* and splitting the resulting string by the delimiter.  For simplicity, you may assume that the user will enter valid input, and that no call will exceed 23 hours, 59 minutes and 59 seconds.
+
+.. Todo: make this simpler? Go back to calls of max 1 hour?
+
+Your program should output the following information:
+
+* The basic cost
+* The off-peak discount
+* The share-call discount
+* The net cost
+* The VAT
+* The total cost
+
+#. *Before* you write the program, identify the equivalence classes and boundaries that you will need to use in equivalence testing and boundary analysis when writing black-box tests for your program. This may help you to design the program itself, and not just the tests!
+
+#. Write the program.  Remember that you will need to write unit tests for this program, and design it accordingly -- the calculation that you need to test should be placed in some kind of unit, like a function, which can be imported from outside of the program and used independently of the rest of the code (like the user input)!
+
+#. Make a list of test cases that you would need to write to perform a glass-box test of your program, ensuring that you have *statement coverage* -- that is, that each statement in the program is executed at least once.
+
+#. Now implement the black-box and grey-box tests which you have designed by writing a unit test module for your program. Run all the tests, and make sure that they pass!
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. ????
+
+#. Here is an example program::
+
+    from datetime import datetime, time, timedelta
+
+    # The first value in each tuple is for distances <= 50km
+    # The second value is for distances > 50km
+    MIN_CHARGE = (59.400, 89.000)
+    CHARGE_PER_SEC = (0.759, 1.761)
+    OFFPEAK_DISCOUNT = (0.6, 0.5)
+    SHARECALL_DISCOUNT = (1.0, 0.5)
+
+    NEAR, FAR = 0, 1
+
+    OFF_PEAK_START = datetime.time(19, 0, 0)
+    OFF_PEAK_END = datetime.time(7, 0, 0)
+    OFF_PEAK_DURATION = datetime.timedelta(hours=12)
+
+    VAT_RATE = 0.14
+
+    def price_estimate(start, duration, destination, share_call):
+        # peak vs off-peak seconds
+        if OFF_PEAK_END <= start <= OFF_PEAK_START:
+
+        if start < OFF_PEAK_END or start >= OFF_PEAK_START
+
+
+    if __name__ = "__main__":
+        start_str = input("Please enter the starting time of the call (HH:MM:SS): ")
+        start = datetime.strptime(start_str, "%H:%M:%S").time()
+
+        duration_str = input("Please enter the duration of the call (HH:MM:SS): ")
+        d_h, d_m, d_s = [int(p) for p in duration_str.split(":")]
+        duration = datetime.timedelta(hours=d_h, minutes=d_m, seconds=d_s)
+
+        # We set the destination to an index value we can use with the tuple constants
+        destination = FAR if input("Was the destination more than 50km away? (Y/N): ").lower() == 'y' else NEAR
+
+        share_call = True if input("Was the call a share-call? (Y/N): ").lower() == 'y' else False
+
+#. ????
+
+#. Here is an example program::
+
