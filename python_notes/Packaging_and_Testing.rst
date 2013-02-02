@@ -331,20 +331,18 @@ The phone company applies the following rules to a phone call to calculate the c
 
 * The minimum before-tax charge of 59.400 cents applies to all calls to any destination up to 50km away and 89.000 cents for any destination further than 50km away.
 * Calls are charged on a per-second basis at 0.759 cents per second (<= 50km) and 1.761 cents per second (> 50km)
-* Off-peak seconds (from 19:00:00 to 06:59:59 the next day) are given a discount of 60% (<= 50km) and 50% (> 50km) off the above rate
-* If the type of call was share-call AND the destination is more than 50km away, the cost to the user will be 50% (minimum charge still applies). However, share-calls over shorter distances are not discounted.
+* Off-peak seconds (from 19:00:00 to 06:59:59 the next day) are given a discount of 40% off (<= 50km) and 50% off (> 50km) off the above rate
+* If the type of call was share-call AND the destination is more than 50km away, there is a discount of 50% off after any off-peak discount (minimum charge still applies). However, share-calls over shorter distances are not discounted.
 * Finally, VAT of 14% is added to give the final cost.
 
 Your program should ask for the following input:
 
 * The starting time of the call (to be split up into hours, minutes and seconds)
-* The duration of the call (to be split up into hours, minutes and seconds)
+* The duration of the call (to be split up into minutes and seconds)
 * Whether the duration was more than 50km away
 * Whether the call was share-call
 
-Hint: you can prompt the user to input hours, minutes and seconds at once by asking for a format like *HH:MM:SS* and splitting the resulting string by the delimiter.  For simplicity, you may assume that the user will enter valid input, and that no call will exceed 23 hours, 59 minutes and 59 seconds.
-
-.. Todo: make this simpler? Go back to calls of max 1 hour?
+Hint: you can prompt the user to input hours, minutes and seconds at once by asking for a format like *HH:MM:SS* and splitting the resulting string by the delimiter.  You may assume that the user will enter valid input, and that no call will exceed 59 minutes and 59 seconds.
 
 Your program should output the following information:
 
@@ -379,36 +377,78 @@ Answer to exercise 1
     # The second value is for distances > 50km
     MIN_CHARGE = (59.400, 89.000)
     CHARGE_PER_SEC = (0.759, 1.761)
-    OFFPEAK_DISCOUNT = (0.6, 0.5)
-    SHARECALL_DISCOUNT = (1.0, 0.5)
+    OFFPEAK_DISCOUNT = (0.4, 0.5)
+    SHARECALL_DISCOUNT = (0.0, 0.5)
 
     NEAR, FAR = 0, 1
 
     OFF_PEAK_START = datetime.time(19, 0, 0)
+    HOUR_BEFORE_OFF_PEAK_START = datetime.time(18, 0, 0)
     OFF_PEAK_END = datetime.time(7, 0, 0)
-    OFF_PEAK_DURATION = datetime.timedelta(hours=12)
+    HOUR_BEFORE_OFF_PEAK_END = datetime.time(6, 0, 0)
 
     VAT_RATE = 0.14
 
     def price_estimate(start, duration, destination, share_call):
-        # peak vs off-peak seconds
-        if OFF_PEAK_END <= start <= OFF_PEAK_START:
+        peak_seconds = 0
+        off_peak_seconds = 0
 
-        if start < OFF_PEAK_END or start >= OFF_PEAK_START
+        if start >= OFF_PEAK_END and start <= HOUR_BEFORE_OFF_PEAK_START:
+            # whole call fits in peak time
+            peak_seconds = duration
+        elif start >= OFF_PEAK_START or start.hour <= HOUR_BEFORE_OFF_PEAK_END:
+            # whole call fits in off-peak time
+            off_peak_seconds = duration
+        else:
+            # call starts within hour of peak/off-peak boundary
+            secs_left_in_hour = 3600 - start.minute * 60 + start.second
 
+            if start < OFF_PEAK_END:
+                # call starts in off-peak time
+                if duration > secs_left_in_hour:
+                    peak_seconds = duration - secs_left_in_hour
+                off_peak_seconds = duration - peak_seconds
+            else:
+                # call starts in peak time
+                if duration > secs_left_in_hour:
+                    off_peak_seconds = duration - secs_left_in_hour
+                peak_seconds = duration - off_peak_seconds
+
+        basic = CHARGE_PER_SEC[destination] * duration
+        offpeak_discount = OFFPEAK_DISCOUNT[destination] * off_peak_seconds
+        if share_call:
+            share_call_discount =  SHARECALL_DISCOUNT[destination] * (basic - offpeak_discount)
+        else:
+            share_call_discount = 0
+        net = basic - offpeak_discount - share_call_discount
+
+        if net < MIN_CHARGE[destination]:
+            net = MIN_CHARGE[destination]
+
+        vat = VAT_RATE * net
+        total = net + vat
+
+        return basic, offpeak_discount, share_call_discount, net, vat, total
 
     if __name__ = "__main__":
         start_str = input("Please enter the starting time of the call (HH:MM:SS): ")
         start = datetime.strptime(start_str, "%H:%M:%S").time()
 
-        duration_str = input("Please enter the duration of the call (HH:MM:SS): ")
-        d_h, d_m, d_s = [int(p) for p in duration_str.split(":")]
-        duration = datetime.timedelta(hours=d_h, minutes=d_m, seconds=d_s)
+        duration_str = input("Please enter the duration of the call (MM:SS): ")
+        d_m, d_s = [int(p) for p in duration_str.split(":")]
+        duration = datetime.timedelta(minutes=d_m, seconds=d_s).total_seconds()
 
         # We set the destination to an index value we can use with the tuple constants
         destination = FAR if input("Was the destination more than 50km away? (Y/N): ").lower() == 'y' else NEAR
 
         share_call = True if input("Was the call a share-call? (Y/N): ").lower() == 'y' else False
+
+        results = price_estimate(start, duration, destination, share_call)
+
+        print("""Basic cost: %g
+        Off-peak discount: %g
+        Share-call
+        """ % results)
 
 #. ????
 
