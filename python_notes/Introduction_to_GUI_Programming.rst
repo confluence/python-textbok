@@ -269,4 +269,110 @@ Once we have updated the total, we need to update the text displayed by the labe
 
 Finally, once we have used the number the user entered, we clear it from the entry field using the entry widget's delete method by deleting all the characters from the first index (zero) to the end (``END`` is a constant defined by ``tkinter``).  We should also clear our internal value for the last number to be entered -- fortunately, our deletion triggers the validation method, which already resets this number to zero if the entry is cleared.
 
-.. Todo:: exercise: explain why we had to use lambdas here and not just pass in self.update("foo") to each button.  Maybe another exercise to write out the function wrappers in full?  Changing the layout?
+Exercise 1
+----------
+
+#. Explain why we needed to use lambdas to wrap the function calls in the last example. Rewrite the button definitions to replace the lambdas with functions which have been written out in full.
+
+#. Create a GUI for the guessing game from exercise 3 in the previous chapter.
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. The lambdas are necessary because we need to pass *functions* into the button constructors, which the button objects will be able to call later. If we used the bare function calls, we would be calling the functions and passing their return values (in this case, ``None``) into the constructors.  Here is an example of how we can rewrite this code fragment with full function definitions::
+
+    def update_add():
+        self.update("add")
+
+    def update_subtract():
+        self.update("subtract")
+
+    def update_reset():
+        self.update("reset")
+
+    self.add_button = Button(master, text="+", command=update_add)
+    self.subtract_button = Button(master, text="-", command=update_subtract)
+    self.reset_button = Button(master, text="Reset", command=update_reset)
+
+#. Here is an example program::
+
+    import random
+    from tkinter import Tk, Label, Button, Entry, StringVar, DISABLED, NORMAL, END, W, E
+
+    class GuessingGame:
+        def __init__(self, master):
+            self.master = master
+            master.title("Guessing Game")
+
+            self.secret_number = random.randint(1, 100)
+            self.guess = None
+            self.num_guesses = 0
+
+            self.message = "Guess a number from 1 to 100"
+            self.label_text = StringVar()
+            self.label_text.set(self.message)
+            self.label = Label(master, textvariable=self.label_text)
+
+            vcmd = master.register(self.validate) # we have to wrap the command
+            self.entry = Entry(master, validate="key", validatecommand=(vcmd, '%P'))
+
+            self.guess_button = Button(master, text="Guess", command=self.guess_number)
+            self.reset_button = Button(master, text="Play again", command=self.reset, state=DISABLED)
+
+            self.label.grid(row=0, column=0, columnspan=2, sticky=W+E)
+            self.entry.grid(row=1, column=0, columnspan=2, sticky=W+E)
+            self.guess_button.grid(row=2, column=0)
+            self.reset_button.grid(row=2, column=1)
+
+        def validate(self, new_text):
+            if not new_text: # the field is being cleared
+                self.guess = None
+                return True
+
+            try:
+                guess = int(new_text)
+                if 1 <= guess <= 100:
+                    self.guess = guess
+                    return True
+                else:
+                    return False
+            except ValueError:
+                return False
+
+        def guess_number(self):
+            self.num_guesses += 1
+
+            if self.guess is None:
+                self.message = "Guess a number from 1 to 100"
+
+            elif self.guess == self.secret_number:
+                suffix = '' if self.num_guesses == 1 else 'es'
+                self.message = "Congratulations! You guessed the number after %d guess%s." % (self.num_guesses, suffix)
+                self.guess_button.configure(state=DISABLED)
+                self.reset_button.configure(state=NORMAL)
+
+            elif self.guess < self.secret_number:
+                self.message = "Too low! Guess again!"
+            else:
+                self.message = "Too high! Guess again!"
+
+            self.label_text.set(self.message)
+
+        def reset(self):
+            self.entry.delete(0, END)
+            self.secret_number = random.randint(1, 100)
+            self.guess = 0
+            self.num_guesses = 0
+
+            self.message = "Guess a number from 1 to 100"
+            self.label_text.set(self.message)
+
+            self.guess_button.configure(state=NORMAL)
+            self.reset_button.configure(state=DISABLED)
+
+    root = Tk()
+    my_gui = GuessingGame(root)
+    root.mainloop()
