@@ -12,7 +12,7 @@ The ``datetime`` module provides us with objects which we can use to store infor
 * ``datetime.date`` is used to create dates which are not associated with a time.
 * ``datetime.time`` is used for times which are independent of a date.
 * ``datetime.datetime`` is used for objects which have both a date and a time.
-* ``datetime.timedelta`` objects store *differences* between dates, times or datetimes -- if we subtract one datetime from another, the result will be a timedelta.
+* ``datetime.timedelta`` objects store *differences* between dates or datetimes -- if we subtract one datetime from another, the result will be a timedelta.
 * ``datetime.timezone`` objects represent time zone adjustments as offsets from UTC.  This class is a subclass of ``datetime.tzinfo``, which is not meant to be used directly.
 
 We can query these objects for a particular component (like the year, month, hour or minute), perform arithmetic on them, and extract printable string versions from them if we need to display them.  Here are a few examples::
@@ -28,6 +28,8 @@ We can query these objects for a particular component (like the year, month, hou
 
     print(now.weekday())
 
+    print(now.strftime("%a, %d %B %Y"))
+
     long_ago = datetime.datetime(1999, 3, 14, 12, 30, 58)
 
     print(long_ago) # remember that this calls str automatically
@@ -37,7 +39,10 @@ We can query these objects for a particular component (like the year, month, hou
     print(type(difference))
     print(difference) # remember that this calls str automatically
 
-.. Todo:: a simple exercise? Something that involves an absolute difference between datetimes, not like age.
+Exercise 1
+----------
+
+#. Print ten dates, each two a week apart, starting from today, in the form *YYYY-MM-DD*.
 
 Mathematical functions: ``math``
 ================================
@@ -72,6 +77,11 @@ The ``math`` module is a collection of mathematical functions.  They can be used
     math.radians(90)
 
 If you need mathematical functions to use on complex numbers, you should use the ``cmath`` module instead.
+
+Exercise 2
+----------
+
+#. Write an object which represents a sphere of a given radius. Write a method which calculates the sphere's volume, and one which calculates its surface area.
 
 Pseudo-random numbers: ``random``
 =================================
@@ -118,7 +128,10 @@ When we load the ``random`` module we can *seed* it before we start generating v
     random.random()
     random.random()
 
-.. Todo:: exercise -- guessing game from old loops chapter
+Exercise 3
+----------
+
+#. Write a program which randomly picks an integer from 1 to 100.  Your program should prompt the user for guesses -- if the user guesses incorrectly, it should print whether the guess is too high or too low. If the user guesses correctly, the program should print how many guesses the user took to guess the right answer. You can assume that the user will enter valid input.
 
 Matching string patterns: ``re``
 ================================
@@ -321,7 +334,12 @@ Here are a few examples::
 
 .. Note:: ``re`` functions only have a single keyword parameter for flags, but we can combine multiple flags into one using the ``|`` operator (bitwise *or*) -- this is because the values of these constants are actually integer powers of two.
 
-.. Todo:: exercise -- write a function which takes a string parameter and returns True if the string is a valid Python variable name or False if it isn't.  Another exercise: swap two things around in a string (use capturing)
+Exercise 4
+----------
+
+#. Write a function which takes a string parameter and returns ``True`` if the string is a valid Python variable name or ``False`` if it isn't.  You don't have to check whether the string is a reserved keyword in Python -- just whether it is otherwise syntactically valid.  Test it using all the examples of valid and invalid variable names described in the first chapter.
+
+#. Write a function which takes a string which contains two words separated by any amount and type of whitespace, and returns a string in which the words are swapped around and the whitespace is preserved.
 
 Parsing CSV files: ``csv``
 ==========================
@@ -353,7 +371,10 @@ Similarly, we can *write* to a CSV file using the ``writer`` class::
 
 We can use optional parameters to ``writer`` to specify the delimiter and quote character, and also whether to quote all fields or only fields with characters which need to be escaped.
 
-.. Todo:: some kind of exercise seems appropriate.
+Exercise 5
+----------
+
+#. Open a CSV file which contains three columns of numbers.  Write out the data to a new CSV file, swapping around the second and third columns and adding a fourth column which contains the sum of the first three.
 
 Writing scripts: ``sys`` and ``argparse``
 =========================================
@@ -434,4 +455,141 @@ Here is a simple example of a program which uses ``argparse`` to define two posi
 
 .. Note:: if we are using Linux or OSX, we can turn our scripts into *executable files*.  Then we can execute them directly instead of passing them as parameters to Python.  To make our script executable we must mark it as executable using a system tool (``chmod``).  We must also add a line to the beginning of the file to let the operating system know that it should use Python to execute it.  This is typically ``#!/usr/bin/env python``.
 
-.. Todo:: decided to ditch ``os``.  Should we add anything else here?
+Exercise 6
+----------
+
+#. Write a script which reorders the columns in a CSV file. It should take as parameters the path of the original CSV file, a string listing the indices of the columns in the order that they should appear, and optionally a path to the destination file (by default it should have the same name as the original file, but with a suffix).  The script should return an error if the list of indices cannot be parsed or if any of the indices are not valid (too low or too high).  You may allow indices to be negative or repeated.  You should include usage instructions.
+
+Answers to exercises
+====================
+
+Answer to exercise 1
+--------------------
+
+#. Here is an example program::
+
+    import datetime
+
+    today = datetime.datetime.today()
+
+    for w in range(10):
+        day = today + datetime.timedelta(weeks=w)
+        print(day.strftime("%Y-%m-%d"))
+
+Answer to exercise 2
+--------------------
+
+#. Here is an example program::
+
+    import math
+
+    class Sphere:
+        def __init__(self, radius):
+            self.radius = radius
+
+        def volume(self):
+            return (4/3) * math.pi * math.pow(self.radius, 3)
+
+        def surface_area(self):
+            return 4 * math.pi * self.radius ** 2
+
+Answer to exercise 3
+--------------------
+
+#. Here is an example program::
+
+    import random
+
+    secret_number = random.randint(1, 100)
+    guess = None
+    num_guesses = 0
+
+    while not guess == secret_number:
+        guess = int(input("Guess a number from 1 to 100: "))
+        num_guesses += 1
+
+        if guess == secret_number:
+            suffix = '' if num_guesses == 1 else 'es'
+            print("Congratulations! You guessed the number after %d guess%s." % (num_guesses, suffix))
+            break
+
+        if guess < secret_number:
+            print("Too low!")
+        else:
+            print("Too high!")
+
+Answer to exercise 4
+--------------------
+
+#. ::
+
+    import re
+
+    VALID_VARIABLE = re.compile('[a-zA-Z_][a-zA-Z0-9_]*')
+
+    def validate_variable_name(name):
+        return bool(VALID_VARIABLE.match(name))
+
+#. ::
+
+    import re
+
+    WORDS = re.compile('(\S+)(\s+)(\S+)')
+
+    def swap_words(s):
+        return WORDS.sub(r'\3\2\1', s)
+
+Answer to exercise 5
+--------------------
+
+#. Here is an example program::
+
+    import csv
+
+    with open("numbers.csv") as f_in:
+        with open("numbers_new.csv", "w") as f_out:
+            r = csv.reader(f_in)
+            w = csv.writer(f_out)
+            for row in r:
+                w.writerow([row[0], row[2], row[1], sum(float(c) for c in row)])
+
+.. Todo:: why does writerow echo a number to the console?
+
+Answer to exercise 6
+--------------------
+
+#. Here is an example program::
+
+    import sys
+    import argparse
+    import csv
+    import re
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input", help="the input CSV file")
+    parser.add_argument("order", help="the desired column order; comma-separated; starting from zero")
+    parser.add_argument("-o", "--output", help="the destination CSV file")
+
+    opts = parser.parse_args()
+
+    output_file = opts.output
+    if not output_file:
+        output_file = re.sub("\.csv", "_reordered.csv", opts.input, re.IGNORECASE)
+
+    try:
+        new_row_indices = [int(i) for i in opts.order.split(',')]
+    except ValueError:
+        sys.exit("Unable to parse column list.")
+
+    with open(opts.input) as f_in:
+        with open(output_file, "w") as f_out:
+            r = csv.reader(f_in)
+            w = csv.writer(f_out)
+            for row in r:
+                new_row = []
+                for i in new_row_indices:
+                    try:
+                        new_row.append(row[i])
+                    except IndexError:
+                        sys.exit("Invalid column: %d" % i)
+                w.writerow(new_row)
