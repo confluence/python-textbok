@@ -322,6 +322,27 @@ Now we can build our package and run all our tests by passing the ``test`` param
 
 In previous versions of Python, we would have needed to define a test suite just to run all our tests at once, but in newer versions it is no longer necessary to define our own suites for simple test organisation.  We can now easily run all the tests, or a single module, class or method just by using ``unittest`` on the commandline or ``setup.py test``.  We may still find it useful to write custom suites for more complex tasks -- we may wish to group tests which are spread across multiple modules or classes, but which are all related to the same feature.
 
+Checking for test coverage
+--------------------------
+
+How do we know if our test cases cover all the statements in our code?  There are many third-party unit testing libraries which include functionality for calculating coverage, but we can perform a very simple check by using ``unittest`` together with the built-in ``trace`` module.  We can modify our test module like this::
+
+    import trace, sys
+
+    # all our test code
+
+    if __name__ == "__main__":
+        t = trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix], count=1, trace=0)
+        t.runfunc(unittest.main)
+        r = t.results()
+        r.write_results(show_missing=True)
+
+The first line in the ``if`` block creates a ``Trace`` object which is going to trace the execution of our program -- across all the source files in which code is found. We use the ``ignoredirs`` parameter to ignore any code in Python's installed modules -- now we should only see results from our program file and our test file.  Setting the ``count`` parameter to ``1`` makes the ``Trace`` object count the number of times that each line is executed, and setting ``trace`` to ``0`` prevents it from printing out lines as they are executed.
+
+The second line specifies that we should run our test suite's main function.  The third line retrieves the results from the object -- the results are another kind of object, which is based on a dictionary.  This object has a convenient ``write_results`` method which we use in the fourth line to output a file of line counts for each of our source files. They will be written to the current directory by default, but we could also specify another directory with an optional parameter.  The ``show_missing`` parameter ensures that lines which were *never* executed are included in the files and clearly marked.
+
+We need to run the test file directly to make sure that the code inside the ``if`` block is executed.  Afterwards, we should find two files which end in ``.cover`` in the current directory -- one for our program file and one for our test file.  Each line should be annotated with the number of times that it was executed when we ran our test code.
+
 Exercise 1
 ----------
 
@@ -353,13 +374,11 @@ Your program should output the following information:
 * The VAT
 * The total cost
 
-#. *Before* you write the program, identify the equivalence classes and boundaries that you will need to use in equivalence testing and boundary analysis when writing black-box tests for your program. This may help you to design the program itself, and not just the tests!
+#. Before you write the program, identify the equivalence classes and boundaries that you will need to use in equivalence testing and boundary analysis when writing black-box tests. This may help you to design the program itself, and not just the tests!
 
 #. Write the program.  Remember that you will need to write unit tests for this program, and design it accordingly -- the calculation that you need to test should be placed in some kind of unit, like a function, which can be imported from outside of the program and used independently of the rest of the code (like the user input)!
 
-#. Make a list of test cases that you would need to write to perform a glass-box test of your program, ensuring that you have *statement coverage* -- that is, that each statement in the program is executed at least once.
-
-#. Now implement the black-box and grey-box tests which you have designed by writing a unit test module for your program. Run all the tests, and make sure that they pass!
+#. Now implement the black-box tests which you have designed by writing a unit test module for your program. Run all the tests, and make sure that they pass!  Then use the ``trace`` module to check how well your tests cover your function code.
 
 Answers to exercises
 ====================
@@ -367,11 +386,15 @@ Answers to exercises
 Answer to exercise 1
 --------------------
 
-#. ????
+#. Peak and off-peak times provide an obvious source of equivalence classes for the start and duration of the call.  A call could start during peak or off-peak hours, and it could end in peak or off-peak hours (because the maximum duration of a call is just under an hour, a call can cross the peak/off-peak boundary once, but not twice).  A call could also cross over the boundary between days, and this wrapping must be handled correctly.
+
+   A good set of boundaries for the start of the call would be: 00:00, 06:00, 07:00, 18:00 and 19:00.  A good set of boundaries for the duration of the call would be the minimum and maximum durations -- 00:00 and 59:59.  We don't need to test every combination of start time and duration -- the duration of the call is only really important if the call starts within an hour of the peak/off-peak switch.  We can test the remaining start times with a single duration.
+
+   The other input values entered by the user are boolean, so only a true value and a false value needs to be tested for each.  Again, we don't need to test each boolean option with every possible combination of the previous options -- one or two cases should be sufficient.
 
 #. Here is an example program::
 
-    from datetime import datetime, time, timedelta
+    import datetime
 
     # The first value in each tuple is for distances <= 50km
     # The second value is for distances > 50km
@@ -389,14 +412,21 @@ Answer to exercise 1
 
     VAT_RATE = 0.14
 
-    def price_estimate(start, duration, destination, share_call):
+    def price_estimate(start_str, duration_str, destination_str, share_call_str):
+        start = datetime.datetime.strptime(start_str, "%H:%M:%S").time()
+        d_m, d_s = [int(p) for p in duration_str.split(":")]
+        duration = datetime.timedelta(minutes=d_m, seconds=d_s).total_seconds()
+        # We set the destination to an index value we can use with the tuple constants
+        destination = FAR if destination_str.lower() == 'y' else NEAR
+        share_call = True if share_call_str.lower() == 'y' else False
+
         peak_seconds = 0
         off_peak_seconds = 0
 
         if start >= OFF_PEAK_END and start <= HOUR_BEFORE_OFF_PEAK_START:
             # whole call fits in peak time
             peak_seconds = duration
-        elif start >= OFF_PEAK_START or start.hour <= HOUR_BEFORE_OFF_PEAK_END:
+        elif start >= OFF_PEAK_START or start <= HOUR_BEFORE_OFF_PEAK_END:
             # whole call fits in off-peak time
             off_peak_seconds = duration
         else:
@@ -415,7 +445,7 @@ Answer to exercise 1
                 peak_seconds = duration - off_peak_seconds
 
         basic = CHARGE_PER_SEC[destination] * duration
-        offpeak_discount = OFFPEAK_DISCOUNT[destination] * off_peak_seconds
+        offpeak_discount = OFFPEAK_DISCOUNT[destination] * CHARGE_PER_SEC[destination] * off_peak_seconds
         if share_call:
             share_call_discount =  SHARECALL_DISCOUNT[destination] * (basic - offpeak_discount)
         else:
@@ -430,27 +460,151 @@ Answer to exercise 1
 
         return basic, offpeak_discount, share_call_discount, net, vat, total
 
-    if __name__ = "__main__":
+    if __name__ == "__main__":
         start_str = input("Please enter the starting time of the call (HH:MM:SS): ")
-        start = datetime.strptime(start_str, "%H:%M:%S").time()
-
         duration_str = input("Please enter the duration of the call (MM:SS): ")
-        d_m, d_s = [int(p) for p in duration_str.split(":")]
-        duration = datetime.timedelta(minutes=d_m, seconds=d_s).total_seconds()
+        destination_str = input("Was the destination more than 50km away? (Y/N): ")
+        share_call_str = input("Was the call a share-call? (Y/N): ")
 
-        # We set the destination to an index value we can use with the tuple constants
-        destination = FAR if input("Was the destination more than 50km away? (Y/N): ").lower() == 'y' else NEAR
-
-        share_call = True if input("Was the call a share-call? (Y/N): ").lower() == 'y' else False
-
-        results = price_estimate(start, duration, destination, share_call)
+        results = price_estimate(start_str, duration_str, destination_str, share_call_str)
 
         print("""Basic cost: %g
         Off-peak discount: %g
-        Share-call
+        Share-call discount: %g
+        Net cost: %g
+        VAT: %g
+        Total cost: %g
         """ % results)
 
-#. ????
 
-#. Here is an example program::
+#. Here is an example program, including a coverage test::
 
+    import unittest
+    import trace, sys
+
+    from estimate import price_estimate
+
+    class TestEstimate(unittest.TestCase):
+        def test_off_peak(self):
+            # all these cases should fall within off-peak hours and have the same result
+            test_cases = [
+                ("23:59:59", "10:00", "N", "N"),
+                ("00:00:00", "10:00", "N", "N"),
+                ("00:00:01", "10:00", "N", "N"),
+                ("05:59:59", "10:00", "N", "N"),
+                ("06:00:00", "10:00", "N", "N"),
+                ("06:00:01", "10:00", "N", "N"),
+                ("19:00:00", "10:00", "N", "N"),
+                ("19:00:01", "10:00", "N", "N"),
+            ]
+
+            for start, duration, far_away, share_call in test_cases:
+                basic, op_discount, sc_discount, net, vat, total = price_estimate(start, duration, far_away, share_call)
+                self.assertAlmostEqual(basic, 455.4)
+                self.assertAlmostEqual(op_discount, 182.16)
+                self.assertAlmostEqual(sc_discount, 0)
+                self.assertAlmostEqual(net, 273.24)
+                self.assertAlmostEqual(vat, 38.2536)
+                self.assertAlmostEqual(total, 311.4936)
+
+        def test_peak(self):
+            # all these cases should fall within peak hours and have the same result
+            test_cases = [
+                ("07:00:00", "10:00", "N", "N"),
+                ("07:00:01", "10:00", "N", "N"),
+                ("17:59:59", "10:00", "N", "N"),
+                ("18:00:00", "10:00", "N", "N"),
+                ("18:00:01", "10:00", "N", "N"),
+            ]
+
+            for start, duration, far_away, share_call in test_cases:
+                basic, op_discount, sc_discount, net, vat, total = price_estimate(start, duration, far_away, share_call)
+                self.assertAlmostEqual(basic, 455.4)
+                self.assertAlmostEqual(op_discount, 0)
+                self.assertAlmostEqual(sc_discount, 0)
+                self.assertAlmostEqual(net, 455.4)
+                self.assertAlmostEqual(vat, 63.756)
+                self.assertAlmostEqual(total, 519.156)
+
+        def test_peak_and_off_peak(self):
+            # these test cases cross the peak / off-peak boundary, and all have different results.
+            test_cases = [
+                ("06:59:59", "59:59", "N", "N"),
+                ("07:00:00", "59:59", "N", "N"),
+                ("07:00:01", "59:59", "N", "N"),
+
+                ("18:59:59", "59:59", "N", "N"),
+                ("19:00:00", "59:59", "N", "N"),
+                ("19:00:01", "59:59", "N", "N"),
+
+                ("06:30:00", "00:00", "N", "N"),
+                ("06:30:00", "00:01", "N", "N"),
+                ("06:30:00", "59:58", "N", "N"),
+                ("06:30:00", "59:59", "N", "N"),
+            ]
+
+            expected_results = [
+                (2731.641, 36.128400000000006, 0, 2695.5126, 377.371764, 3072.884364),
+                (2731.641, 0.0, 0, 2731.641, 382.42974, 3114.07074),
+                (2731.641, 0.0, 0, 2731.641, 382.42974, 3114.07074),
+
+                (2731.641, 1056.528, 0, 1675.113, 234.51582, 1909.62882),
+                (2731.641, 1092.6564, 0, 1638.9846, 229.457844, 1868.442444),
+                (2731.641, 1092.6564, 0, 1638.9846, 229.457844, 1868.442444),
+
+                (0.0, 0.0, 0, 59.4, 8.316, 67.716), # minimum charge
+                (0.759, 0.3036, 0, 59.4, 8.316, 67.716), # minimum charge
+                (2730.882, 546.48, 0, 2184.402, 305.81628, 2490.21828),
+                (2731.641, 546.48, 0, 2185.161, 305.92254, 2491.08354),
+            ]
+
+            for parameters, results in zip(test_cases, expected_results):
+                basic, op_discount, sc_discount, net, vat, total = price_estimate(*parameters)
+                exp_basic, exp_op_discount, exp_sc_discount, exp_net, exp_vat, exp_total = results
+                self.assertAlmostEqual(basic, exp_basic)
+                self.assertAlmostEqual(op_discount, exp_op_discount)
+                self.assertAlmostEqual(sc_discount, exp_sc_discount)
+                self.assertAlmostEqual(net, exp_net)
+                self.assertAlmostEqual(vat, exp_vat)
+                self.assertAlmostEqual(total, exp_total)
+
+        def test_far_destination_share_call(self):
+            # now we repeat some basic test cases with a far destination and/or share-call
+
+            test_cases = [
+                # off-peak
+                ("23:59:59", "10:00", "Y", "N"),
+                ("23:59:59", "10:00", "Y", "Y"),
+                ("23:59:59", "10:00", "N", "Y"),
+                # peak
+                ("07:00:00", "10:00", "Y", "N"),
+                ("07:00:00", "10:00", "Y", "Y"),
+                ("07:00:00", "10:00", "N", "Y"),
+            ]
+
+            expected_results = [
+                (1056.6, 528.3, 0, 528.3, 73.962, 602.262),
+                (1056.6, 528.3, 264.15, 264.15, 36.981, 301.131),
+                (455.4, 182.16, 0.0, 273.24, 38.2536, 311.4936),
+
+                (1056.6, 0.0, 0, 1056.6, 147.924, 1204.524),
+                (1056.6, 0.0, 528.3, 528.3, 73.962, 602.262),
+                (455.4, 0.0, 0.0, 455.4, 63.756, 519.156),
+            ]
+
+            for parameters, results in zip(test_cases, expected_results):
+                basic, op_discount, sc_discount, net, vat, total = price_estimate(*parameters)
+                exp_basic, exp_op_discount, exp_sc_discount, exp_net, exp_vat, exp_total = results
+                self.assertAlmostEqual(basic, exp_basic)
+                self.assertAlmostEqual(op_discount, exp_op_discount)
+                self.assertAlmostEqual(sc_discount, exp_sc_discount)
+                self.assertAlmostEqual(net, exp_net)
+                self.assertAlmostEqual(vat, exp_vat)
+                self.assertAlmostEqual(total, exp_total)
+
+    if __name__ == "__main__":
+        t = trace.Trace(ignoredirs=[sys.prefix, sys.exec_prefix], count=1, trace=0)
+        t.runfunc(unittest.main)
+
+        r = t.results()
+        r.write_results(show_missing=True)
