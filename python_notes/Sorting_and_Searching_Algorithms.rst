@@ -15,8 +15,13 @@ than others. Algorithm analysis is the study of this question.
 In this chapter we will analyze four algorithms, two for each of the
 following tasks:
 
-* sorting a list, and
+* ordering a list of values, and
 * finding the position of a value within a sorted list.
+
+Algorithm analysis should begin with a clear statement of the task to
+be performed. This allows us to both check that the algorithm is
+correct and ensure that the algorithms we are comparing perform the
+same task.
 
 Although there in general many ways that algorithms might be compared,
 we will focus our attention on the two that are of primary importance
@@ -37,9 +42,48 @@ to many data processing algorithms:
     introduction to computational complexity theory is outside the
     scope of these notes but we will mention some interesting results.
 
+.. Note::
+
+    The common sorting and searching algorithms are widely implemented
+    and already available for most programming languages. You will
+    seldom have to implement them yourself outside of the exercises in
+    these notes. Nevertheless, understanding these algorithms is still
+    important since you will likely be making use of them within your
+    own programs and their space and time complexity will thus affect
+    that of your own algorithms. You may also be required to select
+    which sorting or searching algorithm to use which will require a
+    good understanding of the characteristics of the algorithms
+    available.
+
 
 Sorting algorithms
 ==================
+
+Sorting a list of values is a common computational task that has been
+well studied. The classic description of the task is as follows:
+
+    Given a *list of values* and a function that *compares two
+    values*, order the values in the list from smallest to largest.
+
+The values might be integers, or strings or even other kinds of
+objects. We will examine two algorithms:
+
+* *Selection sort* (which relies on repeatedly *selecting* the next
+  smallest item), and
+* *Merge sort* (which relies on repeatedly *merging* sections of the
+  list that are already sorted)
+
+Other well-known algorithms for sorting lists are *Insertion sort*,
+*Bubble sort*, *Heap sort*, *Quicksort* and *Shell sort*.
+
+There are also a variety of algorithms which perform the sorting task
+for restricted kinds of values, for example:
+
+* *Counting sort* (relies on values all belonging to a small finite set)
+* *Bucket sort* (relies on being able to map each value to an element
+  of a small finite set)
+* *Radix sort* (relies on values being sequences of digits)
+
 
 Selection sort
 --------------
