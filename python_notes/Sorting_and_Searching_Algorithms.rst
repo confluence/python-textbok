@@ -16,9 +16,24 @@ than others. Algorithm analysis is the study of this question.
 Sorting algorithms
 ==================
 
-
 Selection sort
 --------------
+
+Here is the algorithm for selection sort:
+
+* Search the whole array for the smallest element. Swap that element
+  with the element in location 0.
+
+* Search the array from location 1 to the end for the smallest
+  element. Swap that element with the element in location 1.
+
+* Search the array from location 2 to the end for the smallest
+  element. Swap that element with the element in location 2.
+
+* Continue in this way for all the other locations in the array.
+
+To illustrate the principle behind selection sort, we use the
+following array as an example:
 
 .. blockdiag::
 
@@ -34,9 +49,46 @@ Selection sort
         A -> B -> C -> D -> E -> F;
     }
 
+Exercise 1
+----------
+
+Complete the following code that will perform a selection sort in
+Python. "..." denotes missing code that should be filled in::
+
+    def selection_sort(items):
+        """Sorts a list of items into ascending order using the
+           selection sort algoright.
+           """
+        for step in range(len(items)):
+            # Find the location of the smallest element in
+            # items[step:].
+            location_of_smallest = step
+            for location in range(step, len(items)):
+                # TODO: determine location of smallest
+                ...
+            # TODO: Exchange items[step] with items[location_of_smallest]
+            ...
+
 
 Merge sort
 ----------
+
+Here are the steps for Merge sort:
+
+* Each element in the array is a single partition. Merge adjacent
+  partitions to a new array, resulting in partitions of size
+  two. Assign the new array to the original.
+
+* Each pair of elements in the array is a single partition. Merge
+  adjacent partitions to another new array, resulting in partitions of
+  size four. Assign the new array to the original.
+
+* Each group of four elements in the original array is a single
+  partition. Merge adjacent partitions to another new array, resulting
+  in partitions of size eight. Assign the new array to the original.
+
+* Continue this process until the partition size is at least as large
+  as the whole array.
 
 
 
