@@ -58,7 +58,7 @@ According to some formal definitions the term *composition* implies that the two
 Here are four classes which show several examples of aggregation and composition::
 
     class Student:
-        def __init__(self, name, student_number)
+        def __init__(self, name, student_number):
             self.name = name
             self.student_number = student_number
             self.classes = []
@@ -74,8 +74,8 @@ Here are four classes which show several examples of aggregation and composition
             self.department_code = department_code
             self.courses = {}
 
-        def.add_course(self, description, course_code, credits):
-            self.courses[course_code] = Course(description, course_code, credits, department)
+        def add_course(self, description, course_code, credits):
+            self.courses[course_code] = Course(description, course_code, credits, self)
             return self.courses[course_code]
 
 
@@ -171,7 +171,7 @@ Here is a simple example of inheritance::
     class StaffMember(Person):
         PERMANENT, TEMPORARY = range(2)
 
-        def __init__(self, employment_type, *args, **kwargs)
+        def __init__(self, employment_type, *args, **kwargs):
             self.employment_type = employment_type
             super(StaffMember, self).__init__(*args, **kwargs)
 
@@ -188,7 +188,7 @@ Here is a simple example of inheritance::
     jane = Student(Student.POSTGRADUATE, "Jane", "Smith", "SMTJNX045")
     jane.enrol(a_postgrad_course)
 
-    bob = Lecturer(StaffMember.PERMANENT, "Bob". "Jones", "123456789")
+    bob = Lecturer(StaffMember.PERMANENT, "Bob", "Jones", "123456789")
     bob.assign_teaching(an_undergrad_course)
 
 Our base class is ``Person``, which represents any person associated with a university.  We create a subclass to represent students and one to represent staff members, and then a subclass of ``StaffMember`` for people who teach courses (as opposed to staff members who have administrative positions.)
@@ -262,8 +262,8 @@ If we use multiple inheritance, it is often a good idea for us to design our cla
 
 
     class Tutor(Person, LearnerMixin, TeacherMixin):
-        def __init__(self, *args, *kwargs):
-            super(Tutor, self).__init__(*args, *kwargs)
+        def __init__(self, *args, **kwargs):
+            super(Tutor, self).__init__(*args, **kwargs)
 
     jane = Tutor("Jane", "Smith", "SMTJNX045")
     jane.enrol(a_postgrad_course)
@@ -284,11 +284,11 @@ The abstract class is thus an *interface* definition -- some languages also have
 
 In Python we can't prevent anyone from instantiating a class, but we can create something similar to an abstract class by using ``NotImplementedError`` inside our method definitions.  For example, here are some "abstract" classes which can be used as templates for shapes::
 
-    class 2DShape:
+    class Shape2D:
         def area(self):
             raise NotImplementedError()
 
-    class 3DShape:
+    class Shape3D:
         def volume(self):
             raise NotImplementedError()
 
@@ -296,7 +296,7 @@ Any two-dimensional shape has an area, and any three-dimensional shape has a vol
 
 If an object inherits from ``2DShape``, it will gain that class's default ``area`` method -- but the default method raises an error which makes it clear to the user that a custom method must be defined in the child object::
 
-    class Square(2DShape):
+    class Square(Shape2D):
         def __init__(self, width):
             self.width = width
 

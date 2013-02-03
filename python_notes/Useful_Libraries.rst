@@ -108,7 +108,7 @@ In Python can we use the ``random`` module to generate pseudo-random numbers, an
     # a random integer from 1 to 10 (inclusive)
     random.randint(1, 10)
 
-When we load the ``random`` module we can *seed* it before we start generating values.  We can think of this as picking a place in the pseudo-random sequence where we want to start.  We normally want to start in a different place every time -- by default, the module is seeded with a value taken from the system clock.  If we want to reproduce the same random sequence multiple times -- for example, inside a unit test -- we need to pass the same integer or string as parameter to ``seed`` each time:
+When we load the ``random`` module we can *seed* it before we start generating values.  We can think of this as picking a place in the pseudo-random sequence where we want to start.  We normally want to start in a different place every time -- by default, the module is seeded with a value taken from the system clock.  If we want to reproduce the same random sequence multiple times -- for example, inside a unit test -- we need to pass the same integer or string as parameter to ``seed`` each time::
 
     # set a predictable seed
     random.seed(3)
@@ -386,15 +386,14 @@ Scripts vs libraries
 
 We can combine class and function definitions with statements that use them in the same file, but in a large project it is considered good practice to keep them separate: to define all our classes in *library* files, and import them into the main program.  If we do put both classes and main program in one file, we can ensure that the program is only executed when the file is run as a script and not if it is imported from another file -- we saw an example of this earlier::
 
-    def MyClass:
-        # (...)
+    class MyClass:
+        pass
 
-    def MyOtherClass:
-        # (...)
+    class MyOtherClass:
+        pass
 
     if __name__ == '__main__':
         my_object = MyClass()
-        # (...)
         # do more things
 
 If our file is written purely for use as a script, and will never be imported, including this conditional statement is considered unnecessary.
