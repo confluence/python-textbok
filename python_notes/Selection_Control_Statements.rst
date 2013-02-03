@@ -7,7 +7,7 @@ Introduction
 
 In the last chapter, you were introduced to the concept of flow of control: the sequence of statements that the computer executes. In procedurally written code, the computer usually executes instructions in the order that they appear.  However, this is not always the case.  One of the ways in which programmers can change the flow of control is the use of selection control statements.
 
-In this chapter you will learn about selection statements, which allow a program to choose when to execute certain instructions. For example, a program might choose how to proceed on the basis of the user's input. As you will be able to see, such statements make a program more versatile.
+In this chapter we will learn about selection statements, which allow a program to choose when to execute certain instructions. For example, a program might choose how to proceed on the basis of the user's input. As you will be able to see, such statements make a program more versatile.
 
 We will also look at different kinds of programming errors and discuss strategies for finding and correcting them.
 
@@ -41,7 +41,7 @@ When it reaches an ``if`` statement, the computer only executes the body of the 
         condition -> next [label = "NO"];
     }
 
-As you can see from the flowchart, the instructions in the ``if`` body are only executed if the condition is met (i.e. if it is true). If the condition is not met (i.e. false), the instructions in the ``if`` body are skipped.
+As we can see from the flowchart, the instructions in the ``if`` body are only executed if the condition is met (i.e. if it is true). If the condition is not met (i.e. false), the instructions in the ``if`` body are skipped.
 
 Relational operators
 --------------------
@@ -59,7 +59,7 @@ Operator  Description               Example
 <=        less than or equal to     if (value <= 30)
 ========  ========================  ====================
 
-Note that the condition statement can either be true or false. Also note that the operator for equality is ``==`` -- a double equals sign.  Remember that ``=``, the single equals sign, is the assignment operator.  If you accidentally use ``=`` when you mean ``==``, you are likely to get a syntax error::
+Note that the condition statement can either be true or false. Also note that the operator for equality is ``==`` -- a double equals sign.  Remember that ``=``, the single equals sign, is the assignment operator.  If we accidentally use ``=`` when we mean ``==``, we are likely to get a syntax error::
 
     >>> if choice = 3:
     File "<stdin>", line 1
@@ -100,7 +100,7 @@ When comparing variables using ``==``, we are doing a *value* comparison: we are
 
 It is generally the case (with some caveats) that if two variables are the same object, they are also equal.  The reverse is not true -- two variables could be equal in value, but not the same object.
 
-To test whether two objects are *not* the same object, you can use the ``is not`` operator::
+To test whether two objects are *not* the same object, we can use the ``is not`` operator::
 
     if a is not b:
         print("a and b are not the same object.")
@@ -119,14 +119,14 @@ In the examples which have appeared in this chapter so far, there has only been 
         print("Thank you for using this program.")
     print("Always print this.") # this is outside the if block
 
-The interpreter will treat all the statements inside the indented block as one statement -- it will process all the instructions in the block before moving on to the next instruction.  This allows you to specify multiple instructions to be executed when the condition is met.
+The interpreter will treat all the statements inside the indented block as one statement -- it will process all the instructions in the block before moving on to the next instruction.  This allows us to specify multiple instructions to be executed when the condition is met.
 
-``if`` is referred to as a *compound statement* in Python because it combines multiple other statements together.  A compound statement comprises one or more *clauses*, each of which has a *header* (like ``if``) and a *suite* (which is a list of statements, like the ``if`` body).  The contents of the suite are delimited with indentation -- you have to indent lines to the same level to put them in the same block.
+``if`` is referred to as a *compound statement* in Python because it combines multiple other statements together.  A compound statement comprises one or more *clauses*, each of which has a *header* (like ``if``) and a *suite* (which is a list of statements, like the ``if`` body).  The contents of the suite are delimited with indentation -- we have to indent lines to the same level to put them in the same block.
 
 The ``else`` clause
 -------------------
 
-An optional part of an if statement is the ``else`` clause. It allows you to specify an alternative instruction (or set of instructions) to be executed if the condition is *not* met::
+An optional part of an if statement is the ``else`` clause. It allows us to specify an alternative instruction (or set of instructions) to be executed if the condition is *not* met::
 
     if condition:
         if_body
@@ -243,12 +243,12 @@ In Python this is equivalent to putting an ``if`` statement within the body of e
         print("Maximum weight for small parcel exceeded.")
         print("Use large parcel service instead.")
 
-Note that the bodies of the outer ``if`` and ``else`` clauses are indented, and the bodies of the inner ``if`` and ``else`` clauses are indented one more time.  It is important to keep track of indentation, so that each statement is in the correct block.  It doesn't matter that there's an empty line between the last line of the inner ``if`` statement and the following print statement -- they are still both part of the same block (the outer ``if`` body) because they are indented by the same amount.  You can use empty lines (sparingly) to make your code more readable.
+Note that the bodies of the outer ``if`` and ``else`` clauses are indented, and the bodies of the inner ``if`` and ``else`` clauses are indented one more time.  It is important to keep track of indentation, so that each statement is in the correct block.  It doesn't matter that there's an empty line between the last line of the inner ``if`` statement and the following print statement -- they are still both part of the same block (the outer ``if`` body) because they are indented by the same amount.  We can use empty lines (sparingly) to make our code more readable.
 
 The ``elif`` clause and ``if`` ladders
 --------------------------------------
 
-The addition of the else keyword allows you to specify actions for the case in which the condition is false. However, there may be cases in which you would like to handle more than two alternatives. For example, here is a flowchart of a program which works out which grade should be assigned to a particular mark in a test:
+The addition of the else keyword allows us to specify actions for the case in which the condition is false. However, there may be cases in which we would like to handle more than two alternatives. For example, here is a flowchart of a program which works out which grade should be assigned to a particular mark in a test:
 
 .. blockdiag::
 
@@ -271,7 +271,7 @@ The addition of the else keyword allows you to specify actions for the case in w
         A, B, C, D -> next [folded];
     }
 
-You should be able to write a code fragment for this program using nested if statements. It might look something like this::
+We should be able to write a code fragment for this program using nested if statements. It might look something like this::
 
     if mark >= 80:
         grade = A
@@ -284,7 +284,7 @@ You should be able to write a code fragment for this program using nested if sta
             else:
                 grade = D
 
-This code is a bit difficult to read.  Every time you add a nested ``if``, you have to increase the indentation, so all of your alternatives are indented differently.  You can write this code more cleanly using ``elif`` clauses::
+This code is a bit difficult to read.  Every time we add a nested ``if``, we have to increase the indentation, so all of our alternatives are indented differently.  We can write this code more cleanly using ``elif`` clauses::
 
     if mark >= 80:
         grade = A
@@ -320,7 +320,7 @@ Now all the alternatives are clauses of one ``if`` statement, and are indented t
         mark_50 -> D [label = "NO"];
     }
 
-The default (catch-all) condition is the ``else`` clause at the end of the statement. If none of the conditions specified earlier is matched, the actions in the ``else`` body will be executed. It is a good idea to include a final ``else`` clause in each ladder to make sure that you are covering all cases, especially if there's a possibility that the options will change in the future.  Consider the following code fragment::
+The default (catch-all) condition is the ``else`` clause at the end of the statement. If none of the conditions specified earlier is matched, the actions in the ``else`` body will be executed. It is a good idea to include a final ``else`` clause in each ladder to make sure that we are covering all cases, especially if there's a possibility that the options will change in the future.  Consider the following code fragment::
 
     if course_code == "CSC":
         department_name = "Computer Science"
@@ -343,7 +343,7 @@ Boolean values, operators and expressions
 The ``bool`` type
 -----------------
 
-In Python there is a value type for variables which can either be true or false: the boolean type, ``bool``.  The true value is ``True`` and the false value is ``False``.  Python will implicitly convert any other value type to a boolean if you use it like a boolean, for example as a condition in an ``if`` statement.   You will almost never have to cast values to ``bool`` explicitly.  You also don't have to use the ``==`` operator explicitly to check if a variable's value evaluates to ``True`` -- you can use the variable name by itself as a condition::
+In Python there is a value type for variables which can either be true or false: the boolean type, ``bool``.  The true value is ``True`` and the false value is ``False``.  Python will implicitly convert any other value type to a boolean if we use it like a boolean, for example as a condition in an ``if`` statement.   We will almost never have to cast values to ``bool`` explicitly.  We also don't have to use the ``==`` operator explicitly to check if a variable's value evaluates to ``True`` -- we can use the variable name by itself as a condition::
 
     name = "Jane"
 
@@ -355,11 +355,11 @@ In Python there is a value type for variables which can either be true or false:
     if bool(name) == True:
         print("Hello, %s!" % name)
 
-    # This won't give you the answer you expect:
+    # This won't give us the answer we expect:
     if name == True:
         print("Hello, %s!" % name)
 
-Why won't the last ``if`` statement do what you expect?  If you cast the string ``"Jane"`` to a boolean, it will be equal to ``True``, but it isn't equal to ``True`` while it's still a string -- so the condition in the last ``if`` statement will evaluate to ``False``.  This is why you should always use the shorthand syntax, as shown in the first statement -- Python will then do the implicit cast for you.
+Why won't the last ``if`` statement do what we expect?  If we cast the string ``"Jane"`` to a boolean, it will be equal to ``True``, but it isn't equal to ``True`` while it's still a string -- so the condition in the last ``if`` statement will evaluate to ``False``.  This is why we should always use the shorthand syntax, as shown in the first statement -- Python will then do the implicit cast for us.
 
 .. Note:: For historical reasons, the numbers ``0`` and ``0.0`` are actually equal to ``False`` and ``1`` and ``1.0`` are equal to ``True``.  They are not, however, identical objects -- you can test this by comparing them with the ``is`` operator.
 
@@ -395,37 +395,37 @@ The compound condition is only true if the given mark is less than 50 *and* it i
     if (x > 3 and x < 300):
         x += 1
 
-    # This will give you a syntax error:
+    # This will give us a syntax error:
     if (x > 3 and < 300): # < 300 is not a valid expression!
         x += 1
 
-You can join three or more subexpressions with ``and`` -- they will be evaluated from left to right::
+We can join three or more subexpressions with ``and`` -- they will be evaluated from left to right::
 
     condition_1 and condition_2 and condition_3 and condition_4
     # is the same as
     ((condition_1 and condition_2) and condition_3) and condition_4
 
-.. Note:: for the special case of testing whether a number falls within a certain range, you don't have to use the ``and`` operator at all.  Instead of writing ``mark >= 50 and mark < 65`` you can simply write ``50 <= mark < 65``.  This doesn't work in many other languages, but it's a useful feature of Python.
+.. Note:: for the special case of testing whether a number falls within a certain range, we don't have to use the ``and`` operator at all.  Instead of writing ``mark >= 50 and mark < 65`` we can simply write ``50 <= mark < 65``.  This doesn't work in many other languages, but it's a useful feature of Python.
 
 Short-circuit evaluation
 ------------------------
 
 Note that if ``a`` is false, the expression ``a and b`` is false whether ``b`` is true or not.  The interpreter can take advantage of this to be more efficient: if it evaluates the first subexpression in an AND expression to be false, it does not bother to evaluate the second subexpression.  We call ``and`` a *shortcut operator* or *short-circuit* operator because of this behaviour.
 
-This behaviour doesn't just make the interpreter slightly faster -- you can also use it to your advantage when writing programs.  Consider this example::
+This behaviour doesn't just make the interpreter slightly faster -- we can also use it to our advantage when writing programs.  Consider this example::
 
     if x > 0 and 1/x < 0.5:
         print("x is %f" % x)
 
-What if x is zero?  If the interpreter were to evaluate both of the subexpressions, you would get a divide by zero error.  But because ``and`` is a short-circuit operator, the second subexpression will only be evaluated if the first subexpression is true.  If x is zero, it will evaluate to false, and the second subexpression will not be evaluated at all.
+What if x is zero?  If the interpreter were to evaluate both of the subexpressions, we would get a divide by zero error.  But because ``and`` is a short-circuit operator, the second subexpression will only be evaluated if the first subexpression is true.  If x is zero, it will evaluate to false, and the second subexpression will not be evaluated at all.
 
-You could also have used nested ``if`` statements, like this::
+We could also have used nested ``if`` statements, like this::
 
     if x > 0:
         if 1/x < 0.5:
             print("x is %f" % x)
 
-Using ``and`` instead is more compact and readable -- especially if you have more than two conditions to check.  These two snippets do the same thing::
+Using ``and`` instead is more compact and readable -- especially if we have more than two conditions to check.  These two snippets do the same thing::
 
     if x != 0:
         if y != 0:
@@ -435,7 +435,7 @@ Using ``and`` instead is more compact and readable -- especially if you have mor
     if x != 0 and y != 0 and z != 0:
         print(1/(x*y*z))
 
-This often comes in useful if you want to access an object's attribute or an element from a list or a dictionary, and you first want to check if it exists::
+This often comes in useful if we want to access an object's attribute or an element from a list or a dictionary, and we first want to check if it exists::
 
     if hasattr(my_person, "name") and len(myperson.name) > 30:
         print("That's a long name, %s!" % myperson.name)
@@ -473,15 +473,15 @@ The || operator is also binary::
     if x < 3 or x > 300:
         x += 1
 
-    # This will give you a syntax error:
+    # This will give us a syntax error:
     if x < 3 or > 300: # > 300 is not a valid expression!
         x += 1
 
-    # This may not do what you expect:
+    # This may not do what we expect:
     if x == 2 or 3:
         print("x is 2 or 3")
 
-The last example won't give you an error, because ``3`` is a valid subexpression -- and since it is a non-zero number it evaluates to ``True``.  So the last ``if`` body will always execute, regardless of the value of ``x``!
+The last example won't give us an error, because ``3`` is a valid subexpression -- and since it is a non-zero number it evaluates to ``True``.  So the last ``if`` body will always execute, regardless of the value of ``x``!
 
 
 .. Todo:: at the end mention crazy magic behaviour of ``and`` and ``or``, and what they actually return if they're not applied to booleans.
@@ -550,12 +550,12 @@ Here is a table indicating the relative level of precedence for all the operator
 | ``or`` (lowest)         |
 +-------------------------+
 
-It is always a good idea to use brackets to clarify what you mean, even though you can rely on the order of precedence above.  Brackets can make complex expressions in your code easier to read and understand, and reduce the opportunity for errors.
+It is always a good idea to use brackets to clarify what we mean, even though we can rely on the order of precedence above.  Brackets can make complex expressions in our code easier to read and understand, and reduce the opportunity for errors.
 
 DeMorgan's law for manipulating boolean expressions
 ---------------------------------------------------
 
-The ``not`` operator can make expressions more difficult to understand, especially if it is used multiple times.  Try only to use the ``not`` operator where it makes sense to have it.  Most people find it easier to read positive statements than negative ones.  Sometimes you can use the opposite relational operator to avoid using the ``not`` operator, for example::
+The ``not`` operator can make expressions more difficult to understand, especially if it is used multiple times.  Try only to use the ``not`` operator where it makes sense to have it.  Most people find it easier to read positive statements than negative ones.  Sometimes we can use the opposite relational operator to avoid using the ``not`` operator, for example::
 
     if not mark < 50:
         print("You passed")
@@ -633,16 +633,16 @@ We often initialise a number to zero or a string to an empty string before we gi
 
 Sometimes, however, a zero or an empty string *is* a meaningful value.  How can we indicate that a variable isn't set to anything if we *can't* use zero or an empty string?  We can set it to ``None`` instead.
 
-In Python, ``None`` is a special value which means "nothing".  Its type is called ``NoneType``, and only one ``None`` value exists at a time -- all the ``None`` values you use are actually the same object::
+In Python, ``None`` is a special value which means "nothing".  Its type is called ``NoneType``, and only one ``None`` value exists at a time -- all the ``None`` values we use are actually the same object::
 
     print(None is None) # True
 
-``None`` evaluates to ``False`` in boolean expressions.  If you don't care whether your variable is ``None`` or some other value which is also false, you can just check its value like this::
+``None`` evaluates to ``False`` in boolean expressions.  If we don't care whether our variable is ``None`` or some other value which is also false, we can just check its value like this::
 
     if my_string:
         print("My string is '%s'." % my_string)
 
-If, however, you want to distinguish between the case when your variable is ``None`` and when it is empty (or zero, or some other false value) you need to be more specific::
+If, however, we want to distinguish between the case when our variable is ``None`` and when it is empty (or zero, or some other false value) we need to be more specific::
 
     if my_number is not None:
         print(my_number) # could still be zero
@@ -659,7 +659,7 @@ Switch statements and dictionary-based dispatch
 
 ``if`` ladders can get unwieldy if they become very long.  Many languages have a control statement called a switch, which tests the value of a single variable and makes a decision on the basis of that value. It is similar to an ``if`` ladder, but can be a little more readable, and is often optimised to be faster.
 
-Python does not have a switch statement, but you can achieve something similar by using a dictionary. This example will be clearer when you have read more about dictionaries, but all you need to know for now is that a dictionary is a store of key and value pairs -- you retrieve a value by its key, the way you would retrieve a list element by its index.  Here is how we can rewrite the course code example::
+Python does not have a switch statement, but we can achieve something similar by using a dictionary. This example will be clearer when we have read more about dictionaries, but all we need to know for now is that a dictionary is a store of key and value pairs -- we retrieve a value by its key, the way we would retrieve a list element by its index.  Here is how we can rewrite the course code example::
 
     DEPARTMENT_NAMES = {
         "CSC": "Computer Science",
@@ -672,7 +672,7 @@ Python does not have a switch statement, but you can achieve something similar b
     else:
         print("Unknown course code: %s" % course_code)
 
-You are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so you can even use this dispatch method to execute completely different statements in response to different values::
+We are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so we can even use this dispatch method to execute completely different statements in response to different values::
 
     def reverse(string):
         print("'%s' reversed is '%s'." % (string, string[::-1]))
@@ -706,7 +706,7 @@ This means that if ``score`` is at least 50, ``result`` is assigned ``"Pass"``, 
     else:
         result = "Fail"
 
-The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find your code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
+The ternary operator can make simple ``if`` statements shorter and more legible, but some people may find this code harder to understand. There is no functional or efficiency difference between a normal ``if``-``else`` and the ternary operator.  You should use the operator sparingly.
 
 Exercise 3
 ----------
@@ -749,8 +749,6 @@ Exercise 3
        50 <= mark < 60      D
        mark < 50            E
        ==================== ===========
-
-.. Todo:: change you to we almost everywhere
 
 Answers to exercises
 ====================
