@@ -330,7 +330,9 @@ COBOL (COmmon Business Oriented Language) has commonly been used in business. It
       STOP RUN.
     END PROGRAM
 
-FORTRAN (FORmula TRANslator) was popular with scientists and engineers, but many have switched to C and C++. It was the first high-level language. Here's the addition program written in FORTRAN::
+FORTRAN (FORmula TRANslator) was popular with scientists and engineers, but many have switched to C and C++. It was the first high-level language. Here's the addition program written in FORTRAN:
+
+.. code-block:: fortran
 
          PROGRAM ADDNUMS
     C    THIS FORTRAN PROGRAM FINDS THE TOTAL OF
@@ -343,7 +345,9 @@ FORTRAN (FORmula TRANslator) was popular with scientists and engineers, but many
          STOP
          END
 
-Many programmers use C to write system-level code (operating systems, compilers). Here's the addition program code written in C::
+Many programmers use C to write system-level code (operating systems, compilers). Here's the addition program code written in C:
+
+.. code-block:: c
 
     /* This C program calculates the sum of 17 and 20.
     It then displays the result. */
@@ -357,7 +361,9 @@ Many programmers use C to write system-level code (operating systems, compilers)
         printf("The sum of 17 and 20 is %d\n", result);
     }
 
-Pascal (named after Blaise Pascal) used to be a popular introductory programming language until the early 1990s, but many schools have switched to C++ or Java. Here is the addition program written in Pascal::
+Pascal (named after Blaise Pascal) used to be a popular introductory programming language until the early 1990s, but many schools have switched to C++ or Java. Here is the addition program written in Pascal:
+
+.. code-block:: pascal
 
     PROGRAM
     AddNums (Input, Output);
@@ -371,13 +377,17 @@ Pascal (named after Blaise Pascal) used to be a popular introductory programming
 Functional and logic languages
 ------------------------------
 
-A functional language is based on mathematical functions. It usually consists of functions and function calls. In the language's pure form, variables do not exist: instead, parts of program communicate through the use of function parameters. One of the most popular functional languages is Common Lisp, which is widely used in the artificial intelligence field, especially in the US. Other functional languages include ML and Miranda. Here's the addition program written using a functional style, in Common Lisp::
+A functional language is based on mathematical functions. It usually consists of functions and function calls. In the language's pure form, variables do not exist: instead, parts of program communicate through the use of function parameters. One of the most popular functional languages is Common Lisp, which is widely used in the artificial intelligence field, especially in the US. Other functional languages include ML and Miranda. Here's the addition program written using a functional style, in Common Lisp:
+
+.. code-block:: common-lisp
 
     ;; This Lisp program calculates the
     ;; sum of 20 and 17. It then displays the result.
     (format t "The sum of 20 and 17 is ~D~%" (+ 20 17))
 
-A logic language is based on formal rules of logic and inference. An example of such a language is Prolog. Prolog's variables cannot be changed once they are set, which is typical of a logic language. Here's the addition program written in Prolog::
+A logic language is based on formal rules of logic and inference. An example of such a language is Prolog. Prolog's variables cannot be changed once they are set, which is typical of a logic language. Here's the addition program written in Prolog:
+
+.. code-block:: prolog
 
     /* This Prolog program calculates the sum of 17 and 20. It then
     /* displays the result. */
@@ -386,7 +396,9 @@ A logic language is based on formal rules of logic and inference. An example of 
         write("The sum of 17 and 20 is ", Result),
         nl.
 
-The above program does not show the deductive power of Prolog. Prolog programs can consist of a set of known facts, plus rules for inferring new facts from existing ones. In the example below, the first seven lines list facts about the kind of drink certain people like. The last line is a rule of inference which says that Matt likes a drink only when both Mike and Mary like that drink::
+The above program does not show the deductive power of Prolog. Prolog programs can consist of a set of known facts, plus rules for inferring new facts from existing ones. In the example below, the first seven lines list facts about the kind of drink certain people like. The last line is a rule of inference which says that Matt likes a drink only when both Mike and Mary like that drink:
+
+.. code-block:: prolog
 
     /* Shows Prolog's inference ability */
     likes(dave, cola).
@@ -397,16 +409,22 @@ The above program does not show the deductive power of Prolog. Prolog programs c
     likes(mike, orange_juice).
     likes(matt, Drink) :- likes(mary, Drink), likes(mike, Drink).
 
-A Prolog program answers a query. For example, we might want to know what food Mary likes -- we can query this::
+A Prolog program answers a query. For example, we might want to know what food Mary likes -- we can query this:
+
+.. code-block:: prolog
 
     likes(mary, Drink).
 
-To which Prolog will output possible answers, like::
+To which Prolog will output possible answers, like:
+
+.. code-block:: prolog
 
     Drink = lemonade
     Drink = orange_juice
 
-To demonstrate the rule of inference, we can ask for the food that Matt likes. The system can find the solution by checking what Mary and Mike like::
+To demonstrate the rule of inference, we can ask for the food that Matt likes. The system can find the solution by checking what Mary and Mike like:
+
+.. code-block:: prolog
 
     likes(matt, Drink)
 
@@ -419,7 +437,9 @@ More recently, computer scientists have embraced a new programming approach -- o
 
 Simula (Simulation Language), invented in 1967, was the first language to take the object-oriented approach. However, Smalltalk (early 1980s) was the first purely object-oriented language -- everything in the language is an object. C++ is a hybrid OO language in that it has the procedural aspects of C. A C++ program can be completely procedural, completely OO or a hybrid. Most OO languages make use of variables in a similar fashion to procedural languages.
 
-Here's the addition code written in C++; note the similarity to the earlier program written in C::
+Here's the addition code written in C++; note the similarity to the earlier program written in C:
+
+.. code-block:: cpp
 
     // This C++ program finds the result of adding 17 and 20.
     // It then displays the result.
@@ -433,7 +453,9 @@ Here's the addition code written in C++; note the similarity to the earlier prog
         return 0;
     }
 
-Java was introduced in 1995 by Sun Microsystems, who were purchased by Oracle Corporation during 2009-2010. It is an OO language but not as pure as Smalltalk. For example, in Java primitive values (numbers and characters) are not objects -- they are values. In Smalltalk, everything is an object. Initially it was designed for use in appliances, but the first released version was designed for use on the Internet.  Java syntax is quite similar to C and C++, but functions cannot be defined outside of objects.  Here is the addition code written in Java::
+Java was introduced in 1995 by Sun Microsystems, who were purchased by Oracle Corporation during 2009-2010. It is an OO language but not as pure as Smalltalk. For example, in Java primitive values (numbers and characters) are not objects -- they are values. In Smalltalk, everything is an object. Initially it was designed for use in appliances, but the first released version was designed for use on the Internet.  Java syntax is quite similar to C and C++, but functions cannot be defined outside of objects.  Here is the addition code written in Java:
+
+.. code-block:: java
 
     // This is a Java program to calculate the sum of
     // 17 and 20. It then displays the result.
