@@ -1,7 +1,7 @@
 OUTSTANDING CHAPTERS
 
 * introduction - IN PROGRESS
-* sorting and searching algorithms
+* sorting and searching algorithms -- add to end of collections?
 
 OUTSTANDING SECTIONS
 
@@ -14,10 +14,6 @@ GLOBAL SEARCH AND REPLACE
 * replace "you" with "we" almost everywhere in earlier chapters
 * put term definitions in italics in earlier chapters
 * add hyperlinks between exercises and answers and whenever something is referenced?
-
-EXERCISES
-
-* most of them
 
 ACTIVITIES
 
