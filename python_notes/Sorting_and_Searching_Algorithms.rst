@@ -164,6 +164,8 @@ Here are the steps for Merge sort:
 * Continue this process until the partition size is at least as large
   as the whole array.
 
+Exercise 2
+----------
 
 
 Python's sorting algorithm
@@ -188,9 +190,14 @@ Searching algorithms
 Linear search
 -------------
 
+Exercise 3
+----------
 
 Binary search
 -------------
+
+Exercise 4
+----------
 
 
 Algorithm complexity
