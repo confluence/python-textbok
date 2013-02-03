@@ -114,7 +114,7 @@ Historically, computers have been categorised into specialised subtypes. The dis
 History of computers
 ====================
 
-Today's computers are electronic. Earlier computers were mostly mechanical and electro-mechanical. Over time, computers have advanced exponentially.
+Today's computers are electronic. Earlier computers were mostly mechanical and electro-mechanical. Over time, computers have advanced exponentially -- from expensive machines which took up entire rooms to today's affordable and compact units.
 
 The oldest mechanical calculating aid is the abacus. It was invented in Babylon over 3000 years ago and was also used by the Chinese. It can be used for addition, subtraction, multiplication and division. More recently, in 1642, Blaise Pascal invented the first mechanical calculator. Pascal's machine was able to do addition and subtraction. In 1671, Gottfried von Leibnitz extended Pascal's machine to handle multiplication, division and square roots.
 
@@ -150,55 +150,297 @@ Fourth-generation computers (early 70s and onwards)
 
 From the early 1970s, computer designers have been concentrating on making smaller and smaller computer parts. Today, computers are assembled using very large-scale integration (VLSI) integrated circuits, each containing millions of transistors on single chips. This process has resulted in cheaper and more reliable computers. In the late 1960s and early 1970s, medium-sized organisations including colleges and universities began to use computers. Small businesses followed suit by the early 1980s. In this period, most were time-shared systems. Today's computers are usually single-user or multiple-user personal computers, with many connected to larger networks such as the Internet.
 
-Programming languages
-=====================
-
 Programming a computer
 ======================
 
+Algorithms
+----------
 
-Summary
-=======
+An algorithm is a series of steps which must be followed in order for some task to be completed or for some problem to be solved.  You have probably used an algorithm before -- for example, you may have assembled a model toy by following instructions or cooked using a recipe. The steps in a set of instructions or a recipe form a kind of algorithm. They tell you how to transform components or ingredients into toys or cookies. The ingredients act as an input to the algorithm. The algorithm transforms the ingredients into the final output.
 
-A computer is simply a machine that follows a list of instructions -
-also known as programs. At the lowest-level, each instruction is
-simple eg. adding two numbers.
+Recipes as algorithms (the structured approach to programming)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A computer consists of four major parts - input devices, CPU, memory
-and output devices. The computer can be regarded as an information
-processing machine, taking in information from input devices,
-processing it with the CPU and then displaying the result on an output
-device. While processing, the computer can save the information for
-later use in the memory.
+In a typical recipe, there is a list of ingredients and a list of steps. The recipes do not usually say who is performing the steps, but implies that you (the cook) should perform them. Many algorithms are written in this way, implying that the CPU of the computer is the *actor* of these instructions. This approach is referred to as the structured approach to programming and it works reasonably well for simple programs. However, it can become more complex when you are trying to solve a real world problem where it is rare for one actor to be in control of everything. The object-oriented approach to programming is an attempt to simulate the real world by including several actors in the algorithm.
 
-There are two kinds of memory - primary and secondary memory. Primary
-memory is closely linked to the CPU and is volatile. It is much faster
-than secondary memory but this comes at a price. Secondary memory is
-separate from the CPU and does not lose its content when the computer
-is switched off. Primary memory also stores contents in addressable
-cells that can each hold a single value, in contrast to secondary
-memory, which stores information in files.
+Play scripts as algorithms (the object-oriented approach to programming)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At the lowest level, computers understand machine language with
-assembly language one level up. Each assembler instruction corresponds
-to a machine instruction, but it allows humans to easily read it. An
-assembler is needed to translate assembly language into machine
-language.
+A script of a play is a good analogy to the object-oriented (OO) approach. Actors and scenes are listed at the beginning (like the ingredients of a recipe). In a scene, the script lists the instructions for each actor to speak and act. Each actor is free to interpret these instructions (subject to the director's approval) in a way he or she sees appropriate. In the OO programming approach, multiple objects act together to accomplish a goal. The algorithm, like a play script, directs each object to perform particular steps in the correct order.
 
-High-level languages were developed to make it easier for human to
-read and understand. A compiler is needed to convert programs written
-in these languages to machine language. High-level languages can be
-grouped into four types. Procedural languages include BASIC, C, COBOL,
-FORTRAN and Pascal. An example of a functional language is Lisp, while
-Prolog is a common logic language. C++ is a hybrid language - a
-combination of procedural and object-oriented , while Java and
-Smalltalk are object-oriented languages.
+Programming languages
+---------------------
 
-Computer systems can be grouped into four types. A single-user
-personal computer is one that can be used by a single user at a
-time. Many people can share the use of a computer via terminals in a
-time-share system. A batch computer is very efficient but not
-interactive. A network is a group of linked computers.
+To make use of an algorithm in a computer, we must first convert it to a program. We do this by using a programming language (a very formal language with strict rules about spelling and grammar) which the computer is able to convert unambiguously into computer instructions, or *machine language*.  In this course we will be using the Python programming language, but there are many other languages which we will outline later in the chapter.
 
-Computers have evolved exponentially over time - from expensive large
-room-sized machine to today's affordable and compact units.
+The reason that we do not write computer instructions directly is that they are difficult for humans to read and understand. For example, these are the computer instructions (in the Intel 8086 machine language, a subset of the Intel Pentium machine language) required to add 17 and 20::
+
+    1011 0000 0001 0001
+    0000 0100 0001 0100
+    1010 0010 0100 1000 0000 0000
+
+The first line tells the computer to copy 17 into the AL register: the first four characters (1011) tell the computer to copy information into a register, the next four characters (0000) tell the computer to use register named AL, and the last eight digits (0001 0001, which is 17 in binary) specify the number to be copied.
+
+As you can see, it is quite hard to write a program in machine language.  In the 1940s, the programmers of the first computers had to do this because there were no other options!  To simplify the programming process, *assembly language* was introduced.
+
+Each assembly instruction corresponds to one machine language instruction, but it is more easily understood by humans, as can be seen in the equivalent addition program in the 8086 assembly language::
+
+    MOV AL, 17D
+    ADD AL, 20D
+    MOV [SUM], AL
+
+Programs written in assembly language cannot be understood by the computer directly, so a translation step is needed. This is done using an assembler, whose job it is to translate from assembly language to machine language.
+
+Although assembly language was a great improvement over machine language, it can still be quite cryptic, and it is so low-level that the simplest task requires many instructions.  *High-level languages* were developed to make programming even easier.
+
+In a high-level language, an instruction may correspond to several machine language instructions, which makes programs easier to read and write.  This is the Python equivalent of the code above::
+
+  sum = 17 + 20
+
+Compilers, interpreters and the Python programming language
+-----------------------------------------------------------
+
+Programs written in high-level languages must also be translated into machine language before a computer can execute them.  Some programming languages translate the whole program at once and store the result in another file which is then executed. Some languages translate and execute programs line-by-line.  We call these languages *compiled* languages and *interpreted* languages, respectively.  Python is an interpreted language.
+
+A compiled language comes with a *compiler*, which is a program which *compiles* source files to executable binary files.  An interpreted language comes with an *interpreter*, which *interprets* source files and executes them.  Interpretation can be less efficient than compilation, so interpreted languages have a reputation for being slow.
+
+Programs which need to use a lot of computer resources, and which therefore need to be as efficient as possible, are often written in a language like C.  C is a compiled language which is in many ways lower-level than Python -- for example, a C programmer needs to handle a lot of memory management explicitly; something a Python programmer seldom needs to worry about.
+
+This fine-grained control allows for a lot of optimisation, but can be time-consuming and error-prone.  For applications which are not resource-intensive, a language like Python allows programs to be developed more easily and rapidly, and the speed difference on a modern computer is usually negligible.
+
+Developing a Python program
+---------------------------
+
+Suppose that we want to develop a program to display an average of a series of numbers. The first step is to understand the problem, but first we need to know more about the program:
+
+* How will it get the numbers? Let's assume that the user will type them in using the keyboard.
+* How will it know how many numbers to get? Let's assume that the user will enter 0 to signify the end of the list.
+* Where should it display results? It should print them on the screen.
+
+The second step is to come up with the algorithm. You can do this by trying to solve the problem yourself and noting the steps that you took. Try this. You are likely to end up with an instruction list which looks something like this:
+
+#. Set running total to 0.
+#. Set running count to 0.
+#. Repeat these steps:
+
+   * Read a value.
+   * Check if value is 0 (stop this loop if so).
+   * Add value to running total.
+   * Add 1 to running count.
+
+#. Compute the average by dividing the running total by the count.
+#. Display the average.
+
+The next step of development is to test the algorithm. You can do this by trying the algorithm on different lists of numbers and see if you can get a correct result from it. For simple algorithms such as this, you can do the test on paper or using a calculator. Try this with a simple list of numbers, like 1, 2, 3, 4 and 5. Then try a more complex list. You might get a feeling that this algorithm works for all cases. However, there is a case that the converted program might not be able to handle. Try a list which only contains 0. The average of a list with a single 0 in it is 0, but what does the algorithm tell you the answer is? Can you modify the algorithm to take care of this?
+
+We now look at the four steps in developing a program in more detail.
+
+Understanding the problem
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Before you start writing a program, you should thoroughly understand the problem that you are trying to solve:
+
+* When you start, think about the problem on your own without touching the keyboard. Figure out exactly what you need the algorithm to do.
+
+* If the program is for someone else, it might be helpful to speak to those who will be using the program, to find out exactly what is needed. There might be missing information or constraints such as speed, robustness or ease of use.
+
+* Think about what type of input and output the program will need to have, and how it will be entered and displayed.
+
+* It can be useful to plan the program on paper by writing down lists of requirements or sketching a few diagrams. This can help you to gather your thoughts and spot any potential error or missing information.
+
+Coming up with an algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We have previously described an algorithm as a series of steps, but there are a few more formal requirements:
+
+* It must be a *finite* series of steps: a never-ending list of steps is not an algorithm. A computer has finite resources (like memory) and cannot handle infinite lists of steps.
+
+* It must be *unambiguous*: each step must be an unambiguous instruction.  For example, you cannot have a step which says "multiply x by either 1 or -1". If you have an instruction like this, you have to specify exactly how the choice should be made -- for example, "if y is less than 0, multiply x by 1, otherwise multiply x by -1".
+
+* It must be *effective*: The algorithm must do what it is supposed to do.
+
+* It must *terminate*: The algorithm must not go on forever. Note that this is different to the requirement that it be finite. Consider the following finite list of instructions:
+
+    #. Set x to 1
+    #. Set y to 2
+    #. Repeat the following steps:
+       #. Add x and y to get z
+       #. Display z on screen
+    #. Display the word 'Done'
+
+  If you try to follow these instructions, you will get stuck on step 3 forever -- therefore, this list is not an algorithm.
+
+Writing the program
+^^^^^^^^^^^^^^^^^^^
+
+Once you have an algorithm, you can translate it into Python.  Some parts of the algorithm may be straightforward to translate, but others may need to be expressed slightly differently in Python than they would be in a natural language.  Sometimes you can use the language's features to rewrite a program more cleanly or efficiently.  This will become easier the more experience you gain with Python.
+
+You should take care to avoid errors by thinking through your program as you write it, section by section. This is called *desk checking*.  In later chapters we will also discuss other tools for checking your code, for example programs which automatically check the code for certain kinds of errors.
+
+Test the program
+^^^^^^^^^^^^^^^^
+
+After thoroughly desk checking the program as you write, you should run it and test it with several different input values. Later in this module we will see how to write automated tests -- programs that you write to test your programs. Automated tests make it easy to run the same tests repeatedly to make sure that your program still works.
+
+Programming languages
+=====================
+
+There are hundreds of different programming languages.  Some are particularly suited to certain tasks, while others are considered to be general-purpose.  Programs can be categorised into four major groups -- *procedural*, *functional*, *logic* and *object-oriented* languages -- but some languages contain features characteristic of more than one group.
+
+Procedural languages
+--------------------
+
+Procedural (also known as imperative) languages form the largest group of languages. A program written in a procedural language consists of a list of statements, which the computer follows in order. Different parts of the program communicate with one another using variables. A variable is actually a named location in primary memory. The value stored in a variable can usually be changed throughout the program's execution. In some other programming language paradigms (such as logic languages), variables act more like variables used in mathematics and their values may not be changed.
+
+BASIC is an example of a procedural programming language. It has a very simple syntax (originally only 14 statement types). Here is some BASIC code for adding 17 and 20::
+
+    10 REM THIS BASIC PROGRAM CALCULATES THE SUM OF
+    20 REM 17 AND 20, THEN DISPLAYS THE RESULT.
+    30 LET RESULT = 17 + 20
+    40 PRINT "The sum of 17 and 20 is ", RESULT
+    50 END
+
+
+In the early 1990s, Microsoft's Visual Basic extended the BASIC language to a development system for Microsoft Windows.
+
+COBOL (COmmon Business Oriented Language) has commonly been used in business. It was designed for ease of data movement. Here's the addition program written in COBOL::
+
+    IDENTIFICATION DIVISION.
+    PROGRAM-ID.      ADDING.
+    DATE-WRITTEN.    JUL 11,1997.
+    DATE-COMPILED.   JUL 12,1997.
+    *    THIS COBOL PROGRAM CALCULATE THE SUM
+    *    OF 17 AND 20. IT THEN DISPLAYS THE RESULT.
+    ENVIRONMENT DIVISION.
+    CONFIGURATION SECTION.
+    SOURCE-COMPUTER. IBM-370.
+    OBJECT-COMPUTER. IBM-370.
+    DATA DIVISION.
+    WORKING-STORAGE SECTION.
+    77  TOTAL          PICTURE 99.
+    PROCEDURE DIVISION.
+      ADD 17, 20 GIVING TOTAL.
+      DISPLAY 'THE SUM OF 17 AND 20 IS ', TOTAL UPON CONSOLE.
+      STOP RUN.
+    END PROGRAM
+
+FORTRAN (FORmula TRANslator) was popular with scientists and engineers, but many have switched to C and C++. It was the first high-level language. Here's the addition program written in FORTRAN::
+
+         PROGRAM ADDNUMS
+    C    THIS FORTRAN PROGRAM FINDS THE TOTAL OF
+    C    17 AND 20, THEN DISPLAYS THE RESULT.
+
+         INTEGER RESULT
+         RESULT = 17 + 20
+         WRITE (*, 10) RESULT
+      10 FORMAT ('THE SUM OF 17 AND 20 IS ', I2)
+         STOP
+         END
+
+Many programmers use C to write system-level code (operating systems, compilers). Here's the addition program code written in C::
+
+    /* This C program calculates the sum of 17 and 20.
+    It then displays the result. */
+
+    #include <stdio.h>
+
+    void main(void)
+    {
+        int result;
+        result = 17 + 20;
+        printf("The sum of 17 and 20 is %d\n", result);
+    }
+
+Pascal (named after Blaise Pascal) used to be a popular introductory programming language until the early 1990s, but many schools have switched to C++ or Java. Here is the addition program written in Pascal::
+
+    PROGRAM
+    AddNums (Input, Output);
+    { This Pascal program calculate the sum of 17 and 20. It then displays the result }
+
+    BEGIN
+       Result := 17 + 20;
+       writeLn ('The sum of 17 and 20 is ', Result)
+    END
+
+Functional and logic languages
+------------------------------
+
+A functional language is based on mathematical functions. It usually consists of functions and function calls. In the language's pure form, variables do not exist: instead, parts of program communicate through the use of function parameters. One of the most popular functional languages is Common Lisp, which is widely used in the artificial intelligence field, especially in the US. Other functional languages include ML and Miranda. Here's the addition program written using a functional style, in Common Lisp::
+
+    ;; This Lisp program calculates the
+    ;; sum of 20 and 17. It then displays the result.
+    (format t "The sum of 20 and 17 is ~D~%" (+ 20 17))
+
+A logic language is based on formal rules of logic and inference. An example of such a language is Prolog. Prolog's variables cannot be changed once they are set, which is typical of a logic language. Here's the addition program written in Prolog::
+
+    /* This Prolog program calculates the sum of 17 and 20. It then
+    /* displays the result. */
+
+    run :- Result is 17 + 20,
+        write("The sum of 17 and 20 is ", Result),
+        nl.
+
+The above program does not show the deductive power of Prolog. Prolog programs can consist of a set of known facts, plus rules for inferring new facts from existing ones. In the example below, the first seven lines list facts about the kind of drink certain people like. The last line is a rule of inference which says that Matt likes a drink only when both Mike and Mary like that drink::
+
+    /* Shows Prolog's inference ability */
+    likes(dave, cola).
+    likes(dave, orange_juice).
+    likes(mary, lemonade).
+    likes(mary, orange_juice).
+    likes(mike, sparkling_water).
+    likes(mike, orange_juice).
+    likes(matt, Drink) :- likes(mary, Drink), likes(mike, Drink).
+
+A Prolog program answers a query. For example, we might want to know what food Mary likes -- we can query this::
+
+    likes(mary, Drink).
+
+To which Prolog will output possible answers, like::
+
+    Drink = lemonade
+    Drink = orange_juice
+
+To demonstrate the rule of inference, we can ask for the food that Matt likes. The system can find the solution by checking what Mary and Mike like::
+
+    likes(matt, Drink)
+
+    Drink = orange_juice
+
+Object-oriented languages
+-------------------------
+
+More recently, computer scientists have embraced a new programming approach -- object-oriented (OO) programming. In this approach, programmers model each real-world entity as an object, with each object having its own set of values and behaviours. This makes an object an active entity, whereas a variable in a procedural language is passive.
+
+Simula (Simulation Language), invented in 1967, was the first language to take the object-oriented approach. However, Smalltalk (early 1980s) was the first purely object-oriented language -- everything in the language is an object. C++ is a hybrid OO language in that it has the procedural aspects of C. A C++ program can be completely procedural, completely OO or a hybrid. Most OO languages make use of variables in a similar fashion to procedural languages.
+
+Here's the addition code written in C++; note the similarity to the earlier program written in C::
+
+    // This C++ program finds the result of adding 17 and 20.
+    // It then displays the result.
+    #include <iostream>
+
+    int main(void)
+    {
+        int result = 17 + 20;
+        std::cout << "The sum of 17 and 20 is " << result << std::endl;
+
+        return 0;
+    }
+
+Java was introduced in 1995 by Sun Microsystems, who were purchased by Oracle Corporation during 2009-2010. It is an OO language but not as pure as Smalltalk. For example, in Java primitive values (numbers and characters) are not objects -- they are values. In Smalltalk, everything is an object. Initially it was designed for use in appliances, but the first released version was designed for use on the Internet.  Java syntax is quite similar to C and C++, but functions cannot be defined outside of objects.  Here is the addition code written in Java::
+
+    // This is a Java program to calculate the sum of
+    // 17 and 20. It then displays the result.
+    public class Add {
+        public static void main(String[] args) {
+            int result;
+            result = 17 + 20;
+            System.out.println("sum of 17 && 20 is " + result);
+        }
+    }
+
+Python is a general-purpose interpreted language which was originally created in the late 1980s, but only became widely used in the 2000s after the release of version 2.0.  It is known for its clear, simple syntax and its dynamic typing -- the same variables in Python can be reused to store values of different types; something which would not be allowed in a statically-typed language like C or Java.  Everything in Python is an object, but Python can be used to write code in multiple styles -- procedural, object-oriented or even functional.  Here is the addition code written in Python::
+
+    # This Python program adds 17 and 20 and prints the result.
+    result = 17 + 20
+    print("The sum of 17 and 20 is %d." % result)
