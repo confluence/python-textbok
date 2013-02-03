@@ -6,11 +6,27 @@ Introduction
 ============
 
 We have learned that in order to write a computer program that
-performs some taks, we must construct a suitable algorithm. However,
+performs some task, we must construct a suitable algorithm. However,
 the algorithm we construct is unlikely to be unique -- there are
 likely many algorithms that perform the same task. The question then
 arises as to whether some of these algorithms are in any sense better
 than others. Algorithm analysis is the study of this question.
+
+In this chapter we will analyze four algorithms, two for each of the
+following tasks:
+
+* sorting a list, and
+* finding the position of a value within a sorted list.
+
+Although there in general many ways that algorithms might be compared,
+we will focus our attention on the two that are of primary importance
+to many data processing algorithms:
+
+* *time complexity* (how the number of steps required depends on the
+  length of the input)
+
+* *space complexity* (how the amount of extra memory or storage
+  required depends on the length of the input)
 
 
 Sorting algorithms
