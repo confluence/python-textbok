@@ -24,6 +24,58 @@ execute instructions to process data.  Each computer has at its core a
 central processing unit (CPU) -- modern CPUs are built as a single
 microprocessor chip.
 
+Computer instructions
+---------------------
+
+A computer accepts a series of instructions as input, processes them one by one, and usually displays some kind of output to show what it has done.  This is similar to the way people follow instructions or recipes.  However, while people can understand complex instructions in natural languages (like English), computers can only understand very simple instructions which can be expressed in computer languages -- restricted, formally specified languages which are much more limited than natural languages.
+
+While some languages (like Python) can be used to express more high-level instructions than others (like assembly), there are still considerable limits.  A computer can easily interpret an instruction like "add these two numbers together", but not a more complicated request like "balance my chequebook".  Such a request would have to be broken down into many smaller step-by-step instructions which are simpler.  Lists of instructions which tell the computer how to perform complex tasks are known as *programs*.
+
+Here are some examples of simple computer instructions:
+
+* *arithmetic*: adding, subtracting, multiplying or dividing numbers.
+* *comparison*: comparing two numbers to see which is greater, or whether they are equal. These are often called *logical operations*.
+* *branching*: jumping to another instruction in the program, and continuing from there.
+
+Modern computers can execute many millions of these instructions in a second.
+
+Components of a computer
+------------------------
+
+A computer contains four major types of components:
+
+* *input*: anything that allows a computer to *receive* information from a user. This includes keyboards, mice, scanners and microphones.
+* *processing*: the components of the computer which *process* information.  The main processing component of a computer is the *central processing unit*, or CPU, but in a modern computer there are likely to be other processing units too. For example, many graphics cards come with *graphics processing units*, or GPUs, which were once only used to process graphics but today can also be used for general-purpose programs.
+* *memory*: components where information is *stored*.  This includes both *primary memory* (what we colloquially know as "memory") and *secondary memory* (what we know as *storage devices*, e.g. hard drives, CDs or flash disks).
+* *output*: anything that the computer uses to *display* information to the user. This includes monitors, speakers and printers.
+
+To understand how these components fit together, consider how a vending machine works.  A vending machine is not, strictly speaking, a computer, but it can be broken down into very similar components:
+
+* *input*: to use a vending machine, you put money into it and make a selection. The coin slots and selection buttons are the vending machine's input devices.
+* *processing*: when you make your selection, the vending machine goes through several steps: verifying that it has received enough money, computing change, and making sure the selected item is in stock. The part of the machine that performs all these steps can be thought of as the processor.
+* *output*: the vending machine deposits your purchase and your change in compartments from which you can retrieve them. It also has a simple electronic display which can show letters and numbers, and uses this to give you all kinds of feedback.
+* *memory*: to perform the processing steps, the vending machine needs to keep track of information such as what items are in stock, their prices and the available change. This information must be stored somewhere.
+
+The CPU
+-------
+
+The CPU is the most important part of a computer because of its instruction-processing functionality. The other parts of the computer follow the commands of the CPU. Two important characteristics of a CPU are:
+
+* the *clock speed*: the CPU contains a clock which produces a regular signal. All the low-level operations (switches) that the CPU performs in order to process instructions are synchronised to this signal.  The faster the clock, the faster the CPU can (in theory) operate -- but there are other limitations.  Today's typical clock speed is in excess of 1GHz or 1 000 000 000 switches per second.
+
+* the *instruction set*: this is the set of instructions (more accurately, the machine language instructions) that the CPU understands.  Different kinds of CPUs understand different sets of instructions: for example, Intel IA-32 and x86-64, IBM PowerPC or ARM.
+
+A CPU has several important subcomponents:
+
+* the *arithmetic/logic unit* (ALU) performs arithmetic and comparison operations.
+* the *control unit* determines which instruction to execute next.
+* *registers* form a high-speed storage area for temporary results.
+
+Memory
+------
+
+
+
 Types of computers
 ==================
 
