@@ -114,6 +114,42 @@ Historically, computers have been categorised into specialised subtypes. The dis
 History of computers
 ====================
 
+Today's computers are electronic. Earlier computers were mostly mechanical and electro-mechanical. Over time, computers have advanced exponentially.
+
+The oldest mechanical calculating aid is the abacus. It was invented in Babylon over 3000 years ago and was also used by the Chinese. It can be used for addition, subtraction, multiplication and division. More recently, in 1642, Blaise Pascal invented the first mechanical calculator. Pascal's machine was able to do addition and subtraction. In 1671, Gottfried von Leibnitz extended Pascal's machine to handle multiplication, division and square roots.
+
+In 1801, Joseph-Marie Jacquard invented a loom which read a tape of punched cards. It was able to weave cloth according to instructions on the cards. This was the first machine that could be reprogrammed.
+
+Towards the middle of the 1800s, Charles Babbage designed the Difference Engine, which was supposed to compute and print mathematical tables. However, it was never completed because he became engrossed in the design of his Analytical Engine. It was designed to follow instructions in a program and thus able to handle any computation.  Babbage's machine was also going to make use of punched cards, but unfortunately the English government stopped funding the project and the machine was never completed. It is doubtful that the machine could have worked, since it required metalworking skills beyond what was possible at the time.
+
+Ada Lovelace assisted Babbage in some of his work. In 1942, she translated one of Babbage's papers on the Analytical Engine from French to English and in the margins she wrote examples of how to use the machine -- in effect becoming the first programmer ever.
+
+American Herman Hollerith invented a method of using punched cards for automated data processing. His machines were employed by the US government to tabulate the 1890 census. Hollerith's firm later merged with three others to form International Business Machines (IBM). The punched card system remained in use well into the 1960s.
+
+In 1944, Howard Aiken and his team completed the Mark I computer - the world's first automatic computer. It operated with electro-mechanical switches and was able to multiply two numbers in six seconds. In 1946, John W. Mauchly and J. Presper Eckert designed the first general-purpose electronic computer called ENIAC (E)lectronic (N)umerical (I)ntegrator (A)nd (C)omputer. It was hundreds of times faster than any electro-mechanical computing devices and could be programmed by the plugging of wires into holes along its outside.
+
+Since the 1950s, computer systems have been available commercially. They have since become known by generation numbers.
+
+First-generation computers (1950s)
+----------------------------------
+
+Marking the first generation of computers, Sperry-Rand introduced a commercial electronic computer, the UNIVAC I. Other companies soon followed suit, but these computers were bulky and unreliable by today's standards. For electronic switchings, they used vacuum tubes which generated a lot of heat and often burnt out. Most programs were written in machine language and made use of punched cards for data storage.
+
+Second-generation computers (late 50s to mid-60s)
+-------------------------------------------------
+
+In the late 1950s, second generation computers were produced using transistors instead of vacuum tubes, which made them more reliable. Higher-level programming languages like FORTRAN, Algol and COBOL were developed at about this time, and many programmers began to use them instead of assembly or machine languages. This made programs more independent of specific computer systems. Manufacturers also provided larger amounts of primary memory and also introduced magnetic tapes for long-term data storage.
+
+Third-generation computers (mid-60s to early 70s)
+-------------------------------------------------
+
+In 1964, IBM introduced its System/360 line of computers -- with every machine in the line able to run the same programs, but at different speeds. This generation of computers started to employ integrated circuits containing many transistors. Most ran in batch mode, with a few running in time-share mode.
+
+Fourth-generation computers (early 70s and onwards)
+---------------------------------------------------
+
+From the early 1970s, computer designers have been concentrating on making smaller and smaller computer parts. Today, computers are assembled using very large-scale integration (VLSI) integrated circuits, each containing millions of transistors on single chips. This process has resulted in cheaper and more reliable computers. In the late 1960s and early 1970s, medium-sized organisations including colleges and universities began to use computers. Small businesses followed suit by the early 1980s. In this period, most were time-shared systems. Today's computers are usually single-user or multiple-user personal computers, with many connected to larger networks such as the Internet.
+
 Programming languages
 =====================
 
