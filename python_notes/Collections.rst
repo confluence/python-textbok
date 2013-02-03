@@ -104,7 +104,7 @@ How do we check whether a list contains a particular value?  We use ``in`` or ``
 List methods and functions
 --------------------------
 
-There are many built-in functions which you can use on lists and other sequences::
+There are many built-in functions which we can use on lists and other sequences::
 
     # the length of a list
     len(animals)
@@ -118,7 +118,7 @@ There are many built-in functions which you can use on lists and other sequences
     # are all of these values true?
     all([1,0,1,0,1])
 
-List objects also have useful methods which you can call::
+List objects also have useful methods which we can call::
 
     numbers = [1, 2, 3, 4, 5]
 
@@ -133,9 +133,9 @@ List objects also have useful methods which you can call::
 
     # find the index of a value
     numbers.index(3)
-    # if the value appears more than once, you will get the index of the first one
+    # if the value appears more than once, we will get the index of the first one
     numbers.index(2)
-    # if the value is not in the list, you will get a ValueError!
+    # if the value is not in the list, we will get a ValueError!
     numbers.index(42)
 
     # insert a value at a particular index
@@ -149,7 +149,7 @@ List objects also have useful methods which you can call::
     # if the value appears more than once, only the first one will be removed
     numbers.remove(5)
 
-If you want to sort or reverse a list, you can either call a method on the list to modify it *in-place*, or use a function to return a modified copy of the list while leaving the original list untouched::
+If we want to sort or reverse a list, we can either call a method on the list to modify it *in-place*, or use a function to return a modified copy of the list while leaving the original list untouched::
 
     numbers = [3, 2, 4, 1]
 
@@ -180,15 +180,15 @@ The ``reversed`` function actually returns a generator, not a list (we will look
 Using arithmetic operators with lists
 -------------------------------------
 
-Some of the arithmetic operators we have used on numbers before can also be used on lists, but the effect may not always be what you expect::
+Some of the arithmetic operators we have used on numbers before can also be used on lists, but the effect may not always be what we expect::
 
-    # you can concatenate two lists by adding them
+    # we can concatenate two lists by adding them
     print([1, 2, 3] + [4, 5, 6])
 
-    # you can concatenate a list with itself by multiplying it by an integer
+    # we can concatenate a list with itself by multiplying it by an integer
     print([1, 2, 3] * 3)
 
-    # not all arithmetic operators can be used on lists -- this will give you an error!
+    # not all arithmetic operators can be used on lists -- this will give us an error!
     print([1, 2, 3] - [2, 3])
 
 Lists vs arrays
@@ -320,10 +320,10 @@ How do we make an empty set?  We have to use the ``set`` function.  Dictionaries
     # this is an empty dictionary
     a = {}
 
-    # this is how you make an empty set
+    # this is how we make an empty set
     b = set()
 
-You can use the ``list``, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but you will probably seldom find a reason to do so.
+We can use the ``list``, ``tuple``, ``dict`` and even ``int``, ``float`` or ``str`` functions in the same way -- they all have sensible defaults -- but we will probably seldom find a reason to do so.
 
 Exercise 3
 ----------
@@ -339,7 +339,7 @@ Exercise 3
 Ranges
 ======
 
-``range`` is another kind of immutable sequence type. It is very specialised -- you use it to create ranges of integers.  Ranges are also *generators*.  We will find out more about generators in the next chapter, but for now you just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out::
+``range`` is another kind of immutable sequence type. It is very specialised -- we use it to create ranges of integers.  Ranges are also *generators*.  We will find out more about generators in the next chapter, but for now we just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out::
 
     # print the integers from 0 to 9
     print(list(range(10)))
@@ -400,7 +400,7 @@ The keys of a dictionary don't have to be strings -- they can be *any immutable 
     marbles["blue"] = 30 # this will work
     marbles["purple"] += 2 # this will fail -- the increment operator needs an existing value to modify!
 
-Like sets, dictionaries are not ordered -- if you print a dictionary, the order will be random.
+Like sets, dictionaries are not ordered -- if we print a dictionary, the order will be random.
 
 Here are some commonly used methods of dictionary objects::
 
@@ -408,7 +408,7 @@ Here are some commonly used methods of dictionary objects::
 
     # Get a value by its key, or None if it doesn't exist
     marbles.get("orange")
-    # You can specify a different default
+    # We can specify a different default
     marbles.get("orange", 0)
 
     # Add several items to the dictionary at once
@@ -484,10 +484,10 @@ We have to be more careful when converting a dictionary to a sequence: do we wan
     marbles = {"red": 34, "green": 30, "brown": 31, "yellow": 29 }
 
     colours = list(marbles) # the keys will be used by default
-    counts = tuple(marbles.values()) # but you can use a view to get the values
+    counts = tuple(marbles.values()) # but we can use a view to get the values
     marbles_set = set(marbles.items()) # or the key-value pairs
 
-If you convert the key-value pairs of a dictionary to a sequence, each pair will be converted to a tuple containing the key followed by the value.
+If we convert the key-value pairs of a dictionary to a sequence, each pair will be converted to a tuple containing the key followed by the value.
 
 We can also convert a sequence to a dictionary, but only if it's a sequence of *pairs* -- each pair must itself be a sequence with two values::
 
@@ -497,7 +497,7 @@ We can also convert a sequence to a dictionary, but only if it's a sequence of *
     # but this will work
     dict([(1, 2), (3, 4)])
 
-We will revisit conversions in the next chapter, when we learn about *comprehensions* -- an efficient syntax for filtering sequences or dictionaries.  By using the right kind of comprehension, you can filter a collection and convert it to a different type of collection at the same time.
+We will revisit conversions in the next chapter, when we learn about *comprehensions* -- an efficient syntax for filtering sequences or dictionaries.  By using the right kind of comprehension, we can filter a collection and convert it to a different type of collection at the same time.
 
 Another look at strings
 -----------------------
@@ -517,7 +517,7 @@ Remember that strings are immutable -- modifying characters in-place isn't allow
     # this will give us an error
     s[0] = "b"
 
-The membership operator has special behaviour when applied to strings: you can use it to determine if a string contains a single character as an element, but you can also use it to check if a string contains a substring::
+The membership operator has special behaviour when applied to strings: we can use it to determine if a string contains a single character as an element, but we can also use it to check if a string contains a substring::
 
     print('a' in 'abcd') # True
     print('ab' in 'abcd') # also True
@@ -584,11 +584,11 @@ Most of the sequences we have seen so far have been one-dimensional: each sequen
         [10, 11, 12],
     ]
 
-The outer list has four elements, and each of these elements is a list with three elements (which are numbers).  To access one of these numbers, you need to use two indices -- one for the outer list, and one for the inner list::
+The outer list has four elements, and each of these elements is a list with three elements (which are numbers).  To access one of these numbers, we need to use two indices -- one for the outer list, and one for the inner list::
 
     print(my_table[0][0])
 
-    # lists are mutable, so you can do this
+    # lists are mutable, so we can do this
     my_table[0][0] = 42
 
 We have already seen an example of this in the previous chapter, when we created a list of tuples to convert into a dict.
