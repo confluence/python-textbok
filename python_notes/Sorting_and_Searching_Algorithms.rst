@@ -79,10 +79,15 @@ Other well-known algorithms for sorting lists are *Insertion sort*,
 There are also a variety of algorithms which perform the sorting task
 for restricted kinds of values, for example:
 
-* *Counting sort* (relies on values all belonging to a small finite set)
-* *Bucket sort* (relies on being able to map each value to an element
-  of a small finite set)
+* *Counting sort* (relies on values all belonging to a small set of items)
+* *Bucket sort* (relies on being able to map each value to one of a
+  small set of items)
 * *Radix sort* (relies on values being sequences of digits)
+
+Restricting the task enlarges the set of algorithms that can perform
+it and among these new algorithms may be ones that have desirable
+properties. For example, *Radix sort* uses fewer steps than any
+generic sorting algorithm.
 
 
 Selection sort
