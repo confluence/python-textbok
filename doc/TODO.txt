@@ -1,11 +1,9 @@
 OUTSTANDING CHAPTERS
 
-* introduction - IN PROGRESS
-* sorting and searching algorithms -- add to end of collections?
+* sorting and searching algorithms -- IN PROGRESS
 
 OUTSTANDING SECTIONS
 
-* how to use the interpreter; how to write files; how to install packages (basics)
 * generators and yield, in the function chapter
 * with statement in the exceptions chapter
 
@@ -14,7 +12,3 @@ GLOBAL SEARCH AND REPLACE
 * replace "you" with "we" almost everywhere in earlier chapters
 * put term definitions in italics in earlier chapters
 * add hyperlinks between exercises and answers and whenever something is referenced?
-
-ACTIVITIES
-
-* do we keep these?

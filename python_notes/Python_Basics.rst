@@ -39,23 +39,80 @@ Getting started with Python
 Using the interactive interpreter
 ---------------------------------
 
+Entering ``python`` on the commandline without any parameters will launch the Python interpreter.  This is a text console in which you can enter Python commands one by one -- they will be interpreted on the fly.
+
+.. Note:: In these notes we will assume throughout that the ``python`` command launches Python 3, but if you have both Python 2 and Python 3 installed on your computer, you may need to specify that you want to use Python 3 by using the ``python3`` command instead.  Whenever you launch the interpreter, you will see some information printed before the prompt, which includes the version number -- make sure that it starts with 3! Take note of the command that you need to use.
+
+Here is an example of an interpreter prompt::
+
+    Python 3.2.3 (default, Oct 19 2012, 20:10:41)
+    [GCC 4.6.3] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+If you type a number, string or any variable into the interpreter, its value will automatically be echoed to the console::
+
+    >>> "hello"
+    'hello'
+    >>> 3
+    3
+
+That means that you don't have to use an explicit print command to display the value of a variable if you are using the interpreter -- you can just enter the bare variable, like this::
+
+    >>> x = 2
+    >>> x
+    2
+
+This won't work if you are running a program from a file -- if you were to enter the two lines above into a file and run it, you wouldn't see any output at all.  You would have to use the print function to output the value of ``x``::
+
+    x = 2
+    print(x)
+
+In most of the code examples in this module we have used explicit print statements, so that you will see the same output whether you use the examples in the interpreter or run them from files.
+
+The interpreter can be very useful when you want to test out a small piece of code before adding it to a larger program.  It's a quick and easy way to check how a function works or make sure that the syntax of a code fragment is correct.
+
+There are some other interactive interpreters for Python which have more advanced features than the built-in interpreter, for example functionality for inspecting the contents of objects or querying the documentation for imported modules, classes and functions:
+
+* `IPython <http://ipython.org/>`_, which was originally developed within the scientific community
+* `bpython <http://bpython-interpreter.org/>`_, a new project
+
 Running programs from files
 ---------------------------
 
-.. Todo:: translate the section about compiling programs. Say
-          something about how to use the interactive interpreter.
-          Include something about an IDE (Wing?).
+The interpreter is useful for testing code snippets and exploring functions and modules, but to save a program permanently we need to write it into a file.  Python files are commonly given the suffix ``.py``.  Once you have written a program and saved it, you can run it by using the ``python`` command with the file name as a parameter::
+
+    python myprogram.py
+
+This will cause Python to execute the program.
+
+Like any source code file, a Python file is just an ordinary text file.  You can edit it with any text editor you like.  It is a good idea to use a text editor which at least supports syntax highlighting -- that is, it can display the words in your program in different colours, depending on the function they perform in your program.  It is also useful to have indentation features such as the ability to indent or unindent blocks of code all at once, and automatic indentation (having the program guess the right level of indentation whenever you start typing a new line).
+
+Some programmers prefer to use an *integrated development environment*, or IDE. An IDE is a program which combines a text editor with additional functionality like looking up documentation, inspecting objects, compiling the code (in the case of a compiled language) and running the code.  Some IDEs support multiple languages, and some are designed for a specific language.
+
+There are many IDEs, free and commercial, which can be used with Python.  Python also comes with a simple built-in IDE called IDLE (you may need to install it from a separate package).
 
 Installing new packages
 -----------------------
 
-.. todo:: mention pip, easy_install and system package managers.
+How you install new Python packages depends a little on your operating system.  Linux distributions have their own package managers, and you may choose to install packages using these managers so that they are integrated with the other packages on your system.  However, some obscure Python packages may not be available as system packages, and the packages which are available are often not the latest versions.  It is thus sometimes necessary to install packages directly from PyPI.
+
+The `Python Package Index <http://pypi.python.org/pypi>`_ (PyPI) is a large repository of Python packages.  You can install packages from this repository using a tool like easy_install or pip (which is intended to be a more modern replacement for easy_install).  Both of these utilities are cross-platform.  Here is how you install a package called ``sqlobject`` with pip::
+
+    pip install sqlobject
+
+This command will search PyPI for a package called sqlobject, download it and install it on your system.
 
 Further reading
 ---------------
 
-.. todo:: links to Python tutorial and documentation
+In this module we will see many examples of Python's built-in functions and types and modules in the standard library -- but this document is only a summary, and not an exhaustive list of all the features of the language.  As you work on the exercises in this module, you should use the `official Python documentation <http://docs.python.org/3.3/index.html>`_ as a reference.
 
+For example, each module in the standard library has a section in the documentation which describes its *application programming interface*, or API -- the functionality which is available to you when you use the module in your code.  By looking up the API you will be able to see what functions the module provides, what input they require, what output they return, and so on. The documentation often includes helpful examples which show you how the module is meant to be used.
+
+The documentation is available on the web, but you can also install it on your computer -- you can either download a copy of the documentation files in HTML format so that you can browse them locally, or use a tool like ``pydoc``, which prints out the documentation on the commandline::
+
+    pydoc re
 
 Essentials of a Python program
 ==============================
