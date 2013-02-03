@@ -89,16 +89,32 @@ A computer's operating system provides high-level interfaces to secondary memory
 We can think of directories as boxes (which may contain other boxes). Although it's easy to visualise the contents of a hard drive or flash disk using this metaphor, it is important to note that it is only a metaphor -- at a lower level, a hard drive has a series of memory addresses just like RAM, and all the data is ultimately stored in this simple structure. Parts of the same file are not necessarily stored in adjacent memory addresses.
 
 Types of computers
-==================
+------------------
+
+Historically, computers have been categorised into specialised subtypes. The distinction is not always so clear-cut with modern computers, which can perform a greater variety of functions and often occupy multiple roles:
+
+* *single-user personal computers*: these computers are designed for home use by a single person at a time. They are small enough to fit on a desk -- something which was novel when they were first introduced.  Modern personal computers are powerful enough to be used for many functions which were previously performed by more specialised computers.
+
+* *time-share computer systems*: these computers are designed to allow multiple users to access them remotely at the same time.  They are typically located in air-conditioned rooms which are physically far away from the users.  Traditionally the remote computers, or *terminals*, which users use to connect are so-called *thin clients* or *dumb terminals* -- which have little computing power of their own -- and the time-share computers have specialised hardware.  Users are given access to such computers when they need to solve a problem that requires the use of a lot of computing power.  We sometimes call these powerful computers *supercomputers*.
+
+  Today the distinction between time-share systems and ordinary computer networks is somewhat blurred.  The role of the central computer can be played by an ordinary personal computer (although often one with much better hardware) which performs a specialised role. Users often use their normal personal computers as clients when connecting to other computers on the network.
+
+* *batch computer systems*: most computers are *interactive* -- when the user issues some kind of instruction, something happens in response right away.  Some computers were designed to process large batches of instructions non-interactively -- that is, large amounts of work was scheduled to be done without the possibility of further input from the user while it was being done.  This allowed the computers to use their resources more efficiently.
+
+  Some large companies may still use old-fashioned computer systems like this to perform highly repetitive tasks like payroll or accounting.  Most time-share systems can be used to perform non-interactive batch operations.  These operations are often scheduled during off-hours, when they are unlikely to compete with users for resources.
+
+* *computer networks*: these are multiple computers connected to each other with digital or analog cables or wirelessly, which are able to communicate with each other.  Today almost all computers can be connected to a network.  In most networks there are specialised computers called *servers* which provide services to other computers on the network (which are called *clients*).  For example, a storage server is likely to have many fast, high-capacity disk drives so that it can provide storage and back-up services to the whole network.  A print server might be optimised for managing print jobs.  Using servers keeps costs down by allowing users to share resources efficiently, while keeping the maintenance in one area.
+
+  The Internet is a very large international computer network. Many computers on the Internet are servers.  When you use a web browser, you send requests to web servers which respond by sending you webpages.
 
 History of computers
 ====================
 
-Programming a computer
-======================
-
 Programming languages
 =====================
+
+Programming a computer
+======================
 
 
 Summary
