@@ -28,6 +28,15 @@ to many data processing algorithms:
 * *space complexity* (how the amount of extra memory or storage
   required depends on the length of the input)
 
+.. Note::
+
+    *Computational complexity theory* studies the inherent complexity
+    of *tasks* themselves. Sometimes it is possible to prove that
+    *any* algorithm that can perform a given task will require some
+    minimum number of steps or amount of extra storage. A full
+    introduction to computational complexity theory is outside the
+    scope of these notes but we will mention some interesting results.
+
 
 Sorting algorithms
 ==================
