@@ -13,7 +13,6 @@ Contents:
     Variables_and_Scope
     Selection_Control_Statements
     Collections
-    Sorting_and_Searching_Algorithms
     Loop_Control_Statements
     Errors_and_Exceptions
     Functions
@@ -22,6 +21,7 @@ Contents:
     Packaging_and_Testing
     Useful_Libraries
     Introduction_to_GUI_Programming
+    Sorting_and_Searching_Algorithms
 
 Indices and tables
 ==================
