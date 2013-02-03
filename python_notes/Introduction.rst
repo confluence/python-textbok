@@ -74,7 +74,19 @@ A CPU has several important subcomponents:
 Memory
 ------
 
+A computer stores information in its memory for later reference. There are two types of memory: primary and secondary.
 
+*Primary memory* is connected directly to the CPU (or other processing units) and is usually referred to as RAM (random-access memory). Most primary memory loses its contents when the computer is switched off (i.e. it is *volatile*).
+
+.. Todo:: diagram?
+
+We can imagine primary memory as a long sequence of memory cells: each cell can be addressed by its memory address. These addresses start at zero for the first cell and each subsequent cell's address is one more than the one preceding it. Each cell can hold only a single number, but the CPU can replace the content with a new number at any time. The content can be retrieved without being erased from the cell.
+
+*Secondary memory* is cheaper than primary memory, and can thus be made available in much larger sizes. Although it is much slower, it is non-volatile -- that is, its contents are preserved even after the computer is switched off. Examples of this type of memory include hard disks and flash disks.
+
+A computer's operating system provides high-level interfaces to secondary memory.  These interfaces allow us to refer to clusters of related information called *files* which are arranged in a hierarchy of directories.  Both the interfaces and the hierarchies are often referred to as *filesystems*.
+
+We can think of directories as boxes (which may contain other boxes). Although it's easy to visualise the contents of a hard drive or flash disk using this metaphor, it is important to note that it is only a metaphor -- at a lower level, a hard drive has a series of memory addresses just like RAM, and all the data is ultimately stored in this simple structure. Parts of the same file are not necessarily stored in adjacent memory addresses.
 
 Types of computers
 ==================
