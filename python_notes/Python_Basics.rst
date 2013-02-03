@@ -39,9 +39,17 @@ Getting started with Python
 Using the interactive interpreter
 ---------------------------------
 
-Entering ``python`` on the commandline without any parameters will launch the Python interpreter.  This is a text console in which you can enter Python commands one by one -- they will be interpreted on the fly.
+Entering ``python`` on the commandline without any parameters will
+launch the Python interpreter.  This is a text console in which you can
+enter Python commands one by one -- they will be interpreted on the fly.
 
-.. Note:: In these notes we will assume throughout that the ``python`` command launches Python 3, but if you have both Python 2 and Python 3 installed on your computer, you may need to specify that you want to use Python 3 by using the ``python3`` command instead.  Whenever you launch the interpreter, you will see some information printed before the prompt, which includes the version number -- make sure that it starts with 3! Take note of the command that you need to use.
+.. Note:: In these notes we will assume throughout that the ``python``
+   command launches Python 3, but if you have both Python 2 and Python 3
+   installed on your computer, you may need to specify that you want to use
+   Python 3 by using the ``python3`` command instead.  Whenever you launch
+   the interpreter, you will see some information printed before the
+   prompt, which includes the version number -- make sure that it starts
+   with 3! Take note of the command that you need to use.
 
 Here is an example of an interpreter prompt::
 
@@ -50,67 +58,126 @@ Here is an example of an interpreter prompt::
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
 
-If you type a number, string or any variable into the interpreter, its value will automatically be echoed to the console::
+If you type a number, string or any variable into the interpreter, its
+value will automatically be echoed to the console::
 
     >>> "hello"
     'hello'
     >>> 3
     3
 
-That means that you don't have to use an explicit print command to display the value of a variable if you are using the interpreter -- you can just enter the bare variable, like this::
+That means that you don't have to use an explicit print command to
+display the value of a variable if you are using the interpreter -- you
+can just enter the bare variable, like this::
 
     >>> x = 2
     >>> x
     2
 
-This won't work if you are running a program from a file -- if you were to enter the two lines above into a file and run it, you wouldn't see any output at all.  You would have to use the print function to output the value of ``x``::
+This won't work if you are running a program from a file -- if you were
+to enter the two lines above into a file and run it, you wouldn't see
+any output at all.  You would have to use the print function to output
+the value of ``x``::
 
     x = 2
     print(x)
 
-In most of the code examples in this module we have used explicit print statements, so that you will see the same output whether you use the examples in the interpreter or run them from files.
+In most of the code examples in this module we have used explicit print
+statements, so that you will see the same output whether you use the
+examples in the interpreter or run them from files.
 
-The interpreter can be very useful when you want to test out a small piece of code before adding it to a larger program.  It's a quick and easy way to check how a function works or make sure that the syntax of a code fragment is correct.
+The interpreter can be very useful when you want to test out a small
+piece of code before adding it to a larger program.  It's a quick and
+easy way to check how a function works or make sure that the syntax of a
+code fragment is correct.
 
-There are some other interactive interpreters for Python which have more advanced features than the built-in interpreter, for example functionality for inspecting the contents of objects or querying the documentation for imported modules, classes and functions:
+There are some other interactive interpreters for Python which have more
+advanced features than the built-in interpreter, for example
+functionality for inspecting the contents of objects or querying the
+documentation for imported modules, classes and functions:
 
-* `IPython <http://ipython.org/>`_, which was originally developed within the scientific community
+* `IPython <http://ipython.org/>`_, which was originally developed
+  within the scientific community
 * `bpython <http://bpython-interpreter.org/>`_, a new project
 
 Running programs from files
 ---------------------------
 
-The interpreter is useful for testing code snippets and exploring functions and modules, but to save a program permanently we need to write it into a file.  Python files are commonly given the suffix ``.py``.  Once you have written a program and saved it, you can run it by using the ``python`` command with the file name as a parameter::
+The interpreter is useful for testing code snippets and exploring
+functions and modules, but to save a program permanently we need to
+write it into a file.  Python files are commonly given the suffix
+``.py``.  Once you have written a program and saved it, you can run it
+by using the ``python`` command with the file name as a parameter::
 
     python myprogram.py
 
 This will cause Python to execute the program.
 
-Like any source code file, a Python file is just an ordinary text file.  You can edit it with any text editor you like.  It is a good idea to use a text editor which at least supports syntax highlighting -- that is, it can display the words in your program in different colours, depending on the function they perform in your program.  It is also useful to have indentation features such as the ability to indent or unindent blocks of code all at once, and automatic indentation (having the program guess the right level of indentation whenever you start typing a new line).
+Like any source code file, a Python file is just an ordinary text file.
+You can edit it with any text editor you like.  It is a good idea to use
+a text editor which at least supports syntax highlighting -- that is, it
+can display the words in your program in different colours, depending on
+the function they perform in your program.  It is also useful to have
+indentation features such as the ability to indent or unindent blocks of
+code all at once, and automatic indentation (having the program guess
+the right level of indentation whenever you start typing a new line).
 
-Some programmers prefer to use an *integrated development environment*, or IDE. An IDE is a program which combines a text editor with additional functionality like looking up documentation, inspecting objects, compiling the code (in the case of a compiled language) and running the code.  Some IDEs support multiple languages, and some are designed for a specific language.
+Some programmers prefer to use an *integrated development environment*,
+or IDE. An IDE is a program which combines a text editor with additional
+functionality like looking up documentation, inspecting objects,
+compiling the code (in the case of a compiled language) and running the
+code.  Some IDEs support multiple languages, and some are designed for a
+specific language.
 
-There are many IDEs, free and commercial, which can be used with Python.  Python also comes with a simple built-in IDE called IDLE (you may need to install it from a separate package).
+There are many IDEs, free and commercial, which can be used with Python.
+Python also comes with a simple built-in IDE called IDLE (you may need
+to install it from a separate package).
 
 Installing new packages
 -----------------------
 
-How you install new Python packages depends a little on your operating system.  Linux distributions have their own package managers, and you may choose to install packages using these managers so that they are integrated with the other packages on your system.  However, some obscure Python packages may not be available as system packages, and the packages which are available are often not the latest versions.  It is thus sometimes necessary to install packages directly from PyPI.
+How you install new Python packages depends a little on your operating
+system.  Linux distributions have their own package managers, and you
+may choose to install packages using these managers so that they are
+integrated with the other packages on your system.  However, some
+obscure Python packages may not be available as system packages, and the
+packages which are available are often not the latest versions.  It is
+thus sometimes necessary to install packages directly from PyPI.
 
-The `Python Package Index <http://pypi.python.org/pypi>`_ (PyPI) is a large repository of Python packages.  You can install packages from this repository using a tool like easy_install or pip (which is intended to be a more modern replacement for easy_install).  Both of these utilities are cross-platform.  Here is how you install a package called ``sqlobject`` with pip::
+The `Python Package Index <http://pypi.python.org/pypi>`_ (PyPI) is a
+large repository of Python packages.  You can install packages from this
+repository using a tool like easy_install or pip (which is intended to
+be a more modern replacement for easy_install).  Both of these utilities
+are cross-platform.  Here is how you install a package called
+``sqlobject`` with pip::
 
     pip install sqlobject
 
-This command will search PyPI for a package called sqlobject, download it and install it on your system.
+This command will search PyPI for a package called sqlobject, download
+it and install it on your system.
 
 Further reading
 ---------------
 
-In this module we will see many examples of Python's built-in functions and types and modules in the standard library -- but this document is only a summary, and not an exhaustive list of all the features of the language.  As you work on the exercises in this module, you should use the `official Python documentation <http://docs.python.org/3.3/index.html>`_ as a reference.
+In this module we will see many examples of Python's built-in functions
+and types and modules in the standard library -- but this document is
+only a summary, and not an exhaustive list of all the features of the
+language.  As you work on the exercises in this module, you should use
+the `official Python documentation
+<http://docs.python.org/3.3/index.html>`_ as a reference.
 
-For example, each module in the standard library has a section in the documentation which describes its *application programming interface*, or API -- the functionality which is available to you when you use the module in your code.  By looking up the API you will be able to see what functions the module provides, what input they require, what output they return, and so on. The documentation often includes helpful examples which show you how the module is meant to be used.
+For example, each module in the standard library has a section in the
+documentation which describes its *application programming interface*,
+or API -- the functionality which is available to you when you use the
+module in your code.  By looking up the API you will be able to see what
+functions the module provides, what input they require, what output they
+return, and so on. The documentation often includes helpful examples
+which show you how the module is meant to be used.
 
-The documentation is available on the web, but you can also install it on your computer -- you can either download a copy of the documentation files in HTML format so that you can browse them locally, or use a tool like ``pydoc``, which prints out the documentation on the commandline::
+The documentation is available on the web, but you can also install it
+on your computer -- you can either download a copy of the documentation
+files in HTML format so that you can browse them locally, or use a tool
+like ``pydoc``, which prints out the documentation on the commandline::
 
     pydoc re
 
@@ -166,7 +233,7 @@ keywords in Python::
 Identifier names
 ----------------
 
-When you write a Python program, you will create many entities --
+When we write a Python program, we will create many entities --
 variables which store values like numbers or strings, as well as
 functions and classes.  These entities must given names by which they
 can be referred to uniquely -- these names are known as identifiers.
@@ -183,11 +250,11 @@ Python has some rules that you must follow when forming an identifier:
 * it may not start with a number.
 * it may not be a keyword.
 
-If you break any of these rules, your program will exit with a syntax
+If we break any of these rules, our program will exit with a syntax
 error.  However, not all identifiers which are syntactically correct
-are meaningful to human readers.  There are a few guidelines that you
-should follow when naming your variables to make your code easier to
-understand (by other people, and by you!) -- this is an important part
+are meaningful to human readers.  There are a few guidelines that we
+should follow when naming our variables to make our code easier to
+understand (by other people, and by us!) -- this is an important part
 of following a good coding style:
 
 * be descriptive -- a variable name should describe the contents of
@@ -240,7 +307,7 @@ Exercise 1
 ----------
 
 Write down why each of the entries in the left column will raise a
-syntax error if used as an identifier.
+syntax error if it is used as an identifier.
 
 
 Flow of control
@@ -260,9 +327,9 @@ Indentation and (lack of) semicolons
 
 Many languages arrange code into blocks using curly braces (``{`` and
 ``}``) or ``BEGIN`` and ``END`` statements -- these languages
-encourage you to indent blocks to make code easier to read, but
+encourage us to indent blocks to make code easier to read, but
 indentation is not compulsory.  Python uses indentation only to
-delimit blocks, so you *must* indent your code::
+delimit blocks, so we *must* indent our code::
 
     # this function definition starts a new block
     def add_numbers(a, b):
@@ -278,12 +345,12 @@ delimit blocks, so you *must* indent your code::
     # this is outside the block!
     print("Print this no matter what.")
 
-In many languages you need to use a special character to mark the end
+In many languages we need to use a special character to mark the end
 of each instruction -- usually a semicolon.  Python uses ends of lines
 to determine where instructions end (except in some special cases when
 the last symbol on the line lets Python know that the instruction will
-span multiple lines).  You may optionally use semicolons -- this is
-something you might want to do if you want to put more than one
+span multiple lines).  We may optionally use semicolons -- this is
+something we might want to do if we want to put more than one
 instruction on a line (but that is usually bad style)::
 
     # These all individual instructions -- no semicolons required!
@@ -354,14 +421,14 @@ programmer to:
 * describe what the program does
 * describe (in higher-level terms than the code) how the program works
 
-It is not necessary to comment each line. You should comment in
-appropriate places where it might not be clear what is going on. You
+It is not necessary to comment each line. We should comment in
+appropriate places where it might not be clear what is going on. We
 can also put a short comment describing what is taking place in the
 next few instructions following the comment.
 
 Some languages also have support for comments that span multiple
-lines, but Python does not.  If you want to type a very long comment
-in Python, you should split it into multiple shorter lines and put a
+lines, but Python does not.  If we want to type a very long comment
+in Python, we need to split it into multiple shorter lines and put a
 ``#`` at the start of each line.
 
 .. Note:: It is possible to insert a multi-line string literal into
@@ -384,18 +451,18 @@ Reading and writing
 -------------------
 
 Many programs display text on the screen either to give some
-information or to ask for some information. For example, you might
-just want to tell the user what your program does::
+information or to ask for some information. For example, we might
+just want to tell the user what our program does::
 
     Welcome to John's Calculating Machine.
 
-Perhaps you might want to ask the user for a number::
+Perhaps we might want to ask the user for a number::
 
     Enter the first number:
 
 The easiest way to output information is to display a string literal
 using the built-in ``print`` function. A string literal is text
-enclosed in quotes. You can use either single quotes (``'``) or double
+enclosed in quotes. We can use either single quotes (``'``) or double
 quotes (``"``) -- but the start quote and the end quote have to match!
 
 These are examples of string literals::
@@ -409,11 +476,11 @@ following instruction::
     print("Hello!")
 
 As you can see the ``print`` function takes in a string as an
-argument.  It prints the string, and by default also prints a newline
+argument.  It prints the string, and also prints a newline
 character at the end -- this is why the console's cursor appears on a
-new line after you have printed something.
+new line after we have printed something.
 
-To query the user for information, use the ``input`` function::
+To query the user for information, we use the ``input`` function::
 
     first_number = input('Enter the first number: ')
 
@@ -445,7 +512,7 @@ function without a parameter::
 Files
 -----
 
-Although the ``print`` function prints to the console by default, you
+Although the ``print`` function prints to the console by default, we
 can also use it to write to a file.  Here is a simple example::
 
     with open('myfile.txt', 'w') as myfile:
@@ -468,8 +535,8 @@ method as follows::
 A method is a function attached to an object -- methods will be
 explained in more detail in the chapter about classes.
 
-Unlike ``print``, the ``write`` method does add a newline to the
-string written.
+Unlike ``print``, the ``write`` method does not add a newline to the
+string which is written.
 
 We can read data from a file by opening it for reading and using the
 file's ``read`` method::
@@ -511,13 +578,13 @@ integers, while common integer operations are addition, subtraction,
 multiplication and division.
 
 Python is a dynamically (and not statically) typed language.  That
-means that you don't have to specify a type for a variable when you
-create it -- you can use the same variable to store values of
+means that we don't have to specify a type for a variable when we
+create it -- we can use the same variable to store values of
 different types.  However, Python is also strongly (and not weakly)
-typed -- at any given time, a variable has a definite type.  If you
+typed -- at any given time, a variable has a definite type.  If we
 try to perform operations on variables which have incompatible types
-(for example, if you try to add a number to a string), Python will
-exit with a type error instead of trying to guess what you mean.
+(for example, if we try to add a number to a string), Python will
+exit with a type error instead of trying to guess what we mean.
 
 The function ``type`` can be used to determine the type of an
 object. For example::
@@ -541,10 +608,10 @@ Python can display an integer with the ``print`` function, but only if
 it is the only argument::
 
     print(3)
-    # You can add two numbers together
+    # We can add two numbers together
     print(1 + 2)
 
-You can't combine a string and an integer directly, because Python is
+We can't combine a string and an integer directly, because Python is
 strongly typed::
 
     >>> print("My number is " + 3)
@@ -552,14 +619,14 @@ strongly typed::
       File "<stdin>", line 1, in <module>
     TypeError: Can't convert 'int' object to str implicitly
 
-If you want to print a number and a string together, you will have to
+If we want to print a number and a string together, we will have to
 convert the number to a string somehow::
 
     # str function converts things to strings.
-    # Then you can concatenate two strings with +.
+    # Then we can concatenate two strings with +.
     print("My number is " + str(3))
 
-    # String formatting does the conversion for you.
+    # String formatting does the conversion for us.
     print("My number is %d" % 3)
 
 Other integer operations:
@@ -645,8 +712,8 @@ understandable.
 Exercise 4
 ----------
 
-#. Which of the following numbers are valid Python integers: ``110``, ``1.0``,
-   ``17.5``, ``-39``, ``-2.3``
+#. Which of the following numbers are valid Python integers? ``110``,
+   ``1.0``, ``17.5``, ``-39``, ``-2.3``
 
 #. What are the results of the following operations and explain why:
    #. ``15 + 20 * 3``
@@ -664,18 +731,18 @@ Floating-point numbers
 
 Floating-point numbers (``float`` type) are numbers with a decimal
 point or an exponent (or both). Examples are ``5.0``, ``10.24``,
-``0.0``, ``12.`` and ``.3``. You can use scientific notation to denote
+``0.0``, ``12.`` and ``.3``. We can use scientific notation to denote
 very large or very small floating point numbers, e.g. 3.8 x 10\
 :sup:`15`. The first part of the number, 3.8, is the mantissa and 15
-is the exponent. You can think of the exponent as the number of times
-you have to move the decimal point to the right to get to the actual
+is the exponent. We can think of the exponent as the number of times
+we have to move the decimal point to the right to get to the actual
 value of the number.
 
-In Python, you can write the number 3.8 x 10\ :sup:`15` as ``3.8e15``
-or ``3.8e+15``. You can also write it as ``38e14`` or
+In Python, we can write the number 3.8 x 10\ :sup:`15` as ``3.8e15``
+or ``3.8e+15``. We can also write it as ``38e14`` or
 ``.038e17``. They are all the same value. A negative exponent
 indicates smaller numbers, e.g. ``2.5e-3`` is the same as
-``0.0025``. Negative exponents can be thought of as how many times you
+``0.0025``. Negative exponents can be thought of as how many times we
 have to move the decimal point to the left. Negative mantissa
 indicates that the number itself is negative, e.g. ``-2.5e3`` equals
 ``-2500`` and ``-2.5e-3`` equals ``-0.0025``.
@@ -694,7 +761,7 @@ notation::
     # This will print 1e-10
     print(0.0000000001)
 
-When displaying floats, you will usually specify how you would like
+When displaying floats, we will usually specify how we would like
 them to be displayed, using string formatting::
 
     # This will print 12.35
@@ -716,18 +783,19 @@ floating-point division operator is ``/``.  Floating-point operations
 always produce a floating-point solution. The order of precedence for
 these operators is the same as those for integer operators.
 
-Often, you will have to decide which type of number to use in a
-program. Generally, you should use an integer for counting and
-measuring discrete whole numbers. Use floating-point numbers for
+Often, we will have to decide which type of number to use in a
+program. Generally, we should use integers for counting and
+measuring discrete whole numbers. We should use floating-point numbers
+for
 measuring things that are continuous.
 
-You can combine integers and floating-point numbers in arithmetic
+We can combine integers and floating-point numbers in arithmetic
 expressions without having to convert them -- this is something that
-Python will do for you automatically.  If you perform an arithmetic
+Python will do for us automatically.  If we perform an arithmetic
 operation on an integer and a floating-point number, the result will
 always be a floating-point number.
 
-You can use the integer division operator on floating-point numbers,
+We can use the integer division operator on floating-point numbers,
 and vice versa. The two division operators are at the same level in
 the order of precedence.
 
@@ -744,26 +812,28 @@ the order of precedence.
 
     Python includes three other types for dealing with numbers:
 
-    * ``complex`` (like floating-point but for complex numbers, try ``1+5j``)
-    * ``Fraction`` (for rational numbers, available in the ``fractions`` module)
-    * ``Decimal`` (for decimal floating-point arithmetic, available in
+    * ``complex`` (like floating-point but for complex numbers; try
+      ``1+5j``)
+    * ``Fraction`` (for rational numbers; available in the ``fractions``
+      module)
+    * ``Decimal`` (for decimal floating-point arithmetic; available in
       the ``decimal`` module).
 
-    Using these is beyond the scope of these notes but it's worthwhile
-    knowing they exist in case you have a use for them later.
-
+    Using these is beyond the scope of this module, but it's worth
+    knowing that they exist in case you have a use for them later.
 
 Exercise 5
 ----------
 
 #. Which of the following are Python floating-point numbers: ``1``,
-   ``1.0``, ``1.12e4``, ``-3.141759``, ``735``, ``0.57721566``, ``7.5e-3``
+   ``1.0``, ``1.12e4``, ``-3.141759``, ``735``, ``0.57721566``,
+   ``7.5e-3``
 
 #. What is the difference between integer and floating point division?
    What is the operator used for integer division? What is the
    operator used for floating point division?
 
-#. What are the results of the following operations and explain why:
+#. What are the results of the following operations? Explain why:
    #. ``1.5 + 2``
    #. ``1.5 // 2.0``
    #. ``1.5 / 2.0``
@@ -775,7 +845,6 @@ Exercise 5
 
 #. What happens when you evaluate ``1e1000``? What about ``-1e1000``?
    And ``type(1e1000)``?
-
 
 Strings
 =======
@@ -792,18 +861,18 @@ characters -- but in Python single characters are just strings with a
 length of 1.
 
 .. Note:: In Python 2, the ``str`` type used the ASCII encoding. If
-          you wanted to use strings containing Unicode (for example,
-          characters from other alphabets or special punctuation) you
+          we wanted to use strings containing Unicode (for example,
+          characters from other alphabets or special punctuation) we
           had to use the ``unicode`` type. In Python 3, the ``str``
           type uses Unicode.
 
 String formatting
 -----------------
 
-You will often need to print a message which is not a fixed string --
-perhaps you want to include some numbers or other values which are
+We will often need to print a message which is not a fixed string --
+perhaps we want to include some numbers or other values which are
 stored in variables.  The recommended way to include these variables
-in your message is to use string formatting syntax::
+in our message is to use string formatting syntax::
 
     name = "Jane"
     age = 23
@@ -814,9 +883,9 @@ The symbols in the string which start with percent signs (``%``) are
 placeholders, and the variables which are to be inserted into those
 positions are given after the string formatting operator, ``%``, in
 the same order in which they appear in the string.  If there is only
-one variable, it doesn't require any kind of wrapper, but if you have
-more than one you need to put them in a tuple (between round
-brackets).  The placeholders symbols have different letters depending
+one variable, it doesn't require any kind of wrapper, but if we have
+more than one we need to put them in a tuple (between round
+brackets).  The placeholder symbols have different letters depending
 on the type of the variable -- ``name`` is a string, but ``age`` is an
 integer.  All the variables will be converted to strings before being
 combined with the rest of the message.
@@ -826,22 +895,22 @@ Escape sequences
 
 An escape sequence (of characters) can be used to denote a special
 character which cannot be typed easily on a keyboard or one which has
-been reserved for other purposes.  For example, you may want to insert
+been reserved for other purposes.  For example, we may want to insert
 a newline into your string::
 
     print('This is one line.\nThis is another line.')
 
-If your string is enclosed in single quotes, you will have to escape
-apostrophes, and you need to do the same for double quotes in a string
+If our string is enclosed in single quotes, we will have to escape
+apostrophes, and we need to do the same for double quotes in a string
 enclosed in double quotes.  An escape sequence starts with a backslash
 (``\``)::
 
     print('"Hi! I\'m Jane," she said.')
     print("\"Hi! I'm Jane,\" she said.")
 
-If you did not escape one of these quotes, Python would treat it as
-the end quote of your string -- and shortly afterwards it would fail
-to parse the rest of the statement and give you a syntax error::
+If we did not escape one of these quotes, Python would treat it as
+the end quote of our string -- and shortly afterwards it would fail
+to parse the rest of the statement and give us a syntax error::
 
     >>> print('"Hi! I'm Jane," she said.')
       File "<stdin>", line 1
@@ -861,12 +930,17 @@ Sequence  Meaning
 ``\t``    tab
 ========  =================
 
-You can also use escape sequences to output unicode characters.
+We can also use escape sequences to output unicode characters.
 
 Raw strings
 -----------
 
-Sometimes we may need to define string literals which contain many backslashes -- escaping all of them can be tedious.  We can avoid this by using Python's *raw string* notation.  By adding an ``r`` before the opening quote of the string, we indicate that the contents of the string are exactly what we have written, and that backslashes have no special meaning.  For example::
+Sometimes we may need to define string literals which contain many
+backslashes -- escaping all of them can be tedious.  We can avoid this
+by using Python's *raw string* notation.  By adding an ``r`` before the
+opening quote of the string, we indicate that the contents of the string
+are exactly what we have written, and that backslashes have no special
+meaning.  For example::
 
     # This string ends in a newline
     "Hello!\n"
@@ -874,19 +948,22 @@ Sometimes we may need to define string literals which contain many backslashes -
     # This string ends in a backslash followed by an 'n'
     r"Hello!\n"
 
-We most often use raw strings when we are passing strings to some other program which does its *own* processing of special sequences.  We want to leave all such sequences untouched in Python, to allow the other program to handle them.
+We most often use raw strings when we are passing strings to some other
+program which does its *own* processing of special sequences.  We want
+to leave all such sequences untouched in Python, to allow the other
+program to handle them.
 
 Triple quotes
 -------------
 
-In cases where you need to define a long literal spanning multiple
+In cases where we need to define a long literal spanning multiple
 lines, or containing many quotes, it may be simplest and most legible
 to enclose it in triple quotes (either single or double quotes, but of
 course they must match).  Inside the triple quotes, all whitespace is
-treated literally -- if you type a newline it will be reflected in
-your string.  You also don't have to escape any quotes.  Be careful
-that you don't include anything that you don't mean to -- any
-indentation will also go inside your string!
+treated literally -- if we type a newline it will be reflected in
+our string.  We also don't have to escape any quotes.  We must be
+careful not to include anything that we don't mean to -- any indentation
+will also go inside our string!
 
 These string literals will be identical::
 
@@ -917,16 +994,16 @@ objects, and accessed with the attribute reference operator, ``.``)::
 
 Why does the last print statement output the original value of
 ``name``? It's because the ``lower`` method does not change the value
-of ``name``.  It returns a modified *copy* of the value.  If you
-wanted to change the value of ``name`` permanently, you would have to
+of ``name``.  It returns a modified *copy* of the value.  If we
+wanted to change the value of ``name`` permanently, we would have to
 assign the new value to the variable, like this::
 
     # Convert the string to lowercase
     name = name.lower()
     print(name)
 
-In Python, strings are *immutable* -- that means that you can't modify
-a string once it has been created.  However, you can assign a new
+In Python, strings are *immutable* -- that means that we can't modify
+a string once it has been created.  However, we can assign a new
 string value to an existing variable name.
 
 Exercise 6
@@ -966,10 +1043,6 @@ Exercise 6
 
    Why is the second line output not lowercase?
 
-
-.. Todo:: change you to we almost everywhere
-
-
 Answers to exercises
 ====================
 
@@ -988,7 +1061,8 @@ class           Identifier is a keyword.
 Answer to exercise 2
 --------------------
 
-The two statements inside the block defined by the ``append_chickens`` function are::
+The two statements inside the block defined by the ``append_chickens``
+function are::
 
     text = text + " Rawwwk!"
     return text
@@ -1012,7 +1086,7 @@ Answer to exercise 4
 
 #. The valid Python integers are: ``110`` and ``-39``
 
-#. What are the results of the following operations and explain why:
+#.
 
    #. ``15 + 20 * 3``: ``75`` -- ``*`` has higher precedence than ``+``.
    #. ``13 // 2 + 3``: ``9`` -- ``//`` has higher precedence than ``+``.
@@ -1029,14 +1103,15 @@ Answer to exercise 4
 Answer to exercise 5
 --------------------
 
-#. Only ``1`` and ``735`` are not floating-point numbers (they are integers).
+#. Only ``1`` and ``735`` are not floating-point numbers (they are
+integers).
 
 #. In integer division the fractional part (remainder) is discarded
    (although the result is always a float if one of the operands was a
    float). The Python operator for integer division is ``//``. The
    operator for floating-point division is ``/``.
 
-#. What are the results of the following operations and explain why:
+#.
 
    #. ``1.5 + 2``: ``3.5`` -- the integer ``2`` is converted to a
       floating-point number and then added to ``1.5``.
@@ -1080,7 +1155,8 @@ Answer to exercise 6
 
 #. Using single double-quotes::
 
-       "the first cold shower\neven the monkey seems to want\na little coat of straw"
+       "the first cold shower\neven the monkey seems to want\na little
+       coat of straw"
 
    Using triple quotes::
 
