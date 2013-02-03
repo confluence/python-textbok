@@ -195,4 +195,13 @@ Algorithm complexity
 Complexities of common operations in Python
 ===========================================
 
+.. TODO::
 
+    Summarize the important bits from http://wiki.python.org/moin/TimeComplexity
+
+Answers to exercises
+====================
+
+.. TODO::
+
+   Put answers here.
