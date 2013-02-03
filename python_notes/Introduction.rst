@@ -183,7 +183,9 @@ The first line tells the computer to copy 17 into the AL register: the first fou
 
 As you can see, it is quite hard to write a program in machine language.  In the 1940s, the programmers of the first computers had to do this because there were no other options!  To simplify the programming process, *assembly language* was introduced.
 
-Each assembly instruction corresponds to one machine language instruction, but it is more easily understood by humans, as can be seen in the equivalent addition program in the 8086 assembly language::
+Each assembly instruction corresponds to one machine language instruction, but it is more easily understood by humans, as can be seen in the equivalent addition program in the 8086 assembly language:
+
+.. code-block:: nasm
 
     MOV AL, 17D
     ADD AL, 20D
@@ -277,8 +279,8 @@ Once you have an algorithm, you can translate it into Python.  Some parts of the
 
 You should take care to avoid errors by thinking through your program as you write it, section by section. This is called *desk checking*.  In later chapters we will also discuss other tools for checking your code, for example programs which automatically check the code for certain kinds of errors.
 
-Test the program
-^^^^^^^^^^^^^^^^
+Testing the program
+^^^^^^^^^^^^^^^^^^^
 
 After thoroughly desk checking the program as you write, you should run it and test it with several different input values. Later in this module we will see how to write automated tests -- programs that you write to test your programs. Automated tests make it easy to run the same tests repeatedly to make sure that your program still works.
 
@@ -292,7 +294,9 @@ Procedural languages
 
 Procedural (also known as imperative) languages form the largest group of languages. A program written in a procedural language consists of a list of statements, which the computer follows in order. Different parts of the program communicate with one another using variables. A variable is actually a named location in primary memory. The value stored in a variable can usually be changed throughout the program's execution. In some other programming language paradigms (such as logic languages), variables act more like variables used in mathematics and their values may not be changed.
 
-BASIC is an example of a procedural programming language. It has a very simple syntax (originally only 14 statement types). Here is some BASIC code for adding 17 and 20::
+BASIC is an example of a procedural programming language. It has a very simple syntax (originally only 14 statement types). Here is some BASIC code for adding 17 and 20:
+
+.. code-block:: vbnet
 
     10 REM THIS BASIC PROGRAM CALCULATES THE SUM OF
     20 REM 17 AND 20, THEN DISPLAYS THE RESULT.
@@ -303,7 +307,9 @@ BASIC is an example of a procedural programming language. It has a very simple s
 
 In the early 1990s, Microsoft's Visual Basic extended the BASIC language to a development system for Microsoft Windows.
 
-COBOL (COmmon Business Oriented Language) has commonly been used in business. It was designed for ease of data movement. Here's the addition program written in COBOL::
+COBOL (COmmon Business Oriented Language) has commonly been used in business. It was designed for ease of data movement. Here's the addition program written in COBOL:
+
+.. code-block:: cobol
 
     IDENTIFICATION DIVISION.
     PROGRAM-ID.      ADDING.
