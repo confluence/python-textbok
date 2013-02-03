@@ -21,16 +21,16 @@ Selection sort
 
 Here is the algorithm for selection sort:
 
-* Search the whole array for the smallest element. Swap that element
-  with the element in location 0.
+* Search the whole list for the smallest element. Swap that element
+  with the element at location 0.
 
-* Search the array from location 1 to the end for the smallest
-  element. Swap that element with the element in location 1.
+* Search the list from location 1 to the end for the smallest
+  element. Swap that element with the element at location 1.
 
-* Search the array from location 2 to the end for the smallest
-  element. Swap that element with the element in location 2.
+* Search the list from location 2 to the end for the smallest
+  element. Swap that element with the element at location 2.
 
-* Continue in this way for all the other locations in the array.
+* Continue in this way for all the other locations in the list.
 
 To illustrate the principle behind selection sort, we use the
 following array as an example:
