@@ -362,7 +362,7 @@ instruction on a line (but that is usually bad style)::
     b = [1, 2, 3,
         4, 5, 6]
 
-    # This is legal, but you shouldn't do it
+    # This is legal, but we shouldn't do it
     c = 1; d = 5
 
 Exercise 2
@@ -432,12 +432,12 @@ in Python, we need to split it into multiple shorter lines and put a
 ``#`` at the start of each line.
 
 .. Note:: It is possible to insert a multi-line string literal into
-          your code by enclosing it in triple quotes.  This is not
+          our code by enclosing it in triple quotes.  This is not
           normally used for comments, except in the special case of
           docstrings: strings which are inserted at the top of
           structures like functions and classes, and which document
           them according to a standard format.  It is good practice to
-          annotate your code in this way because automated tools can
+          annotate our code in this way because automated tools can
           then parse it to generate documentation automatically.  We
           will discuss docstrings further in a future chapter.
 
@@ -896,7 +896,7 @@ Escape sequences
 An escape sequence (of characters) can be used to denote a special
 character which cannot be typed easily on a keyboard or one which has
 been reserved for other purposes.  For example, we may want to insert
-a newline into your string::
+a newline into our string::
 
     print('This is one line.\nThis is another line.')
 
