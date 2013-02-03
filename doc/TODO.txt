@@ -9,6 +9,6 @@ OUTSTANDING SECTIONS
 
 GLOBAL SEARCH AND REPLACE
 
-* replace "you" with "we" almost everywhere in earlier chapters
+* replace "you" with "we" almost everywhere in earlier chapters - done up to collections; check everything
 * put term definitions in italics in earlier chapters
 * add hyperlinks between exercises and answers and whenever something is referenced?
