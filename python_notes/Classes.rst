@@ -417,7 +417,7 @@ There are also decorators which we can use to define a setter and a deleter for 
 Exercise 4
 ----------
 
-#. Create a class called ``Numbers``, which has a single class attribute called ``MULTIPLIER``, and constructor which takes the parameters ``x`` and ``y`` (these should all be numbers).
+#. Create a class called ``Numbers``, which has a single class attribute called ``MULTIPLIER``, and a constructor which takes the parameters ``x`` and ``y`` (these should all be numbers).
 
     #. Write a method called ``add`` which returns the sum of the attributes ``x`` and ``y``.
     #. Write a class method called ``multiply``, which takes a single number parameter ``a`` and returns the product of ``a`` and ``MULTIPLIER``.
