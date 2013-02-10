@@ -225,23 +225,19 @@ More generally, the algorithm for selection sort is as follows:
 #. Divide the list to be sorted into a sorted portion at the front
    (initially empty) and an unsorted portion at the end (initially the
    whole list).
-
 #. Find the smallest element in the unsorted list:
 
-  #. Select the first element of the unsorted list as the initial
+  i. Select the first element of the unsorted list as the initial
      candidate.
-
   #. Compare the candidate to each element of the unsorted list in
      turn, replacing the candidate with the current element if the
      current element is smaller.
-
   #. Once the end of the unsorted list is reached, the candidate is the
      smallest element.
 
-#. Swap the smallest element found in the previous step with the first
+3. Swap the smallest element found in the previous step with the first
    element in the unsorted list, thus extending the sorted list by one
    element.
-
 #. Repeat the steps 2 and 3 above until only one element remains in the
    unsorted list.
 
@@ -317,7 +313,7 @@ Here are the steps for Merge sort:
 * Continue this process until the partition size is at least as large
   as the whole array.
 
-Exercise 2
+Exercise 3
 ----------
 
 
@@ -343,13 +339,13 @@ Searching algorithms
 Linear search
 -------------
 
-Exercise 3
+Exercise 4
 ----------
 
 Binary search
 -------------
 
-Exercise 4
+Exercise 5
 ----------
 
 
