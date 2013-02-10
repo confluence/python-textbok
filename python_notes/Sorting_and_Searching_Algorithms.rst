@@ -93,35 +93,157 @@ generic sorting algorithm.
 Selection sort
 --------------
 
-Here is the algorithm for selection sort:
+Selection sort orders a given list by repeatedly selecting the
+smallest remaining element and moving it to the end of a growing
+sorted list.
 
-* Search the whole list for the smallest element. Swap that element
-  with the element at location 0.
-
-* Search the list from location 1 to the end for the smallest
-  element. Swap that element with the element at location 1.
-
-* Search the list from location 2 to the end for the smallest
-  element. Swap that element with the element at location 2.
-
-* Continue in this way for all the other locations in the list.
-
-To illustrate the principle behind selection sort, we use the
-following array as an example:
+To illustrate selection sort, let us examine how it operates on a
+small list of four elements:
 
 .. blockdiag::
 
     blockdiag {
         class I [width = 64, fontsize = 16];
         A [numbered = 0, label = "7.2", class = "I"];
-        B [numbered = 1, label = "3.5", class = "I"];
-        C [numbered = 2, label = "0.8", class = "I"];
+        B [numbered = 1, label = "3.8", class = "I"];
+        C [numbered = 2, label = "1.5", class = "I"];
         D [numbered = 3, label = "2.7", class = "I"];
-        E [numbered = 4, label = "9.5", class = "I"];
-        F [numbered = 5, label = "5.8", class = "I"];
 
-        A -> B -> C -> D -> E -> F;
+        group {
+            A -> B -> C -> D;
+            label = "Unsorted";
+            color = "#EE0000";
+        }
     }
+
+Initially the entire list is unsorted. We will use the front of the
+list to hold the sorted items in order to avoid using extra storage
+space but at the start this sorted list is empty.
+
+First we must find the smallest element in the unsorted portion of the
+list. We take the first element of the unsorted list as a candidate
+and compare it to each of the following elements in turn, replacing
+our candidate with any element found to be smaller. This requires 3
+comparisons and we find that element 1.5 at position 2 is smallest.
+
+Now we will swap the first element of our unordered list with the
+smallest element to start our ordered list:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "3.8", class = "I"];
+        C [numbered = 2, label = "7.2", class = "I"];
+        D [numbered = 3, label = "2.7", class = "I"];
+
+        A -> B;
+        group {
+            A;
+            label = "Sorted";
+            color = "#00EE00";
+        }
+        group {
+            B -> C -> D;
+            label = "Unsorted";
+            color = "#EE0000";
+        }
+    }
+
+We now repeat our previous steps, determining that 2.7 is the smallest
+remaining element and swap it with 3.8, the first element of the
+current unordered section, to get:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "7.2", class = "I"];
+        D [numbered = 3, label = "3.8", class = "I"];
+
+        B -> C;
+        group {
+            A -> B;
+            label = "Sorted";
+            color = "#00EE00";
+        }
+        group {
+            C -> D;
+            label = "Unsorted";
+            color = "#EE0000";
+        }
+    }
+
+Finally, we determine that 3.8 is the smallest of the remaining
+unordered elements and swap it with 7.2:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+
+        C -> D;
+        group {
+            A -> B -> C;
+            label = "Sorted";
+            color = "#00EE00";
+        }
+        group {
+            D;
+            label = "Unsorted";
+            color = "#EE0000";
+        }
+    }
+
+
+More generally, the algorithm for selection sort is as follows:
+
+* Divide the list to be sorted into a sorted portion at the front
+  (initially empty) and an unsorted portion at the end (initially the
+  whole list).
+
+* Find the smallest element in the unsorted list:
+
+  * Select the first element of the unsorted list as the initial
+    candidate.
+
+  * Compare the candidate to each element of the unsorted list in
+    turn, replacing the candidate with the current element if the
+    current element is smaller.
+
+  * Once the end of the unsorted list is reached, the candidate is the
+    smallest element.
+
+* Swap the smallest element found in the previous step with the first
+  element in the unsorted list, thus extending the sorted list by one
+  element.
+
+* Repeat the two steps above until only one element remains in the
+  unsorted list.
+
+.. TODO::
+
+   Count number of operations.
+
+.. TODO::
+
+   Determine number of operations required for N elements.
+
+.. Note::
+
+   Stable sorts.
+
+.. Note::
+
+   In place sorts.
+
 
 Exercise 1
 ----------
