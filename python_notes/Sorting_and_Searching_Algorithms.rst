@@ -288,9 +288,31 @@ Python. "..." denotes missing code that should be filled in::
 Exercise 2
 ----------
 
-.. TODO::
+Earlier in this section we counted the number of *comparisons*,
+*swaps* and *assignments* used in our example.
 
-   Determine number of operations required for N elements.
+#. How many swaps are performed when we apply selection sort to a list
+   of N items?
+
+#. How many comparisons are performed when we apply selection sort to
+   a list of N items?
+
+   i. How many comparisons are performed when finding the smallest
+      element when the unsorted portion of the list has M items?
+
+   #. Sum over all the values of M encountered when sorting the list
+      of length N to find the total number of comparisons.
+
+#. The number of assignments (to the candidate smallest number)
+   performed during the search for a smallest element is at most one
+   more than the number of comparisons. Use this to find an upper
+   limit on the total number of assignments performed while sorting a
+   list of length N.
+
+#. Use the results of the previous question to find an upper bound on
+   the total number of operations (swaps, comparisons and assignments)
+   performed? Which term in the number of operations will dominate for
+   large lists?
 
 
 Merge sort
@@ -384,3 +406,24 @@ Completed selection sort implementation::
             temporary_item = items[step]
             items[step] = items[location_of_smallest]
             items[location_of_smallest] = temporary_item
+
+
+Exercise 2
+----------
+
+#. ``N - 1`` swaps are performed.
+
+#. ``(N - 1) * N / 2`` comparisons are performed.
+
+   i. ``M - 1`` comparisons are performed finding the smallest element.
+
+   #. Summing ``M - 1`` from ``2`` to ``N`` gives::
+
+          1 + 2 + 3 + ... + (N - 1)
+
+          = (N - 1) * N / 2
+
+#. At most ``(N - 1) * N / 2 + (N - 1)`` assignements are performed.
+
+#. At most ``N**2 + N - 2`` operations are performed. For long lists
+   the number of operations grows as ``N**2``.
