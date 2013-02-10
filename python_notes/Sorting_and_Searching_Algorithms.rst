@@ -318,6 +318,34 @@ Earlier in this section we counted the number of *comparisons*,
 Merge sort
 ----------
 
+Merge sort orders a list by repeatedly merging sorted sub-sections of
+the list, starting from sub-sections consisting of a single item each.
+
+We will see shortly that merge sort requires significanly fewer
+operations than selection sort.
+
+Let us start once more with our small list of four elements:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "7.2", class = "I"];
+        B [numbered = 1, label = "3.8", class = "I"];
+        C [numbered = 2, label = "1.5", class = "I"];
+        D [numbered = 3, label = "2.7", class = "I"];
+        A -> B -> C -> D;
+
+        group { A; color = "#0000EE"; }
+        group { B; color = "#0000EE"; }
+        group { C; color = "#0000EE"; }
+        group { D; color = "#0000EE"; }
+    }
+
+First we will merge the two sections on the left. Since each section
+is sorted, determining the smallest element in each section requires
+only looking at the first element.
+
 Here are the steps for Merge sort:
 
 * Each element in the array is a single partition. Merge adjacent
