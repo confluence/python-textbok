@@ -222,28 +222,28 @@ candidate depends on the contents of the list.
 
 More generally, the algorithm for selection sort is as follows:
 
-# Divide the list to be sorted into a sorted portion at the front
-  (initially empty) and an unsorted portion at the end (initially the
-  whole list).
+#. Divide the list to be sorted into a sorted portion at the front
+   (initially empty) and an unsorted portion at the end (initially the
+   whole list).
 
-# Find the smallest element in the unsorted list:
+#. Find the smallest element in the unsorted list:
 
-  # Select the first element of the unsorted list as the initial
-    candidate.
+  #. Select the first element of the unsorted list as the initial
+     candidate.
 
-  # Compare the candidate to each element of the unsorted list in
-    turn, replacing the candidate with the current element if the
-    current element is smaller.
+  #. Compare the candidate to each element of the unsorted list in
+     turn, replacing the candidate with the current element if the
+     current element is smaller.
 
-  # Once the end of the unsorted list is reached, the candidate is the
-    smallest element.
+  #. Once the end of the unsorted list is reached, the candidate is the
+     smallest element.
 
-# Swap the smallest element found in the previous step with the first
-  element in the unsorted list, thus extending the sorted list by one
-  element.
+#. Swap the smallest element found in the previous step with the first
+   element in the unsorted list, thus extending the sorted list by one
+   element.
 
-# Repeat the steps 2 and 3 above until only one element remains in the
-  unsorted list.
+#. Repeat the steps 2 and 3 above until only one element remains in the
+   unsorted list.
 
 .. Note::
 
