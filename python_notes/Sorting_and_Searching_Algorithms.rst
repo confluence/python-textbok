@@ -361,6 +361,86 @@ Searching algorithms
 Linear search
 -------------
 
+A *linear search* is the most basic kind of search method. It involves checking each element of the list in turn, until the desired element is found.
+
+For example, suppose that we want to find the number 3.8 in the following list:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+
+        A -> B -> C -> D;
+        group {
+            A;
+            label = "Checking";
+            color = "#0000EE";
+        }
+
+    }
+
+We start with the first element, and perform a comparison to see if its value is the value that we want. In this case, 1.5 is not equal to 3.8, so we move onto the next element:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+
+        A -> B -> C -> D;
+        group {
+            A;
+            label = "Checked";
+            color = "#EEEE00";
+        }
+        group {
+            B;
+            label = "Checking";
+            color = "#0000EE";
+        }
+
+    }
+
+We perform another comparison, and see that 2.7 is also not equal to 3.8, so we move onto the next element:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+
+        A -> B -> C -> D;
+        group {
+            A -> B;
+            label = "Checked";
+            color = "#EEEE00";
+        }
+        group {
+            C;
+            label = "Checking";
+            color = "#0000EE";
+        }
+
+    }
+
+We perform another comparison and determine that we have found the correct element. Now we can end the search and return the position of the element (index 2).
+
+We had to use a total of 3 comparisons when searching through this list of 4 elements. How many comparisons we need to perform depends on the total length of the list, but also whether the element we are looking for is near the beginning or near the end of the list. In the worst-case scenario, if our element is the last element of the list, we will have to search through the entire list to find it.
+
+If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing a linear search thus scales linearly with the length of the list.
+
+The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
+
 Exercise 4
 ----------
 
