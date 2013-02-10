@@ -205,14 +205,14 @@ unordered elements and swap it with 7.2:
 The table below shows the number of operations of each type used in
 sorting our example list:
 
-======================= =========== =====
-Sorted List Length      Comparisons Swaps
-======================= =========== =====
-0 -> 1                  3           1
-1 -> 2                  2           1
-2 -> 3                  1           1
-Total                   6           3
-======================= =========== =====
+======================= =========== ===== =========================
+Sorted List Length      Comparisons Swaps Assign smallest candidate
+======================= =========== ===== =========================
+0 -> 1                  3           1     3
+1 -> 2                  2           1     2
+2 -> 3                  1           1     2
+**Total**               **6**       **3** **7**
+======================= =========== ===== =========================
 
 More generally, the algorithm for selection sort is as follows:
 
