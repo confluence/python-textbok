@@ -579,7 +579,7 @@ Now the first half of the list is our new list to search.  We compare the elemen
 
 The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
 
-We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is *log(N)*.
+We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is *log(2N)*.
 
 Exercise 5
 ----------
