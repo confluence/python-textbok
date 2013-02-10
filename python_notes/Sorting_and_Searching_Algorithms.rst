@@ -214,46 +214,58 @@ Sorted List Length      Comparisons Swaps Assign smallest candidate
 **Total**               **6**       **3** **7**
 ======================= =========== ===== =========================
 
+Note that the number of *comparisons* and the number of *swaps* are
+independent of the contents of the list (this is true for selection
+sort but not necessarily for other sorting algorithms) while the
+number of times we have to assign a new value to the smallest
+candidate depends on the contents of the list.
+
 More generally, the algorithm for selection sort is as follows:
 
-* Divide the list to be sorted into a sorted portion at the front
+# Divide the list to be sorted into a sorted portion at the front
   (initially empty) and an unsorted portion at the end (initially the
   whole list).
 
-* Find the smallest element in the unsorted list:
+# Find the smallest element in the unsorted list:
 
-  * Select the first element of the unsorted list as the initial
+  # Select the first element of the unsorted list as the initial
     candidate.
 
-  * Compare the candidate to each element of the unsorted list in
+  # Compare the candidate to each element of the unsorted list in
     turn, replacing the candidate with the current element if the
     current element is smaller.
 
-  * Once the end of the unsorted list is reached, the candidate is the
+  # Once the end of the unsorted list is reached, the candidate is the
     smallest element.
 
-* Swap the smallest element found in the previous step with the first
+# Swap the smallest element found in the previous step with the first
   element in the unsorted list, thus extending the sorted list by one
   element.
 
-* Repeat the two steps above until only one element remains in the
+# Repeat the steps 2 and 3 above until only one element remains in the
   unsorted list.
 
-.. TODO::
-
-   Count number of operations.
-
-.. TODO::
-
-   Determine number of operations required for N elements.
-
 .. Note::
 
-   Stable sorts.
+   The *Selection sort* algorithm as described here has two properties
+   which are often desirable in sorting algorithms.
 
-.. Note::
+   The first is that the algorithm is *inplace*. This means that it
+   uses essentially no extra storage beyond that required for the
+   input (the unsorted list in this case). A little extra storage may
+   be used (for example, a temporary variable to hold the candidate
+   for the smallest element). The important property is that the extra
+   storage required should not increase as the size of the input
+   increases.
 
-   In place sorts.
+   The second is that the sorting algorithm is *stable*. This means
+   that two elements which are equal, retain their initial relative
+   ordering. This becomes important if there is additional information
+   attached to the values being sorted (for example, if we are sorting
+   a list of people using a comparison function that compares their
+   dates of birth). Stable sorting algorithms ensure that sorting an
+   already sorted list leaves the order of the list unchanged, even in
+   the presence of elements that compare equal.
 
 
 Exercise 1
@@ -275,6 +287,14 @@ Python. "..." denotes missing code that should be filled in::
                 ...
             # TODO: Exchange items[step] with items[location_of_smallest]
             ...
+
+
+Exercise 2
+----------
+
+.. TODO::
+
+   Determine number of operations required for N elements.
 
 
 Merge sort
