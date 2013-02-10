@@ -447,6 +447,112 @@ Exercise 4
 Binary search
 -------------
 
+A *binary search* is a faster search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
+
+We first check the *middle* element in the list. If it is the value we want, we can stop. If it is *higher* than the value we want, we repeat the search process with the portion of the list *before* the middle element.  If it is *lower* than the value we want, we repeat the search process with the portion of the list *after* the middle element.
+
+For example, suppose that we want to find the value 3.8 in the following list of 7 elements:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+        E [numbered = 4, label = "9.0", class = "I"];
+        F [numbered = 5, label = "12.6", class = "I"];
+        G [numbered = 6, label = "15.3", class = "I"];
+
+        A -> B -> C -> D -> E -> F -> G;
+
+        group {
+            D;
+            label = "Checking";
+            color = "#0000EE";
+        }
+        group {
+            A -> B -> C;
+            label = "To check next";
+            color = "#00EEEE";
+        }
+
+    }
+
+First we compare the element in the middle of the list to our value. 7.2 is *bigger* than 3.8, so we need to check the first half of the list next.
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+        E [numbered = 4, label = "9.0", class = "I"];
+        F [numbered = 5, label = "12.6", class = "I"];
+        G [numbered = 6, label = "15.3", class = "I"];
+
+        A -> B -> C -> D -> E -> F -> G;
+
+        group {
+            B;
+            label = "Checking";
+            color = "#0000EE";
+        }
+        group {
+            C;
+            label = "To check next";
+            color = "#00EEEE";
+        }
+        group {
+            D;
+            label = "Checked";
+            color = "#EEEE00";
+        }
+
+    }
+
+Now the first half of the list is our new list to search.  We compare the element in the middle of this list to our value.  2.7 is *smaller* than 3.8, so we need to search the *second half* of this sublist next.
+
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [numbered = 0, label = "1.5", class = "I"];
+        B [numbered = 1, label = "2.7", class = "I"];
+        C [numbered = 2, label = "3.8", class = "I"];
+        D [numbered = 3, label = "7.2", class = "I"];
+        E [numbered = 4, label = "9.0", class = "I"];
+        F [numbered = 5, label = "12.6", class = "I"];
+        G [numbered = 6, label = "15.3", class = "I"];
+
+        A -> B -> C -> D -> E -> F -> G;
+
+        group {
+            C;
+            label = "Checking";
+            color = "#0000EE";
+        }
+        group {
+            D;
+            label = "Checked";
+            color = "#EEEE00";
+        }
+        group {
+            B;
+            label = "Checked";
+            color = "#EEEE00";
+        }
+
+    }
+
+The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
+
+We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is *log(N)*.
+
 Exercise 5
 ----------
 
