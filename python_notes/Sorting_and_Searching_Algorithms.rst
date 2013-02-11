@@ -456,6 +456,14 @@ example, this requires just one more merge:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
+.. TODO::
+
+   Write better algorithm description.
+
+   Discuss number of steps taken in example.
+
+   Discuss number of steps taken in general.
+
 Here are the steps for Merge sort:
 
 * Each element in the array is a single partition. Merge adjacent
@@ -475,6 +483,10 @@ Here are the steps for Merge sort:
 
 Exercise 3
 ----------
+
+Write a Python function that implements merge sort. It may help to
+write a separate function that performs merges which you can call from
+within your merge sort implementation.
 
 
 Python's sorting algorithm
