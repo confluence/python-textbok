@@ -2,10 +2,6 @@ OUTSTANDING CHAPTERS
 
 * sorting and searching algorithms -- IN PROGRESS
 
-OUTSTANDING SECTIONS
-
-* with statement in the exceptions chapter
-
 GLOBAL SEARCH AND REPLACE
 
 * replace "you" with "we" almost everywhere in earlier chapters - done up to collections; check everything
