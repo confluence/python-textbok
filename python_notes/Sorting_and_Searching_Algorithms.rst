@@ -501,8 +501,8 @@ items into conveniently mergable sections.
 
    Tim Peters is also credited as the author of *The Zen of Python* --
    an attempt to summarize the early Python community's ethos in a
-   short series of koans. You can read it by typing `import this` into
-   the Python console.
+   short series of koans. You can read it by typing ``import this``
+   into the Python console.
 
 
 Searching algorithms
