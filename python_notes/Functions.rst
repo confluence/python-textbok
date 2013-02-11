@@ -528,6 +528,52 @@ Exercise 7
 
 #. Rewrite all these functions as named functions.
 
+Generator functions and ``yield``
+=================================
+
+We have already encountered generators -- sequences in which new elements are generated as they are needed, instead of all being generated up-front.  We can create our own generators by writing functions which make use of the ``yield`` statement.
+
+Consider this simple function which returns a range of numbers as a list::
+
+    def my_list(n):
+        i = 0
+        l = []
+
+        while i < n:
+            l.append(i)
+            i += 1
+
+        return l
+
+This function builds the full list of numbers and returns it.  We can change this function into a generator function while preserving a very similar syntax, like this::
+
+    def my_gen(n):
+        i = 0
+
+        while i < n:
+            yield i
+            i += 1
+
+The first important thing to know about the ``yield`` statement is that if we use it in a function, that function will return a generator.  We can test this by using the ``type`` function on the return value of ``my_gen``. We can also try using it in a ``for`` loop, like we would use any other generator, to see what sequence the generator represents::
+
+    g = my_gen(3)
+
+    print(type(g))
+
+    for x in g:
+        print(x)
+
+What does the ``yield`` statement do?  Whenever a new value is requested from the generator, for example by our ``for`` loop in the example above, the generator begins to execute the function until it reaches the ``yield`` statement. The ``yield`` statement causes the generator to return a single value.
+
+After the ``yield`` statement is executed, execution of the function does not end -- when the *next* value is requested from the generator, it will go back to the beginning of the function and execute it *again*.
+
+If the generator executes the entire function without encountering a ``yield`` statement, it will raise a ``StopIteration`` exception to indicate that there are no more values.  A ``for`` loop automatically handles this exception for us.  In our ``my_gen`` function this will happen when ``i`` becomes equal to ``n`` -- when this happens, the ``yield`` statement inside the ``while`` loop will no longer be executed.
+
+Exercise 8
+----------
+
+#. Write a generator function which takes an integer ``n`` as a parameter.  The function should return a generator which counts *down* from ``n`` to ``0``.  Test your function using a ``for`` loop.
+
 Answers to exercises
 ====================
 
@@ -719,3 +765,18 @@ Answer to exercise 7
 
     def d(s):
         return "".join(set(s))
+
+Answer to exercise 8
+--------------------
+
+#. Here is an example program::
+
+    def my_gen(n):
+        i = n
+
+        while i >= 0:
+            yield i
+            i -= 1
+
+    for x in my_gen(3):
+        print(x)

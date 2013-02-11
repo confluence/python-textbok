@@ -4,7 +4,6 @@ OUTSTANDING CHAPTERS
 
 OUTSTANDING SECTIONS
 
-* generators and yield, in the function chapter
 * with statement in the exceptions chapter
 
 GLOBAL SEARCH AND REPLACE

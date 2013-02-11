@@ -554,6 +554,13 @@ indicates that the file should be opened for reading.
     not been created yet for reading. Opening a file for writing will
     create the file if it does not exist yet.
 
+.. Note::
+
+    The ``with`` statement automatically closes the file at the end of
+    the block, even if an error occurs inside the block. In older
+    versions of Python files had to be closed explicitly -- this is no
+    longer recommended. You should always use the ``with`` statement.
+
 
 Built-in types
 --------------
