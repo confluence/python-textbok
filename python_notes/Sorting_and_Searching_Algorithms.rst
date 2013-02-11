@@ -475,7 +475,7 @@ Exercise 4
 Binary search
 -------------
 
-A *binary search* is a faster search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
+A *binary search* is a more efficient search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
 
 We first check the *middle* element in the list. If it is the value we want, we can stop. If it is *higher* than the value we want, we repeat the search process with the portion of the list *before* the middle element.  If it is *lower* than the value we want, we repeat the search process with the portion of the list *after* the middle element.
 
@@ -579,7 +579,7 @@ Now the first half of the list is our new list to search.  We compare the elemen
 
 The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
 
-We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ (N).
+We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ (N).
 
 Exercise 5
 ----------
