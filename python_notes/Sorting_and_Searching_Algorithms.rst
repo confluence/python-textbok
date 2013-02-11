@@ -330,21 +330,131 @@ Let us start once more with our small list of four elements:
 
     blockdiag {
         class I [width = 64, fontsize = 16];
-        A [numbered = 0, label = "7.2", class = "I"];
-        B [numbered = 1, label = "3.8", class = "I"];
-        C [numbered = 2, label = "1.5", class = "I"];
-        D [numbered = 3, label = "2.7", class = "I"];
+        A [label = "7.2", class = "I"];
+        B [label = "3.8", class = "I"];
+        C [label = "1.5", class = "I"];
+        D [label = "2.7", class = "I"];
         A -> B -> C -> D;
+
+        E [label = "", class = "I"];
+        F [label = "", class = "I"];
+        G [label = "", class = "I"];
+        H [label = "", class = "I"];
+        E -> F -> G -> H;
 
         group { A; color = "#0000EE"; }
         group { B; color = "#0000EE"; }
         group { C; color = "#0000EE"; }
         group { D; color = "#0000EE"; }
+
+        group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
-First we will merge the two sections on the left. Since each section
-is sorted, determining the smallest element in each section requires
-only looking at the first element.
+First we will merge the two sections on the left into the temporary
+storage. If you imagine the two sections as two sorted piles of cards,
+merging proceeds by repeatedly taking the smaller of the top two cards
+and placing it on the end of the merged list in the temporary
+storage. Once one of the two piles is empty, the remaining items in
+the other pile can just be placed on the end of the merged list:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [label = "7.2", class = "I"];
+        B [label = "3.8", class = "I"];
+        C [label = "1.5", class = "I"];
+        D [label = "2.7", class = "I"];
+        A -> B -> C -> D;
+
+        E [label = "3.8", class = "I"];
+        F [label = "7.2", class = "I"];
+        G [label = "", class = "I"];
+        H [label = "", class = "I"];
+        E -> F -> G -> H;
+
+        group { A; color = "#0000EE"; }
+        group { B; color = "#0000EE"; }
+        group { C; color = "#0000EE"; }
+        group { D; color = "#0000EE"; }
+
+        group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
+    }
+
+Next we copy the merged list from temporary storage, back into the
+portion of the list originally occupied by the merged subsections:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [label = "3.8", class = "I"];
+        B [label = "7.2", class = "I"];
+        C [label = "1.5", class = "I"];
+        D [label = "2.7", class = "I"];
+        A -> B -> C -> D;
+
+        E [label = "3.8", class = "I"];
+        F [label = "7.2", class = "I"];
+        G [label = "", class = "I"];
+        H [label = "", class = "I"];
+        E -> F -> G -> H;
+
+        group { A; B; color = "#0000EE"; }
+        group { C; color = "#0000EE"; }
+        group { D; color = "#0000EE"; }
+
+        group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
+    }
+
+Next we repeat the procedure to merge the second pair of sorted sub-sections:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [label = "3.8", class = "I"];
+        B [label = "7.2", class = "I"];
+        C [label = "1.5", class = "I"];
+        D [label = "2.7", class = "I"];
+        A -> B -> C -> D;
+
+        E [label = "1.5", class = "I"];
+        F [label = "2.7", class = "I"];
+        G [label = "", class = "I"];
+        H [label = "", class = "I"];
+        E -> F -> G -> H;
+
+        group { A; B; color = "#0000EE"; }
+        group { C; D; color = "#0000EE"; }
+
+        group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
+    }
+
+Having now reached the end of the original list, we now return to the
+start of list and begin merging sorted sub-sections again. We repeat
+this until the entire list is a single sorted sub-section. In our
+example, this requires just one more merge:
+
+.. blockdiag::
+
+    blockdiag {
+        class I [width = 64, fontsize = 16];
+        A [label = "1.5", class = "I"];
+        B [label = "2.7", class = "I"];
+        C [label = "3.8", class = "I"];
+        D [label = "7.2", class = "I"];
+        A -> B -> C -> D;
+
+        E [label = "1.5", class = "I"];
+        F [label = "2.7", class = "I"];
+        G [label = "3.8", class = "I"];
+        H [label = "7.2", class = "I"];
+        E -> F -> G -> H;
+
+        group { A; B; C; D; color = "#0000EE"; }
+        group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
+    }
 
 Here are the steps for Merge sort:
 
