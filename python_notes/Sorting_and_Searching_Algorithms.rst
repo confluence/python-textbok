@@ -589,6 +589,8 @@ We had to use a total of 3 comparisons when searching through this list of 4 ele
 
 If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing a linear search thus scales linearly with the length of the list.
 
+.. Todo:: maybe move the next bit down into the algorithm analysis section.
+
 The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
 
 Exercise 4
