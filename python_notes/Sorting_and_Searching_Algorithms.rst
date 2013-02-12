@@ -32,17 +32,6 @@ algorithms:
 * *space complexity*: how the amount of extra memory or storage
   required depends on the size of the input
 
-.. Todo:: make sure that we actually mention some interesting results about computational complexity theory, or remove the reference.
-
-.. Note::
-
-    *Computational complexity theory* studies the inherent complexity
-    of *tasks* themselves. Sometimes it is possible to prove that
-    *any* algorithm that can perform a given task will require some
-    minimum number of steps or amount of extra storage. A full
-    introduction to computational complexity theory is outside the
-    scope of these notes but we will mention some interesting results.
-
 .. Note::
 
     Common sorting and searching algorithms are widely implemented
@@ -756,6 +745,8 @@ Binary search    O(1)
 None of these algorithms require a significant amount of storage space in addition to that used by the input list, except for the merge sort -- which, as we saw in a previous section, requires temporary storage which is the same size as the input (and thus scales linearly with the input size).
 
 .. Note:: The Python wiki has a `summary <http://wiki.python.org/moin/TimeComplexity>`_ of the time complexities of common operations on collections.  You may also wish to investigate the ``collections`` module, which provides additional collection classes which are optimised for particular tasks.
+
+.. Note:: *Computational complexity theory* studies the inherent complexity of *tasks* themselves. Sometimes it is possible to prove that *any* algorithm that can perform a given task will require some minimum number of steps or amount of extra storage.  For example, it can be shown that, given a list of arbitrary objects and only a comparison function with which to compare them, no sorting algorithm can use fewer than O(N log N) comparisons.
 
 Exercise 6
 ----------
