@@ -5,33 +5,34 @@ Sorting, searching and algorithm analysis
 Introduction
 ============
 
-We have learned that in order to write a computer program that
-performs some task, we must construct a suitable algorithm. However,
-the algorithm we construct is unlikely to be unique -- there are
-likely many algorithms that perform the same task. The question then
-arises as to whether some of these algorithms are in any sense better
-than others. Algorithm analysis is the study of this question.
+We have learned that in order to write a computer program which
+performs some task we must construct a suitable algorithm. However,
+whatever algorithm we construct is unlikely to be unique -- there are
+likely to be many possible algorithms which can perform the same task.
+Are some of these algorithms in some sense better than others? Algorithm
+analysis is the study of this question.
 
-In this chapter we will analyze four algorithms, two for each of the
-following tasks:
+In this chapter we will analyze four algorithms; two for each of the
+following common tasks:
 
-* ordering a list of values, and
-* finding the position of a value within a sorted list.
+* *sorting*: ordering a list of values
+* *searching*: finding the position of a value within a list
 
 Algorithm analysis should begin with a clear statement of the task to
-be performed. This allows us to both check that the algorithm is
-correct and ensure that the algorithms we are comparing perform the
+be performed. This allows us both to check that the algorithm is
+correct and to ensure that the algorithms we are comparing perform the
 same task.
 
-Although there in general many ways that algorithms might be compared,
-we will focus our attention on the two that are of primary importance
-to many data processing algorithms:
+Although there are many ways that algorithms can be compared, we will
+focus on two that are of primary importance to many data processing
+algorithms:
 
-* *time complexity* (how the number of steps required depends on the
-  length of the input)
+* *time complexity*: how the number of steps required depends on the
+  size of the input
+* *space complexity*: how the amount of extra memory or storage
+  required depends on the size of the input
 
-* *space complexity* (how the amount of extra memory or storage
-  required depends on the length of the input)
+.. Todo:: make sure that we actually mention some interesting results about computational complexity theory, or remove the reference.
 
 .. Note::
 
@@ -44,23 +45,22 @@ to many data processing algorithms:
 
 .. Note::
 
-    The common sorting and searching algorithms are widely implemented
+    Common sorting and searching algorithms are widely implemented
     and already available for most programming languages. You will
     seldom have to implement them yourself outside of the exercises in
-    these notes. Nevertheless, understanding these algorithms is still
-    important since you will likely be making use of them within your
-    own programs and their space and time complexity will thus affect
-    that of your own algorithms. You may also be required to select
-    which sorting or searching algorithm to use which will require a
-    good understanding of the characteristics of the algorithms
-    available.
-
+    these notes. It is nevertheless important for you to understand
+    these basic algorithms, because you are likely to use them within
+    your own programs -- their space and time complexity will thus
+    affect that of your own algorithms. Should you need to select a
+    specific sorting or searching algorithm to fit a particular task,
+    you will require a good understanding of the available options.
 
 Sorting algorithms
 ==================
 
-Sorting a list of values is a common computational task that has been
-well studied. The classic description of the task is as follows:
+The sorting of a list of values is a common computational task which has
+been studied extensively. The classic description of the task is as
+follows:
 
     Given a *list of values* and a function that *compares two
     values*, order the values in the list from smallest to largest.
@@ -68,34 +68,34 @@ well studied. The classic description of the task is as follows:
 The values might be integers, or strings or even other kinds of
 objects. We will examine two algorithms:
 
-* *Selection sort* (which relies on repeatedly *selecting* the next
-  smallest item), and
-* *Merge sort* (which relies on repeatedly *merging* sections of the
-  list that are already sorted)
+* *Selection sort*, which relies on repeated *selection* of the next
+  smallest item
+* *Merge sort*, which relies on repeated *merging* of sections of the
+  list that are already sorted
 
-Other well-known algorithms for sorting lists are *Insertion sort*,
-*Bubble sort*, *Heap sort*, *Quicksort* and *Shell sort*.
+Other well-known algorithms for sorting lists are *insertion sort*,
+*bubble sort*, *heap sort*, *quicksort* and *shell sort*.
 
-There are also a variety of algorithms which perform the sorting task
+There are also various algorithms which perform the sorting task
 for restricted kinds of values, for example:
 
-* *Counting sort* (relies on values all belonging to a small set of items)
-* *Bucket sort* (relies on being able to map each value to one of a
-  small set of items)
-* *Radix sort* (relies on values being sequences of digits)
+* *Counting sort*, which relies on the values belonging to a small set
+  of items
+* *Bucket sort*, which relies on the ability to map each value to one of
+  a small set of items
+* *Radix sort*, which relies on the values being sequences of digits
 
-Restricting the task enlarges the set of algorithms that can perform
-it and among these new algorithms may be ones that have desirable
-properties. For example, *Radix sort* uses fewer steps than any
-generic sorting algorithm.
-
+If we restrict the task, we can enlarge the set of algorithms that can
+perform it. Among these new algorithms may be ones that have desirable
+properties. For example, *Radix sort* uses fewer steps than any generic
+sorting algorithm.
 
 Selection sort
 --------------
 
-Selection sort orders a given list by repeatedly selecting the
-smallest remaining element and moving it to the end of a growing
-sorted list.
+To order a given list using selection sort, we repeatedly select the
+smallest remaining element and move it to the end of a growing sorted
+list.
 
 To illustrate selection sort, let us examine how it operates on a
 small list of four elements:
@@ -117,8 +117,8 @@ small list of four elements:
     }
 
 Initially the entire list is unsorted. We will use the front of the
-list to hold the sorted items in order to avoid using extra storage
-space but at the start this sorted list is empty.
+list to hold the sorted items -- to avoid using extra storage
+space -- but at the start this sorted list is empty.
 
 First we must find the smallest element in the unsorted portion of the
 list. We take the first element of the unsorted list as a candidate
@@ -127,7 +127,7 @@ our candidate with any element found to be smaller. This requires 3
 comparisons and we find that element 1.5 at position 2 is smallest.
 
 Now we will swap the first element of our unordered list with the
-smallest element to start our ordered list:
+smallest element. This becomes the start of our ordered list:
 
 .. blockdiag::
 
@@ -152,8 +152,8 @@ smallest element to start our ordered list:
     }
 
 We now repeat our previous steps, determining that 2.7 is the smallest
-remaining element and swap it with 3.8, the first element of the
-current unordered section, to get:
+remaining element and swapping it with 3.8 -- the first element of the
+current unordered section -- to get:
 
 .. blockdiag::
 
@@ -246,7 +246,7 @@ More generally, the algorithm for selection sort is as follows:
    The *Selection sort* algorithm as described here has two properties
    which are often desirable in sorting algorithms.
 
-   The first is that the algorithm is *inplace*. This means that it
+   The first is that the algorithm is *in-place*. This means that it
    uses essentially no extra storage beyond that required for the
    input (the unsorted list in this case). A little extra storage may
    be used (for example, a temporary variable to hold the candidate
@@ -255,19 +255,19 @@ More generally, the algorithm for selection sort is as follows:
    increases.
 
    The second is that the sorting algorithm is *stable*. This means
-   that two elements which are equal, retain their initial relative
+   that two elements which are equal retain their initial relative
    ordering. This becomes important if there is additional information
    attached to the values being sorted (for example, if we are sorting
    a list of people using a comparison function that compares their
    dates of birth). Stable sorting algorithms ensure that sorting an
    already sorted list leaves the order of the list unchanged, even in
-   the presence of elements that compare equal.
+   the presence of elements that are treated as equal by the comparison.
 
 
 Exercise 1
 ----------
 
-Complete the following code that will perform a selection sort in
+Complete the following code which will perform a selection sort in
 Python. "..." denotes missing code that should be filled in::
 
     def selection_sort(items):
@@ -297,7 +297,7 @@ Earlier in this section we counted the number of *comparisons*,
 #. How many comparisons are performed when we apply selection sort to
    a list of N items?
 
-   i. How many comparisons are performed when finding the smallest
+   i. How many comparisons are performed to find the smallest
       element when the unsorted portion of the list has M items?
 
    #. Sum over all the values of M encountered when sorting the list
@@ -311,17 +311,18 @@ Earlier in this section we counted the number of *comparisons*,
 
 #. Use the results of the previous question to find an upper bound on
    the total number of operations (swaps, comparisons and assignments)
-   performed? Which term in the number of operations will dominate for
+   performed. Which term in the number of operations will dominate for
    large lists?
 
 
 Merge sort
 ----------
 
-Merge sort orders a list by repeatedly merging sorted sub-sections of
-the list, starting from sub-sections consisting of a single item each.
+When we use merge sort to order a list, we repeatedly merge sorted
+sub-sections of the list -- starting from sub-sections consisting of a
+single item each.
 
-We will see shortly that merge sort requires significanly fewer
+We will see shortly that merge sort requires significantly fewer
 operations than selection sort.
 
 Let us start once more with our small list of four elements:
@@ -351,9 +352,9 @@ Let us start once more with our small list of four elements:
     }
 
 First we will merge the two sections on the left into the temporary
-storage. If you imagine the two sections as two sorted piles of cards,
-merging proceeds by repeatedly taking the smaller of the top two cards
-and placing it on the end of the merged list in the temporary
+storage. Imagine the two sections as two sorted piles of cards -- we
+will merge the two piles by repeatedly taking the smaller of the top two
+cards and placing it at the end of the merged list in the temporary
 storage. Once one of the two piles is empty, the remaining items in
 the other pile can just be placed on the end of the merged list:
 
@@ -381,7 +382,7 @@ the other pile can just be placed on the end of the merged list:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
-Next we copy the merged list from temporary storage, back into the
+Next we copy the merged list from the temporary storage back into the
 portion of the list originally occupied by the merged subsections:
 
 .. blockdiag::
@@ -407,7 +408,7 @@ portion of the list originally occupied by the merged subsections:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
-Next we repeat the procedure to merge the second pair of sorted sub-sections:
+We repeat the procedure to merge the second pair of sorted sub-sections:
 
 .. blockdiag::
 
@@ -431,8 +432,8 @@ Next we repeat the procedure to merge the second pair of sorted sub-sections:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
-Having now reached the end of the original list, we now return to the
-start of list and begin merging sorted sub-sections again. We repeat
+Having reached the end of the original list, we now return to the start
+of the list and begin to merge sorted sub-sections again. We repeat
 this until the entire list is a single sorted sub-section. In our
 example, this requires just one more merge:
 
@@ -485,17 +486,18 @@ Exercise 3
 ----------
 
 Write a Python function that implements merge sort. It may help to
-write a separate function that performs merges which you can call from
-within your merge sort implementation.
-
+write a separate function which performs merges and call it from within
+your merge sort implementation.
 
 Python's sorting algorithm
 --------------------------
 
-Python's list objects use a sorting algorithm called *Timsort*
-invented by Tim Peters in 2002 for use in Python. Timsort is a modifed
-version of merge sort that uses insertion sort to arrange the list of
-items into conveniently mergable sections.
+Python's default sorting algorithm, which is used by the built-in
+``sorted`` function as well as the ``sort`` method of list objects, is
+called *Timsort*.  It's an algorithm developed by Tim Peters in 2002 for
+use in Python. Timsort is a modifed version of merge sort which uses
+insertion sort to arrange the list of items into conveniently mergeable
+sections.
 
 .. Note::
 
@@ -508,10 +510,12 @@ items into conveniently mergable sections.
 Searching algorithms
 ====================
 
+.. Todo:: define search; introduce linear and binary search; mention other algorithms.
+
 Linear search
 -------------
 
-A *linear search* is the most basic kind of search method. It involves checking each element of the list in turn, until the desired element is found.
+Linear search is the most basic kind of search method. It involves checking each element of the list in turn, until the desired element is found.
 
 For example, suppose that we want to find the number 3.8 in the following list:
 
@@ -587,7 +591,7 @@ We perform another comparison and determine that we have found the correct eleme
 
 We had to use a total of 3 comparisons when searching through this list of 4 elements. How many comparisons we need to perform depends on the total length of the list, but also whether the element we are looking for is near the beginning or near the end of the list. In the worst-case scenario, if our element is the last element of the list, we will have to search through the entire list to find it.
 
-If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing a linear search thus scales linearly with the length of the list.
+If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing linear search thus scales linearly with the length of the list.
 
 Exercise 4
 ----------
@@ -595,9 +599,13 @@ Exercise 4
 Binary search
 -------------
 
-A *binary search* is a more efficient search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
+Binary search is a more efficient search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
 
-We first check the *middle* element in the list. If it is the value we want, we can stop. If it is *higher* than the value we want, we repeat the search process with the portion of the list *before* the middle element.  If it is *lower* than the value we want, we repeat the search process with the portion of the list *after* the middle element.
+We first check the *middle* element in the list.
+
+* If it is the value we want, we can stop.
+* If it is *higher* than the value we want, we repeat the search process with the portion of the list *before* the middle element.
+* If it is *lower* than the value we want, we repeat the search process with the portion of the list *after* the middle element.
 
 For example, suppose that we want to find the value 3.8 in the following list of 7 elements:
 
@@ -699,7 +707,7 @@ Now the first half of the list is our new list to search.  We compare the elemen
 
 The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
 
-We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ N.
+We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ N.
 
 Exercise 5
 ----------
@@ -708,12 +716,14 @@ Exercise 5
 Algorithm complexity
 ====================
 
+.. Todo:: talk a bit more about time and space complexity and what it means?
+
 Big O notation
 --------------
 
-We commonly express the cost of an algorithm as a function of the number N of elements that the algorithm acts on.  The function gives us an estimate of the number of operations we have to perform in order to use the algorithm on N elements -- it thus allows us to predict how the cost of the function will increase as N increases. We use a function which is an *approximation* of the exact function -- we simplify it as much as possible, so that only the most important information is preserved.
+We commonly express the cost of an algorithm as a function of the number N of elements that the algorithm acts on.  The function gives us an estimate of the number of operations we have to perform in order to use the algorithm on N elements -- it thus allows us to predict how the number of required operations will increase as N increases. We use a function which is an *approximation* of the exact function -- we simplify it as much as possible, so that only the most important information is preserved.
 
-For example, we know that when we use linear search on a list of N elements, on average we will have to search through half of the list before we find our item -- so the number of operations we will have to perform is N/2.  However, the most important thing is that the algorithm scales *linearly* -- as N increases, the cost of the algorithm increases in proportion to N, not the square of N or the cube of N.  The constant factor of 1/2 is insignificant compared to the very large differences in cost between -- for example -- N and N squared, so we leave it out when we describe the cost of the algorithm.
+For example, we know that when we use linear search on a list of N elements, on average we will have to search through half of the list before we find our item -- so the number of operations we will have to perform is N/2.  However, the most important thing is that the algorithm scales *linearly* -- as N increases, the cost of the algorithm increases in proportion to N, not N\ :sup:`2` or N\ :sup:`3`\ .  The constant factor of 1/2 is insignificant compared to the very large differences in cost between -- for example -- N and N\ :sup:`2`\ , so we leave it out when we describe the cost of the algorithm.
 
 We thus write the cost of the linear search algorithm as O(N) -- we say that the cost is *on the order of N*, or just *order N*.  We call this notation *big O notation*, because it uses the capital O symbol (for *order*).
 
@@ -732,10 +742,25 @@ Binary search    O(1)              O(log N)          O(log N)
 
 What does O(1) mean? It means that the cost of an algorithm is *constant*, no matter what the value of N is. For both these search algorithms, the best case scenario happens when the first element to be tested is the correct element -- then we only have to perform a single operation to find it.
 
-Exercise ??? (linear vs binary search)
---------------------------------------
+In the previous table, big O notation has been used to describe the *time complexity* of algorithms.  It can also be used to describe their *space complexity* -- in which case the cost function represents the number of units of space required for storage rather than the required number of operations.  Here are the space complexities of the algorithms above (for the worst case, and excluding the space required to store the input):
 
-#. We can see from the comparison table above that binary search is more efficient (in the average case) than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
+===============  ================
+Algorithm        Space complexity
+===============  ================
+Selection sort   O(1)
+Merge sort       O(N)
+Linear search    O(1)
+Binary search    O(1)
+===============  ================
+
+None of these algorithms require a significant amount of storage space in addition to that used by the input list, except for the merge sort -- which, as we saw in a previous section, requires temporary storage which is the same size as the input (and thus scales linearly with the input size).
+
+Exercise 6
+----------
+
+#. We can see from the comparison tables above that binary search is more efficient (in the average case) than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
+
+.. Todo:: add another exercise for writing something simple in big O notation.
 
 
 Complexities of common operations in Python
@@ -791,7 +816,7 @@ Answer to exercise 2
 #. At most ``N**2 + N - 2`` operations are performed. For long lists
    the number of operations grows as ``N**2``.
 
-Answer to exercise ??? (linear vs binary search)
-------------------------------------------------
+Answer to exercise 6
+--------------------
 
 #. The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
