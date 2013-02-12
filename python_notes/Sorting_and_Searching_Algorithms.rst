@@ -758,7 +758,7 @@ None of these algorithms require a significant amount of storage space in additi
 Exercise 6
 ----------
 
-#. We can see from the comparison tables above that binary search is more efficient (in the average case) than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
+#. We can see from the comparison tables above that binary search is more efficient than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
 
 .. Todo:: add another exercise for writing something simple in big O notation.
 
