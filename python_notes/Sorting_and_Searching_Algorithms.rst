@@ -859,4 +859,12 @@ Answer to exercise 2
 Answer to exercise 6
 --------------------
 
-#. The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
+#. The advantage of linear search is that it can be performed on an
+   *unsorted* list -- if we are going to examine all the values in
+   turn, their order doesn't matter. It can be more efficient to
+   perform a linear search than a binary search if we need to find a
+   value *once* in a large unsorted list, because just sorting the
+   list in preparation for performing a binary search could be more
+   expensive. If, however, we need to find values in the same large
+   list multiple times, sorting the list and using binary search
+   becomes more worthwhile.
