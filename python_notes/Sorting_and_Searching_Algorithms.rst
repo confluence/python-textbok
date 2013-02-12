@@ -467,26 +467,35 @@ of passes -- i.e. 2N\ log\ :sub:`2`\ N copies and roughly N\ log\
 
 The algorithm for merge sort may be written as:
 
-.. TODO::
+#. Create a temporary storate list the same size as the list to be
+   sorted.
 
-   Write better algorithm description.
+#. Start by treating each element of the list as a sorted one element
+   sub-section of the original list.
 
-Here are the steps for Merge sort:
+#. Move through all the sorted sub-sections, merging adjacent pairs as
+   follows:
 
-* Each element in the array is a single partition. Merge adjacent
-  partitions to a new array, resulting in partitions of size
-  two. Assign the new array to the original.
+   i. Keep two indexes pointing to the smallest uncopied items in each
+      sorted sub-section and a third index pointing initially to the
+      start of the temporary storage.
 
-* Each pair of elements in the array is a single partition. Merge
-  adjacent partitions to another new array, resulting in partitions of
-  size four. Assign the new array to the original.
+   #. Copy the smaller of the two items indexed into the indicated
+      position in the temporary storage. Increment the index of the
+      sub-section the item was copied from and the index into
+      temporary storage.
 
-* Each group of four elements in the original array is a single
-  partition. Merge adjacent partitions to another new array, resulting
-  in partitions of size eight. Assign the new array to the original.
+   #. If all the items in one sub-section have been copied, copy the
+      remaining items from to the back of the list in temporary
+      storage. Otherwise return to step 2i).
 
-* Continue this process until the partition size is at least as large
-  as the whole array.
+   #. Copy the sorted list in temporary storage back over the section
+      of the original list used by the two sub-sections that were
+      merged.
+
+#. If only a single sorted sub-section remains, the entire list is
+   sorted and we are done. Otherwise return to the start of step 2.
+
 
 Exercise 3
 ----------
@@ -494,6 +503,7 @@ Exercise 3
 Write a Python function that implements merge sort. It may help to
 write a separate function which performs merges and call it from within
 your merge sort implementation.
+
 
 Python's sorting algorithm
 --------------------------
