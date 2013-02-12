@@ -755,20 +755,14 @@ Binary search    O(1)
 
 None of these algorithms require a significant amount of storage space in addition to that used by the input list, except for the merge sort -- which, as we saw in a previous section, requires temporary storage which is the same size as the input (and thus scales linearly with the input size).
 
+.. Note:: The Python wiki has a `summary <http://wiki.python.org/moin/TimeComplexity>`_ of the time complexities of common operations on collections.  You may also wish to investigate the ``collections`` module, which provides additional collection classes which are optimised for particular tasks.
+
 Exercise 6
 ----------
 
 #. We can see from the comparison tables above that binary search is more efficient than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
 
 .. Todo:: add another exercise for writing something simple in big O notation.
-
-
-Complexities of common operations in Python
-===========================================
-
-.. TODO::
-
-    Summarize the important bits from http://wiki.python.org/moin/TimeComplexity
 
 Answers to exercises
 ====================
