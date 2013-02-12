@@ -916,6 +916,27 @@ Answer to exercise 2
 #. At most ``N**2 + N - 2`` operations are performed. For long lists
    the number of operations grows as ``N**2``.
 
+Answer to exercise 3
+--------------------
+
+.. todo::
+
+   Write answer.
+
+Answer to exercise 4
+--------------------
+
+.. todo::
+
+   Write answer.
+
+Answer to exercise 5
+--------------------
+
+.. todo::
+
+   Write answer.
+
 Answer to exercise 6
 --------------------
 
