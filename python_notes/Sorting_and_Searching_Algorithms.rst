@@ -504,9 +504,12 @@ Searching algorithms
 Linear search
 -------------
 
-Linear search is the most basic kind of search method. It involves checking each element of the list in turn, until the desired element is found.
+Linear search is the most basic kind of search method. It involves
+checking each element of the list in turn, until the desired element
+is found.
 
-For example, suppose that we want to find the number 3.8 in the following list:
+For example, suppose that we want to find the number 3.8 in the
+following list:
 
 .. blockdiag::
 
@@ -526,7 +529,9 @@ For example, suppose that we want to find the number 3.8 in the following list:
 
     }
 
-We start with the first element, and perform a comparison to see if its value is the value that we want. In this case, 1.5 is not equal to 3.8, so we move onto the next element:
+We start with the first element, and perform a comparison to see if
+its value is the value that we want. In this case, 1.5 is not equal to
+3.8, so we move onto the next element:
 
 .. blockdiag::
 
@@ -551,7 +556,8 @@ We start with the first element, and perform a comparison to see if its value is
 
     }
 
-We perform another comparison, and see that 2.7 is also not equal to 3.8, so we move onto the next element:
+We perform another comparison, and see that 2.7 is also not equal to
+3.8, so we move onto the next element:
 
 .. blockdiag::
 
@@ -576,11 +582,22 @@ We perform another comparison, and see that 2.7 is also not equal to 3.8, so we 
 
     }
 
-We perform another comparison and determine that we have found the correct element. Now we can end the search and return the position of the element (index 2).
+We perform another comparison and determine that we have found the
+correct element. Now we can end the search and return the position of
+the element (index 2).
 
-We had to use a total of 3 comparisons when searching through this list of 4 elements. How many comparisons we need to perform depends on the total length of the list, but also whether the element we are looking for is near the beginning or near the end of the list. In the worst-case scenario, if our element is the last element of the list, we will have to search through the entire list to find it.
+We had to use a total of 3 comparisons when searching through this
+list of 4 elements. How many comparisons we need to perform depends on
+the total length of the list, but also whether the element we are
+looking for is near the beginning or near the end of the list. In the
+worst-case scenario, if our element is the last element of the list,
+we will have to search through the entire list to find it.
 
-If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing linear search thus scales linearly with the length of the list.
+If we search the same list many times, assuming that all elements are
+equally likely to be searched for, we will on average have to search
+through half of the list each time.  The cost (in comparisons) of
+performing linear search thus scales linearly with the length of the
+list.
 
 Exercise 4
 ----------
@@ -588,15 +605,21 @@ Exercise 4
 Binary search
 -------------
 
-Binary search is a more efficient search algorithm which relies on the elements in the list being sorted.  We apply the same search process to progressively smaller sub-lists of the original list, starting with the whole list and approximately halving the search area every time.
+Binary search is a more efficient search algorithm which relies on the
+elements in the list being sorted.  We apply the same search process
+to progressively smaller sub-lists of the original list, starting with
+the whole list and approximately halving the search area every time.
 
 We first check the *middle* element in the list.
 
 * If it is the value we want, we can stop.
-* If it is *higher* than the value we want, we repeat the search process with the portion of the list *before* the middle element.
-* If it is *lower* than the value we want, we repeat the search process with the portion of the list *after* the middle element.
+* If it is *higher* than the value we want, we repeat the search
+  process with the portion of the list *before* the middle element.
+* If it is *lower* than the value we want, we repeat the search
+  process with the portion of the list *after* the middle element.
 
-For example, suppose that we want to find the value 3.8 in the following list of 7 elements:
+For example, suppose that we want to find the value 3.8 in the
+following list of 7 elements:
 
 .. blockdiag::
 
@@ -625,7 +648,9 @@ For example, suppose that we want to find the value 3.8 in the following list of
 
     }
 
-First we compare the element in the middle of the list to our value. 7.2 is *bigger* than 3.8, so we need to check the first half of the list next.
+First we compare the element in the middle of the list to our
+value. 7.2 is *bigger* than 3.8, so we need to check the first half of
+the list next.
 
 .. blockdiag::
 
@@ -659,7 +684,9 @@ First we compare the element in the middle of the list to our value. 7.2 is *big
 
     }
 
-Now the first half of the list is our new list to search.  We compare the element in the middle of this list to our value.  2.7 is *smaller* than 3.8, so we need to search the *second half* of this sublist next.
+Now the first half of the list is our new list to search.  We compare
+the element in the middle of this list to our value.  2.7 is *smaller*
+than 3.8, so we need to search the *second half* of this sublist next.
 
 
 .. blockdiag::
@@ -694,9 +721,15 @@ Now the first half of the list is our new list to search.  We compare the elemen
 
     }
 
-The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
+The second half of the last sub-list is just a single element, which
+is also the middle element.  We compare this element to our value, and
+it is the element that we want.
 
-We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ N.
+We have performed 3 comparisons in total when searching this list of 7
+items.  The number of comparisons we need to perform scales with the
+size of the list, but much more slowly than for linear search -- if we
+are searching a list of length N, the maximum number of comparisons
+that we will have to perform is log\ :sub:`2`\ N.
 
 Exercise 5
 ----------
