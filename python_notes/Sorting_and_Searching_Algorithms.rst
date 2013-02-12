@@ -589,10 +589,6 @@ We had to use a total of 3 comparisons when searching through this list of 4 ele
 
 If we search the same list many times, assuming that all elements are equally likely to be searched for, we will on average have to search through half of the list each time.  The cost (in comparisons) of performing a linear search thus scales linearly with the length of the list.
 
-.. Todo:: maybe move the next bit down into the algorithm analysis section.
-
-The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
-
 Exercise 4
 ----------
 
@@ -703,7 +699,7 @@ Now the first half of the list is our new list to search.  We compare the elemen
 
 The second half of the last sub-list is just a single element, which is also the middle element.  We compare this element to our value, and it is the element that we want.
 
-We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ (N).
+We have performed 3 comparisons in total when searching this list of 7 items.  The number of comparisons we need to perform scales with the size of the list, but much more slowly than for the linear search -- if we are searching a list of length N, the maximum number of comparisons that we will have to perform is log\ :sub:`2`\ N.
 
 Exercise 5
 ----------
@@ -711,6 +707,35 @@ Exercise 5
 
 Algorithm complexity
 ====================
+
+Big O notation
+--------------
+
+We commonly express the cost of an algorithm as a function of the number N of elements that the algorithm acts on.  The function gives us an estimate of the number of operations we have to perform in order to use the algorithm on N elements -- it thus allows us to predict how the cost of the function will increase as N increases. We use a function which is an *approximation* of the exact function -- we simplify it as much as possible, so that only the most important information is preserved.
+
+For example, we know that when we use linear search on a list of N elements, on average we will have to search through half of the list before we find our item -- so the number of operations we will have to perform is N/2.  However, the most important thing is that the algorithm scales *linearly* -- as N increases, the cost of the algorithm increases in proportion to N, not the square of N or the cube of N.  The constant factor of 1/2 is insignificant compared to the very large differences in cost between -- for example -- N and N squared, so we leave it out when we describe the cost of the algorithm.
+
+We thus write the cost of the linear search algorithm as O(N) -- we say that the cost is *on the order of N*, or just *order N*.  We call this notation *big O notation*, because it uses the capital O symbol (for *order*).
+
+We have dropped the constant factor 1/2. We would also drop any lower-order terms from an expression with multiple terms -- for example, O(N\ :sup:`3` + N\ :sup:`2`\ ) would be simplified to O(N\ :sup:`3`\ ).
+
+In the example above we calculated the *average* cost of the algorithm, which is also known as the *expected* cost, but it can also be useful to calculate the *best case* and *worst case* costs.  Here are the best case, expected and worst case costs for the sorting and searching algorithms we have discussed so far:
+
+===============  ================  ================  ================
+Algorithm        Best case         Expected          Worst case
+===============  ================  ================  ================
+Selection sort   О(N\ :sup:`2`\ )  О(N\ :sup:`2`\ )  О(N\ :sup:`2`\ )
+Merge sort       O(N log N)        O(N log N)        O(N log N)
+Linear search    O(1)              O(N)              O(N)
+Binary search    O(1)              O(log N)          O(log N)
+===============  ================  ================  ================
+
+What does O(1) mean? It means that the cost of an algorithm is *constant*, no matter what the value of N is. For both these search algorithms, the best case scenario happens when the first element to be tested is the correct element -- then we only have to perform a single operation to find it.
+
+Exercise ??? (linear vs binary search)
+--------------------------------------
+
+#. We can see from the comparison table above that binary search is more efficient (in the average case) than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
 
 
 Complexities of common operations in Python
@@ -723,8 +748,8 @@ Complexities of common operations in Python
 Answers to exercises
 ====================
 
-Exercise 1
-----------
+Answer to exercise 1
+--------------------
 
 Completed selection sort implementation::
 
@@ -746,8 +771,8 @@ Completed selection sort implementation::
             items[location_of_smallest] = temporary_item
 
 
-Exercise 2
-----------
+Answer to exercise 2
+--------------------
 
 #. ``N - 1`` swaps are performed.
 
@@ -765,3 +790,8 @@ Exercise 2
 
 #. At most ``N**2 + N - 2`` operations are performed. For long lists
    the number of operations grows as ``N**2``.
+
+Answer to exercise ??? (linear vs binary search)
+------------------------------------------------
+
+#. The advantage of linear search is that it can be performed on an *unsorted* list -- if we are going to examine all the values in turn, their order doesn't matter. It can be more efficient to perform a linear search than a binary search if we need to find a value *once* in a large unsorted list, because just sorting the list in preparation for performing a binary search could be more expensive. If, however, we need to find values in the same large list multiple times, sorting the list and using binary search becomes more worthwhile.
