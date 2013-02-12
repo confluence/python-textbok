@@ -9,8 +9,8 @@ We have learned that in order to write a computer program which
 performs some task we must construct a suitable algorithm. However,
 whatever algorithm we construct is unlikely to be unique -- there are
 likely to be many possible algorithms which can perform the same task.
-Are some of these algorithms in some sense better than others? Algorithm
-analysis is the study of this question.
+Are some of these algorithms in some sense better than others?
+Algorithm analysis is the study of this question.
 
 In this chapter we will analyze four algorithms; two for each of the
 following common tasks:
@@ -446,13 +446,30 @@ example, this requires just one more merge:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
+Notice how the size of the sorted sections of the array doubles after
+every interation of merges. After M steps the size of the sorted
+sections is 2\ :sup:`M`. Once 2\ :sup:`M` is greater than N, the
+entire list is sorted. Thus, for a list of size N, we need M equals
+log\ :sub:`2`\ N interations to sort the list.
+
+Each iteration of merges requires a complete pass through the list and
+each element is copied twice -- once into the temporary storage and
+once back into the original list. While each pair of sub-sections
+being merged has items, each copy into the temporary array also
+requires a comparison to pick which item to copy. Once one of the
+lists runs out no comparisons are needed. Thus each pass requires 2N
+copies and roughly N comparisons (and certainly no more than N).
+
+The total number of operations required for our merge sort algorithm
+is the product of the number of operations in each pass and the number
+of passes -- i.e. 2N\ log\ :sub:`2`\ N copies and roughly N\ log\
+:sub:`2`\ N comparisons.
+
+The algorithm for merge sort may be written as:
+
 .. TODO::
 
    Write better algorithm description.
-
-   Discuss number of steps taken in example.
-
-   Discuss number of steps taken in general.
 
 Here are the steps for Merge sort:
 
