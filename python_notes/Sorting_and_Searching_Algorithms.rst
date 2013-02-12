@@ -701,24 +701,47 @@ We have performed 3 comparisons in total when searching this list of 7 items.  T
 Exercise 5
 ----------
 
+.. todo:: Exercise 5
 
-Algorithm complexity
-====================
 
-.. Todo:: talk a bit more about time and space complexity and what it means?
+Algorithm complexity and Big O notation
+=======================================
 
-Big O notation
---------------
+We commonly express the cost of an algorithm as a function of the
+number N of elements that the algorithm acts on.  The function gives
+us an estimate of the number of operations we have to perform in order
+to use the algorithm on N elements -- it thus allows us to predict how
+the number of required operations will increase as N increases. We use
+a function which is an *approximation* of the exact function -- we
+simplify it as much as possible, so that only the most important
+information is preserved.
 
-We commonly express the cost of an algorithm as a function of the number N of elements that the algorithm acts on.  The function gives us an estimate of the number of operations we have to perform in order to use the algorithm on N elements -- it thus allows us to predict how the number of required operations will increase as N increases. We use a function which is an *approximation* of the exact function -- we simplify it as much as possible, so that only the most important information is preserved.
+For example, we know that when we use linear search on a list of N
+elements, on average we will have to search through half of the list
+before we find our item -- so the number of operations we will have to
+perform is N/2.  However, the most important thing is that the
+algorithm scales *linearly* -- as N increases, the cost of the
+algorithm increases in proportion to N, not N\ :sup:`2` or N\
+:sup:`3`\ .  The constant factor of 1/2 is insignificant compared to
+the very large differences in cost between -- for example -- N and N\
+:sup:`2`\ , so we leave it out when we describe the cost of the
+algorithm.
 
-For example, we know that when we use linear search on a list of N elements, on average we will have to search through half of the list before we find our item -- so the number of operations we will have to perform is N/2.  However, the most important thing is that the algorithm scales *linearly* -- as N increases, the cost of the algorithm increases in proportion to N, not N\ :sup:`2` or N\ :sup:`3`\ .  The constant factor of 1/2 is insignificant compared to the very large differences in cost between -- for example -- N and N\ :sup:`2`\ , so we leave it out when we describe the cost of the algorithm.
+We thus write the cost of the linear search algorithm as O(N) -- we
+say that the cost is *on the order of N*, or just *order N*.  We call
+this notation *big O notation*, because it uses the capital O symbol
+(for *order*).
 
-We thus write the cost of the linear search algorithm as O(N) -- we say that the cost is *on the order of N*, or just *order N*.  We call this notation *big O notation*, because it uses the capital O symbol (for *order*).
+We have dropped the constant factor 1/2. We would also drop any
+lower-order terms from an expression with multiple terms -- for
+example, O(N\ :sup:`3` + N\ :sup:`2`\ ) would be simplified to O(N\
+:sup:`3`\ ).
 
-We have dropped the constant factor 1/2. We would also drop any lower-order terms from an expression with multiple terms -- for example, O(N\ :sup:`3` + N\ :sup:`2`\ ) would be simplified to O(N\ :sup:`3`\ ).
-
-In the example above we calculated the *average* cost of the algorithm, which is also known as the *expected* cost, but it can also be useful to calculate the *best case* and *worst case* costs.  Here are the best case, expected and worst case costs for the sorting and searching algorithms we have discussed so far:
+In the example above we calculated the *average* cost of the
+algorithm, which is also known as the *expected* cost, but it can also
+be useful to calculate the *best case* and *worst case* costs.  Here
+are the best case, expected and worst case costs for the sorting and
+searching algorithms we have discussed so far:
 
 ===============  ================  ================  ================
 Algorithm        Best case         Expected          Worst case
@@ -729,9 +752,19 @@ Linear search    O(1)              O(N)              O(N)
 Binary search    O(1)              O(log N)          O(log N)
 ===============  ================  ================  ================
 
-What does O(1) mean? It means that the cost of an algorithm is *constant*, no matter what the value of N is. For both these search algorithms, the best case scenario happens when the first element to be tested is the correct element -- then we only have to perform a single operation to find it.
+What does O(1) mean? It means that the cost of an algorithm is
+*constant*, no matter what the value of N is. For both these search
+algorithms, the best case scenario happens when the first element to
+be tested is the correct element -- then we only have to perform a
+single operation to find it.
 
-In the previous table, big O notation has been used to describe the *time complexity* of algorithms.  It can also be used to describe their *space complexity* -- in which case the cost function represents the number of units of space required for storage rather than the required number of operations.  Here are the space complexities of the algorithms above (for the worst case, and excluding the space required to store the input):
+In the previous table, big O notation has been used to describe the
+*time complexity* of algorithms.  It can also be used to describe
+their *space complexity* -- in which case the cost function represents
+the number of units of space required for storage rather than the
+required number of operations.  Here are the space complexities of the
+algorithms above (for the worst case, and excluding the space required
+to store the input):
 
 ===============  ================
 Algorithm        Space complexity
@@ -742,16 +775,38 @@ Linear search    O(1)
 Binary search    O(1)
 ===============  ================
 
-None of these algorithms require a significant amount of storage space in addition to that used by the input list, except for the merge sort -- which, as we saw in a previous section, requires temporary storage which is the same size as the input (and thus scales linearly with the input size).
+None of these algorithms require a significant amount of storage space
+in addition to that used by the input list, except for the merge sort
+-- which, as we saw in a previous section, requires temporary storage
+which is the same size as the input (and thus scales linearly with the
+input size).
 
-.. Note:: The Python wiki has a `summary <http://wiki.python.org/moin/TimeComplexity>`_ of the time complexities of common operations on collections.  You may also wish to investigate the ``collections`` module, which provides additional collection classes which are optimised for particular tasks.
+.. Note::
 
-.. Note:: *Computational complexity theory* studies the inherent complexity of *tasks* themselves. Sometimes it is possible to prove that *any* algorithm that can perform a given task will require some minimum number of steps or amount of extra storage.  For example, it can be shown that, given a list of arbitrary objects and only a comparison function with which to compare them, no sorting algorithm can use fewer than O(N log N) comparisons.
+    The Python wiki has a `summary
+    <http://wiki.python.org/moin/TimeComplexity>`_ of the time
+    complexities of common operations on collections.  You may also
+    wish to investigate the ``collections`` module, which provides
+    additional collection classes which are optimised for particular
+    tasks.
+
+.. Note::
+
+    *Computational complexity theory* studies the inherent complexity
+    of *tasks* themselves. Sometimes it is possible to prove that
+    *any* algorithm that can perform a given task will require some
+    minimum number of steps or amount of extra storage.  For example,
+    it can be shown that, given a list of arbitrary objects and only a
+    comparison function with which to compare them, no sorting
+    algorithm can use fewer than O(N log N) comparisons.
 
 Exercise 6
 ----------
 
-#. We can see from the comparison tables above that binary search is more efficient than linear search.  Why would we ever use linear search?  Hint: what property must a list have for us to be able to use a binary search on it?
+#. We can see from the comparison tables above that binary search is
+   more efficient than linear search.  Why would we ever use linear
+   search?  Hint: what property must a list have for us to be able to
+   use a binary search on it?
 
 .. Todo:: add another exercise for writing something simple in big O notation.
 
