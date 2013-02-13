@@ -526,7 +526,8 @@ sections.
 Searching algorithms
 ====================
 
-Searching is also a common and well-studied task. This task can be described formally as follows:
+Searching is also a common and well-studied task. This task can be
+described formally as follows:
 
     Given a *list of values* a function that *compares two values* and a
     *desired value*, find the position of the desired value in the list.
@@ -540,7 +541,12 @@ We will look at two algorithms that perform this task:
   the list which contains values which are definitely either all larger
   or all smaller than the desired value
 
-.. Todo:: other algorithms
+There are numerous other searching techniques. Often they rely on the
+construction of more complex data structures to facilitate repeated
+searching. Examples of such structures are *hash tables* (such as
+Python's dictionaries) and *prefix trees*. Inexact searches that find
+elements similar to the one being searched for are also an important
+topic.
 
 Linear search
 -------------
