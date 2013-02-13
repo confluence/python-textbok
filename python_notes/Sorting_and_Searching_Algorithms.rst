@@ -526,7 +526,21 @@ sections.
 Searching algorithms
 ====================
 
-.. Todo:: define search; introduce linear and binary search; mention other algorithms.
+Searching is also a common and well-studied task. This task can be described formally as follows:
+
+    Given a *list of values* a function that *compares two values* and a
+    *desired value*, find the position of the desired value in the list.
+
+We will look at two algorithms that perform this task:
+
+* *linear search*, which simply checks the values in sequence until the
+  desired value is found
+* *binary search*, which requires a sorted input list, and checks for
+  the value in the middle of the list, repeatedly discarding the half of
+  the list which contains values which are definitely either all larger
+  or all smaller than the desired value
+
+.. Todo:: other algorithms
 
 Linear search
 -------------
