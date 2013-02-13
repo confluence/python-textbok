@@ -767,7 +767,9 @@ that we will have to perform is log\ :sub:`2`\ N.
 Exercise 5
 ----------
 
-.. todo:: Exercise 5
+#. Write a function which implements binary search. You may assume that
+   the input list will be sorted. Hint: this function is often written
+   recursively.
 
 
 Algorithm complexity and Big O notation
@@ -874,6 +876,15 @@ Exercise 6
    search?  Hint: what property must a list have for us to be able to
    use a binary search on it?
 
+#. Suppose that each of the following functions shows the average number
+   of operations required to perform some algorithm on a list of length
+   N. Give the big O notation for the time complexity of each algorithm:
+
+   #. 4N\ :sup:`2` + 2N + 2
+   #. N + log N
+   #. N log N
+   #. 3
+
 .. Todo:: add another exercise for writing something simple in big O notation.
 
 Answers to exercises
@@ -938,7 +949,7 @@ Answer to exercise 3
                 if items[i_1] < items[i_2]:
                     temporary_storage[i_t] = items[i_1]
                     i_1 += 1
-                else:  # the_list[i_2] >= the_list[i_1]
+                else:  # the_list[i_2] >= items[i_1]
                     temporary_storage[i_t] = items[i_2]
                     i_2 += 1
                 i_t += 1
@@ -984,14 +995,28 @@ Answer to exercise 4
             if item == desired_item:
                 return position
 
-        raise ValueError("%s was not found in the list.", desired_item)
+        raise ValueError("%s was not found in the list." % desired_item)
 
 Answer to exercise 5
 --------------------
 
-.. todo::
+#. Here is an example program::
 
-   Write answer.
+    def binary_search(items, desired_item, start=0, end=None):
+        if end == None:
+            end = len(items)
+
+        if start == end:
+            raise ValueError("%s was not found in the list." % desired_item)
+
+        pos = (end - start) // 2 + start
+
+        if desired_item == items[pos]:
+            return pos
+        elif desired_item > items[pos]:
+            return binary_search(items, desired_item, start=(pos + 1), end=end)
+        else: # desired_item < items[pos]:
+            return binary_search(items, desired_item, start=start, end=pos)
 
 Answer to exercise 6
 --------------------
@@ -1005,3 +1030,10 @@ Answer to exercise 6
    expensive. If, however, we need to find values in the same large
    list multiple times, sorting the list and using binary search
    becomes more worthwhile.
+
+#. We drop all constant factors and less significant terms:
+
+   #. O(N\ :sup:`2`)
+   #. O(N)
+   #. O(N log N)
+   #. O(1)
