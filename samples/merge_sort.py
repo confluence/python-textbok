@@ -9,7 +9,7 @@ def merge(items, sections, temporary_storage):
             if items[i_1] < items[i_2]:
                 temporary_storage[i_t] = items[i_1]
                 i_1 += 1
-            else:  # the_list[i_2] >= the_list[i_1]
+            else:  # the_list[i_2] >= items[i_1]
                 temporary_storage[i_t] = items[i_2]
                 i_2 += 1
             i_t += 1
