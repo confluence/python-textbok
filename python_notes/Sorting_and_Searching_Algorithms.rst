@@ -919,9 +919,45 @@ Answer to exercise 2
 Answer to exercise 3
 --------------------
 
-.. todo::
+#. Here is an example program::
 
-   Write answer.
+    def merge(items, sections, temporary_storage):
+        ((start_1, end_1), (start_2, end_2)) = sections
+        i_1 = start_1
+        i_2 = start_2
+        i_t = 0
+
+        while i_1 < end_1 or i_2 < end_2:
+            if i_1 < end_1 and i_2 < end_2:
+                if the_list[i_1] < the_list[i_2]:
+                    temporary_storage[i_t] = items[i_1]
+                    i_1 += 1
+                else: # the_list[i_2] >= the_list[i_1]
+                    temporary_storage[i_t] = items[i_2]
+                    i_2 += 1
+                i_t += 1
+
+            elif i_1 < end_1:
+                for i in range(i_1, end_1):
+                    temporary_storage[i_t] = items[i_1]
+                    i_1 += 1
+                    i_t += 1
+
+            else: # i_2 < end_2
+                for i in range(i_2, end_2):
+                    temporary_storage[i_t] = items[i_2]
+                    i_2 += 1
+                    i_t += 1
+
+            for i in range(i_t):
+                items[start_1 + i] = temporary_storage[i]
+
+    def merge_sort(items):
+        temporary_storage = [None] * len(items)
+        num_sorted_subsections = len(items)
+
+        while num_sorted_subsections > 1:
+            # TODO finish this
 
 Answer to exercise 4
 --------------------
