@@ -629,6 +629,12 @@ list.
 Exercise 4
 ----------
 
+#. Write a function which implements linear search. It should take a
+   list and an element as a parameter, and return the position of the
+   element in the list. If the element is not in the list, the function
+   should raise an exception. If the element is in the list multiple
+   times, the function should return the first position.
+
 Binary search
 -------------
 
@@ -962,9 +968,14 @@ Answer to exercise 3
 Answer to exercise 4
 --------------------
 
-.. todo::
+#. Here is an example program::
 
-   Write answer.
+    def linear_search(items, desired_item):
+        for position, item in enumerate(items):
+            if item == desired_item:
+                return position
+
+        raise ValueError("%s was not found in the list.", desired_item)
 
 Answer to exercise 5
 --------------------
