@@ -446,18 +446,18 @@ example, this requires just one more merge:
         group { E; F; G; H; color = "#00EE00"; label = "Temporary storage"; }
     }
 
-Notice how the size of the sorted sections of the array doubles after
-every interation of merges. After M steps the size of the sorted
+Notice how the size of the sorted sections of the list doubles after
+every iteration of merges. After M steps the size of the sorted
 sections is 2\ :sup:`M`. Once 2\ :sup:`M` is greater than N, the
 entire list is sorted. Thus, for a list of size N, we need M equals
 log\ :sub:`2`\ N interations to sort the list.
 
 Each iteration of merges requires a complete pass through the list and
 each element is copied twice -- once into the temporary storage and
-once back into the original list. While each pair of sub-sections
-being merged has items, each copy into the temporary array also
+once back into the original list. As long as there are items left in
+both sub-sections in each pair, each copy into the temporary list also
 requires a comparison to pick which item to copy. Once one of the
-lists runs out no comparisons are needed. Thus each pass requires 2N
+lists runs out, no comparisons are needed. Thus each pass requires 2N
 copies and roughly N comparisons (and certainly no more than N).
 
 The total number of operations required for our merge sort algorithm
@@ -465,36 +465,36 @@ is the product of the number of operations in each pass and the number
 of passes -- i.e. 2N\ log\ :sub:`2`\ N copies and roughly N\ log\
 :sub:`2`\ N comparisons.
 
-The algorithm for merge sort may be written as:
+The algorithm for merge sort may be written as this list of steps:
 
-#. Create a temporary storate list the same size as the list to be
-   sorted.
+#. Create a temporary storage list which is the same size as the list to
+   be sorted.
 
-#. Start by treating each element of the list as a sorted one element
+#. Start by treating each element of the list as a sorted one-element
    sub-section of the original list.
 
 #. Move through all the sorted sub-sections, merging adjacent pairs as
    follows:
 
-   i. Keep two indexes pointing to the smallest uncopied items in each
-      sorted sub-section and a third index pointing initially to the
-      start of the temporary storage.
+   i. Use two variables to point to the indices of the smallest uncopied
+      items in the two sorted sub-sections, and a third variable to
+      point to the index of the start of the temporary storage.
 
-   #. Copy the smaller of the two items indexed into the indicated
+   #. Copy the smaller of the two indexed items into the indicated
       position in the temporary storage. Increment the index of the
-      sub-section the item was copied from and the index into
+      sub-section from which the item was copied, and the index into
       temporary storage.
 
    #. If all the items in one sub-section have been copied, copy the
-      remaining items from to the back of the list in temporary
-      storage. Otherwise return to step 2i).
+      items remaining in the other sub-section to the back of the list
+      in temporary storage. Otherwise return to step 3 ii.
 
    #. Copy the sorted list in temporary storage back over the section
-      of the original list used by the two sub-sections that were
-      merged.
+      of the original list which was occupied by the two sub-sections
+      that have just been merged.
 
 #. If only a single sorted sub-section remains, the entire list is
-   sorted and we are done. Otherwise return to the start of step 2.
+   sorted and we are done. Otherwise return to the start of step 3.
 
 
 Exercise 3
