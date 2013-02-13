@@ -1,7 +1,3 @@
-OUTSTANDING CHAPTERS
-
-* sorting and searching algorithms -- IN PROGRESS
-
 GLOBAL SEARCH AND REPLACE
 
 * replace "you" with "we" almost everywhere in earlier chapters - done up to collections; check everything
