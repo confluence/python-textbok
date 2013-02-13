@@ -834,7 +834,7 @@ searching algorithms we have discussed so far:
 ===============  ================  ================  ================
 Algorithm        Best case         Expected          Worst case
 ===============  ================  ================  ================
-Selection sort   О(N\ :sup:`2`\ )  О(N\ :sup:`2`\ )  О(N\ :sup:`2`\ )
+Selection sort   O(N\ :sup:`2`\ )  O(N\ :sup:`2`\ )  O(N\ :sup:`2`\ )
 Merge sort       O(N log N)        O(N log N)        O(N log N)
 Linear search    O(1)              O(N)              O(N)
 Binary search    O(1)              O(log N)          O(log N)
@@ -904,8 +904,6 @@ Exercise 6
    #. N + log N
    #. N log N
    #. 3
-
-.. Todo:: add another exercise for writing something simple in big O notation.
 
 Answers to exercises
 ====================
