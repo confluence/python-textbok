@@ -529,8 +529,9 @@ Searching algorithms
 Searching is also a common and well-studied task. This task can be
 described formally as follows:
 
-    Given a *list of values* a function that *compares two values* and a
-    *desired value*, find the position of the desired value in the list.
+    Given a *list of values*, a function that *compares two values*
+    and a *desired value*, find the position of the desired value in
+    the list.
 
 We will look at two algorithms that perform this task:
 
