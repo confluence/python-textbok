@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Object-Oriented Programming in Python'
-copyright = u'2013, 2014, University of Cape Town and individual contributors'
+copyright = u'2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -248,7 +248,7 @@ texinfo_documents = [
 epub_title = u'Object-Oriented Programming in Python'
 epub_author = u'University of Cape Town and individual contributors'
 epub_publisher = u'University of Cape Town and individual contributors'
-epub_copyright = u'2013, 2014, University of Cape Town and individual contributors'
+epub_copyright = u'2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
