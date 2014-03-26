@@ -655,7 +655,7 @@ results in an integer solution.
 
 .. Note:: In Python 2, the operator ``/`` performed integer division
           if both the dividend and the divisor were integers, and
-          floating point division if at least one of them was a float.
+          floating-point division if at least one of them was a float.
           In Python 3, ``/`` *always* performs floating-point division
           and ``//`` *always* performs integer division -- even if the
           dividend and divisor are floats!
@@ -739,7 +739,7 @@ Floating-point numbers
 Floating-point numbers (``float`` type) are numbers with a decimal
 point or an exponent (or both). Examples are ``5.0``, ``10.24``,
 ``0.0``, ``12.`` and ``.3``. We can use scientific notation to denote
-very large or very small floating point numbers, e.g. 3.8 x 10\
+very large or very small floating-point numbers, e.g. 3.8 x 10\
 :sup:`15`. The first part of the number, 3.8, is the mantissa and 15
 is the exponent. We can think of the exponent as the number of times
 we have to move the decimal point to the right to get to the actual
@@ -808,10 +808,10 @@ the order of precedence.
 
 .. Note::
 
-    Python floating-point numbers confirm to standardized format named
+    Python floating-point numbers conform to a standardised format named
     ``IEEE 754``. The standard represents each floating-point number
     using a small fixed amount of memory, so unlike Python's integers,
-    Python's floating point numbers have a limited range. The largest
+    Python's floating-point numbers have a limited range. The largest
     floating-point number that can be represented in Python is
     ``2**1023``.
 
@@ -819,7 +819,7 @@ the order of precedence.
 
     Python includes three other types for dealing with numbers:
 
-    * ``complex`` (like floating-point but for complex numbers; try
+    * ``complex`` (like floating point but for complex numbers; try
       ``1+5j``)
     * ``Fraction`` (for rational numbers; available in the ``fractions``
       module)
@@ -836,9 +836,9 @@ Exercise 5
    ``1.0``, ``1.12e4``, ``-3.141759``, ``735``, ``0.57721566``,
    ``7.5e-3``
 
-#. What is the difference between integer and floating point division?
+#. What is the difference between integer and floating-point division?
    What is the operator used for integer division? What is the
-   operator used for floating point division?
+   operator used for floating-point division?
 
 #. What are the results of the following operations? Explain why:
    #. ``1.5 + 2``

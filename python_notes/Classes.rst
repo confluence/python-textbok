@@ -60,11 +60,11 @@ Here is an example of a simple custom class which stores information about a per
 
 We start the class definition with the ``class`` keyword, followed by the class name and a colon.  We would list any parent classes in between round brackets before the colon, but this class doesn't have any, so we can leave them out.
 
-Inside the class body, we define two functions -- these are our objects's methods.  The first is called ``__init__``, which is a special method.  When we call the class object, a new instance of the class is created, and the ``__init__`` method on this new object is immediately executed with all the parameters that we passed to the class object.  The purpose of this method is thus to set up a new object using data that we have provided.
+Inside the class body, we define two functions -- these are our object's methods.  The first is called ``__init__``, which is a special method.  When we call the class object, a new instance of the class is created, and the ``__init__`` method on this new object is immediately executed with all the parameters that we passed to the class object.  The purpose of this method is thus to set up a new object using data that we have provided.
 
 The second method is a custom method which calculates the age of our person using the birthdate and the current date.
 
-.. Note:: ``__init__`` is sometimes called the object's *constructor*, because it is used similarly to the way that constructors are used in other languages, but that is not technically correct -- it's better to call it the *initializer*.  There is a different method called ``__new__`` which is more analogous to a constructor, but it is hardly ever used.
+.. Note:: ``__init__`` is sometimes called the object's *constructor*, because it is used similarly to the way that constructors are used in other languages, but that is not technically correct -- it's better to call it the *initialiser*.  There is a different method called ``__new__`` which is more analogous to a constructor, but it is hardly ever used.
 
 You may have noticed that both of these method definitions have ``self`` as the first parameter, and we use this variable inside the method bodies -- but we don't appear to pass this parameter in.  This is because whenever we call a method on an object, *the object itself* is automatically passed in as the first parameter.  This gives us a way to access the object's properties from inside the object's methods.
 

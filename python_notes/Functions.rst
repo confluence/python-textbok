@@ -323,7 +323,7 @@ Remember that although we can execute a function *body* many times, a function *
 Exercise 4
 ----------
 
-#. Write a function called ``calculator``.  It should take the following parameters: two numbers, an arithmetic operation (which can be addition, subtraction, multiplication or division and is addition by default), and an output format (which can be integer or floating point, and is floating point by default).  Division should be floating point division.
+#. Write a function called ``calculator``.  It should take the following parameters: two numbers, an arithmetic operation (which can be addition, subtraction, multiplication or division and is addition by default), and an output format (which can be integer or floating point, and is floating point by default).  Division should be floating-point division.
 
    The function should perform the requested operation on the two input numbers, and return a result in the requested format (if the format is integer, the result should be rounded and not just truncated).  Raise exceptions as appropriate if any of the parameters passed to the function are invalid.
 
@@ -363,7 +363,7 @@ We can use ``*`` or ``**`` when we are *calling* a function to *unpack* a sequen
     my_dict = {"name": "Jane", "surname": "Doe"}
     print_kwargs(**my_dict)
 
-This makes it easier to build lists of parameters programatically.  Note that we can use this for *any* function, not just one which uses ``*args`` or ``**kwargs``::
+This makes it easier to build lists of parameters programmatically.  Note that we can use this for *any* function, not just one which uses ``*args`` or ``**kwargs``::
 
     my_dict = {
         "title": "Mr",

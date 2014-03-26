@@ -465,7 +465,7 @@ The following code fragment will print out a message if the given age is less th
     if age < 0 or age > 120:
         print("Invalid age: %d" % age)
 
-The interpreter also performs a short-circuit evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is suffifent to determine that the whole expression is true.
+The interpreter also performs a short-circuit evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is sufficient to determine that the whole expression is true.
 
 The || operator is also binary::
 

@@ -283,7 +283,7 @@ Some Python libraries define common constants for our convenience, for example::
     # All the lowercase ASCII letters: 'abcdefghijklmnopqrstuvwxyz'
     print(string.ascii_lowercase)
 
-    # The mathematical constants pi and e, both floating point numbers
+    # The mathematical constants pi and e, both floating-point numbers
     print(math.pi) # ratio of circumference of a circle to its diameter
     print(math.e) # natural base of logarithms
 
@@ -405,7 +405,7 @@ Finally, we output the results::
 Exercise 2
 ----------
 
-#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that **T_c = (5/9) x (T_f - 32)**, where **T_c** is the temperature in °C and **T_f** is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating point numbers.
+#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that **T_c = (5/9) x (T_f - 32)**, where **T_c** is the temperature in °C and **T_f** is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating-point numbers.
 
 #. What could make this program crash? What would we need to do to handle this situation more gracefully?
 

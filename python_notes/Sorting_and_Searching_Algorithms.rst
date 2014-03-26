@@ -12,7 +12,7 @@ likely to be many possible algorithms which can perform the same task.
 Are some of these algorithms in some sense better than others?
 Algorithm analysis is the study of this question.
 
-In this chapter we will analyze four algorithms; two for each of the
+In this chapter we will analyse four algorithms; two for each of the
 following common tasks:
 
 * *sorting*: ordering a list of values
@@ -511,14 +511,14 @@ Python's sorting algorithm
 Python's default sorting algorithm, which is used by the built-in
 ``sorted`` function as well as the ``sort`` method of list objects, is
 called *Timsort*.  It's an algorithm developed by Tim Peters in 2002 for
-use in Python. Timsort is a modifed version of merge sort which uses
+use in Python. Timsort is a modified version of merge sort which uses
 insertion sort to arrange the list of items into conveniently mergeable
 sections.
 
 .. Note::
 
    Tim Peters is also credited as the author of *The Zen of Python* --
-   an attempt to summarize the early Python community's ethos in a
+   an attempt to summarise the early Python community's ethos in a
    short series of koans. You can read it by typing ``import this``
    into the Python console.
 

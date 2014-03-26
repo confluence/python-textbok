@@ -75,7 +75,7 @@ Sometimes there can be absolutely nothing wrong with your Python implementation 
 
 * using the wrong variable name
 * indenting a block to the wrong level
-* using integer division instead of floating point division
+* using integer division instead of floating-point division
 * getting operator precedence wrong
 * making a mistake in a boolean expression
 * off-by-one, and other numerical errors
@@ -121,7 +121,7 @@ Handling exceptions
 
 Until now, the programs that we have written have generally ignored the fact that things can go wrong.  We have have tried to prevent runtime errors by checking data which may be incorrect before we used it, but we haven't yet seen how we can handle errors when they do occur -- our programs so far have just crashed suddenly whenever they have encountered one.
 
-There are some situations in which runtime errors are likely to occur.  Whenever we try to read a file or get input from a user, there is a chance that something unexpected will happen -- the file may have been moved or deleted, and the user may enter data which is not in the right format.  Good programmers should add safeguards to their programs so that common situations like this can be handled gracefully -- a program which crashes whenever it encounters an easily forseeable problem is not very pleasant to use.  Most users expect programs to be robust enough to recover from these kinds of setbacks.
+There are some situations in which runtime errors are likely to occur.  Whenever we try to read a file or get input from a user, there is a chance that something unexpected will happen -- the file may have been moved or deleted, and the user may enter data which is not in the right format.  Good programmers should add safeguards to their programs so that common situations like this can be handled gracefully -- a program which crashes whenever it encounters an easily foreseeable problem is not very pleasant to use.  Most users expect programs to be robust enough to recover from these kinds of setbacks.
 
 If we know that a particular section of our program is likely to cause an error, we can tell Python what to do if it does happen.  Instead of letting the error crash our program we can intercept it, do something about it, and allow the program to continue.
 
@@ -491,7 +491,7 @@ Answer to exercise 1
 
 #.
 
-    #. The values entered by the user may not be valid integers or floating point numbers.
+    #. The values entered by the user may not be valid integers or floating-point numbers.
     #. The user may enter zero for the divisor.
     #. If the ``math`` library hasn't been imported, ``math.round`` is undefined.
 
