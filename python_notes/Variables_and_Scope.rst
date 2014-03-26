@@ -112,7 +112,7 @@ Counting is something that is done often in a program. For example, we might wan
 
     count = count + 1
 
-This is in fact a very common operation.  Python has a shorthand operator, ``+=`` which lets us express it more cleanly, without having to write the name of the variable twice::
+This is in fact a very common operation.  Python has a shorthand operator, ``+=``, which lets us express it more cleanly, without having to write the name of the variable twice::
 
     # These statements mean exactly the same thing:
     count = count + 1
@@ -412,7 +412,7 @@ Exercise 2
 Type conversion
 ===============
 
-As we write more programs, we will often find that we need to convert data from one type to another, for example for a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.
+As we write more programs, we will often find that we need to convert data from one type to another, for example from a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.
 
 Implicit conversion
 -------------------

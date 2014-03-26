@@ -449,7 +449,7 @@ This often comes in useful if we want to access an object's attribute or an elem
 The ``or`` operator
 -------------------
 
-The OR operator in Java is ``or``.  A compound expression made up of two subexpressions and the ``or`` operator is true when *at least one* of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:
+The OR operator in Python is ``or``.  A compound expression made up of two subexpressions and the ``or`` operator is true when *at least one* of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:
 
 =========  =========  ==========
 ``a``      ``b``      ``a or b``
