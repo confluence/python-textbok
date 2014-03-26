@@ -681,8 +681,8 @@ We are not limited to storing simple values like strings in the dictionary.  In 
         print("'%s' capitalised is '%s'." % (string, string.upper()))
 
     ACTIONS = {
-        "r" = reverse, # use the function name without brackets to refer to the function without calling it
-        "c" = capitalise,
+        "r": reverse, # use the function name without brackets to refer to the function without calling it
+        "c": capitalise,
     }
 
     my_function = ACTIONS[my_action] # now we retrieve the function
