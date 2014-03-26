@@ -112,7 +112,7 @@ Counting is something that is done often in a program. For example, we might wan
 
     count = count + 1
 
-This is in fact a very common operation.  Python has a shorthand operator, ``+=`` which lets us express it more cleanly, without having to write the name of the variable twice::
+This is in fact a very common operation.  Python has a shorthand operator, ``+=``, which lets us express it more cleanly, without having to write the name of the variable twice::
 
     # These statements mean exactly the same thing:
     count = count + 1
@@ -283,7 +283,7 @@ Some Python libraries define common constants for our convenience, for example::
     # All the lowercase ASCII letters: 'abcdefghijklmnopqrstuvwxyz'
     print(string.ascii_lowercase)
 
-    # The mathematical constants pi and e, both floating point numbers
+    # The mathematical constants pi and e, both floating-point numbers
     print(math.pi) # ratio of circumference of a circle to its diameter
     print(math.e) # natural base of logarithms
 
@@ -405,14 +405,14 @@ Finally, we output the results::
 Exercise 2
 ----------
 
-#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that **T_c = (5/9) x (T_f - 32)**, where **T_c** is the temperature in °C and **T_f** is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating point numbers.
+#. Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that **T_c = (5/9) x (T_f - 32)**, where **T_c** is the temperature in °C and **T_f** is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating-point numbers.
 
 #. What could make this program crash? What would we need to do to handle this situation more gracefully?
 
 Type conversion
 ===============
 
-As we write more programs, we will often find that we need to convert data from one type to another, for example for a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.
+As we write more programs, we will often find that we need to convert data from one type to another, for example from a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.
 
 Implicit conversion
 -------------------

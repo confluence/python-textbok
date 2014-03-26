@@ -449,7 +449,7 @@ This often comes in useful if we want to access an object's attribute or an elem
 The ``or`` operator
 -------------------
 
-The OR operator in Java is ``or``.  A compound expression made up of two subexpressions and the ``or`` operator is true when *at least one* of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:
+The OR operator in Python is ``or``.  A compound expression made up of two subexpressions and the ``or`` operator is true when *at least one* of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:
 
 =========  =========  ==========
 ``a``      ``b``      ``a or b``
@@ -465,7 +465,7 @@ The following code fragment will print out a message if the given age is less th
     if age < 0 or age > 120:
         print("Invalid age: %d" % age)
 
-The interpreter also performs a short-circuit evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is suffifent to determine that the whole expression is true.
+The interpreter also performs a short-circuit evaluation for ``or`` expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is sufficient to determine that the whole expression is true.
 
 The || operator is also binary::
 
