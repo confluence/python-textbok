@@ -298,7 +298,7 @@ We will look in more detail at how these methods are defined in a later chapter,
 
 Some of these generators can go on for ever, so if you use them in a ``for`` loop you will need some other check to make the loop terminate!
 
-There is also a built-in function called ``zip`` which allows us to combine multiple iterables pairwise. It also outputs a generator:
+There is also a built-in function called ``zip`` which allows us to combine multiple iterables pairwise. It also outputs a generator::
 
     for i in zip((1, 2, 3), (4, 5, 6)):
         print(i)
