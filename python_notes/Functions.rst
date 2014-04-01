@@ -107,7 +107,7 @@ In Python, parameters have no declared types.  We can pass any kind of variable 
 
 The advantage of this is that we don't have to write a lot of different ``print_sum`` functions, one for each different pair of types, when they would all be identical otherwise.  The disadvantage is that since Python doesn't check parameter types against the function definition when a function is called, we may not immediately notice if the wrong type of parameter is passed in -- if, for example, another person interacting with code that we have written uses parameter types that we did not anticipate, or if we accidentally get the parameters out of order.
 
-This is why it is important for us to test our code thoroughly -- something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if it is incorrect.
+This is why it is important for us to test our code thoroughly -- something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if the are incorrect.
 
 Exercise 2
 ----------
