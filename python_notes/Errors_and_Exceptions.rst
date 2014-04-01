@@ -320,7 +320,7 @@ We can raise exceptions ourselves using the ``raise`` statement::
 
 We can raise our own ``ValueError`` if the age input is a valid integer, but it's negative.  When we do this, it has exactly the same effect as any other exception -- the flow of control will immediately exit the ``try`` clause at this point and pass to the ``except`` clause.  This ``except`` clause can match our exception as well, since it is also a ``ValueError``.
 
-We picked ``ValueError`` as our exception type because it's the most appropriate for this kind of error.  There's nothing stopping us from using a completely inappropriate exception class here, but we should try to be consistent. Here are a few common exception types which we are likely to raise in our own code::
+We picked ``ValueError`` as our exception type because it's the most appropriate for this kind of error.  There's nothing stopping us from using a completely inappropriate exception class here, but we should try to be consistent. Here are a few common exception types which we are likely to raise in our own code:
 
 * ``TypeError``: this is an error which indicates that a variable has the wrong *type* for some operation.  We might raise it in a function if a parameter is not of a type that we know how to handle.
 * ``ValueError``: this error is used to indicate that a variable has the right *type* but the wrong *value*.  For example, we used it when ``age`` was an integer, but the wrong *kind* of integer.
