@@ -364,7 +364,7 @@ The final product of a comprehension doesn't have to be a list.  You can create 
     doubles_generator = (2 * number for number in numbers)
 
     # a set comprehension
-    doubles_generator = {2 * number for number in numbers}
+    doubles_set = {2 * number for number in numbers}
 
     # a dict comprehension which uses the number as the key and the doubled number as the value
     doubles_dict = {number: 2 * number for number in numbers}
