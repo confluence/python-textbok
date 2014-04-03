@@ -306,8 +306,8 @@ We should be careful when using mutable types as default parameter values in fun
         pets.append(pet)
         return pets
 
-    list_with_cat = add_pet_to_list(cat)
-    list_with_dog = add_pet_to_list(dog)
+    list_with_cat = add_pet_to_list("cat")
+    list_with_dog = add_pet_to_list("dog")
 
     print(list_with_cat)
     print(list_with_dog) # oops
