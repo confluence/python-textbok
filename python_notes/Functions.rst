@@ -480,7 +480,7 @@ We can pass additional parameters to our decorator.  For example, we may want to
 
 Python has several built-in decorators which are commonly used to decorate class methods.  We will learn about them in the next chapter.
 
-.. Note:: a decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
+.. Note:: A decorator doesn't have to be a function -- it can be any callable object.  Some people prefer to write decorators as classes.
 
 Exercise 6
 ----------
