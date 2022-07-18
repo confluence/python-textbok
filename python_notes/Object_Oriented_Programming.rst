@@ -575,13 +575,16 @@ Answer to exercise 3
                     break
 
     box1 = ListBox()
-    box1.add(Item(str(i), i) for i in range(20))
+    for i in range(20):
+        box1.add(Item(str(i), i))
 
     box2 = ListBox()
-    box2.add(Item(str(i), i) for i in range(9))
+    for i in range(9):
+        box2.add(Item(str(i), i))
 
-    box1 = DictBox()
-    box1.add(Item(str(i), i) for i in range(5))
+    box3 = DictBox()
+    for i in range(5):
+        box3.add(Item(str(i), i))
 
     repack_boxes(box1, box2, box3)
 
