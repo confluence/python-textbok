@@ -455,7 +455,7 @@ Here are some examples of special object properties:
 
 * ``__init__``: the initialisation method of an object, which is called when the object is created.
 * ``__str__``: the string representation method of an object, which is called when you use the ``str`` function to convert that object to a string.
-* ``__class__``: an attribute which stores the the class (or type) of an object -- this is what is returned when you use the ``type`` function on the object.
+* ``__class__``: an attribute which stores the class (or type) of an object -- this is what is returned when you use the ``type`` function on the object.
 * ``__eq__``: a method which determines whether this object is equal to another.  There are also other methods for determining if it's not equal, less than, etc.. These methods are used in object comparisons, for example when we use the equality operator ``==`` to check if two objects are equal.
 * ``__add__`` is a method which allows this object to be added to another object. There are equivalent methods for all the other arithmetic operators.  Not all objects support all arithemtic operations -- numbers have all of these methods defined, but other objects may only have a subset.
 * ``__iter__``: a method which returns an iterator over the object -- we will find it on strings, lists and other iterables.  It is executed when we use the ``iter`` function on the object.
