@@ -261,7 +261,7 @@ Python. "..." denotes missing code that should be filled in::
 
     def selection_sort(items):
         """Sorts a list of items into ascending order using the
-           selection sort algoright.
+           selection sort algorithm.
            """
         for step in range(len(items)):
             # Find the location of the smallest element in
