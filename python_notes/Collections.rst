@@ -628,7 +628,7 @@ You might think of using this method to construct our timetable.  We can certain
 
 But what happens if we repeat a day seven times to make a week? ::
 
-    timetable = day * 7
+    timetable = [day] * 7
     print(timetable)
 
 Everything looks fine so far, so what's the problem?  Well, let's see what happens when we try to schedule a meeting for Monday afternoon::
