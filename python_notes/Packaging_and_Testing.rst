@@ -185,7 +185,7 @@ Selecting test cases
 
 How do we select test cases?  There are two major approaches that we can follow: *black-box* or *glass-box* testing.  We can also use a combination of the two.
 
-In black-box testing, we treat our function like an opaque "black box".  We don't use our knowledge of how the function is written to pick test cases -- we only think about what the function is supposed to do.  A strategy commonly used in black-box testing is is *equivalence testing* and *boundary value analysis*.
+In black-box testing, we treat our function like an opaque "black box".  We don't use our knowledge of how the function is written to pick test cases -- we only think about what the function is supposed to do.  A strategy commonly used in black-box testing is *equivalence testing* and *boundary value analysis*.
 
 An *equivalence class* is a set of input values which should all produce similar output, and there are *boundaries* between neighbouring equivalence classes.  Input values which lie near these boundaries are the most likely to produce incorrect output, because it's easy for a programmer to use ``<`` instead of ``<=`` or start counting from ``1`` instead of ``0``, both of which could cause an *off-by-one* error.  If we test an input value from inside each equivalence class, and additionally test values just before, just after and on each boundary, we can be reasonably sure that we have covered all the bases.
 
